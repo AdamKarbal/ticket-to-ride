@@ -36,5 +36,7 @@ public class MainDeCartesWagon { // peut être renommée pour faire des mains to
     public void removeCarteWagon(CarteWagon carte) {
         mainDeCartesWagon.remove(carte);
     }
-
+    // ton contains et ton remove ne vont pas marcher tu dois le faire manuellement
+    // vérifie si la carte est présente avant de la remove
+    // Rajoute une méthode qui retourne une carte aléatoire
 }
