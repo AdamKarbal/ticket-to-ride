@@ -17,18 +17,18 @@ public class Pioche {
     }
 
     // Méthode pour créer une pioche complète
-    public static Stack<CarteWagon> creerPiocheComplete() {
-        Stack<CarteWagon> pioche = new Stack<>();
-        for (String couleur : couleurs) {
+    public static Pioche creerPiocheComplete() {
+        Pioche nouvellePioche = new Pioche();
+        for (String couleur : couleurs) { // créer une carte pour tout les couleurs
             for (int i = 0; i < cartesParCouleur; i++) {
-                pioche.push(new CarteWagon(couleur));
+                nouvellePioche.pioche.push(new CarteWagon(couleur));
             }
         }
         // Mélanger la pioche
-        Collections.shuffle(pioche);
-        Collections.shuffle(pioche);
-        Collections.shuffle(pioche);
-        return pioche;
+        Collections.shuffle(nouvellePioche.pioche);
+        Collections.shuffle(nouvellePioche.pioche);
+        Collections.shuffle(nouvellePioche.pioche);
+        return nouvellePioche;
     }
 
     // Méthode
@@ -38,13 +38,11 @@ public class Pioche {
         return cartePiocher;
     }
 
-    public MainDeCartesWagon mettre5cartesurlatable(){
-        ArrayList<CarteWagon> cartesPiocher= new ArrayList<>();
-        for(int i=0; i<=5;i++){
-            cartesPiocher.add(piocher());
+    public CarteSurTable mettre5cartesurlatable(CarteSurTable carteSurTable){ // méthode à utiliser a chaque fin de tour pour avoir 5 carte sur la table
+        while(carteSurTable.getMainDeCartes().size()!=5){
+            carteSurTable.getMainDeCartes().add(piocher());
         }
-        MainDeCartesWagon carteSurLaTable = new MainDeCartesWagon(cartesPiocher);
-        return carteSurLaTable;
+        return carteSurTable;
     }
 
 }
