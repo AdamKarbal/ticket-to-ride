@@ -1,27 +1,42 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.pioche.MainJoueur;
+import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
+
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Robot {
-    private int score;
+    //private Score score;
     private Couleur couleur;
-    private ArrayList<DestinationCard> destinations;
+    //private ArrayList<DestinationCard> destinations;
     private MainJoueur main;
     public Robot(int score, Couleur couleur) {
-        this.score = score;
+        //this.score = score;
         this.couleur = couleur;
-        this.destinations = new ArrayList<>();
-        this.deck=new MainJoueur;
+        //this.destinations = new ArrayList<>();
+        this.main=new MainJoueur();
     }
-    public void chooseDestination(DestinationCard destination){
+    /*public void chooseDestination(DestinationCard destination){
         destinations.add(destination);
+    }*/
+    public void jPioche(Pioche pioche) {
+        main.addCarte(pioche.piocher());
     }
-    public void p(){
+    public void placerTrain(Plateau plateau){
+        if
+    }
 
-    }
+
+
+
+
+
+
+
+
     @Override
     public String toString() {
         return couleur.name();

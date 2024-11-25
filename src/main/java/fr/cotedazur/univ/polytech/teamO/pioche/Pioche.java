@@ -15,6 +15,7 @@ public class Pioche {
     public Pioche() {
         this.pioche = new Stack<>();
     }
+    // Getter
 
     // Méthode pour créer une pioche complète
     public static Pioche creerPiocheComplete() {
