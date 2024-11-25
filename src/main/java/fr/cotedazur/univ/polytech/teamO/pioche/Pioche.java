@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 
 public class Pioche {
     // Instances
-    private Stack<CarteWagon> pioche;
+    public Stack<CarteWagon> pioche;
 
     // Constantes
     private static int cartesParCouleur = 12;
@@ -16,7 +16,9 @@ public class Pioche {
         this.pioche = new Stack<>();
     }
     // Getter
-
+    public Stack getPioche() {
+        return pioche;
+    }
     // Méthode pour créer une pioche complète
     public static Pioche creerPiocheComplete() {
         Pioche nouvellePioche = new Pioche();
@@ -35,8 +37,7 @@ public class Pioche {
     // Méthode
 
     public CarteWagon piocher(){
-        CarteWagon cartePiocher = pioche.pop();
-        return cartePiocher;
+        return pioche.pop();
     }
 
     public CarteSurTable mettre5cartesurlatable(CarteSurTable carteSurTable){ // méthode à utiliser a chaque fin de tour pour avoir 5 carte sur la table

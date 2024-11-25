@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
 import fr.cotedazur.univ.polytech.teamO.pioche.MainJoueur;
 import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
 
@@ -23,10 +24,11 @@ public class Robot {
         destinations.add(destination);
     }*/
     public void jPioche(Pioche pioche) {
-        main.addCarte(pioche.piocher());
+        CarteWagon cartePiocher = (CarteWagon) pioche.getPioche().pop();
+        main.addCarte(cartePiocher);
     }
-    public void placerTrain(Plateau plateau){
-        if
+    public void placerTrain(Route route){
+        
     }
 
 
