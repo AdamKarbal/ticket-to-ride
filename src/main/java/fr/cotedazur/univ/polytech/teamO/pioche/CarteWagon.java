@@ -1,12 +1,14 @@
 package fr.cotedazur.univ.polytech.teamO.pioche;
 
+import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+
 public class CarteWagon implements Carte {
     //Instance
-    private String couleur;
+    private Couleur couleur;
     private String nomCarte;
 
     // Constructeurs
-    public CarteWagon(String couleur) {
+    public CarteWagon(Couleur couleur) {
         this.couleur = couleur;
         setNomCarteWagon(couleur);
     }
@@ -14,9 +16,10 @@ public class CarteWagon implements Carte {
 
     // Accesseurs
 
-    public void setNomCarteWagon(String Couleur){
+    public void setNomCarteWagon(Couleur Couleur){
         this.nomCarte = "Carte Wagon de Couleur : " + Couleur;
     }
+
     @Override
     public String getNom() {
         if(isValid()){
@@ -26,17 +29,27 @@ public class CarteWagon implements Carte {
     }
 
     @Override
-    public String getCouleur() {
+    public Couleur getCouleur() {
         return couleur;
     }
 
     // Méthode
 
-    public boolean isValid(){
-        String couleurCarte = couleur;
-        if(couleurCarte=="Rouge" || couleurCarte=="Bleu" || couleurCarte=="Vert" || couleurCarte=="Jaune" || couleurCarte=="Noir" || couleurCarte=="Blanc" || couleurCarte=="Orange" || couleurCarte=="Rose") return true;
+    public boolean isValid() {
+        Couleur couleurCarte = couleur;
+        if (couleurCarte.name().equals("Rouge") ||
+                couleurCarte.name().equals("Bleu") ||
+                couleurCarte.name().equals("Vert") ||
+                couleurCarte.name().equals("Jaune") ||
+                couleurCarte.name().equals("Noir") ||
+                couleurCarte.name().equals("Blanc") ||
+                couleurCarte.name().equals("Orange") ||
+                couleurCarte.name().equals("Rose")) {
+            return true;
+        }
         return false;
     }
+
 
 
 }

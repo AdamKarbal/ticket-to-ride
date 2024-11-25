@@ -2,13 +2,13 @@ package  fr.cotedazur.univ.polytech.teamO.pioche;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
+import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 
 public class Pioche {
     // Instances
     private Stack<CarteWagon> pioche;
 
     // Constantes
-    private static String[] couleurs = {"Rouge", "Bleu", "Vert", "Jaune", "Noir", "Blanc", "Orange", "Rose"}; //Avant qu'il y a les énumeration de couleur
     private static int cartesParCouleur = 12;
 
     // Constructeur
@@ -20,7 +20,7 @@ public class Pioche {
     // Méthode pour créer une pioche complète
     public static Pioche creerPiocheComplete() {
         Pioche nouvellePioche = new Pioche();
-        for (String couleur : couleurs) { // créer une carte pour tout les couleurs
+        for (Couleur couleur : Couleur.values()) { // créer une carte pour tout les couleurs
             for (int i = 0; i < cartesParCouleur; i++) {
                 nouvellePioche.pioche.push(new CarteWagon(couleur));
             }
@@ -44,6 +44,10 @@ public class Pioche {
             carteSurTable.getMainDeCartes().add(piocher());
         }
         return carteSurTable;
+    }
+
+    public Stack<CarteWagon> getPioche(){
+        return pioche;
     }
 
 }

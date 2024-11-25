@@ -38,7 +38,4 @@ public class MainJoueur implements MainDeCarte { // peut être renommée pour fa
     public void removeCarte(CarteWagon carte) {
         mainJoueur.remove(carte);
     }
-    // ton contains et ton remove ne vont pas marcher tu dois le faire manuellement
-    // vérifie si la carte est présente avant de la remove
-    // Rajoute une méthode qui retourne une carte aléatoire
 }

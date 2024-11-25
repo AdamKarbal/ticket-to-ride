@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.teamO.piocheTest;
 
+import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,11 +19,9 @@ public class CarteWagonTest {
 
     @BeforeEach
     void startup(){
-        CarteWagonNoirValide = new CarteWagon("Noir");
-         CarteWagonBleuValide = new CarteWagon("Bleu");
-         CarteWagonRougeValide = new CarteWagon("Rouge");
-         CarteWagonChocolatInvalide = new CarteWagon("Chocolat");
-         CarteWagonMauveInvalide = new CarteWagon("Mauve");
+        CarteWagonNoirValide = new CarteWagon(Couleur.NOIR);
+         CarteWagonBleuValide = new CarteWagon(Couleur.BLEU);
+         CarteWagonRougeValide = new CarteWagon(Couleur.ROUGE);
     }
 
     @Test
@@ -30,8 +29,6 @@ public class CarteWagonTest {
         assertTrue(CarteWagonNoirValide.isValid());
         assertTrue(CarteWagonBleuValide.isValid());
         assertTrue(CarteWagonRougeValide.isValid());
-        assertFalse(CarteWagonMauveInvalide.isValid());
-        assertFalse(CarteWagonChocolatInvalide.isValid());
     }
 
     @Test
@@ -39,7 +36,5 @@ public class CarteWagonTest {
         assertEquals("Carte Wagon de Couleur : Noir",CarteWagonNoirValide.getNom());
         assertEquals("Carte Wagon de Couleur : Rouge",CarteWagonRougeValide.getNom());
         assertEquals("Carte Wagon de Couleur : Bleu",CarteWagonBleuValide.getNom());
-        assertEquals("Carte invalide",CarteWagonMauveInvalide.getNom());
-        assertEquals("Carte invalide",CarteWagonChocolatInvalide.getNom());
     }
 }
