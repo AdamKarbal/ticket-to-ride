@@ -1,14 +1,15 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.pioche.MainJoueur;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Robot {
-    private int score;
+    private int score; // faut faire classe score
     private Couleur couleur;
-    private ArrayList<DestinationCard> destinations;
+    private ArrayList<DestinationCard> destinations; // pareil dans carte faire classe
     private MainJoueur main;
     public Robot(int score, Couleur couleur) {
         this.score = score;
