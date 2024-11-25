@@ -2,38 +2,35 @@ package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import java.util.ArrayList;
 
-public class CarteSurTable implements  MainDeCarte{
+public class CarteSurTable<T extends Carte> implements  MainDeCarte<T>{
     // Instances
-    private ArrayList<CarteWagon> carteSurTable;
+    private ArrayList<T> carteSurTable;
 
     // Constructeurs
 
-    public CarteSurTable(ArrayList<CarteWagon> carteSurTable){
+    public CarteSurTable(ArrayList<T> carteSurTable){
         this.carteSurTable =carteSurTable;
     }
 
     // Accesseurs
     @Override
-    public ArrayList<CarteWagon> getMainDeCartes(){
+    public ArrayList<T> getMainDeCartes(){
         return carteSurTable;
     }
 
     // Méthode
-    @Override
-    public void addCarte(CarteWagon CarteWagon){ // ajouter une carte wagon
+
+    public void addCarte(T CarteWagon){ // ajouter une carte wagon
         carteSurTable.add(CarteWagon);
     }
-    @Override
-    public boolean containCarte(CarteWagon CarteWagon){
+    public boolean containCarte(T CarteWagon){
         if(carteSurTable.contains(CarteWagon)) return true;
         return false;
     }
-    @Override
-    public CarteWagon carteAtPosI(int i){
+    public T carteAtPosI(int i){
         return carteSurTable.get(i);
     }
-    @Override
-    public void removeCarte(CarteWagon carte) {
+    public void removeCarte(T carte) {
         carteSurTable.remove(carte);
     }
 

@@ -2,12 +2,12 @@ package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import java.util.ArrayList;
 
-public interface MainDeCarte {
+public interface MainDeCarte<T extends Carte> {
 
-    ArrayList<CarteWagon> getMainDeCartes();
+    ArrayList<T> getMainDeCartes();
     // Methode
-    void removeCarte(CarteWagon carte);
-    CarteWagon carteAtPosI(int i);
-    boolean containCarte(CarteWagon carteWagon);
-    void addCarte(CarteWagon carteWagon);
+    void removeCarte(T carte);
+    T carteAtPosI(int i);
+    boolean containCarte(T carteWagon);
+    void addCarte(T carteWagon);
 }

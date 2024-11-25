@@ -2,23 +2,18 @@ package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 
-public class CarteWagon implements Carte {
+public class CarteWagon extends Carte {
     //Instance
     private Couleur couleur;
     private String nomCarte;
 
     // Constructeurs
     public CarteWagon(Couleur couleur) {
-        this.couleur = couleur;
-        setNomCarteWagon(couleur);
+        super(couleur);
     }
 
 
     // Accesseurs
-
-    public void setNomCarteWagon(Couleur Couleur){
-        this.nomCarte = "Carte Wagon de Couleur : " + Couleur;
-    }
 
     @Override
     public String getNom() {

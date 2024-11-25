@@ -4,38 +4,38 @@ import fr.cotedazur.univ.polytech.teamO.Main;
 
 import java.util.ArrayList;
 
-public class MainJoueur implements MainDeCarte { // peut être renommée pour faire des mains tout simplement
+public class MainJoueur<T extends Carte> implements MainDeCarte<T>{ // peut être renommée pour faire des mains tout simplement
     // Instances
-    private ArrayList<CarteWagon> mainJoueur;
+    private ArrayList<T> mainJoueur;
 
     // Constructeurs
     public MainJoueur() { this.mainJoueur = new ArrayList(); }
-    public MainJoueur(ArrayList<CarteWagon> mainDeCartesWagon){
+    public MainJoueur(ArrayList<T> mainDeCartesWagon){
         this.mainJoueur=mainDeCartesWagon;
     }
 
     // Accesseurs
-    @Override
-    public ArrayList<CarteWagon> getMainDeCartes(){
+
+    public ArrayList<T> getMainDeCartes(){
         return mainJoueur;
     }
 
     // Méthode
-    @Override
-    public void addCarte(CarteWagon CarteWagon){ // ajouter une carte wagon
-        mainJoueur.add(CarteWagon);
+
+    public void addCarte(T carte){ // ajouter une carte wagon
+        mainJoueur.add(carte);
     }
-    @Override
+
     public boolean containCarte(CarteWagon CarteWagon){
         if(mainJoueur.contains(CarteWagon)) return true;
         return false;
     }
-    @Override
-    public CarteWagon carteAtPosI(int i){
+
+    public T carteAtPosI(int i){
         return mainJoueur.get(i);
     }
-    @Override
-    public void removeCarte(CarteWagon carte) {
+
+    public void removeCarte(T carte) {
         mainJoueur.remove(carte);
     }
 }

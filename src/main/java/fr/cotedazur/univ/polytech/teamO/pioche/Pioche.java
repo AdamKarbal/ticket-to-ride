@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.Stack;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 
-public class Pioche {
+public class Pioche<T extends Carte> {
     // Instances
-    public Stack<CarteWagon> pioche;
+    public Stack<T> pioche;
 
     // Constantes
     private static int cartesParCouleur = 12;
@@ -20,7 +20,7 @@ public class Pioche {
         return pioche;
     }
     // Méthode pour créer une pioche complète
-    public static Pioche creerPiocheComplete() {
+    public static Pioche creerPiocheComplete() { // bien handle le cas des locomotives
         Pioche nouvellePioche = new Pioche();
         for (Couleur couleur : Couleur.values()) { // créer une carte pour tout les couleurs
             for (int i = 0; i < cartesParCouleur; i++) {
@@ -36,7 +36,7 @@ public class Pioche {
 
     // Méthode
 
-    public CarteWagon piocher(){
+    public T piocher(){
         return pioche.pop();
     }
 
@@ -47,8 +47,5 @@ public class Pioche {
         return carteSurTable;
     }
 
-    public Stack<CarteWagon> getPioche(){
-        return pioche;
-    }
 
 }

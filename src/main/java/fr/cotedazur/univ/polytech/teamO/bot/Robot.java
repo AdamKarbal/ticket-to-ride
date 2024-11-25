@@ -27,18 +27,6 @@ public class Robot {
         CarteWagon cartePiocher = (CarteWagon) pioche.getPioche().pop();
         main.addCarte(cartePiocher);
     }
-    public void placerTrain(Route route){
-        
-    }
-
-
-
-
-
-
-
-
-
     @Override
     public String toString() {
         return couleur.name();
