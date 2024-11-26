@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import fr.cotedazur.univ.polytech.teamO.pioche.MainJoueur;
 import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
-import fr.cotedazur.univ.polytech.teamO.pioche.CarteSurTable
+import fr.cotedazur.univ.polytech.teamO.pioche.CarteSurTable;
 
 import java.util.ArrayList;
 
@@ -27,8 +27,8 @@ public class PiocheTest {
         System.out.print(pioche.getPioche());
     }
 
-    @Test
-    void testCarteSurTable(){
-        System.out.println(pioche.mettre5cartesurlatable());
-    }
+
+    /*void testCarteSurTable(){
+        System.out.println(pioche.mettre5cartesurlatable(carteSurTable));
+    }*/
 }

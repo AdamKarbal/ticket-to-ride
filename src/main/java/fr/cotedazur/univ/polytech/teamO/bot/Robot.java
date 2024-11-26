@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 
+import fr.cotedazur.univ.polytech.teamO.Main;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
 import fr.cotedazur.univ.polytech.teamO.pioche.MainJoueur;
@@ -19,6 +20,9 @@ public class Robot {
         this.couleur = couleur;
         //this.destinations = new ArrayList<>();
         this.main=new MainJoueur();
+    }
+    public MainJoueur getMain() {
+        return main;
     }
     /*public void chooseDestination(DestinationCard destination){
         destinations.add(destination);

@@ -26,7 +26,7 @@ public class MainJoueur<T extends Carte> implements MainDeCarte<T>{ // peut êtr
         mainJoueur.add(carte);
     }
 
-    public boolean containCarte(CarteWagon CarteWagon){
+    public boolean containCarte(T CarteWagon){
         if(mainJoueur.contains(CarteWagon)) return true;
         return false;
     }

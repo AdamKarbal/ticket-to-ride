@@ -18,7 +18,7 @@ public class Jeu {
 
     //Setup de la partie
     public void setupPioche(){
-        pioche = Pioche.creerPiocheComplete();
+        pioche.creerPiocheComplete();
     }
     public void setupCarteSurTable(){
         carteSurTable=getPioche().mettre5cartesurlatable(carteSurTable);

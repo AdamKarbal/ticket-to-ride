@@ -8,30 +8,29 @@ public class Pioche<T extends Carte> {
     // Instances
     public Stack<T> pioche;
 
+    public Pioche(){
+        creerPiocheComplete();
+    }
     // Constantes
     private static int cartesParCouleur = 12;
 
-    // Constructeur
-    public Pioche() {
-        this.pioche = new Stack<>();
-    }
     // Getter
     public Stack getPioche() {
         return pioche;
     }
     // Méthode pour créer une pioche complète
-    public static Pioche creerPiocheComplete() { // bien handle le cas des locomotives
-        Pioche nouvellePioche = new Pioche();
+    public void creerPiocheComplete() { // bien handle le cas des locomotives
+        Stack nouvellePioche = new Stack<T>();
         for (Couleur couleur : Couleur.values()) { // créer une carte pour tout les couleurs
             for (int i = 0; i < cartesParCouleur; i++) {
-                nouvellePioche.pioche.push(new CarteWagon(couleur));
+                nouvellePioche.push(new CarteWagon(couleur));
             }
         }
         // Mélanger la pioche
-        Collections.shuffle(nouvellePioche.pioche);
-        Collections.shuffle(nouvellePioche.pioche);
-        Collections.shuffle(nouvellePioche.pioche);
-        return nouvellePioche;
+        Collections.shuffle(nouvellePioche);
+        Collections.shuffle(nouvellePioche);
+        Collections.shuffle(nouvellePioche);
+        this.pioche=nouvellePioche;
     }
 
     // Méthode
