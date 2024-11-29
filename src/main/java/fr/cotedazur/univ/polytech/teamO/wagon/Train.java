@@ -11,7 +11,7 @@ public class Train<E extends Vehicule>{
     //private Route route;
 
     public Train(Couleur couleur, List<E> suiteDeWagons) {
-        if(suiteDeWagons.get(0).getCouleur() == null) this.couleur = Couleur.DEFAULT;
+        if(suiteDeWagons.get(0).getCouleur() == null) this.couleur = Couleur.Default;
         else this.couleur = couleur;
         if(suiteDeWagons == null) this.suiteDeWagons = new ArrayList<E>();
         else this.suiteDeWagons = suiteDeWagons;
@@ -19,7 +19,7 @@ public class Train<E extends Vehicule>{
 
     @Override
     public String toString(){
-        return "Un train de " + suiteDeWagons.size() + " wagons de couleur "+ couleur+".";
+        return "Un train de " + suiteDeWagons.size() + " wagons de couleur "+ couleur.name() +".";
     }
 
     public int getNbWagons(){

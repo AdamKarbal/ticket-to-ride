@@ -24,17 +24,21 @@ public class Robot {
     public MainJoueur getMain() {
         return main;
     }
-    /*public void chooseDestination(DestinationCard destination){
+
+    /* public void chooseDestination(DestinationCard destination){
         destinations.add(destination);
-    }*/
+    } */
+
     public void jPioche(Pioche pioche) {
         CarteWagon cartePiocher = (CarteWagon) pioche.getPioche().pop();
         main.addCarte(cartePiocher);
     }
+
     @Override
     public String toString() {
         return couleur.name();
     }
+
     @Override
     public boolean equals(Object obj) {
         if (equals(obj)) return true;
@@ -42,6 +46,7 @@ public class Robot {
         Robot other = (Robot) obj;
         return couleur.equals(other.couleur);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(couleur);

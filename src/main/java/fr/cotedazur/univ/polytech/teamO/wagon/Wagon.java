@@ -6,7 +6,7 @@ public class Wagon extends Vehicule{
     private Couleur couleur;
 
     public Wagon(Couleur couleur) {
-        if(couleur == null) this.couleur = Couleur.DEFAULT;
+        if(couleur == null) this.couleur = Couleur.Default;
         else this.couleur = couleur;
     }
 
@@ -16,7 +16,7 @@ public class Wagon extends Vehicule{
 
     @Override
     public String toString(){
-        return "Un wagon de couleur " + couleur +" à placer sur une route.";
+        return "Un wagon de couleur " + getCouleur().name() + " à placer sur une route.";
     }
 
 }

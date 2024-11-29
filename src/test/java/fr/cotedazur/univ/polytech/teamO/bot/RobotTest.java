@@ -13,7 +13,7 @@ class RobotTest {
     @BeforeEach
     void setUp() {
         pioche = new Pioche();
-        robot=new Robot(2, Couleur.BLEU);
+        robot=new Robot(2, Couleur.Bleu);
     }
     @Test
     void testPioche() {

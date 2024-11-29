@@ -7,7 +7,7 @@ public class CarteLocomotive extends Carte {
     private Couleur couleur;
     private String nomCarte;
     public CarteLocomotive(){
-        super(Couleur.RAINBOW);
+        super(Couleur.Rainbow);
     }
     public String getNom(){
         return nomCarte;

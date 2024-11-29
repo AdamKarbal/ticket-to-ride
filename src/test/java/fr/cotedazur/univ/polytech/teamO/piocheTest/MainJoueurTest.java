@@ -20,11 +20,11 @@ public class MainJoueurTest {
 
      @BeforeEach
     void startup(){
-         CarteWagonNoir = new CarteWagon(Couleur.NOIR);
-         CarteWagonJaune = new CarteWagon(Couleur.JAUNE);
-         CarteWagonRouge = new CarteWagon(Couleur.ROUGE);
-         CarteWagonViolet = new CarteWagon(Couleur.VIOLET);
-         CarteWagonBlanc = new CarteWagon(Couleur.BLANC);
+         CarteWagonNoir = new CarteWagon(Couleur.Noir);
+         CarteWagonJaune = new CarteWagon(Couleur.Jaune);
+         CarteWagonRouge = new CarteWagon(Couleur.Rouge);
+         CarteWagonViolet = new CarteWagon(Couleur.Violet);
+         CarteWagonBlanc = new CarteWagon(Couleur.Blanc);
          MainJoueur1 = new MainJoueur(main);
      }
 
