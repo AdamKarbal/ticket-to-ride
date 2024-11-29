@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 
 public class Jeu {
+    /*
 
     private Pioche pioche;
     private Robot robot1;
@@ -24,5 +25,5 @@ public class Jeu {
         carteSurTable=getPioche().mettre5cartesurlatable(carteSurTable);
 
     }
-
+*/
 }
