@@ -46,5 +46,4 @@ public class Pioche<T extends Carte> {
         return carteSurTable;
     }
 
-
 }

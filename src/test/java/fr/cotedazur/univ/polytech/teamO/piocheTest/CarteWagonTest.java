@@ -19,9 +19,9 @@ public class CarteWagonTest {
 
     @BeforeEach
     void startup(){
-        CarteWagonNoirValide = new CarteWagon(Couleur.NOIR);
-         CarteWagonBleuValide = new CarteWagon(Couleur.BLEU);
-         CarteWagonRougeValide = new CarteWagon(Couleur.ROUGE);
+        CarteWagonNoirValide = new CarteWagon(Couleur.Noir);
+        CarteWagonBleuValide = new CarteWagon(Couleur.Bleu);
+        CarteWagonRougeValide = new CarteWagon(Couleur.Rouge);
     }
 
     @Test

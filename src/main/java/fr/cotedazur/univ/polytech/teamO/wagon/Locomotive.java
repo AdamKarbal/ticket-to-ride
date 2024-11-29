@@ -6,7 +6,7 @@ public class Locomotive extends Vehicule{
     private Couleur couleur;
 
     public Locomotive() {
-        this.couleur = Couleur.RAINBOW;
+        this.couleur = Couleur.Rainbow;
     }
 
     @Override
