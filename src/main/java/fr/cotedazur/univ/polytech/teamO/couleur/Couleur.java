@@ -11,6 +11,4 @@ public enum Couleur {
     Vert,
     Orange,
     Default
-
-
 }

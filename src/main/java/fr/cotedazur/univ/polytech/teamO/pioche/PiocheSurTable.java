@@ -2,18 +2,20 @@ package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import java.util.ArrayList;
 
-public class CarteSurTable<T extends Carte> implements  MainDeCarte<T>{
+public class PiocheSurTable<T extends Carte> extends Pioche<T> {
     // Instances
     private ArrayList<T> carteSurTable;
 
     // Constructeurs
-
-    public CarteSurTable(ArrayList<T> carteSurTable){
+    public PiocheSurTable() {
+        carteSurTable = mettre5cartesurlatable();
+    }
+    public PiocheSurTable(ArrayList<T> carteSurTable){
         this.carteSurTable =carteSurTable;
     }
 
     // Accesseurs
-    @Override
+    /*@Override*/
     public ArrayList<T> getMainDeCartes(){
         return carteSurTable;
     }

@@ -1,6 +1,6 @@
 package  fr.cotedazur.univ.polytech.teamO.pioche;
 
-import fr.cotedazur.univ.polytech.teamO.Main;
+
 
 import java.util.ArrayList;
 
@@ -37,5 +37,14 @@ public class MainJoueur<T extends Carte> implements MainDeCarte<T>{ // peut êtr
 
     public void removeCarte(T carte) {
         mainJoueur.remove(carte);
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        for(T carte : mainJoueur){
+            str += carte.toString() + "\n";
+        }
+        return str;
     }
 }

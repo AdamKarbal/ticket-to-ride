@@ -2,9 +2,10 @@ package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 
+import java.util.Arrays;
+
 public class CarteWagon extends Carte {
     //Instance
-    private Couleur couleur;
     private String nomCarte;
 
     // Constructeurs
@@ -18,7 +19,7 @@ public class CarteWagon extends Carte {
     @Override
     public String getNom() {
         if(isValid()){
-            return nomCarte;
+            return nom;
         }
         return "Carte invalide";
     }
@@ -31,18 +32,7 @@ public class CarteWagon extends Carte {
     // Méthode
 
     public boolean isValid() {
-        Couleur couleurCarte = couleur;
-        if (couleurCarte.name().equals("Rouge") ||
-                couleurCarte.name().equals("Bleu") ||
-                couleurCarte.name().equals("Vert") ||
-                couleurCarte.name().equals("Jaune") ||
-                couleurCarte.name().equals("Noir") ||
-                couleurCarte.name().equals("Blanc") ||
-                couleurCarte.name().equals("Orange") ||
-                couleurCarte.name().equals("Rose")) {
-            return true;
-        }
-        return false;
+        return Arrays.asList(Couleur.values()).contains(couleur);
     }
 
 
