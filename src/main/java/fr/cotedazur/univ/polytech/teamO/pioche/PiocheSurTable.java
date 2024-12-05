@@ -1,39 +1,53 @@
 package fr.cotedazur.univ.polytech.teamO.pioche;
 
+import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PiocheSurTable<T extends Carte> extends Pioche<T> {
     // Instances
-    private ArrayList<T> carteSurTable;
+    private ArrayList<T> cartesSurTable;
 
     // Constructeurs
     public PiocheSurTable() {
-        carteSurTable = mettre5cartesurlatable();
+        this.cartesSurTable=new ArrayList<>();
+        Random random=new Random();
+        Couleur[] couleurs=Couleur.values();
+        for(int i=0;i<5;i++){
+            this.cartesSurTable.add((T) new CarteWagon(couleurs[random.nextInt(couleurs.length)]));
+        }
     }
     public PiocheSurTable(ArrayList<T> carteSurTable){
-        this.carteSurTable =carteSurTable;
+        this.cartesSurTable =carteSurTable;
     }
 
     // Accesseurs
-    /*@Override*/
     public ArrayList<T> getMainDeCartes(){
-        return carteSurTable;
+        return cartesSurTable;
     }
 
     // Méthode
 
     public void addCarte(T CarteWagon){ // ajouter une carte wagon
-        carteSurTable.add(CarteWagon);
+        cartesSurTable.add(CarteWagon);
     }
     public boolean containCarte(T CarteWagon){
-        if(carteSurTable.contains(CarteWagon)) return true;
+        if(cartesSurTable.contains(CarteWagon)) return true;
         return false;
     }
     public T carteAtPosI(int i){
-        return carteSurTable.get(i);
+        return cartesSurTable.get(i);
     }
     public void removeCarte(T carte) {
-        carteSurTable.remove(carte);
+        cartesSurTable.remove(carte);
+    }
+    public T piocher(T carte){
+        if(containCarte(carte)){
+            removeCarte(carte);
+            return carte;
+        }
+        return null;
     }
 
 }

@@ -2,6 +2,8 @@ package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 
+import java.util.Objects;
+
 public abstract class Carte {
     protected Couleur couleur;
     protected String nom;
@@ -26,6 +28,10 @@ public abstract class Carte {
         if (obj == null || obj.getClass()!=getClass()) return false;
         Carte carte = (Carte) obj;
         return getCouleur().equals(carte.getCouleur());
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(couleur);
     }
     @Override
     public String toString(){

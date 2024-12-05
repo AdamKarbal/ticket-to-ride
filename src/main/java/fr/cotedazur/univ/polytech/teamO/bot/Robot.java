@@ -48,8 +48,8 @@ public class Robot {
         getMain().addCarte(carte);
     }
 
-    public void piocherSurTable(int i){
-        Carte carte=piocheSurTable.piocher(); // à changer
+    public void piocherSurTable(Carte carteAPiocher){
+        Carte carte=piocheSurTable.piocher(carteAPiocher); // à changer
         if(piocheCount==0){
             getMain().addCarte(carte);
             if(carte.getCouleur()==Couleur.Rainbow) {
@@ -63,7 +63,7 @@ public class Robot {
         else{
             if(carte.getCouleur()!=Couleur.Rainbow) {
                 turnOver=true;
-                piocheCount=0;
+                piocheCount--;
                 getMain().addCarte(carte);
             }
             else{
