@@ -10,13 +10,12 @@ public class Route<T extends Case> {
     private List<T> cases= new ArrayList<>();
     private final int nbCases;
     private Couleur couleur;
-    private boolean available;
 
     public Route(int nbCases, Couleur couleur)  {
-        if (nbCases < 0 )this.nbCases = 0;
+        if (nbCases < 1 )throw new IllegalArgumentException("nbCases doit être positif.");
         else this.nbCases = nbCases;
-        this.couleur = couleur;
-        this.available = true;
+        if (couleur == null)throw new NullPointerException("La couleur ne peut pas être nulle");
+        else this.couleur = couleur;
     }
 
     public Couleur getCouleur() {
@@ -38,13 +37,9 @@ public class Route<T extends Case> {
 
     public boolean isAvailable() {
         for (Case c : cases) {
-            if (!c.isAvailable()) setAvailable(false);
+            if (!c.isAvailable()) return false;
         }
         return true;
     }
 
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
 }
