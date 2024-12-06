@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Robot {
-    //private Score score;
+    private Score score;
     private Couleur couleur;
     //private ArrayList<DestinationCard> destinations;
     private Pioche piocheCourante;

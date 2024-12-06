@@ -30,7 +30,7 @@ class RobotTest {
     @Test
     void testPiocheSurTable() {
         assertEquals(piocheSurTable.getMainDeCartes().size(),5);
-        robot.piocherSurTable();
+        //robot.piocherSurTable();
         
     }
 

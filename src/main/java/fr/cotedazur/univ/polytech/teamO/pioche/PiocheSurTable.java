@@ -8,7 +8,7 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
 
     // Constructeurs
     public PiocheSurTable() {
-        carteSurTable = mettre5cartesurlatable();
+        //carteSurTable = mettre5cartesurlatable();
     }
     public PiocheSurTable(ArrayList<T> carteSurTable){
         this.carteSurTable =carteSurTable;
