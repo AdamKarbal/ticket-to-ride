@@ -49,7 +49,7 @@ public class Robot {
         getMain().addCarte(carte);
     }
 
-    public void piocherSurTable(Carte carteAPiocher){
+    /*public void piocherSurTable(Carte carteAPiocher){
         Carte carte=piocheSurTable.piocher(carteAPiocher); // à changer
         if(piocheCount==0){
             getMain().addCarte(carte);
@@ -72,7 +72,7 @@ public class Robot {
             }
         }
         piocheSurTable.addCarte(piocheCourante.piocher());
-    }
+    }*/
 
     @Override
     public String toString() {
