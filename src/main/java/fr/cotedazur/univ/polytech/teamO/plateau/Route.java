@@ -10,11 +10,13 @@ public class Route<T extends Case> {
     private List<T> cases= new ArrayList<>();
     private final int nbCases;
     private Couleur couleur;
+    private boolean available;
 
     public Route(int nbCases, Couleur couleur)  {
         if (nbCases < 0 )this.nbCases = 0;
         else this.nbCases = nbCases;
         this.couleur = couleur;
+        this.available = true;
     }
 
     public Couleur getCouleur() {
@@ -26,30 +28,23 @@ public class Route<T extends Case> {
     public List<T> getCases() {
         return cases;
     }
-    public boolean checkLengthRoute() throws IllegalArgumentException {
-        if(getNbCases()!=getCases().size()){cases.clear();throw new IllegalArgumentException("La taille de la liste de cases doit être la même que celle indiqué par nbCases.");}
-        else return true;
+
+    public void addCases(){
+        if(cases.size()==0){
+            for(int i=0;i<getNbCases();i++){cases.add((T) new Case(couleur));}
+        }
     }
 
-    public boolean addCase(T c) {
-        if (!(c.getCouleur().equals(getCouleur()) && getNbCases()>=getCases().size())) return false;
-        else {cases.add(c);return true;}
-    }
-    public boolean addAllCases(List<T> newCases) {
-        for (T c : newCases) addCase(c);
-        return false;
-    }
 
     public boolean isAvailable() {
         for (Case c : cases) {
-            if (!c.isAvailable()) return false;
+            if (!c.isAvailable()) setAvailable(false);
         }
         return true;
     }
-    public boolean finalCheck(){
-        if(checkLengthRoute()) return true;
-        else {cases.clear();return false;}
+
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
-
-
 }
