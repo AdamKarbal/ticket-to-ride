@@ -3,8 +3,8 @@ package fr.cotedazur.univ.polytech.teamO.pioche;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 
 public class CarteDestination{
-    private ville villeFrom;
-    private ville villeTo;
+    //private Ville villeFrom; à enlever le commentaire quand on aura fait l'enum ville
+    //private Ville villeTo;
     private boolean isDone;
     private Score value;
     private int id;

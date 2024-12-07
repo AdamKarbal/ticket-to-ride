@@ -1,6 +1,8 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.Gestionnaire;
+import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
 import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
 import fr.cotedazur.univ.polytech.teamO.pioche.PiocheSurTable;
@@ -13,6 +15,7 @@ class RobotTest {
     Pioche pioche;
     Robot robot;
     PiocheSurTable piocheSurTable;
+    Gestionnaire gestionnaire;
     CarteWagon carteBleue;
     CarteWagon carteJaune;
     CarteWagon carteRouge;
@@ -22,7 +25,8 @@ class RobotTest {
         pioche = new Pioche();
         piocheSurTable=new PiocheSurTable();
         pioche.mettre5cartesurlatable(piocheSurTable);
-        robot=new Robot(2, Couleur.Bleu,pioche,piocheSurTable);
+        gestionnaire= new Gestionnaire(pioche,piocheSurTable);
+        robot=new Robot(new Score(), Couleur.Bleu,gestionnaire);
         carteBleue = new CarteWagon(Couleur.Bleu);
         carteJaune = new CarteWagon(Couleur.Jaune);
         carteRouge = new CarteWagon(Couleur.Rouge);
@@ -38,7 +42,7 @@ class RobotTest {
     @Test
     void testPiocheSurTable() {
         assertEquals(piocheSurTable.getMainDeCartes().size(),5);
-        //robot.piocherSurTable(piocheSurTable.carteAtPosI(0));
+        robot.piocherSurTable(piocheSurTable.carteAtPosI(0));
         assertEquals(piocheSurTable.getMainDeCartes().size(),5);
         assertEquals(robot.getMain().getMainDeCartes().size(),1);
         assertEquals(pioche.getPioche().size(),taillePiocheInit-1);

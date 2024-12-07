@@ -2,31 +2,28 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-//import fr.cotedazur.univ.polytech.teamO.gestion.Score;
+import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
-
-
+import fr.cotedazur.univ.polytech.teamO.gestion.Gestionnaire;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Robot {
-    //private Score score;
+    private Score score;
     private Couleur couleur;
     //private ArrayList<DestinationCard> destinations;
-    private Pioche piocheCourante;
     private MainJoueur main;
     private boolean turnOver;
-    private PiocheSurTable piocheSurTable;
     private int piocheCount;
-    public Robot(int score, Couleur couleur, Pioche piocheCourante, PiocheSurTable piocheSurTable) {
-        //this.score = score;
+    private Gestionnaire gestionnaire;
+    public Robot(Score score, Couleur couleur, Gestionnaire gestionnaire) {
+        this.score = score;
         this.couleur = couleur;
         //this.destinations = new ArrayList<>();
         this.main=new MainJoueur();
-        this.piocheCourante=piocheCourante;
-        this.piocheSurTable=piocheSurTable;
         this.turnOver=false;
         this.piocheCount=0;
+        this.gestionnaire=gestionnaire;
     }
     public MainJoueur getMain() {
         return main;
@@ -37,7 +34,7 @@ public class Robot {
     } */
     // Actions du joueur
     public void piocher(){
-        Carte carte=piocheCourante.piocher();
+        Carte carte=gestionnaire.piocher();
         if(piocheCount==0){
             piocheCount++;
             turnOver=false;
@@ -49,8 +46,8 @@ public class Robot {
         getMain().addCarte(carte);
     }
 
-    /*public void piocherSurTable(Carte carteAPiocher){
-        Carte carte=piocheSurTable.piocher(carteAPiocher); // à changer
+    public void piocherSurTable(Carte carteAPiocher){
+        Carte carte=gestionnaire.piocherSurTable(carteAPiocher); // à changer
         if(piocheCount==0){
             getMain().addCarte(carte);
             if(carte.getCouleur()==Couleur.Rainbow) {
@@ -71,8 +68,7 @@ public class Robot {
                 piocher();
             }
         }
-        piocheSurTable.addCarte(piocheCourante.piocher());
-    }*/
+    }
 
     @Override
     public String toString() {
