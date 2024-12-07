@@ -18,6 +18,7 @@ class RouteTest {
         route.addCases();
         route2.addCases();
         route3.addCases();
+        //Même si on rapelle cette méthode elle ne fonctionnera pas
 
     }
     @Test

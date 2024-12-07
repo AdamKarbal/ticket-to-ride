@@ -16,6 +16,7 @@ public class Route<T extends Case> {
         else this.nbCases = nbCases;
         if (couleur == null)throw new NullPointerException("La couleur ne peut pas être nulle");
         else this.couleur = couleur;
+        addCases();
     }
 
     public Couleur getCouleur() {
