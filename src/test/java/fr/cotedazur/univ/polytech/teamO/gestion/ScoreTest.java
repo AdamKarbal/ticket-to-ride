@@ -1,15 +1,13 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
-import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScoreTest {
-    Robot robot1;
-    Robot robot2;
-    Score score1 = new Score(robot1);
-    Score score2 = new Score(robot2);
+
+    Score score1 = new Score();
+    Score score2 = new Score();
 
     @Test
     void testConstructeur(){
