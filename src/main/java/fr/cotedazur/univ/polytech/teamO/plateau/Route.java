@@ -7,9 +7,9 @@ import java.util.List;
 
 public class Route<T extends Case> {
 
-    private List<T> cases= new ArrayList<>();
+    private final List<T> cases= new ArrayList<>();
     private final int nbCases;
-    private Couleur couleur;
+    private final Couleur couleur;
 
     public Route(int nbCases, Couleur couleur)  {
         if (nbCases < 1 )throw new IllegalArgumentException("nbCases doit être positif.");
