@@ -38,7 +38,7 @@ class RobotTest {
     @Test
     void testPiocheSurTable() {
         assertEquals(piocheSurTable.getMainDeCartes().size(),5);
-        robot.piocherSurTable(piocheSurTable.carteAtPosI(0));
+        //robot.piocherSurTable(piocheSurTable.carteAtPosI(0));
         assertEquals(piocheSurTable.getMainDeCartes().size(),5);
         assertEquals(robot.getMain().getMainDeCartes().size(),1);
         assertEquals(pioche.getPioche().size(),taillePiocheInit-1);

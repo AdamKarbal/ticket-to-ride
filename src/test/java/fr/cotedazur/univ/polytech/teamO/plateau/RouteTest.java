@@ -40,9 +40,9 @@ class RouteTest {
     }
     @Test
     void testAvailable(){
-        assertTrue(route.isAvailable());
-        assertTrue(route2.isAvailable());
-        assertTrue(route3.isAvailable());
+        assertFalse(route.isAvailable(6));
+        assertFalse(route2.isAvailable(0));
+        assertTrue(route3.isAvailable(3));
     }
 
 

@@ -35,11 +35,14 @@ public class Route<T extends Case> {
     }
 
 
-    public boolean isAvailable() {
+    public boolean isAvailable(int nbWagons) {
+        if(nbWagons<1 || nbWagons>getNbCases()) return false;
+        int cpt=0;
         for (Case c : cases) {
-            if (!c.isAvailable()) return false;
+            if (!c.isAvailable()) cpt++;
         }
-        return true;
+        if(cpt>nbWagons) return false;
+        else return true;
     }
 
 }
