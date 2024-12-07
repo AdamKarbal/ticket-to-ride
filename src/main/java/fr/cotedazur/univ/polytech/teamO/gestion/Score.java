@@ -16,4 +16,10 @@ public class Score {
         if(nbPoints>0)this.nbPoints += nbPoints;
     }
 
+    public void removeNbPoints(int nbPoints){
+        if(nbPoints<0){
+            this.nbPoints -= nbPoints;
+        }
+    }
+
 }
