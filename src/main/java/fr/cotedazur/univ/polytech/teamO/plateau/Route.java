@@ -41,7 +41,7 @@ public class Route<T extends Case> {
         for (Case c : cases) {
             if (!c.isAvailable()) cpt++;
         }
-        if(cpt>nbWagons) return false;
+        if(getNbCases()-cpt<nbWagons) return false;
         else return true;
     }
 
