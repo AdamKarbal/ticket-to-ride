@@ -8,7 +8,7 @@ import fr.cotedazur.univ.polytech.teamO.gestion.Gestionnaire;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Robot {
+public class Robot implements Comparable<Robot> {
     private Score score;
     private Couleur couleur;
     //private ArrayList<DestinationCard> destinations;
@@ -70,6 +70,10 @@ public class Robot {
         }
     }
 
+    public int getPlayerScore(){
+        return score.getNbPoints();
+    }
+
     @Override
     public String toString() {
         return couleur.name();
@@ -86,5 +90,12 @@ public class Robot {
     @Override
     public int hashCode() {
         return Objects.hash(couleur);
+    }
+
+    @Override
+    public int compareTo(Robot o) {
+        if(score.getNbPoints() > o.score.getNbPoints()) return 1;
+        else if (score.getNbPoints() == o.score.getNbPoints()) return 0;
+        return -1;
     }
 }

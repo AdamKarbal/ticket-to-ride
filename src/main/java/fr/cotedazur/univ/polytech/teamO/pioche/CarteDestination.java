@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
-
+/*
 public class CarteDestination{
     //private Ville villeFrom; à enlever le commentaire quand on aura fait l'enum ville
     //private Ville villeTo;
@@ -35,3 +35,5 @@ public class CarteDestination{
 
     // POUR LE TIRAGE FAIRE UNE CLASSE AVEC UNE MAIN DE CARTE DESTINATION ? OU GARDER DANS LA CLASSE ROBOT ? PERSO PLUS POUR LE PREMIER CHOIX
 }
+
+ */

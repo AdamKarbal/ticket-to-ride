@@ -10,7 +10,7 @@ public class Route {
     private boolean available;
 
     public Route(int nbCases, Couleur couleur)  {
-        if (nbCases < 1 )throw new IllegalArgumentException("nbCases doit être positif.");
+        if (nbCases < 1 )throw new IllegalArgumentException("nbCases doit être strictement positif.");
         else this.nbCases = nbCases;
         if (couleur == null)throw new NullPointerException("La couleur ne peut pas être nulle");
         else this.couleur = couleur;

@@ -6,8 +6,10 @@ public interface MainDeCarte<T extends Carte> {
 
     ArrayList<T> getMainDeCartes();
     // Methode
-    void removeCarte(T carte);
+
     T carteAtPosI(int i);
+
     boolean containCarte(T carteWagon);
+
     void addCarte(T carteWagon);
 }

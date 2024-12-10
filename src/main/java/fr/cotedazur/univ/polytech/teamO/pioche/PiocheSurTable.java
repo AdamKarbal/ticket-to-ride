@@ -19,7 +19,7 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
         }
     }
     public PiocheSurTable(ArrayList<T> carteSurTable){
-        this.cartesSurTable =carteSurTable;
+        this.cartesSurTable = carteSurTable;
     }
 
     // Accesseurs
