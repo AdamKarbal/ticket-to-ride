@@ -15,8 +15,8 @@ public class Output {
 
     @Override
     public String toString(){
-        String output = "La partie est terminée ! Le gagnant est... \n"
-                + gagnant.toString() + " avec un score de " + gagnant.getPlayerScore() + " !";
+        String output = "La partie est terminée ! Le gagnant est... \n\n"
+                +"     " + gagnant.toString() + " avec un score de " + gagnant.getPlayerScore() + " !";
         output += "\n" + ranking.toString();
         return output;
     }

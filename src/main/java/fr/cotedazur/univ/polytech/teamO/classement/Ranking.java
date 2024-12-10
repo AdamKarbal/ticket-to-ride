@@ -26,7 +26,7 @@ public class Ranking {
     @Override 
     public String toString(){
         int classeur = 0;
-        String display = "Classement : \n";
+        String display = "\nClassement : \n\n";
         for(Robot robot : classement){
             display += ++classeur + " : " + robot.toString() + " avec un score de " + robot.getPlayerScore() + "\n";
         }
