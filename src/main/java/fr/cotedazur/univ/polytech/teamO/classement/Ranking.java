@@ -6,24 +6,28 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class Ranking {
-    private TreeSet<Robot> ranking;
+    private TreeSet<Robot> classement;
 
     public Ranking(ArrayList<Robot> robots) throws NullPointerException, EmptyListException{
-        this.ranking = new TreeSet<>();
+        this.classement = new TreeSet<>();
         if(robots.isEmpty()) throw new EmptyListException("La liste que vous avez passé ne contient pas de joueur! Ajoutez en...");
         try{
-            ranking.addAll(robots);
+            classement.addAll(robots);
         }
         catch(NullPointerException e){
             System.out.println("Passez une liste de joueurs en paramètre pour créer un classement!");
         }
     }
+
+    public Robot first(){
+        return classement.first();
+    }
     
     @Override 
     public String toString(){
         int classeur = 0;
-        String display = "Classement actuel : \n";
-        for(Robot robot : ranking){
+        String display = "Classement : \n";
+        for(Robot robot : classement){
             display += ++classeur + " : " + robot.toString() + " avec un score de " + robot.getPlayerScore() + "\n";
         }
         return display;
