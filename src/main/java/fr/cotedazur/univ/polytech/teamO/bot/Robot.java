@@ -94,8 +94,8 @@ public class Robot implements Comparable<Robot> {
 
     @Override
     public int compareTo(Robot o) {
-        if(score.getNbPoints() > o.score.getNbPoints()) return 1;
+        if(score.getNbPoints() > o.score.getNbPoints()) return -1;
         else if (score.getNbPoints() == o.score.getNbPoints()) return 0;
-        return -1;
+        return 1;
     }
 }
