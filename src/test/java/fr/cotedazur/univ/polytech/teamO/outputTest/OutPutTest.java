@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class OutPutTest {
     Pioche pioche;
     PiocheSurTable piocheSurTable;
-    Gestionnaire gestionnaire;
     ArrayList<Robot> robots;
     Score score1;
     Score score2;
@@ -31,7 +30,6 @@ public class OutPutTest {
         pioche = new Pioche();
         piocheSurTable=new PiocheSurTable();
         pioche.mettre5cartesurlatable(piocheSurTable);
-        gestionnaire= new Gestionnaire(pioche,piocheSurTable);
         robots = new ArrayList<>();
         score1 = new Score();
         score2 = new Score();
@@ -42,10 +40,10 @@ public class OutPutTest {
         score3.addNbPoints(1500);
         score4.addNbPoints(1800);
 
-        Robot Un = new Robot(score1, Couleur.Bleu, gestionnaire);
-        Robot Deux = new Robot(score2, Couleur.Rouge, gestionnaire);
-        Robot Trois = new Robot(score3, Couleur.Jaune, gestionnaire);
-        Robot Quatre = new Robot(score4, Couleur.Noir, gestionnaire);
+        Robot Un = new Robot(score1, Couleur.Bleu);
+        Robot Deux = new Robot(score2, Couleur.Rouge);
+        Robot Trois = new Robot(score3, Couleur.Jaune);
+        Robot Quatre = new Robot(score4, Couleur.Noir);
         robots.add(Un);
         robots.add(Deux);
         robots.add(Trois);
