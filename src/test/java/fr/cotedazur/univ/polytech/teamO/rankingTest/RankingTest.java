@@ -34,10 +34,10 @@ public class RankingTest {
         score2 = new Score();
         score3 = new Score();
         score4 = new Score();
-        score1.addNbPoints(1000);
-        score2.addNbPoints(1200);
-        score3.addNbPoints(1500);
-        score4.addNbPoints(1800);
+        score1.addNbPoints(23);
+        score2.addNbPoints(28);
+        score3.addNbPoints(43);
+        score4.addNbPoints(17);
 
         Robot Un = new Robot(score1, Couleur.Bleu);
         Robot Deux = new Robot(score2, Couleur.Rouge);

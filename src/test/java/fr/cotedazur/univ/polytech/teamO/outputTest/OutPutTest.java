@@ -35,10 +35,10 @@ public class OutPutTest {
         score2 = new Score();
         score3 = new Score();
         score4 = new Score();
-        score1.addNbPoints(2500);
-        score2.addNbPoints(1600);
-        score3.addNbPoints(1500);
-        score4.addNbPoints(1800);
+        score1.addNbPoints(20);
+        score2.addNbPoints(10);
+        score3.addNbPoints(15);
+        score4.addNbPoints(60);
 
         Robot Un = new Robot(score1, Couleur.Bleu);
         Robot Deux = new Robot(score2, Couleur.Rouge);
