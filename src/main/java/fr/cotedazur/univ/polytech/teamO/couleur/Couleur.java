@@ -9,6 +9,5 @@ public enum Couleur {
     Rainbow,
     Bleu,
     Vert,
-    Orange,
-    Default
+    Orange
 }

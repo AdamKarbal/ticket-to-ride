@@ -11,8 +11,7 @@ public class Train<E extends Vehicule>{
     //private Route route;
 
     public Train(Couleur couleur, List<E> suiteDeWagons) {
-        if(suiteDeWagons.get(0).getCouleur() == null) this.couleur = Couleur.Default;
-        else this.couleur = couleur;
+        if(!(suiteDeWagons.get(0).getCouleur() == null)) this.couleur = couleur;
         if(suiteDeWagons == null) this.suiteDeWagons = new ArrayList<E>();
         else this.suiteDeWagons = suiteDeWagons;
     }

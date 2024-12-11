@@ -5,8 +5,8 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 public class Wagon extends Vehicule{
     private Couleur couleur;
 
-    public Wagon(Couleur couleur) {
-        if(couleur == null) this.couleur = Couleur.Default;
+    public Wagon(Couleur couleur) throws NullPointerException {
+        if(couleur == null) throw new NullPointerException();
         else this.couleur = couleur;
     }
 
