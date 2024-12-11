@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.automatisation;
 import fr.cotedazur.univ.polytech.teamO.bot.*;
 import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
+import fr.cotedazur.*;
 
 public class Jeu {
     /*
@@ -10,7 +11,7 @@ public class Jeu {
     private Robot robot1;
     private Robot robot2;
     private CarteSurTable carteSurTable;
-
+    private FinPartie etatPartie;
 
     //Accesseurs
     public Pioche getPioche(){
@@ -18,12 +19,8 @@ public class Jeu {
     }
 
     //Setup de la partie
-    public void setupPioche(){
-        pioche.creerPiocheComplete();
-    }
-    public void setupCarteSurTable(){
-        carteSurTable=getPioche().mettre5cartesurlatable(carteSurTable);
 
-    }
+    while(robot1.
+
 */
 }
