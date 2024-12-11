@@ -5,8 +5,9 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.Gestionnaire;
-import java.util.ArrayList;
-import java.util.Objects;
+import fr.cotedazur.univ.polytech.teamO.plateau.Route;
+
+import java.util.*;
 
 public class Robot implements Comparable<Robot> {
     private Score score;
@@ -16,39 +17,64 @@ public class Robot implements Comparable<Robot> {
     private boolean turnOver;
     private int piocheCount;
     private Gestionnaire gestionnaire;
-    public Robot(Score score, Couleur couleur, Gestionnaire gestionnaire) {
+    private HashMap<Couleur,Integer> wagonByCouleur;
+
+    //Constructeur
+    public Robot(Score score, Couleur couleur) {
         this.score = score;
         this.couleur = couleur;
         //this.destinations = new ArrayList<>();
         this.main=new MainJoueur();
         this.turnOver=false;
+        this.wagonByCouleur=Gestionnaire.initWagonByCouleur(this);
         this.piocheCount=0;
-        this.gestionnaire=gestionnaire;
     }
+
+    // Getters & setters
     public MainJoueur getMain() {
         return main;
     }
-
-    /* public void chooseDestination(DestinationCard destination){
+    public Score getScore(){
+        return score;
+    }
+    public boolean isTurnOver() {
+        return turnOver;
+    }
+    public void setTurnOver(boolean turnOver) {
+        this.turnOver = turnOver;
+    }
+    public int getPiocheCount() {
+        return piocheCount;
+    }
+    public void setPiocheCount(int piocheCount) {
+        this.piocheCount = piocheCount;
+    }
+    public HashMap<Couleur,Integer> getWagonByCouleur() {
+        return wagonByCouleur;
+    }
+    /* public void chooseDestination(CarteDestination destination){
         destinations.add(destination);
     } */
+    public int getPlayerScore(){
+        return score.getNbPoints();
+    }
     // Actions du joueur
     public void piocher(){
-        Carte carte=gestionnaire.piocher();
-        if(piocheCount==0){
+        Carte carte=Gestionnaire.piocher(this);
+        /*if(piocheCount==0){
             piocheCount++;
             turnOver=false;
         }
         else{
             piocheCount--;
             turnOver=true;
-        }
+        }*/
         getMain().addCarte(carte);
     }
 
     public void piocherSurTable(Carte carteAPiocher){
-        Carte carte=gestionnaire.piocherSurTable(carteAPiocher); // à changer
-        if(piocheCount==0){
+        Carte carte=Gestionnaire.piocherSurTable(this,carteAPiocher);
+        /*if(piocheCount==0){
             getMain().addCarte(carte);
             if(carte.getCouleur()==Couleur.Rainbow) {
                 turnOver=true;
@@ -67,13 +93,14 @@ public class Robot implements Comparable<Robot> {
             else{
                 piocher();
             }
-        }
+        }*/
     }
 
-    public int getPlayerScore(){
-        return score.getNbPoints();
+    public void poseTrain(Route route){
+        Gestionnaire.poseTrain(this,route);
     }
 
+    // Méthodes générales
     @Override
     public String toString() {
         return couleur.name();

@@ -43,6 +43,10 @@ public class Pioche<T extends Carte> {
             piocheSurTable.getMainDeCartes().add(piocher());
         }
     }
+
+    public int size(){
+        return pioche.size();
+    }
     @Override
     public String toString() {
         String str = "";

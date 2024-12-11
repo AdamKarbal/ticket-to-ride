@@ -1,27 +1,73 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
+import fr.cotedazur.univ.polytech.teamO.bot.Robot;
+import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.Carte;
+import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
 import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
 import fr.cotedazur.univ.polytech.teamO.pioche.PiocheSurTable;
+import fr.cotedazur.univ.polytech.teamO.plateau.Route;
+import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
+
+import java.util.HashMap;
 
 public class Gestionnaire {
-
     // Ajouter ici tous les trucs relatifs au jeu et qu'on peut modifier pendant la partie
-    private Pioche pioche;
-    private PiocheSurTable piocheSurTable;
-    public Gestionnaire(Pioche piocheCourante, PiocheSurTable piocheSurCourant) {
-        this.pioche = piocheCourante;
-        this.piocheSurTable = piocheSurCourant;
+    public static Pioche pioche=new Pioche();
+    public static PiocheSurTable piocheSurTable=new PiocheSurTable();
+    // Méthodes du jeu
+    public static Carte piocher(Robot robot){
+        if(robot.getPiocheCount()==0){
+            robot.setPiocheCount(robot.getPiocheCount()+1);
+            robot.setTurnOver(false);
+        }
+        else{
+            robot.setPiocheCount(robot.getPiocheCount()-1);
+            robot.setTurnOver(true);
+        }
+        Carte carte=pioche.piocher();
+        robot.getWagonByCouleur().put(carte.getCouleur(),robot.getWagonByCouleur().get(carte.getCouleur())+1);
+        return carte;
     }
-
-    public Carte piocher(){
-        return pioche.piocher();
-    }
-
-    public Carte piocherSurTable(Carte carte){
-        Carte cartePiochee = piocheSurTable.piocher(carte);
+    public static Carte piocherSurTable(Robot robot,Carte carte){
+        Carte cartePiochee=piocheSurTable.piocher(carte);
         piocheSurTable.addCarte(pioche.piocher());
+        if(robot.getPiocheCount()==0){
+            robot.getMain().addCarte(cartePiochee);
+            if(cartePiochee.getCouleur()==Couleur.Rainbow) {
+                robot.setTurnOver(true);
+            }
+            else{
+                robot.setTurnOver(false);
+                robot.setPiocheCount(robot.getPiocheCount()+1);
+            }
+        }
+        else{
+            if(cartePiochee.getCouleur()!=Couleur.Rainbow) {
+                robot.setTurnOver(true);
+                robot.setPiocheCount(robot.getPiocheCount()-1);
+                robot.getMain().addCarte(cartePiochee);
+            }
+            else{
+                return piocher(robot);
+            }
+        }
         return cartePiochee;
     }
-
+    public static HashMap<Couleur,Integer> initWagonByCouleur(Robot robot){
+        HashMap<Couleur,Integer> carteWagonByCouleur=new HashMap<>();
+        for(Couleur couleur:Couleur.values()){
+            carteWagonByCouleur.put(couleur,0);
+        }
+        return carteWagonByCouleur;
+    }
+    public static void poseTrain(Robot robot,Route route){
+        Couleur couleurRoute=route.getCouleur();
+        if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
+            route.setAvailable(false);
+            robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases());
+        }
+    }
+    //mettre la route à non available
+    //mettre à jour le score
 }

@@ -1,19 +1,20 @@
 package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
-/*
+import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
+
 public class CarteDestination{
-    //private Ville villeFrom; à enlever le commentaire quand on aura fait l'enum ville
-    //private Ville villeTo;
+    /*private Ville villeFrom;
+    private Ville villeTo;
     private boolean isDone;
     private Score value;
     private int id;
 
-    public CarteDestination(ville villeFrom, ville villeTo, Score value){
-        if(ville.villeFrom.isValid()){
+    public CarteDestination(Ville villeFrom, Ville villeTo, Score value){
+        if(Ville.isValid(villeFrom)){
             this.villeFrom=villeFrom;
         }
-        if(ville.villeTo.isValid()){
+        if(Ville.isValid(villeTo)){
             this.villeTo=villeTo;
         }
         this.isDone=false;
@@ -28,12 +29,10 @@ public class CarteDestination{
     }
 
     public void notCompleted(){
-        if(isDone==False){
+        if(isDone==false){
             Robot.removeScore(value);
         }
-    }
+    }*/
 
     // POUR LE TIRAGE FAIRE UNE CLASSE AVEC UNE MAIN DE CARTE DESTINATION ? OU GARDER DANS LA CLASSE ROBOT ? PERSO PLUS POUR LE PREMIER CHOIX
 }
-
- */
