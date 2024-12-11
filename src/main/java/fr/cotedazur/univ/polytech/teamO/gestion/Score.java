@@ -13,13 +13,8 @@ public class Score {
     }
 
     public void addNbPoints(int nbPoints) {
-        if(nbPoints>0)this.nbPoints += nbPoints;
+        this.nbPoints += nbPoints;
     }
 
-    public void removeNbPoints(int nbPoints){
-        if(nbPoints<0){
-            this.nbPoints -= nbPoints;
-        }
-    }
 
 }
