@@ -1,7 +1,9 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
 
-public class Score {
+import org.jetbrains.annotations.NotNull;
+
+public class Score implements Comparable<Score> {
     private int nbPoints;
 
     public Score() {
@@ -17,4 +19,10 @@ public class Score {
     }
 
 
+    @Override
+    public int compareTo(@NotNull Score o) {
+        if(this.getNbPoints()==o.getNbPoints())return 0;
+        else if(this.getNbPoints()>o.getNbPoints())return 1;
+        else return -1;
+    }
 }
