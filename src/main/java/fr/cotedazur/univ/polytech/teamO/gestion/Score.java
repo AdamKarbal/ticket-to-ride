@@ -22,7 +22,7 @@ public class Score implements Comparable<Score> {
     @Override
     public int compareTo(@NotNull Score o) {
         if(this.getNbPoints()==o.getNbPoints()) return 0;
-        else if(this.getNbPoints()>o.getNbPoints()) return -1;
-        else return 1;
+        else if(this.getNbPoints()>o.getNbPoints()) return 1;
+        else return -1;
     }
 }

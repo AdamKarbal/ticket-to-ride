@@ -121,8 +121,6 @@ public class Robot implements Comparable<Robot> {
 
     @Override
     public int compareTo(Robot o) {
-        if(score.compareTo(o.score) == -1) return -1;
-        else if (score == o.score) return 0;
-        else return 1;
+        return score.compareTo(o.getScore());
     }
 }

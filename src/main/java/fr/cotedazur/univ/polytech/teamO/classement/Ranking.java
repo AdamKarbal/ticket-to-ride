@@ -3,13 +3,14 @@ package fr.cotedazur.univ.polytech.teamO.classement;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.TreeSet;
 
 public class Ranking {
     private TreeSet<Robot> classement;
 
     public Ranking(ArrayList<Robot> robots) throws NullPointerException, EmptyListException{
-        this.classement = new TreeSet<>();
+        this.classement = new TreeSet<>(Comparator.reverseOrder());
         if(robots.isEmpty()) throw new EmptyListException("La liste que vous avez passé ne contient pas de joueur! Ajoutez en...");
         try{
             classement.addAll(robots);
