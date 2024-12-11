@@ -16,7 +16,14 @@ class ScoreTest {
         score1.addNbPoints(66);
         score2.addNbPoints(-66);
         assertEquals(66, score1.getNbPoints());
-        assertEquals(0, score2.getNbPoints());
+        assertEquals(-66, score2.getNbPoints());
+    }
+    @Test
+    void testCompareTo(){
+        assertEquals(0,score1.compareTo(score2));
+        score1.addNbPoints(66);
+        score2.addNbPoints(-66);
+        assertEquals(1,score1.compareTo(score2));
     }
 
 
