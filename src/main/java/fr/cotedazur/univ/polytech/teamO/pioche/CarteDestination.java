@@ -1,4 +1,4 @@
-/*package fr.cotedazur.univ.polytech.teamO.pioche;
+package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
@@ -36,4 +36,3 @@ public class CarteDestination{
 
     // POUR LE TIRAGE FAIRE UNE CLASSE AVEC UNE MAIN DE CARTE DESTINATION ? OU GARDER DANS LA CLASSE ROBOT ? PERSO PLUS POUR LE PREMIER CHOIX
 }
-*/

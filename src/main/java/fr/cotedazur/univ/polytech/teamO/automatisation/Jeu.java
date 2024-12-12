@@ -2,7 +2,6 @@ package fr.cotedazur.univ.polytech.teamO.automatisation;
 import fr.cotedazur.univ.polytech.teamO.bot.*;
 import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
-import fr.cotedazur.*;
 
 public class Jeu {
     /*

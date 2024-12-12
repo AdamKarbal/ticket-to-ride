@@ -18,10 +18,6 @@ public class OutPutTest {
     Pioche pioche;
     PiocheSurTable piocheSurTable;
     ArrayList<Robot> robots;
-    Score score1;
-    Score score2;
-    Score score3;
-    Score score4;
     Ranking classement;
     Output output;
 
