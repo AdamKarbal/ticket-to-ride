@@ -66,7 +66,7 @@ public class Gestionnaire {
         if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
             route.setAvailable(false);
             robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases());
-            robot.getScore().addNbPoints(route.getNbCases());
+            robot.getScore().addNbPoints(TableauDesScores.getValue(route.getNbCases()));
             for(int i=0;i<route.getNbCases();i++){
                 robot.getMain().removeCarte(new CarteWagon((couleurRoute)));
             }
@@ -74,15 +74,10 @@ public class Gestionnaire {
         }
     }
 
-    public boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
-        int total = 0;
-        for (int value : robot.getWagonByCouleur().values()) {
-            total += value;
-        }
-        if(total<=2){
-            return false;
-        }
-        return true;
+    public static boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
+        return robot.getNbWagons()<2;
     }
+
+    
 
 }

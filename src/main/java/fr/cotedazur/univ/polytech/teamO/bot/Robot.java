@@ -53,7 +53,10 @@ public class Robot implements Comparable<Robot> {
         return wagonByCouleur;
     }
     public int getNbWagons() { return nbWagons; }
-    public void removeNbWagons(int nbWagons) { nbWagons-=nbWagons; }
+    public void removeNbWagons(int nbWagons) { this.nbWagons-=nbWagons; }
+    public Couleur getCouleur() {
+        return couleur;
+    }
     /* public void chooseDestination(CarteDestination destination){
         destinations.add(destination);
     } */
@@ -97,4 +100,5 @@ public class Robot implements Comparable<Robot> {
     public int compareTo(Robot o) {
         return score.compareTo(o.getScore());
     }
+
 }

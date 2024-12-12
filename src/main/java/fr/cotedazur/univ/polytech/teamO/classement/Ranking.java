@@ -23,7 +23,9 @@ public class Ranking {
     public Robot first(){
         return classement.first();
     }
-    
+    public TreeSet<Robot> getClassement(){
+        return classement;
+    }
     @Override 
     public String toString(){
         int classeur = 0;
