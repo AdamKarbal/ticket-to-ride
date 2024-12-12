@@ -74,4 +74,15 @@ public class Gestionnaire {
         }
     }
 
+    public boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
+        int total = 0;
+        for (int value : robot.getWagonByCouleur().values()) {
+            total += value;
+        }
+        if(total<=2){
+            return false;
+        }
+        return true;
+    }
+
 }
