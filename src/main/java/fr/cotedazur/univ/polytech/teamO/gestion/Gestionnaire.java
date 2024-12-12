@@ -66,8 +66,12 @@ public class Gestionnaire {
         if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
             route.setAvailable(false);
             robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases());
+            robot.getScore().addNbPoints(route.getNbCases());
+            for(int i=0;i<route.getNbCases();i++){
+                robot.getMain().removeCarte(new CarteWagon((couleurRoute)));
+            }
+            robot.removeNbWagons(route.getNbCases());
         }
     }
-    //mettre la route à non available
-    //mettre à jour le score
+
 }
