@@ -13,8 +13,6 @@ public class CarteWagonTest {
     private CarteWagon CarteWagonNoirValide;
     private CarteWagon CarteWagonBleuValide;
     private CarteWagon CarteWagonRougeValide;
-    private CarteWagon CarteWagonChocolatInvalide;
-    private CarteWagon CarteWagonMauveInvalide;
 
 
     @BeforeEach
@@ -26,6 +24,8 @@ public class CarteWagonTest {
 
     @Test
     void testIsValid(){
+        assertNotNull(CarteWagonNoirValide);
+        assertNotNull(CarteWagonNoirValide.getCouleur());
         assertTrue(CarteWagonNoirValide.isValid());
         assertTrue(CarteWagonBleuValide.isValid());
         assertTrue(CarteWagonRougeValide.isValid());
