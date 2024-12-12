@@ -10,7 +10,7 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RobotTest {
     Robot robot;
@@ -19,14 +19,21 @@ class RobotTest {
     CarteWagon carteRouge;
     int taillePiocheInit;
     Route routeBleue;
+    Robot robotRouge;
     @BeforeEach
     void setUp() {
         robot=new Robot(new Score(), Couleur.Bleu);
+        robotRouge=new Robot(new Score(), Couleur.Rouge);
         carteBleue = new CarteWagon(Couleur.Bleu);
         carteJaune = new CarteWagon(Couleur.Jaune);
         carteRouge = new CarteWagon(Couleur.Rouge);
         taillePiocheInit=Gestionnaire.pioche.getPioche().size();
         routeBleue= new Route(2,Couleur.Bleu);
+    }
+    @Test
+    void equal(){
+        assertEquals(robot,robot);
+        assertNotEquals(robot,robotRouge);
     }
     @Test
     void testPioche() {

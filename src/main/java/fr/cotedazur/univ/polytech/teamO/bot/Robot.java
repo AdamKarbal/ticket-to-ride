@@ -16,9 +16,8 @@ public class Robot implements Comparable<Robot> {
     private MainJoueur main;
     private boolean turnOver;
     private int piocheCount;
-    private Gestionnaire gestionnaire;
     private HashMap<Couleur,Integer> wagonByCouleur;
-
+    private int nbWagons;
     //Constructeur
     public Robot(Score score, Couleur couleur) {
         this.score = score;
@@ -28,6 +27,7 @@ public class Robot implements Comparable<Robot> {
         this.turnOver=false;
         this.wagonByCouleur=Gestionnaire.initWagonByCouleur(this);
         this.piocheCount=0;
+        this.nbWagons=45;
     }
 
     // Getters & setters
@@ -52,6 +52,8 @@ public class Robot implements Comparable<Robot> {
     public HashMap<Couleur,Integer> getWagonByCouleur() {
         return wagonByCouleur;
     }
+    public int getNbWagons() { return nbWagons; }
+    public void removeNbWagons(int nbWagons) { nbWagons-=nbWagons; }
     /* public void chooseDestination(CarteDestination destination){
         destinations.add(destination);
     } */
@@ -61,39 +63,11 @@ public class Robot implements Comparable<Robot> {
     // Actions du joueur
     public void piocher(){
         Carte carte=Gestionnaire.piocher(this);
-        /*if(piocheCount==0){
-            piocheCount++;
-            turnOver=false;
-        }
-        else{
-            piocheCount--;
-            turnOver=true;
-        }*/
         getMain().addCarte(carte);
     }
 
     public void piocherSurTable(Carte carteAPiocher){
         Carte carte=Gestionnaire.piocherSurTable(this,carteAPiocher);
-        /*if(piocheCount==0){
-            getMain().addCarte(carte);
-            if(carte.getCouleur()==Couleur.Rainbow) {
-                turnOver=true;
-            }
-            else{
-                turnOver=false;
-                piocheCount++;
-            }
-        }
-        else{
-            if(carte.getCouleur()!=Couleur.Rainbow) {
-                turnOver=true;
-                piocheCount--;
-                getMain().addCarte(carte);
-            }
-            else{
-                piocher();
-            }
-        }*/
     }
 
     public void poseTrain(Route route){
@@ -108,7 +82,7 @@ public class Robot implements Comparable<Robot> {
 
     @Override
     public boolean equals(Object obj) {
-        if (equals(obj)) return true;
+        if (this==obj) return true;
         if (obj==null || !(obj instanceof Robot)) return false;
         Robot other = (Robot) obj;
         return couleur.equals(other.couleur);

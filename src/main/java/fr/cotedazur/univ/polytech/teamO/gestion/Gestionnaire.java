@@ -15,9 +15,7 @@ public class Gestionnaire {
     // Ajouter ici tous les trucs relatifs au jeu et qu'on peut modifier pendant la partie
     public static Pioche pioche=new Pioche();
     public static PiocheSurTable piocheSurTable=new PiocheSurTable();
-
     // Méthodes du jeu
-
     public static Carte piocher(Robot robot){
         if(robot.getPiocheCount()==0){
             robot.setPiocheCount(robot.getPiocheCount()+1);
@@ -31,7 +29,6 @@ public class Gestionnaire {
         robot.getWagonByCouleur().put(carte.getCouleur(),robot.getWagonByCouleur().get(carte.getCouleur())+1);
         return carte;
     }
-
     public static Carte piocherSurTable(Robot robot,Carte carte){
         Carte cartePiochee=piocheSurTable.piocher(carte);
         piocheSurTable.addCarte(pioche.piocher());
@@ -57,7 +54,6 @@ public class Gestionnaire {
         }
         return cartePiochee;
     }
-
     public static HashMap<Couleur,Integer> initWagonByCouleur(Robot robot){
         HashMap<Couleur,Integer> carteWagonByCouleur=new HashMap<>();
         for(Couleur couleur:Couleur.values()){
@@ -65,26 +61,17 @@ public class Gestionnaire {
         }
         return carteWagonByCouleur;
     }
-
     public static void poseTrain(Robot robot,Route route){
         Couleur couleurRoute=route.getCouleur();
         if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
             route.setAvailable(false);
             robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases());
+            robot.getScore().addNbPoints(route.getNbCases());
+            for(int i=0;i<route.getNbCases();i++){
+                robot.getMain().removeCarte(new CarteWagon((couleurRoute)));
+            }
+            robot.removeNbWagons(route.getNbCases());
         }
     }
 
-    public boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
-        int total = 0;
-        for (int value : robot.getWagonByCouleur().values()) {
-            total += value;
-        }
-        if(total<=2){
-            return true;
-        }
-        return false;
-    }
-
-    //mettre la route à non available
-    //mettre à jour le score
 }
