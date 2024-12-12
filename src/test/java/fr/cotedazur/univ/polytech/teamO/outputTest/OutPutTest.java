@@ -31,23 +31,22 @@ public class OutPutTest {
         piocheSurTable=new PiocheSurTable();
         pioche.mettre5cartesurlatable(piocheSurTable);
         robots = new ArrayList<>();
-        score1 = new Score();
-        score2 = new Score();
-        score3 = new Score();
-        score4 = new Score();
-        score1.addNbPoints(20);
-        score2.addNbPoints(10);
-        score3.addNbPoints(15);
-        score4.addNbPoints(60);
 
-        Robot Un = new Robot(score1, Couleur.Bleu);
-        Robot Deux = new Robot(score2, Couleur.Rouge);
-        Robot Trois = new Robot(score3, Couleur.Jaune);
-        Robot Quatre = new Robot(score4, Couleur.Noir);
+        Robot Un = new Robot(Couleur.Bleu);
+        Robot Deux = new Robot(Couleur.Rouge);
+        Robot Trois = new Robot(Couleur.Jaune);
+        Robot Quatre = new Robot(Couleur.Noir);
+
+        Un.getScore().addNbPoints(20);
+        Deux.getScore().addNbPoints(10);
+        Trois. getScore().addNbPoints(15);
+        Quatre.getScore().addNbPoints(60);
+
         robots.add(Un);
         robots.add(Deux);
         robots.add(Trois);
         robots.add(Quatre);
+
         classement = new Ranking(robots);
         output = new Output(classement);
     }

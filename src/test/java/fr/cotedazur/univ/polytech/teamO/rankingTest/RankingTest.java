@@ -30,19 +30,18 @@ public class RankingTest {
         piocheSurTable=new PiocheSurTable();
         pioche.mettre5cartesurlatable(piocheSurTable);
         robots = new ArrayList<>();
-        score1 = new Score();
-        score2 = new Score();
-        score3 = new Score();
-        score4 = new Score();
-        score1.addNbPoints(23);
-        score2.addNbPoints(28);
-        score3.addNbPoints(43);
-        score4.addNbPoints(17);
 
-        Robot Un = new Robot(score1, Couleur.Bleu);
-        Robot Deux = new Robot(score2, Couleur.Rouge);
-        Robot Trois = new Robot(score3, Couleur.Jaune);
-        Robot Quatre = new Robot(score4, Couleur.Noir);
+
+        Robot Un = new Robot(Couleur.Bleu);
+        Robot Deux = new Robot(Couleur.Rouge);
+        Robot Trois = new Robot(Couleur.Jaune);
+        Robot Quatre = new Robot(Couleur.Noir);
+
+        Un.getScore().addNbPoints(23);
+        Deux.getScore().addNbPoints(28);
+        Trois. getScore().addNbPoints(43);
+        Quatre.getScore().addNbPoints(17);
+
         robots.add(Un);
         robots.add(Deux);
         robots.add(Trois);

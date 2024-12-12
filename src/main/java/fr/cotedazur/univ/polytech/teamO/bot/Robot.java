@@ -20,8 +20,8 @@ public class Robot implements Comparable<Robot> {
     private HashMap<Couleur,Integer> wagonByCouleur;
 
     //Constructeur
-    public Robot(Score score, Couleur couleur) {
-        this.score = score;
+    public Robot(Couleur couleur) {
+        this.score = new Score();
         this.couleur = couleur;
         //this.destinations = new ArrayList<>();
         this.main=new MainJoueur();

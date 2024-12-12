@@ -21,7 +21,7 @@ class RobotTest {
     Route routeBleue;
     @BeforeEach
     void setUp() {
-        robot=new Robot(new Score(), Couleur.Bleu);
+        robot=new Robot(Couleur.Bleu);
         carteBleue = new CarteWagon(Couleur.Bleu);
         carteJaune = new CarteWagon(Couleur.Jaune);
         carteRouge = new CarteWagon(Couleur.Rouge);
