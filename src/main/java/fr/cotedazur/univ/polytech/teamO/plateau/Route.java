@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.plateau;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.TableauDesScores;
 import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
 
 public class Route {
@@ -8,7 +9,6 @@ public class Route {
     private final int nbCases;
     private final Couleur couleur;
     private boolean available;
-
     public Route(int nbCases, Couleur couleur)  {
         if (nbCases < 1 || nbCases>7)throw new IllegalArgumentException("nbCases doit être strictement positif et inférieur ou égal à 7.");
         else this.nbCases = nbCases;
@@ -26,7 +26,6 @@ public class Route {
     public void setAvailable(boolean available) {
         this.available = available;
     }
-
     public boolean isAvailable() {
         return available;
     }
