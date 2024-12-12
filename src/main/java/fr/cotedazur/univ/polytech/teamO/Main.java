@@ -26,11 +26,6 @@ public class Main {
         robotRouge=new Robot(Couleur.Rouge);
         robotJaune=new Robot(Couleur.Jaune);
         routeBleue=new Route(4,Couleur.Bleu);
-        robots=new ArrayList<>();
-        robots.add(robotBleu);
-        robots.add(robotRouge);
-        robots.add(robotJaune);
-        ranking=new Ranking(robots);
         for(int i=0;i<4;i++){
             robotBleu.piocher();
             robotRouge.piocher();
@@ -60,6 +55,11 @@ public class Main {
             randomAction(robotRouge);
             randomAction(robotJaune);
         }
+        robots=new ArrayList<>();
+        robots.add(robotJaune);
+        robots.add(robotBleu);
+        robots.add(robotRouge);
+        ranking=new Ranking(robots);
         System.out.println(ranking);
 
     }

@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.Gestionnaire;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -97,8 +98,12 @@ public class Robot implements Comparable<Robot> {
     }
 
     @Override
-    public int compareTo(Robot o) {
-        return score.compareTo(o.getScore());
+    public int compareTo(@NotNull Robot o) {
+        if(this.getScore().getNbPoints()==o.getScore().getNbPoints()){
+            return this.getCouleur().name().compareTo(o.getCouleur().name());
+        }
+        else if(this.getScore().getNbPoints()>o.getScore().getNbPoints()) return 1;
+        else return -1;
     }
 
 }

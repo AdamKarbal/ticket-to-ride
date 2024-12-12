@@ -33,8 +33,8 @@ public class RankingTest {
         Robot Trois = new Robot(Couleur.Jaune);
         Robot Quatre = new Robot(Couleur.Noir);
 
-        Un.getScore().addNbPoints(23);
-        Deux.getScore().addNbPoints(28);
+        Un.getScore().addNbPoints(0);
+        Deux.getScore().addNbPoints(0);
         Trois. getScore().addNbPoints(43);
         Quatre.getScore().addNbPoints(17);
 
