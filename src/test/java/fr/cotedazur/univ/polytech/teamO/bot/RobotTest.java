@@ -22,8 +22,8 @@ class RobotTest {
     Robot robotRouge;
     @BeforeEach
     void setUp() {
-        robot=new Robot(new Score(), Couleur.Bleu);
-        robotRouge=new Robot(new Score(), Couleur.Rouge);
+        robot=new Robot(Couleur.Bleu);
+        robotRouge=new Robot(Couleur.Rouge);
         carteBleue = new CarteWagon(Couleur.Bleu);
         carteJaune = new CarteWagon(Couleur.Jaune);
         carteRouge = new CarteWagon(Couleur.Rouge);
