@@ -43,7 +43,7 @@ public class Main {
         if (choix==2){
             if(robot.getWagonByCouleur().get(Couleur.Bleu)==routeBleue.getNbCases()){
                 robot.poseTrain(routeBleue);
-                System.out.println("Le robot "+robot.getCouleur().name()+" a posé une route");
+                System.out.println("Le robot "+robot.getCouleur().name()+" a posé une route.");
                 System.out.println(robot.getNbWagons()+" "+robot.getCouleur().name());}
         }
     }
@@ -54,7 +54,6 @@ public class Main {
             randomAction(robotBleu);
             randomAction(robotRouge);
             randomAction(robotJaune);
-            Thread.sleep(2000);
         }
         robots=new ArrayList<>();
         robots.add(robotJaune);
