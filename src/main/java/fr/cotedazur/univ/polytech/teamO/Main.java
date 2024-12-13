@@ -54,6 +54,7 @@ public class Main {
             randomAction(robotBleu);
             randomAction(robotRouge);
             randomAction(robotJaune);
+            Thread.sleep(2000);
         }
         robots=new ArrayList<>();
         robots.add(robotJaune);
