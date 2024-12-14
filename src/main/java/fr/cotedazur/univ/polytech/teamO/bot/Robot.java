@@ -65,17 +65,17 @@ public class Robot implements Comparable<Robot> {
         return score.getNbPoints();
     }
     // Actions du joueur
-    public void piocher(){
-        Carte carte=Gestionnaire.piocher(this);
+    public void piocher(Gestionnaire g){
+        Carte carte=g.piocher(this);
         getMain().addCarte(carte);
     }
 
-    public void piocherSurTable(Carte carteAPiocher){
-        Carte carte=Gestionnaire.piocherSurTable(this,carteAPiocher);
+    public void piocherSurTable(Carte carteAPiocher,Gestionnaire g){
+        Carte carte=g.piocherSurTable(this,carteAPiocher);
     }
 
-    public void poseTrain(Route route){
-        Gestionnaire.poseTrain(this,route);
+    public void poseTrain(Route route,Gestionnaire g){
+        g.poseTrain(this,route);
     }
 
     // Méthodes générales

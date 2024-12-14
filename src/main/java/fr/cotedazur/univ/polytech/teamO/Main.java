@@ -17,6 +17,7 @@ public class Main {
     static Route routeBleue;
     static ArrayList<Robot> robots;
     static Ranking ranking;
+    static Gestionnaire gestionnaire;
     public static String hello() {
         return "Hello World!";
     }
@@ -26,10 +27,11 @@ public class Main {
         robotRouge=new Robot(Couleur.Rouge);
         robotJaune=new Robot(Couleur.Jaune);
         routeBleue=new Route(4,Couleur.Bleu);
+        gestionnaire=new Gestionnaire();
         for(int i=0;i<4;i++){
-            robotBleu.piocher();
-            robotRouge.piocher();
-            robotJaune.piocher();
+            robotBleu.piocher(gestionnaire);
+            robotRouge.piocher(gestionnaire);
+            robotJaune.piocher(gestionnaire);
         }
     }
     public static void randomAction(Robot robot){
@@ -37,12 +39,12 @@ public class Main {
         Random rand = new Random();
         choix=rand.nextInt(2)+1;
         if (choix==1){
-            robot.piocher();
+            robot.piocher(gestionnaire);
             System.out.println("Le robot "+robot.getCouleur().name()+" a pioché "+robot.getMain().getMainDeCartes().getLast());
         }
         if (choix==2){
             if(robot.getWagonByCouleur().get(Couleur.Bleu)==routeBleue.getNbCases()){
-                robot.poseTrain(routeBleue);
+                robot.poseTrain(routeBleue,gestionnaire);
                 System.out.println("Le robot "+robot.getCouleur().name()+" a posé une route");
                 System.out.println(robot.getNbWagons()+" "+robot.getCouleur().name());}
         }

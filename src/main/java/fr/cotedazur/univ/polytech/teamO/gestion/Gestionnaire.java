@@ -13,10 +13,20 @@ import java.util.HashMap;
 
 public class Gestionnaire {
     // Ajouter ici tous les trucs relatifs au jeu et qu'on peut modifier pendant la partie
-    public static Pioche pioche=new Pioche();
-    public static PiocheSurTable piocheSurTable=new PiocheSurTable();
+    private Pioche pioche;
+    private PiocheSurTable piocheSurTable;
+    public Gestionnaire() {
+        this.pioche = new Pioche();
+        this.piocheSurTable = new PiocheSurTable();
+    }
+    // Accesseurs et setters
+
+    public Pioche getPioche() { return pioche; }
+
+    public PiocheSurTable getPiocheSurTable() { return piocheSurTable; }
+
     // Méthodes du jeu
-    public static Carte piocher(Robot robot){
+    public Carte piocher(Robot robot){
         if(robot.getPiocheCount()==0){
             robot.setPiocheCount(robot.getPiocheCount()+1);
             robot.setTurnOver(false);
@@ -29,8 +39,8 @@ public class Gestionnaire {
         robot.getWagonByCouleur().put(carte.getCouleur(),robot.getWagonByCouleur().get(carte.getCouleur())+1);
         return carte;
     }
-    public static Carte piocherSurTable(Robot robot,Carte carte){
-        Carte cartePiochee=piocheSurTable.piocher(carte);
+    public Carte piocherSurTable(Robot robot,Carte carte){
+        Carte cartePiochee=this.piocheSurTable.piocher(carte);
         piocheSurTable.addCarte(pioche.piocher());
         if(robot.getPiocheCount()==0){
             robot.getMain().addCarte(cartePiochee);
