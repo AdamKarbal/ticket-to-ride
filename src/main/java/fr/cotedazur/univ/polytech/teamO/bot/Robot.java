@@ -4,13 +4,14 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
-import fr.cotedazur.univ.polytech.teamO.gestion.Gestionnaire;
+import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class Robot implements Comparable<Robot> {
+
     private Score score;
     private Couleur couleur;
     //private ArrayList<DestinationCard> destinations;
@@ -26,7 +27,7 @@ public class Robot implements Comparable<Robot> {
         //this.destinations = new ArrayList<>();
         this.main=new MainJoueur();
         this.turnOver=false;
-        this.wagonByCouleur=Gestionnaire.initWagonByCouleur(this);
+        this.wagonByCouleur= MoteurDeJeu.initWagonByCouleur(this);
         this.piocheCount=0;
         this.nbWagons=45;
     }
@@ -65,16 +66,16 @@ public class Robot implements Comparable<Robot> {
         return score.getNbPoints();
     }
     // Actions du joueur
-    public void piocher(Gestionnaire g){
+    public void piocher(MoteurDeJeu g){
         Carte carte=g.piocher(this);
         getMain().addCarte(carte);
     }
 
-    public void piocherSurTable(Carte carteAPiocher,Gestionnaire g){
+    public void piocherSurTable(Carte carteAPiocher, MoteurDeJeu g){
         Carte carte=g.piocherSurTable(this,carteAPiocher);
     }
 
-    public void poseTrain(Route route,Gestionnaire g){
+    public void poseTrain(Route route, MoteurDeJeu g){
         g.poseTrain(this,route);
     }
 

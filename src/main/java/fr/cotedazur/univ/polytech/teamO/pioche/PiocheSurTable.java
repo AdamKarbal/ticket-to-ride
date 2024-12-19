@@ -18,6 +18,7 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
             this.cartesSurTable.add((T) new CarteWagon(couleurs[random.nextInt(couleurs.length)]));
         }
     }
+
     public PiocheSurTable(ArrayList<T> carteSurTable){
         this.cartesSurTable = carteSurTable;
     }

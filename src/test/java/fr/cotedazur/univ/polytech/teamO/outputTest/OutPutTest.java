@@ -3,8 +3,6 @@ import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.classement.EmptyListException;
 import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-import fr.cotedazur.univ.polytech.teamO.gestion.Gestionnaire;
-import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.output.Output;
 import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
 import fr.cotedazur.univ.polytech.teamO.pioche.PiocheSurTable;

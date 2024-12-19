@@ -4,7 +4,10 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
 
+import java.util.Objects;
+
 public class CarteDestination extends Carte {
+
     private Couleur couleur;
     private boolean longue;
     private Ville ville1;
@@ -51,6 +54,16 @@ public class CarteDestination extends Carte {
         return couleur;
     }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || obj.getClass()!=getClass()) return false;
+        CarteDestination carte = (CarteDestination) obj;
+        return getValue()==carte.getValue()&&getVille1().equals(carte.ville1)&&getVille2().equals(carte.ville2);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(value,ville1,ville2);
+    }
     // POUR LE TIRAGE FAIRE UNE CLASSE AVEC UNE MAIN DE CARTE DESTINATION ? OU GARDER DANS LA CLASSE ROBOT ? PERSO PLUS POUR LE PREMIER CHOIX
 }

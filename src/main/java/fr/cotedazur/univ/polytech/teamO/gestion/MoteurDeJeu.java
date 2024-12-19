@@ -11,11 +11,13 @@ import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
 
 import java.util.HashMap;
 
-public class Gestionnaire {
+public class MoteurDeJeu {
     // Ajouter ici tous les trucs relatifs au jeu et qu'on peut modifier pendant la partie
     private Pioche pioche;
     private PiocheSurTable piocheSurTable;
-    public Gestionnaire() {
+    private PiocheDestinationLongue piocheDestinationLongue;
+    private PiocheDestinationCourte piocheDesinationCourte;
+    public MoteurDeJeu() {
         this.pioche = new Pioche();
         this.piocheSurTable = new PiocheSurTable();
     }
@@ -24,6 +26,14 @@ public class Gestionnaire {
     public Pioche getPioche() { return pioche; }
 
     public PiocheSurTable getPiocheSurTable() { return piocheSurTable; }
+
+    public PiocheDestinationLongue getPiocheDestinationLongue() {
+        return piocheDestinationLongue;
+    }
+
+    public PiocheDestinationCourte getPiocheDesinationCourte() {
+        return piocheDesinationCourte;
+    }
 
     // Méthodes du jeu
     public Carte piocher(Robot robot){
