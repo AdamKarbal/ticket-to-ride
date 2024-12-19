@@ -7,7 +7,7 @@ import java.util.HashSet;
 public class Map {
 
     //Instance
-    private HashMap<Ville,Set<Trajet>> map;
+    /*private HashMap<Ville,Set<Trajet>> map;
 
     //Constructeur
     public Map(){
@@ -104,6 +104,6 @@ public class Map {
     public String toString(){
         System.out.println("Voici la map, toutes les villes avec les trajets associés \n");
         //sans trajet jpp continuer
-    }
+    }*/
     // j'ai besoin de trajet pour tester les méthodes des que c bon dites moi merci l'équipe
 }
