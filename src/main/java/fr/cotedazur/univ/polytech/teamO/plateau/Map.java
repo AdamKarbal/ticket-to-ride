@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.plateau;
 
 import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
+import fr.cotedazur.univ.polytech.teamO.trajet.Trajet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +12,12 @@ public class Map {
 
     //Instance
     private HashMap<Ville, ArrayList<Ville>> map;
+    private ArrayList<Trajet> trajets;
 
     //Constructeur
     public Map(){
         this.map= new HashMap<>();
+        this.trajets = new ArrayList<>();
         init();
     }
 
@@ -192,8 +195,83 @@ public class Map {
 
         ajouterVoisin(Ville.Würzburg, Ville.Frankfurt);
         ajouterVoisin(Ville.Würzburg, Ville.Nürnberg);
+
+        ajouterTrajet(Ville.Kiel, Ville.Hamburg, 1);
+        ajouterTrajet(Ville.Kiel, Ville.Schwerin, 1);
+
+        ajouterTrajet(Ville.Schwerin, Ville.Rostock, 1);
+        ajouterTrajet(Ville.Schwerin, Ville.Berlin, 2);
+
+        ajouterTrajet(Ville.Hamburg, Ville.Bremen, 1);
+        ajouterTrajet(Ville.Hamburg, Ville.Hannover, 2);
+        ajouterTrajet(Ville.Hamburg, Ville.Berlin, 2);
+
+        ajouterTrajet(Ville.Bremen, Ville.Emden, 1);
+        ajouterTrajet(Ville.Bremen, Ville.Münster, 1);
+        ajouterTrajet(Ville.Bremen, Ville.Hannover, 1);
+
+        ajouterTrajet(Ville.Hannover, Ville.Kassel, 2);
+        ajouterTrajet(Ville.Hannover, Ville.Erfurt, 1);
+        ajouterTrajet(Ville.Hannover, Ville.Berlin, 1);
+        ajouterTrajet(Ville.Hannover, Ville.Magdeburg, 1);
+
+        ajouterTrajet(Ville.Berlin, Ville.Magdeburg, 1);
+        ajouterTrajet(Ville.Berlin, Ville.Leipzig, 1);
+        ajouterTrajet(Ville.Berlin, Ville.Dresden, 1);
+
+        ajouterTrajet(Ville.Magdeburg, Ville.Leipzig, 1);
+        ajouterTrajet(Ville.Magdeburg, Ville.Erfurt, 1);
+
+        ajouterTrajet(Ville.Erfurt, Ville.Leipzig, 1);
+        ajouterTrajet(Ville.Erfurt, Ville.Chemnitz, 1);
+        ajouterTrajet(Ville.Erfurt, Ville.Würzburg, 1);
+
+        ajouterTrajet(Ville.Leipzig, Ville.Chemnitz, 1);
+        ajouterTrajet(Ville.Chemnitz, Ville.Dresden, 1);
+        ajouterTrajet(Ville.Dresden, Ville.Regensburg, 2);
+
+        ajouterTrajet(Ville.Kassel, Ville.Erfurt, 1);
+        ajouterTrajet(Ville.Kassel, Ville.Frankfurt, 2);
+        ajouterTrajet(Ville.Frankfurt, Ville.Mannheim, 2);
+        ajouterTrajet(Ville.Frankfurt, Ville.Würzburg, 1);
+        ajouterTrajet(Ville.Würzburg, Ville.Nürnberg, 1);
+        ajouterTrajet(Ville.Nürnberg, Ville.Ulm, 1);
+        ajouterTrajet(Ville.Nürnberg, Ville.Regensburg, 1);
+        ajouterTrajet(Ville.Regensburg, Ville.München, 1);
+        ajouterTrajet(Ville.Ulm, Ville.München, 1);
+        ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 1);
+        ajouterTrajet(Ville.Stuttgart, Ville.Karlsruhe, 1);
+        ajouterTrajet(Ville.Karlsruhe, Ville.Saarbrücken, 1);
+        ajouterTrajet(Ville.Karlsruhe, Ville.Mannheim, 1);
+        ajouterTrajet(Ville.Mannheim, Ville.Koblenz, 2);
+        ajouterTrajet(Ville.Koblenz, Ville.Köln, 1);
+        ajouterTrajet(Ville.Koblenz, Ville.Düsseldorf, 1);
+        ajouterTrajet(Ville.Köln, Ville.Düsseldorf, 1);
+        ajouterTrajet(Ville.Düsseldorf, Ville.Münster, 1);
+        ajouterTrajet(Ville.Münster, Ville.Dortmund, 1);
+        ajouterTrajet(Ville.Dortmund, Ville.Düsseldorf, 1);
+
+        ajouterTrajet(Ville.Freiburg, Ville.Karlsruhe, 1);
+        ajouterTrajet(Ville.Freiburg, Ville.Stuttgart, 1);
+        ajouterTrajet(Ville.Freiburg, Ville.Konstanz, 1);
+        ajouterTrajet(Ville.Konstanz, Ville.Stuttgart, 1);
+        ajouterTrajet(Ville.Konstanz, Ville.Lindau, 1);
+
+        ajouterTrajet(Ville.Lindau, Ville.München, 1);
+        ajouterTrajet(Ville.Saarbrücken, Ville.Mannheim, 1);
+        ajouterTrajet(Ville.Saarbrücken, Ville.Karlsruhe, 1);
+
     }
 
+    private void ajouterTrajet(Ville ville1, Ville ville2, int nombreTrajets) {
+        for (int i = 0; i < nombreTrajets; i++) {
+            trajets.add(new Trajet(ville1, ville2));
+        }
+    }
+
+    public ArrayList<Trajet> getTrajets() {
+        return trajets;
+    }
 
     // Accesseurs
 
@@ -211,10 +289,13 @@ public class Map {
         return map.get(ville);
     }
 
-    public String toString(){
-        System.out.println("Voici la map, toutes les villes avec les trajets associés \n");
-        //sans trajet jpp continuer
-        return "";
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Carte des trajets :\n");
+        for (Trajet trajet : trajets) {
+            builder.append(trajet.toString()).append("\n");
+        }
+        return builder.toString();
     }
 
     // j'ai besoin de trajet pour tester les méthodes des que c bon dites moi merci l'équipe
