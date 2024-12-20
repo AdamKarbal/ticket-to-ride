@@ -9,24 +9,23 @@ import java.util.Objects;
 public class CarteDestination extends Carte {
 
     private Couleur couleur;
-    private boolean longue;
     private Ville ville1;
     private Ville ville2;
     private int value;
+    private boolean completed=false;
 
-    public CarteDestination(Couleur couleur,boolean longue,Ville ville1, Ville ville2, int value){
+    public CarteDestination(Couleur couleur,Ville ville1, Ville ville2, int value) throws IllegalArgumentException {
         super(couleur);
-        if((longue && !couleur.equals(Couleur.Marron))||(!longue && !couleur.equals(Couleur.Bleu)))throw new IllegalArgumentException("Couleur Invalide");
+        if(!couleur.equals(Couleur.Marron) &&!couleur.equals(Couleur.Bleu))throw new IllegalArgumentException("Couleur Invalide");
         else this.couleur = couleur;
-        this.longue = longue;
         this.ville1 = ville1;
         this.ville2 = ville2;
-        if((longue && (value<12 || value>22))||(!longue &&(value<3 || value>11)))throw new IllegalArgumentException("Valeur invalide");
+        if((couleur.equals(Couleur.Marron)&&(value<12 || value>22))||(couleur.equals(Couleur.Bleu)&&(value<2 || value>11)))throw new IllegalArgumentException("Valeur invalide");
         else this.value=value;
     }
 
     public boolean isLongue() {
-        return longue;
+        return couleur.equals(Couleur.Marron);
     }
 
     public Ville getVille1() {
@@ -39,6 +38,14 @@ public class CarteDestination extends Carte {
 
     public int getValue() {
         return value;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     @Override
@@ -65,5 +72,7 @@ public class CarteDestination extends Carte {
     public int hashCode() {
         return Objects.hash(value,ville1,ville2);
     }
+
+
     // POUR LE TIRAGE FAIRE UNE CLASSE AVEC UNE MAIN DE CARTE DESTINATION ? OU GARDER DANS LA CLASSE ROBOT ? PERSO PLUS POUR LE PREMIER CHOIX
 }

@@ -17,6 +17,8 @@ public class MoteurDeJeu {
     public MoteurDeJeu() {
         this.pioche = new Pioche();
         this.piocheSurTable = new PiocheSurTable();
+        this.piocheDestinationLongue = new PiocheDestinationLongue();
+        this.piocheDesinationCourte = new PiocheDestinationCourte();
     }
     // Accesseurs et setters
 

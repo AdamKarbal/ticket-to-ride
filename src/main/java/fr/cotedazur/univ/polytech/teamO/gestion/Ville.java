@@ -37,7 +37,13 @@ public enum Ville {
     Ulm,
     Würzburg,
     Augsburg,
-    Emden;
+    Emden,
+    //Pays
+    Niederlande,
+    Frankreich,
+    Danemark,
+    Österreich,
+    Schweiz;
     public static boolean isValid(Ville ville){
         return Arrays.asList(Ville.values()).contains(ville);
     }

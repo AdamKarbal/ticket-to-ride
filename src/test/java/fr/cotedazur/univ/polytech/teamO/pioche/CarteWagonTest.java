@@ -1,10 +1,9 @@
-package fr.cotedazur.univ.polytech.teamO.piocheTest;
+package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
 
 
 public class CarteWagonTest {

@@ -1,10 +1,7 @@
-package fr.cotedazur.univ.polytech.teamO.piocheTest;
+package fr.cotedazur.univ.polytech.teamO.pioche;
 
-import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
-import fr.cotedazur.univ.polytech.teamO.pioche.PiocheSurTable;
 
 import java.util.ArrayList;
 
