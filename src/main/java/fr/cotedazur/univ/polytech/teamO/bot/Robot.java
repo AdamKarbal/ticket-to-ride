@@ -14,7 +14,7 @@ public class Robot implements Comparable<Robot> {
 
     private Score score;
     private Couleur couleur;
-    //private ArrayList<DestinationCard> destinations;
+    private MainJoueur destinations;
     private MainJoueur main;
     private boolean turnOver;
     private int piocheCount;
@@ -24,7 +24,7 @@ public class Robot implements Comparable<Robot> {
     public Robot(Couleur couleur) {
         this.score = new Score();
         this.couleur = couleur;
-        //this.destinations = new ArrayList<>();
+        this.destinations = new MainJoueur();
         this.main=new MainJoueur();
         this.turnOver=false;
         this.wagonByCouleur= MoteurDeJeu.initWagonByCouleur(this);
@@ -36,6 +36,7 @@ public class Robot implements Comparable<Robot> {
     public MainJoueur getMain() {
         return main;
     }
+    public MainJoueur getDestinations() { return destinations; }
     public Score getScore(){
         return score;
     }

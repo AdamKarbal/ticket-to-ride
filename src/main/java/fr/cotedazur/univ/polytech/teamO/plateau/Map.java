@@ -1,12 +1,9 @@
 package fr.cotedazur.univ.polytech.teamO.plateau;
 
 import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
-import fr.cotedazur.univ.polytech.teamO.trajet.Trajet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Map {
 
@@ -196,7 +193,7 @@ public class Map {
         ajouterVoisin(Ville.Würzburg, Ville.Frankfurt);
         ajouterVoisin(Ville.Würzburg, Ville.Nürnberg);
 
-        ajouterTrajet(Ville.Kiel, Ville.Hamburg, 1);
+        /*ajouterTrajet(Ville.Kiel, Ville.Hamburg, 1);
         ajouterTrajet(Ville.Kiel, Ville.Schwerin, 1);
 
         ajouterTrajet(Ville.Schwerin, Ville.Rostock, 1);
@@ -259,15 +256,15 @@ public class Map {
 
         ajouterTrajet(Ville.Lindau, Ville.München, 1);
         ajouterTrajet(Ville.Saarbrücken, Ville.Mannheim, 1);
-        ajouterTrajet(Ville.Saarbrücken, Ville.Karlsruhe, 1);
+        ajouterTrajet(Ville.Saarbrücken, Ville.Karlsruhe, 1);*/
 
     }
 
-    private void ajouterTrajet(Ville ville1, Ville ville2, int nombreTrajets) {
+    /*private void ajouterTrajet(Ville ville1, Ville ville2, int nombreTrajets) {
         for (int i = 0; i < nombreTrajets; i++) {
             trajets.add(new Trajet(ville1, ville2));
         }
-    }
+    }*/
 
     public ArrayList<Trajet> getTrajets() {
         return trajets;

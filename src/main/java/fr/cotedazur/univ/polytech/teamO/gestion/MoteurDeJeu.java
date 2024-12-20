@@ -15,7 +15,7 @@ public class MoteurDeJeu {
     private PiocheDestinationLongue piocheDestinationLongue;
     private PiocheDestinationCourte piocheDesinationCourte;
     public MoteurDeJeu() {
-        this.pioche = new Pioche();
+        this.pioche = new Pioche<>();
         this.piocheSurTable = new PiocheSurTable();
         this.piocheDestinationLongue = new PiocheDestinationLongue();
         this.piocheDesinationCourte = new PiocheDestinationCourte();
@@ -44,7 +44,7 @@ public class MoteurDeJeu {
             robot.setPiocheCount(robot.getPiocheCount()-1);
             robot.setTurnOver(true);
         }
-        Carte carte=pioche.piocher();
+        Carte carte=getPioche().piocher();
         robot.getWagonByCouleur().put(carte.getCouleur(),robot.getWagonByCouleur().get(carte.getCouleur())+1);
         return carte;
     }
@@ -80,7 +80,7 @@ public class MoteurDeJeu {
         }
         return carteWagonByCouleur;
     }
-    public static void poseTrain(Robot robot,Route route){
+    public void poseTrain(Robot robot,Route route){
         Couleur couleurRoute=route.getCouleur();
         if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
             route.setAvailable(false);
@@ -93,7 +93,7 @@ public class MoteurDeJeu {
         }
     }
 
-    public static boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
+    public boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
         return robot.getNbWagons()<2;
     }
 

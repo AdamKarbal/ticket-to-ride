@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RobotTest {
@@ -59,7 +59,7 @@ class RobotTest {
     }
     @Test
     void poseTrain(){
-        for(int i=0;i<10;i++){
+        for(int i=0;i<120;i++){
             robot.piocher(moteurDeJeu);
         }
         System.out.println(robot.getWagonByCouleur());

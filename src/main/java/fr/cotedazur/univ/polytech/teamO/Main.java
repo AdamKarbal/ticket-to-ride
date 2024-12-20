@@ -4,6 +4,8 @@ import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
+import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
+import fr.cotedazur.univ.polytech.teamO.pioche.PiocheSurTable;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ public class Main {
     static ArrayList<Robot> robots;
     static Ranking ranking;
     static MoteurDeJeu moteurDeJeu;
+    static Pioche pioche;
+    static PiocheSurTable piocheSurTable;
     public static String hello() {
         return "Hello World!";
     }
@@ -50,7 +54,7 @@ public class Main {
     }
     public static void main (String... args) throws Exception{
         setup();
-        //while(!(Gestionnaire.isFinished(robotBleu) || Gestionnaire.isFinished(robotRouge) || Gestionnaire.isFinished(robotJaune))){
+        //while(!(gestionnaire.isFinished(robotBleu) || gestionnaire.isFinished(robotRouge) || gestionnaire.isFinished(robotJaune))){
         while(routeBleue.isAvailable()){
             randomAction(robotBleu);
             randomAction(robotRouge);

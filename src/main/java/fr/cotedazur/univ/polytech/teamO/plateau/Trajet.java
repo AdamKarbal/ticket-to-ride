@@ -1,7 +1,6 @@
-package fr.cotedazur.univ.polytech.teamO.trajet;
+package fr.cotedazur.univ.polytech.teamO.plateau;
 
 import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
-import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 
 public class Trajet {
     private Ville from;

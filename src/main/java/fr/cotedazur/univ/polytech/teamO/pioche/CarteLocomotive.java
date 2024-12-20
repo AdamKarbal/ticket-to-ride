@@ -13,7 +13,7 @@ public class CarteLocomotive extends Carte {
         return nomCarte;
     }
     public Couleur getCouleur(){
-        return couleur;
+        return Couleur.Rainbow;
     }
     public boolean isValid(){return true;}
 }
