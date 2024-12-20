@@ -28,4 +28,8 @@ public class Trajet {
     public String toString() {
         return "Trajet : " + " De " + from + " à " + to + ".";
     }
+
+    public void createTrajet(){
+
+    }
 }
