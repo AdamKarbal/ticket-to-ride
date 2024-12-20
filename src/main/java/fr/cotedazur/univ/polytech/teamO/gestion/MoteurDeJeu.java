@@ -2,10 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.gestion;
 
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-import fr.cotedazur.univ.polytech.teamO.pioche.Carte;
-import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
-import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
-import fr.cotedazur.univ.polytech.teamO.pioche.PiocheSurTable;
+import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
 

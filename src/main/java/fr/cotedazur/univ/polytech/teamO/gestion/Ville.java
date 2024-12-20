@@ -8,6 +8,7 @@ public enum Ville {
     Bremerhaven,
     Chemnitz,
     Dresden,
+    Dortmund,
     Düsseldorf,
     Erfurt,
     Freiburg,
@@ -36,9 +37,7 @@ public enum Ville {
     Ulm,
     Würzburg,
     Augsburg,
-    Emden,
-    Flensburg,
-    Osnabrück;
+    Emden;
     public static boolean isValid(Ville ville){
         return Arrays.asList(Ville.values()).contains(ville);
     }

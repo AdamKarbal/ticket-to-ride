@@ -2,108 +2,220 @@ package fr.cotedazur.univ.polytech.teamO.plateau;
 
 import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 public class Map {
 
     //Instance
-    /*private HashMap<Ville,Set<Trajet>> map;
+    private HashMap<Ville, ArrayList<Ville>> map;
 
     //Constructeur
     public Map(){
+        this.map= new HashMap<>();
         init();
     }
 
     //Initialisation
     private void init(){
-        HashSet<Trajet> trajetBerlin = new HashSet<>();
-        HashSet<Trajet> trajetBremen = new HashSet<>();
-        HashSet<Trajet> trajetBremerhaven = new HashSet<>();
-        HashSet<Trajet> trajetChemnitz = new HashSet<>();
-        HashSet<Trajet> trajetDresden = new HashSet<>();
-        HashSet<Trajet> trajetDüsseldorf = new HashSet<>();
-        HashSet<Trajet> trajetErfurt = new HashSet<>();
-        HashSet<Trajet> trajetFreiburg = new HashSet<>();
-        HashSet<Trajet> trajetFrankfurt = new HashSet<>();
-        HashSet<Trajet> trajetHamburg = new HashSet<>();
-        HashSet<Trajet> trajetHannover = new HashSet<>();
-        HashSet<Trajet> trajetKarlsruhe = new HashSet<>();
-        HashSet<Trajet> trajetKassel = new HashSet<>();
-        HashSet<Trajet> trajetKiel = new HashSet<>();
-        HashSet<Trajet> trajetKoblenz = new HashSet<>();
-        HashSet<Trajet> trajetKonstanz= new HashSet<>();
-        HashSet<Trajet> trajetKöln = new HashSet<>();
-        HashSet<Trajet> trajetLeipzig = new HashSet<>();
-        HashSet<Trajet> trajetLindau = new HashSet<>();
-        HashSet<Trajet> trajetMagdeburg = new HashSet<>();
-        HashSet<Trajet> trajetMainz = new HashSet<>();
-        HashSet<Trajet> trajetMannheim = new HashSet<>();
-        HashSet<Trajet> trajetMünchen = new HashSet<>();
-        HashSet<Trajet> trajetMünster = new HashSet<>();
-        HashSet<Trajet> trajetNürnberg= new HashSet<>();
-        HashSet<Trajet> trajetRegensburg= new HashSet<>();
-        HashSet<Trajet> trajetRostock = new HashSet<>();
-        HashSet<Trajet> trajetSaarbrücken= new HashSet<>();
-        HashSet<Trajet> trajetSchwerin = new HashSet<>();
-        HashSet<Trajet> trajetStuttgart = new HashSet<>();
-        HashSet<Trajet> trajetUlm = new HashSet<>();
-        HashSet<Trajet> trajetWürzburg = new HashSet<>();
-        HashSet<Trajet> trajetAusburg = new HashSet<>();
-        HashSet<Trajet> trajetEmden = new HashSet<>();
-        HashSet<Trajet> trajetFlensburg = new HashSet<>();
-        HashSet<Trajet> trajetOsnabrück = new HashSet<>();
-        map.put(Ville.Berlin, trajetBerlin);
-        map.put(Ville.Bremen, trajetBremen);
-        map.put(Ville.Bremerhaven, trajetBremerhaven);
-        map.put(Ville.Chemnitz, trajetChemnitz);
-        map.put(Ville.Dresden, trajetDresden);
-        map.put(Ville.Düsseldorf, trajetDüsseldorf);
-        map.put(Ville.Erfurt, trajetErfurt);
-        map.put(Ville.Freiburg, trajetFreiburg);
-        map.put(Ville.Frankfurt, trajetFrankfurt);
-        map.put(Ville.Hamburg, trajetHamburg);
-        map.put(Ville.Hannover, trajetHannover);
-        map.put(Ville.Karlsruhe, trajetKarlsruhe);
-        map.put(Ville.Kassel, trajetKassel);
-        map.put(Ville.Kiel, trajetKiel);
-        map.put(Ville.Koblenz, trajetKoblenz);
-        map.put(Ville.Konstanz, trajetKonstanz);
-        map.put(Ville.Köln, trajetKöln);
-        map.put(Ville.Leipzig, trajetLeipzig);
-        map.put(Ville.Lindau, trajetLindau);
-        map.put(Ville.Magdeburg, trajetMagdeburg);
-        map.put(Ville.Mainz, trajetMainz);
-        map.put(Ville.Mannheim, trajetMannheim);
-        map.put(Ville.München, trajetMünchen);
-        map.put(Ville.Münster, trajetMünster);
-        map.put(Ville.Nürnberg, trajetNürnberg);
-        map.put(Ville.Regensburg, trajetRegensburg);
-        map.put(Ville.Rostock, trajetRostock);
-        map.put(Ville.Saarbrücken, trajetSaarbrücken);
-        map.put(Ville.Schwerin, trajetSchwerin);
-        map.put(Ville.Stuttgart, trajetStuttgart);
-        map.put(Ville.Ulm, trajetUlm);
-        map.put(Ville.Würzburg, trajetWürzburg);
-        map.put(Ville.Augsburg, trajetAusburg);
-        map.put(Ville.Emden, trajetEmden);
-        map.put(Ville.Flensburg, trajetFlensburg);
-        map.put(Ville.Osnabrück, trajetOsnabrück);
+        for(Ville ville : Ville.values()){
+            map.put(ville, new ArrayList<>());
+        }
+
+        ajouterVoisin(Ville.Augsburg, Ville.Ulm);
+        ajouterVoisin(Ville.Augsburg, Ville.Nürnberg);
+        ajouterVoisin(Ville.Augsburg, Ville.München);
+
+        ajouterVoisin(Ville.Berlin, Ville.Magdeburg);
+        ajouterVoisin(Ville.Berlin, Ville.Leipzig);
+        ajouterVoisin(Ville.Berlin,Ville.Dresden);
+        ajouterVoisin(Ville.Berlin, Ville.Schwerin);
+        ajouterVoisin(Ville.Berlin,Ville.Hannover);
+        ajouterVoisin(Ville.Berlin,Ville.Hamburg);
+        ajouterVoisin(Ville.Berlin,Ville.Rostock);
+
+        ajouterVoisin(Ville.Bremen, Ville.Hamburg);
+        ajouterVoisin(Ville.Bremen, Ville.Hannover);
+        ajouterVoisin(Ville.Bremen, Ville.Münster);
+        ajouterVoisin(Ville.Bremen,Ville.Emden);
+        ajouterVoisin(Ville.Bremen, Ville.Bremerhaven);
+
+        ajouterVoisin(Ville.Bremerhaven, Ville.Emden);
+        ajouterVoisin(Ville.Bremerhaven, Ville.Bremen);
+        ajouterVoisin(Ville.Bremerhaven,Ville.Hamburg);
+        ajouterVoisin(Ville.Bremerhaven,Ville.Kiel);
+
+        ajouterVoisin(Ville.Chemnitz, Ville.Leipzig);
+        ajouterVoisin(Ville.Chemnitz, Ville.Dresden);
+        ajouterVoisin(Ville.Chemnitz, Ville.Erfurt);
+        ajouterVoisin(Ville.Chemnitz,Ville.Regensburg);
+
+        ajouterVoisin(Ville.Dresden, Ville.Leipzig);
+        ajouterVoisin(Ville.Dresden, Ville.Chemnitz);
+        ajouterVoisin(Ville.Dresden,Ville.Berlin);
+        ajouterVoisin(Ville.Dresden,Ville.Regensburg);
+
+        ajouterVoisin(Ville.Düsseldorf, Ville.Köln);
+        ajouterVoisin(Ville.Düsseldorf, Ville.Dortmund);
+
+        ajouterVoisin(Ville.Erfurt, Ville.Leipzig);
+        ajouterVoisin(Ville.Erfurt,Ville.Nürnberg);
+        ajouterVoisin(Ville.Erfurt,Ville.Hannover);
+        ajouterVoisin(Ville.Erfurt, Ville.Chemnitz);
+        ajouterVoisin(Ville.Erfurt, Ville.Kassel);
+        ajouterVoisin(Ville.Erfurt,Ville.Regensburg);
+
+        ajouterVoisin(Ville.Freiburg, Ville.Karlsruhe);
+        ajouterVoisin(Ville.Freiburg, Ville.Stuttgart);
+        ajouterVoisin(Ville.Freiburg, Ville.Konstanz);
+
+        ajouterVoisin(Ville.Frankfurt, Ville.Mainz);
+        ajouterVoisin(Ville.Frankfurt, Ville.Kassel);
+        ajouterVoisin(Ville.Frankfurt, Ville.Würzburg);
+        ajouterVoisin(Ville.Frankfurt,Ville.Köln);
+        ajouterVoisin(Ville.Frankfurt, Ville.Mannheim);
+
+        ajouterVoisin(Ville.Hamburg, Ville.Bremen);
+        ajouterVoisin(Ville.Hamburg, Ville.Hannover);
+        ajouterVoisin(Ville.Hamburg,Ville.Bremerhaven);
+        ajouterVoisin(Ville.Hamburg,Ville.Berlin);
+        ajouterVoisin(Ville.Hamburg, Ville.Kiel);
+        ajouterVoisin(Ville.Hamburg, Ville.Schwerin);
+
+        ajouterVoisin(Ville.Hannover, Ville.Bremen);
+        ajouterVoisin(Ville.Hannover,Ville.Hamburg);
+        ajouterVoisin(Ville.Hannover,Ville.Berlin);
+        ajouterVoisin(Ville.Hannover,Ville.Erfurt);
+        ajouterVoisin(Ville.Hannover, Ville.Magdeburg);
+        ajouterVoisin(Ville.Hannover, Ville.Kassel);
+        ajouterVoisin(Ville.Hannover, Ville.Münster);
+
+        ajouterVoisin(Ville.Karlsruhe, Ville.Freiburg);
+        ajouterVoisin(Ville.Karlsruhe, Ville.Stuttgart);
+        ajouterVoisin(Ville.Karlsruhe, Ville.Saarbrücken);
+        ajouterVoisin(Ville.Karlsruhe, Ville.Mannheim);
+
+        ajouterVoisin(Ville.Kassel, Ville.Frankfurt);
+        ajouterVoisin(Ville.Kassel, Ville.Erfurt);
+        ajouterVoisin(Ville.Kassel,Ville.Dortmund);
+        ajouterVoisin(Ville.Kassel, Ville.Hannover);
+
+
+        ajouterVoisin(Ville.Kiel, Ville.Hamburg);
+        ajouterVoisin(Ville.Kiel,Ville.Rostock);
+        ajouterVoisin(Ville.Kiel,Ville.Bremerhaven);
+        ajouterVoisin(Ville.Kiel,Ville.Schwerin);
+
+        ajouterVoisin(Ville.Koblenz, Ville.Saarbrücken);
+        ajouterVoisin(Ville.Koblenz, Ville.Mainz);
+        ajouterVoisin(Ville.Koblenz, Ville.Köln);
+
+        ajouterVoisin(Ville.Konstanz, Ville.Lindau);
+        ajouterVoisin(Ville.Konstanz, Ville.Stuttgart);
+        ajouterVoisin(Ville.Konstanz,Ville.Freiburg);
+
+        ajouterVoisin(Ville.Köln, Ville.Düsseldorf);
+        ajouterVoisin(Ville.Köln, Ville.Koblenz);
+        ajouterVoisin(Ville.Köln,Ville.Frankfurt);
+
+        ajouterVoisin(Ville.Leipzig, Ville.Berlin);
+        ajouterVoisin(Ville.Leipzig, Ville.Chemnitz);
+        ajouterVoisin(Ville.Leipzig, Ville.Erfurt);
+        ajouterVoisin(Ville.Leipzig,Ville.Dresden);
+        ajouterVoisin(Ville.Leipzig,Ville.Magdeburg);
+
+        ajouterVoisin(Ville.Lindau, Ville.Konstanz);
+        ajouterVoisin(Ville.Lindau, Ville.Ulm);
+        ajouterVoisin(Ville.Lindau,Ville.München);
+
+        ajouterVoisin(Ville.Magdeburg, Ville.Berlin);
+        ajouterVoisin(Ville.Magdeburg, Ville.Hannover);
+        ajouterVoisin(Ville.Magdeburg, Ville.Leipzig);
+
+        ajouterVoisin(Ville.Mainz, Ville.Frankfurt);
+        ajouterVoisin(Ville.Mainz, Ville.Koblenz);
+        ajouterVoisin(Ville.Mainz, Ville.Mannheim);
+        ajouterVoisin(Ville.Mainz,Ville.Saarbrücken);
+
+        ajouterVoisin(Ville.Mannheim, Ville.Mainz);
+        ajouterVoisin(Ville.Mannheim, Ville.Karlsruhe);
+        ajouterVoisin(Ville.Mannheim, Ville.Frankfurt);
+        ajouterVoisin(Ville.Mannheim, Ville.Saarbrücken);
+        ajouterVoisin(Ville.Mannheim, Ville.Stuttgart);
+
+        ajouterVoisin(Ville.München, Ville.Lindau);
+        ajouterVoisin(Ville.München, Ville.Augsburg);
+        ajouterVoisin(Ville.München, Ville.Regensburg);
+        ajouterVoisin(Ville.München, Ville.Nürnberg);
+
+        ajouterVoisin(Ville.Münster, Ville.Bremen);
+        ajouterVoisin(Ville.Münster, Ville.Dortmund);
+        ajouterVoisin(Ville.Münster, Ville.Hannover);
+        ajouterVoisin(Ville.Münster, Ville.Emden);
+
+        ajouterVoisin(Ville.Nürnberg, Ville.Würzburg);
+        ajouterVoisin(Ville.Nürnberg, Ville.Regensburg);
+        ajouterVoisin(Ville.Nürnberg, Ville.Augsburg);
+        ajouterVoisin(Ville.Nürnberg, Ville.Erfurt);
+        ajouterVoisin(Ville.Nürnberg, Ville.München);
+
+        ajouterVoisin(Ville.Regensburg, Ville.München);
+        ajouterVoisin(Ville.Regensburg, Ville.Nürnberg);
+        ajouterVoisin(Ville.Regensburg, Ville.Dresden);
+        ajouterVoisin(Ville.Regensburg, Ville.Chemnitz);
+        ajouterVoisin(Ville.Regensburg, Ville.Erfurt);
+
+        ajouterVoisin(Ville.Rostock, Ville.Schwerin);
+        ajouterVoisin(Ville.Rostock, Ville.Kiel);
+        ajouterVoisin(Ville.Rostock, Ville.Berlin);
+
+        ajouterVoisin(Ville.Saarbrücken, Ville.Mainz);
+        ajouterVoisin(Ville.Saarbrücken, Ville.Koblenz);
+        ajouterVoisin(Ville.Saarbrücken, Ville.Mannheim);
+        ajouterVoisin(Ville.Saarbrücken, Ville.Karlsruhe);
+
+        ajouterVoisin(Ville.Schwerin, Ville.Hamburg);
+        ajouterVoisin(Ville.Schwerin, Ville.Rostock);
+        ajouterVoisin(Ville.Schwerin, Ville.Kiel);
+        ajouterVoisin(Ville.Schwerin, Ville.Berlin);
+
+        ajouterVoisin(Ville.Stuttgart, Ville.Karlsruhe);
+        ajouterVoisin(Ville.Stuttgart, Ville.Ulm);
+        ajouterVoisin(Ville.Stuttgart, Ville.Mannheim);
+        ajouterVoisin(Ville.Stuttgart, Ville.Konstanz);
+
+        ajouterVoisin(Ville.Ulm, Ville.Stuttgart);
+        ajouterVoisin(Ville.Ulm, Ville.Augsburg);
+        ajouterVoisin(Ville.Ulm, Ville.Lindau);
+
+        ajouterVoisin(Ville.Würzburg, Ville.Frankfurt);
+        ajouterVoisin(Ville.Würzburg, Ville.Nürnberg);
     }
+
+
     // Accesseurs
 
-    public HashMap<Ville, Set<Trajet>> getMap() {
+    public HashMap<Ville, ArrayList<Ville>> getMap() {
         return map;
     }
 
     // Méthode
 
-    public void ajouterTrajet(HashMap<Ville, Set<Trajet>> map, Set<Trajet> trajer,Ville ville){
-        map.put(ville,trajet);
+    private void ajouterVoisin(Ville ville,Ville voisin){
+        map.get(ville).add(voisin);
+    }
+
+    public ArrayList<Ville> getVillesFrom(Ville ville) {
+        return map.get(ville);
     }
 
     public String toString(){
         System.out.println("Voici la map, toutes les villes avec les trajets associés \n");
         //sans trajet jpp continuer
-    }*/
+        return "";
+    }
+
     // j'ai besoin de trajet pour tester les méthodes des que c bon dites moi merci l'équipe
 }

@@ -39,9 +39,7 @@ public class PiocheDestinationCourte <T extends CarteDestination>{
         cartesDestinationCourtes.push();*/
     }
 
-    public PiocheDestinationCourte() {
 
-    }
 
     public Stack<T> getCartesDestinationCourtes() {
         return cartesDestinationCourtes;
