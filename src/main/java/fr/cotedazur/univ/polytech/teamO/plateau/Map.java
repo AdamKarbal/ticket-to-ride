@@ -36,7 +36,7 @@ public class Map {
         ajouterVoisin(Ville.Berlin,Ville.Hannover);
         ajouterVoisin(Ville.Berlin,Ville.Hamburg);
         ajouterVoisin(Ville.Berlin,Ville.Rostock);
-
+        ajouterVoisin(Ville.Kiel,Ville.Danemark);
         ajouterVoisin(Ville.Bremen, Ville.Hamburg);
         ajouterVoisin(Ville.Bremen, Ville.Hannover);
         ajouterVoisin(Ville.Bremen, Ville.Münster);
@@ -107,6 +107,7 @@ public class Map {
         ajouterVoisin(Ville.Kiel, Ville.Hamburg);
         ajouterVoisin(Ville.Kiel,Ville.Rostock);
         ajouterVoisin(Ville.Kiel,Ville.Bremerhaven);
+        ajouterVoisin(Ville.Bremerhaven, Ville.Danemark);
         ajouterVoisin(Ville.Kiel,Ville.Schwerin);
 
         ajouterVoisin(Ville.Koblenz, Ville.Saarbrücken);
@@ -324,7 +325,7 @@ public class Map {
         ajouterTrajet(Ville.Augsburg, Ville.Ulm, 1, Couleur.Default );
         ajouterTrajet(Ville.Augsburg, Ville.Ulm, 1, Couleur.Default );
 
-        ajouterTrajet(Ville.Ulm, Ville.Konstanz, 2, Couleur.Rouge );
+        ajouterTrajet(Ville.Ulm, Ville.Lindau, 2, Couleur.Rouge );
         ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 2, Couleur.Default );
         ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 2, Couleur.Default );
 
@@ -349,7 +350,11 @@ public class Map {
         ajouterTrajet(Ville.Konstanz, Ville.München, 5, Couleur.Default );
     }
 
-    private void ajouterTrajet(Ville ville1, Ville ville2, int nbCases, Couleur couleur) {
+    //La méthode marche nickel, mais l'exeption peut pas être implémentée correctement pcq il manque des voisins.
+    void ajouterTrajet(Ville ville1, Ville ville2, int nbCases, Couleur couleur){
+       /* if(!map.get(ville1).contains(ville2) && !map.get(ville2).contains(ville1)){
+            throw new NotNearbyCitiesException("Vous ne pouvez pas créer de trajet entre deux villes non adjacentes !");
+        }*/
         Route routeTr = new Route(nbCases, couleur);
         trajets.add(new Trajet(ville1, ville2, routeTr));
     }

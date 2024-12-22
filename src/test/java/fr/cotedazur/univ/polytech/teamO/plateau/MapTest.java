@@ -39,4 +39,13 @@ public class MapTest {
     void trajetsExistants(){
         System.out.println(map);
     }
+
+    @Test
+    void ajouterTrajetTest() {
+            map.ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 2, Couleur.Default );
+            map.ajouterTrajet(Ville.Ulm, Ville.Augsburg, 2, Couleur.Rouge );
+        assertEquals(111, map.getTrajets().size());
+    }
+
+
 }

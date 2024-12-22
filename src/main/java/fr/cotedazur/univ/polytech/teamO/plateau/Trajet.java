@@ -6,6 +6,7 @@ public class Trajet {
     private final Route route;
     private Ville from;
     private Ville to;
+
     public Trajet(Ville from, Ville to, Route route) {
         this.from = from;
         this.to = to;
@@ -20,12 +21,12 @@ public class Trajet {
         return to;
     }
 
-    @Override
-    public String toString() {
-        return "Trajet : " + " De " + from + " à " + to + " de " + route.getNbCases() +" cases et de couleur " + route.getCouleur() + "." ;
+    public Route getRoute() {
+        return route;
     }
 
-    public void createTrajet(){
-
+    @Override
+    public String toString() {
+        return "Trajet : " + "De " + from + " à " + to + " de " + route.getNbCases() +" cases et de couleur " + route.getCouleur() + "." ;
     }
 }
