@@ -34,4 +34,9 @@ public class MapTest {
         assertEquals(map.getVillesFrom(Ville.Ulm).size(),3);
         assertEquals(map.getVillesFrom(Ville.Ulm),new ArrayList<>(Arrays.asList(Ville.Stuttgart,Ville.Augsburg,Ville.Lindau)));
     }
+
+    @Test
+    void trajetsExistants(){
+        System.out.println(map);
+    }
 }

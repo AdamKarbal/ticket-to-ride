@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.teamO.plateau;
 
+import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
 
 import java.util.ArrayList;
@@ -193,78 +194,165 @@ public class Map {
         ajouterVoisin(Ville.Würzburg, Ville.Frankfurt);
         ajouterVoisin(Ville.Würzburg, Ville.Nürnberg);
 
-        /*ajouterTrajet(Ville.Kiel, Ville.Hamburg, 1);
-        ajouterTrajet(Ville.Kiel, Ville.Schwerin, 1);
+        // Création des trajets uns à uns entre les villes.
 
-        ajouterTrajet(Ville.Schwerin, Ville.Rostock, 1);
-        ajouterTrajet(Ville.Schwerin, Ville.Berlin, 2);
+        ajouterTrajet(Ville.Kiel, Ville.Hamburg, 2, Couleur.Violet);
+        ajouterTrajet(Ville.Kiel, Ville.Hamburg, 2, Couleur.Noir);
 
-        ajouterTrajet(Ville.Hamburg, Ville.Bremen, 1);
-        ajouterTrajet(Ville.Hamburg, Ville.Hannover, 2);
-        ajouterTrajet(Ville.Hamburg, Ville.Berlin, 2);
+        ajouterTrajet(Ville.Kiel, Ville.Schwerin, 3, Couleur.Jaune );
 
-        ajouterTrajet(Ville.Bremen, Ville.Emden, 1);
-        ajouterTrajet(Ville.Bremen, Ville.Münster, 1);
-        ajouterTrajet(Ville.Bremen, Ville.Hannover, 1);
+        ajouterTrajet(Ville.Kiel, Ville.Rostock, 4, Couleur.Orange );
 
-        ajouterTrajet(Ville.Hannover, Ville.Kassel, 2);
-        ajouterTrajet(Ville.Hannover, Ville.Erfurt, 1);
-        ajouterTrajet(Ville.Hannover, Ville.Berlin, 1);
-        ajouterTrajet(Ville.Hannover, Ville.Magdeburg, 1);
+        ajouterTrajet(Ville.Kiel, Ville.Bremerhaven, 3, Couleur.Default );
+        ajouterTrajet(Ville.Kiel, Ville.Danemark, 2, Couleur.Default );
 
-        ajouterTrajet(Ville.Berlin, Ville.Magdeburg, 1);
-        ajouterTrajet(Ville.Berlin, Ville.Leipzig, 1);
-        ajouterTrajet(Ville.Berlin, Ville.Dresden, 1);
+        ajouterTrajet(Ville.Bremerhaven, Ville.Hamburg, 3, Couleur.Default );
 
-        ajouterTrajet(Ville.Magdeburg, Ville.Leipzig, 1);
-        ajouterTrajet(Ville.Magdeburg, Ville.Erfurt, 1);
+        ajouterTrajet(Ville.Bremerhaven, Ville.Danemark, 5, Couleur.Vert);
+        ajouterTrajet(Ville.Hamburg, Ville.Schwerin, 2, Couleur.Vert );
 
-        ajouterTrajet(Ville.Erfurt, Ville.Leipzig, 1);
-        ajouterTrajet(Ville.Erfurt, Ville.Chemnitz, 1);
-        ajouterTrajet(Ville.Erfurt, Ville.Würzburg, 1);
+        ajouterTrajet(Ville.Schwerin, Ville.Rostock, 2, Couleur.Rouge );
+        ajouterTrajet(Ville.Rostock, Ville.Berlin, 6, Couleur.Violet );
 
-        ajouterTrajet(Ville.Leipzig, Ville.Chemnitz, 1);
-        ajouterTrajet(Ville.Chemnitz, Ville.Dresden, 1);
-        ajouterTrajet(Ville.Dresden, Ville.Regensburg, 2);
+        ajouterTrajet(Ville.Schwerin, Ville.Berlin, 5, Couleur.Blanc );
 
-        ajouterTrajet(Ville.Kassel, Ville.Erfurt, 1);
-        ajouterTrajet(Ville.Kassel, Ville.Frankfurt, 2);
-        ajouterTrajet(Ville.Frankfurt, Ville.Mannheim, 2);
-        ajouterTrajet(Ville.Frankfurt, Ville.Würzburg, 1);
-        ajouterTrajet(Ville.Würzburg, Ville.Nürnberg, 1);
-        ajouterTrajet(Ville.Nürnberg, Ville.Ulm, 1);
-        ajouterTrajet(Ville.Nürnberg, Ville.Regensburg, 1);
-        ajouterTrajet(Ville.Regensburg, Ville.München, 1);
-        ajouterTrajet(Ville.Ulm, Ville.München, 1);
-        ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 1);
-        ajouterTrajet(Ville.Stuttgart, Ville.Karlsruhe, 1);
-        ajouterTrajet(Ville.Karlsruhe, Ville.Saarbrücken, 1);
-        ajouterTrajet(Ville.Karlsruhe, Ville.Mannheim, 1);
-        ajouterTrajet(Ville.Mannheim, Ville.Koblenz, 2);
-        ajouterTrajet(Ville.Koblenz, Ville.Köln, 1);
-        ajouterTrajet(Ville.Koblenz, Ville.Düsseldorf, 1);
-        ajouterTrajet(Ville.Köln, Ville.Düsseldorf, 1);
-        ajouterTrajet(Ville.Düsseldorf, Ville.Münster, 1);
-        ajouterTrajet(Ville.Münster, Ville.Dortmund, 1);
-        ajouterTrajet(Ville.Dortmund, Ville.Düsseldorf, 1);
+        ajouterTrajet(Ville.Hamburg, Ville.Berlin, 7, Couleur.Bleu );
+        ajouterTrajet(Ville.Hamburg, Ville.Berlin, 7, Couleur.Jaune );
 
-        ajouterTrajet(Ville.Freiburg, Ville.Karlsruhe, 1);
-        ajouterTrajet(Ville.Freiburg, Ville.Stuttgart, 1);
-        ajouterTrajet(Ville.Freiburg, Ville.Konstanz, 1);
-        ajouterTrajet(Ville.Konstanz, Ville.Stuttgart, 1);
-        ajouterTrajet(Ville.Konstanz, Ville.Lindau, 1);
+        ajouterTrajet(Ville.Hamburg, Ville.Hannover, 4, Couleur.Rouge );
+        ajouterTrajet(Ville.Hamburg, Ville.Hannover, 4, Couleur.Blanc );
 
-        ajouterTrajet(Ville.Lindau, Ville.München, 1);
-        ajouterTrajet(Ville.Saarbrücken, Ville.Mannheim, 1);
-        ajouterTrajet(Ville.Saarbrücken, Ville.Karlsruhe, 1);*/
+        ajouterTrajet(Ville.Hamburg, Ville.Bremen, 3, Couleur.Orange );
+        ajouterTrajet(Ville.Bremerhaven, Ville.Emden, 3, Couleur.Default );
+        ajouterTrajet(Ville.Bremerhaven, Ville.Bremen, 1, Couleur.Blanc );
 
+        ajouterTrajet(Ville.Emden, Ville.Bremen, 3, Couleur.Bleu );
+        ajouterTrajet(Ville.Bremen, Ville.Münster, 3, Couleur.Noir );
+        ajouterTrajet(Ville.Bremen, Ville.Hannover, 3, Couleur.Jaune );
+
+        ajouterTrajet(Ville.Hannover, Ville.Berlin, 7, Couleur.Noir );
+
+        ajouterTrajet(Ville.Berlin, Ville.Magdeburg, 3, Couleur.Rouge );
+        ajouterTrajet(Ville.Berlin, Ville.Leipzig, 4, Couleur.Orange );
+        ajouterTrajet(Ville.Berlin, Ville.Dresden, 5, Couleur.Vert );
+        ajouterTrajet(Ville.Magdeburg, Ville.Hannover, 4, Couleur.Bleu );
+
+        ajouterTrajet(Ville.Magdeburg, Ville.Leipzig, 2, Couleur.Jaune );
+        ajouterTrajet(Ville.Leipzig, Ville.Erfurt, 3, Couleur.Rouge );
+        ajouterTrajet(Ville.Leipzig, Ville.Dresden, 3, Couleur.Noir );
+        ajouterTrajet(Ville.Leipzig, Ville.Chemnitz, 2, Couleur.Bleu );
+
+        ajouterTrajet(Ville.Erfurt, Ville.Chemnitz, 4, Couleur.Noir );
+        ajouterTrajet(Ville.Hannover, Ville.Erfurt, 5, Couleur.Vert );
+        ajouterTrajet(Ville.Erfurt, Ville.Dürnberg, 4, Couleur.Violet );
+        ajouterTrajet(Ville.Erfurt, Ville.Dürnberg, 4, Couleur.Jaune );
+
+        ajouterTrajet(Ville.Erfurt, Ville.Regensburg, 7, Couleur.Blanc );
+        ajouterTrajet(Ville.Chemnitz, Ville.Regensburg, 6, Couleur.Violet );
+
+        ajouterTrajet(Ville.Dresden, Ville.Regensburg, 7, Couleur.Rouge );
+        ajouterTrajet(Ville.Dresden, Ville.Berlin, 5, Couleur.Vert );
+        ajouterTrajet(Ville.Erfurt, Ville.Kassel, 3, Couleur.Default );
+
+        ajouterTrajet(Ville.Kassel, Ville.Hannover, 3, Couleur.Default );
+        ajouterTrajet(Ville.Kassel, Ville.Hannover, 3, Couleur.Default );
+
+        ajouterTrajet(Ville.Münster, Ville.Hannover, 4, Couleur.Violet );
+
+        ajouterTrajet(Ville.Münster, Ville.Emden, 4, Couleur.Rouge );
+        ajouterTrajet(Ville.Emden, Ville.Niederlande, 2, Couleur.Blanc );
+
+        ajouterTrajet(Ville.Münster, Ville.Niederlande, 2, Couleur.Orange );
+        ajouterTrajet(Ville.Düsseldorf, Ville.Niederlande, 3, Couleur.Violet );
+
+        ajouterTrajet(Ville.Düsseldorf, Ville.Dortmund, 1, Couleur.Default );
+        ajouterTrajet(Ville.Düsseldorf, Ville.Dortmund, 1, Couleur.Default );
+        ajouterTrajet(Ville.Düsseldorf, Ville.Dortmund, 1, Couleur.Default );
+
+        ajouterTrajet(Ville.Dortmund, Ville.Münster, 1, Couleur.Default );
+        ajouterTrajet(Ville.Dortmund, Ville.Münster, 1, Couleur.Default );
+
+        ajouterTrajet(Ville.Düsseldorf, Ville.Köln, 1, Couleur.Default );
+        ajouterTrajet(Ville.Düsseldorf, Ville.Köln, 1, Couleur.Default );
+        ajouterTrajet(Ville.Düsseldorf, Ville.Köln, 1, Couleur.Default );
+
+        ajouterTrajet(Ville.Köln, Ville.Frankfurt, 4, Couleur.Default );
+        ajouterTrajet(Ville.Köln, Ville.Frankfurt, 4, Couleur.Default );
+
+        ajouterTrajet(Ville.Köln, Ville.Koblenz, 1, Couleur.Default );
+        ajouterTrajet(Ville.Köln, Ville.Koblenz, 1, Couleur.Default );
+
+        ajouterTrajet(Ville.Koblenz, Ville.Mainz, 2, Couleur.Default );
+        ajouterTrajet(Ville.Koblenz, Ville.Mainz, 2, Couleur.Default );
+        ajouterTrajet(Ville.Koblenz, Ville.Saarbrücken, 3, Couleur.Default );
+
+        ajouterTrajet(Ville.Mainz, Ville.Frankfurt, 1, Couleur.Default );
+        ajouterTrajet(Ville.Mainz, Ville.Frankfurt, 1, Couleur.Default );
+
+        ajouterTrajet(Ville.Mainz, Ville.Mannheim, 1, Couleur.Default );
+        ajouterTrajet(Ville.Mainz, Ville.Mannheim, 1, Couleur.Default );
+
+        ajouterTrajet(Ville.Mainz, Ville.Saarbrücken, 3, Couleur.Default );
+        ajouterTrajet(Ville.Mannheim, Ville.Saarbrücken, 3, Couleur.Default );
+        ajouterTrajet(Ville.Saarbrücken, Ville.Karlsruhe, 3, Couleur.Default );
+
+        ajouterTrajet(Ville.Frankfurt, Ville.Mannheim, 2, Couleur.Default );
+        ajouterTrajet(Ville.Frankfurt, Ville.Mannheim, 2, Couleur.Default );
+
+        ajouterTrajet(Ville.Dortmund, Ville.Kassel, 4, Couleur.Vert );
+        ajouterTrajet(Ville.Frankfurt, Ville.Kassel, 4, Couleur.Bleu );
+        ajouterTrajet(Ville.Frankfurt, Ville.Kassel, 4, Couleur.Blanc);
+
+        ajouterTrajet(Ville.Frankfurt, Ville.Würzburg, 2, Couleur.Default );
+        ajouterTrajet(Ville.Frankfurt, Ville.Würzburg, 2, Couleur.Default );
+
+        ajouterTrajet(Ville.Würzburg, Ville.Dürnberg, 2, Couleur.Default );
+        ajouterTrajet(Ville.Würzburg, Ville.Dürnberg, 2, Couleur.Default );
+
+        ajouterTrajet(Ville.Dürnberg, Ville.Augsburg, 4, Couleur.Orange );
+        ajouterTrajet(Ville.Dürnberg, Ville.München, 5, Couleur.Bleu );
+        ajouterTrajet(Ville.Dürnberg, Ville.München, 5, Couleur.Noir );
+
+        ajouterTrajet(Ville.Dürnberg, Ville.Regensburg, 3, Couleur.Vert );
+
+        ajouterTrajet(Ville.Regensburg, Ville.München, 3, Couleur.Orange );
+        ajouterTrajet(Ville.Regensburg, Ville.Österreich, 4, Couleur.Jaune );
+
+        ajouterTrajet(Ville.München, Ville.Österreich, 3, Couleur.Rouge );
+        ajouterTrajet(Ville.München, Ville.Augsburg, 2, Couleur.Default );
+        ajouterTrajet(Ville.München, Ville.Augsburg, 2, Couleur.Default );
+        ajouterTrajet(Ville.Augsburg, Ville.Ulm, 1, Couleur.Default );
+        ajouterTrajet(Ville.Augsburg, Ville.Ulm, 1, Couleur.Default );
+
+        ajouterTrajet(Ville.Ulm, Ville.Konstanz, 2, Couleur.Rouge );
+        ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 2, Couleur.Default );
+        ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 2, Couleur.Default );
+
+        ajouterTrajet(Ville.Mannheim, Ville.Stuttgart, 2, Couleur.Default );
+        ajouterTrajet(Ville.Mannheim, Ville.Stuttgart, 2, Couleur.Default );
+
+        ajouterTrajet(Ville.Mannheim, Ville.Karlsruhe, 1, Couleur.Bleu );
+        ajouterTrajet(Ville.Frankreich, Ville.Karlsruhe, 2, Couleur.Noir );
+        ajouterTrajet(Ville.Frankreich, Ville.Saarbrücken, 1, Couleur.Vert );
+        ajouterTrajet(Ville.Karlsruhe, Ville.Stuttgart, 1, Couleur.Violet );
+
+        ajouterTrajet(Ville.Karlsruhe, Ville.Freiburg, 3, Couleur.Blanc );
+        ajouterTrajet(Ville.Freiburg, Ville.Stuttgart, 3, Couleur.Default );
+        ajouterTrajet(Ville.Konstanz, Ville.Stuttgart, 3, Couleur.Vert );
+        ajouterTrajet(Ville.Frankreich, Ville.Freiburg, 2, Couleur.Jaune );
+        ajouterTrajet(Ville.Freiburg, Ville.Schweiz, 2, Couleur.Orange );
+        ajouterTrajet(Ville.Freiburg, Ville.Konstanz, 2, Couleur.Noir );
+        ajouterTrajet(Ville.Konstanz, Ville.Schweiz, 1, Couleur.Blanc );
+        ajouterTrajet(Ville.Konstanz, Ville.Lindau, 1, Couleur.Jaune );
+        ajouterTrajet(Ville.Schweiz, Ville.Lindau, 2, Couleur.Bleu );
+        ajouterTrajet(Ville.Österreich, Ville.Lindau, 2, Couleur.Violet );
+        ajouterTrajet(Ville.Konstanz, Ville.München, 5, Couleur.Default );
     }
 
-    /*private void ajouterTrajet(Ville ville1, Ville ville2, int nombreTrajets) {
-        for (int i = 0; i < nombreTrajets; i++) {
-            trajets.add(new Trajet(ville1, ville2));
-        }
-    }*/
+    private void ajouterTrajet(Ville ville1, Ville ville2, int nbCases, Couleur couleur) {
+        Route routeTr = new Route(nbCases, couleur);
+        trajets.add(new Trajet(ville1, ville2, routeTr));
+    }
 
     public ArrayList<Trajet> getTrajets() {
         return trajets;

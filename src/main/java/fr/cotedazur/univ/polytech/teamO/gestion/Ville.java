@@ -38,6 +38,7 @@ public enum Ville {
     Würzburg,
     Augsburg,
     Emden,
+    Dürnberg,
     //Pays
     Niederlande,
     Frankreich,
