@@ -60,9 +60,9 @@ public class Robot implements Comparable<Robot> {
     public Couleur getCouleur() {
         return couleur;
     }
-    /* public void chooseDestination(CarteDestination destination){
-        destinations.add(destination);
-    } */
+    public void chooseDestination(CarteDestination destination){
+        destinations.addCarte(destination);
+    }
     public int getPlayerScore(){
         return score.getNbPoints();
     }
@@ -74,6 +74,7 @@ public class Robot implements Comparable<Robot> {
 
     public void piocherSurTable(Carte carteAPiocher, MoteurDeJeu g){
         Carte carte=g.piocherSurTable(this,carteAPiocher);
+        getMain().addCarte(carte);
     }
 
     public void poseTrain(Route route, MoteurDeJeu g){
