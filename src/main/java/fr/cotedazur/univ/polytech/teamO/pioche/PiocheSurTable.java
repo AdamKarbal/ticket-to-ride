@@ -51,5 +51,12 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
         }
         return null;
     }
-
+    @Override
+    public String toString() {
+        String str = "";
+        for(T carte : cartesSurTable){
+            str += carte.toString() + "\n";
+        }
+        return str;
+    }
 }

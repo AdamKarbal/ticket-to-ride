@@ -22,7 +22,6 @@ public class RankingTest {
     void SetUp() throws EmptyListException {
         pioche = new Pioche();
         piocheSurTable=new PiocheSurTable();
-        pioche.mettre5cartesurlatable(piocheSurTable);
         robots = new ArrayList<>();
 
 

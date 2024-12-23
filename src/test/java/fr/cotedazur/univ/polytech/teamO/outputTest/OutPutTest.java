@@ -23,7 +23,6 @@ public class OutPutTest {
     void SetUp() throws EmptyListException {
         pioche = new Pioche();
         piocheSurTable=new PiocheSurTable();
-        pioche.mettre5cartesurlatable(piocheSurTable);
         robots = new ArrayList<>();
 
         Robot Un = new Robot(Couleur.Bleu);
