@@ -38,12 +38,6 @@ public class Pioche<T extends Carte> {
         return pioche.pop();
     }
 
-    public void mettre5cartesurlatable(PiocheSurTable piocheSurTable){ // méthode à utiliser a chaque fin de tour pour avoir 5 carte sur la table
-        while(piocheSurTable.getMainDeCartes().size()!=5){
-            piocheSurTable.getMainDeCartes().add(piocher());
-        }
-    }
-
     public int size(){
         return pioche.size();
     }

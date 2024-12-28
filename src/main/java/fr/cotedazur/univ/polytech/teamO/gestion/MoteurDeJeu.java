@@ -9,14 +9,14 @@ import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
 import java.util.HashMap;
 
 public class MoteurDeJeu {
-    // Ajouter ici tous les trucs relatifs au jeu et qu'on peut modifier pendant la partie
+    // Ajouter ici tous les trucs relatifs aux actions du joueur
     private Pioche pioche;
     private PiocheSurTable piocheSurTable;
     private PiocheDestinationLongue piocheDestinationLongue;
     private PiocheDestinationCourte piocheDesinationCourte;
-    public MoteurDeJeu() {
-        this.pioche = new Pioche<>();
-        this.piocheSurTable = new PiocheSurTable();
+    public MoteurDeJeu(Pioche pioche, PiocheSurTable piocheSurTable) {
+        this.pioche = pioche;
+        this.piocheSurTable = piocheSurTable;
         this.piocheDestinationLongue = new PiocheDestinationLongue();
         this.piocheDesinationCourte = new PiocheDestinationCourte();
     }
@@ -49,10 +49,9 @@ public class MoteurDeJeu {
         return carte;
     }
     public Carte piocherSurTable(Robot robot,Carte carte){
-        Carte cartePiochee=this.piocheSurTable.piocher(carte);
-        piocheSurTable.addCarte(pioche.piocher());
+        Carte cartePiochee=getPiocheSurTable().piocher(carte);
+        getPiocheSurTable().addCarte(pioche.piocher());
         if(robot.getPiocheCount()==0){
-            robot.getMain().addCarte(cartePiochee);
             if(cartePiochee.getCouleur()==Couleur.Rainbow) {
                 robot.setTurnOver(true);
             }
@@ -62,13 +61,10 @@ public class MoteurDeJeu {
             }
         }
         else{
-            if(cartePiochee.getCouleur()!=Couleur.Rainbow) {
-                robot.setTurnOver(true);
-                robot.setPiocheCount(robot.getPiocheCount()-1);
-                robot.getMain().addCarte(cartePiochee);
-            }
-            else{
-                return piocher(robot);
+            robot.setTurnOver(true);
+            robot.setPiocheCount(robot.getPiocheCount()-1);
+            if(cartePiochee.getCouleur()==Couleur.Rainbow) {
+                cartePiochee = getPioche().piocher();
             }
         }
         return cartePiochee;

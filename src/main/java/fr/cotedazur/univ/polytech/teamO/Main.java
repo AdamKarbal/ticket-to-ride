@@ -27,10 +27,12 @@ public class Main {
 
     public static void setup() throws Exception {
         robotBleu=new Robot(Couleur.Bleu);
+        pioche = new Pioche();
+        piocheSurTable = new PiocheSurTable();
         robotRouge=new Robot(Couleur.Rouge);
         robotJaune=new Robot(Couleur.Jaune);
         routeBleue=new Route(4,Couleur.Bleu);
-        moteurDeJeu =new MoteurDeJeu();
+        moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable);
         for(int i=0;i<4;i++){
             robotBleu.piocher(moteurDeJeu);
             robotRouge.piocher(moteurDeJeu);
