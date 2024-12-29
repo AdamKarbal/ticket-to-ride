@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Main {
-    static Robot robotBleu;
+   /* static Robot robotBleu;
     static Robot robotRouge;
     static Robot robotJaune;
     static Route routeBleue;
@@ -69,6 +69,6 @@ public class Main {
         ranking=new Ranking(robots);
         System.out.println(ranking);
 
-    }
+    }*/
 
 }
