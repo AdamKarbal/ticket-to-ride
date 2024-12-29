@@ -18,5 +18,7 @@ public class Score  {
         this.nbPoints += nbPoints;
     }
 
+    public void removeNbPoints(int nbPoints) { this.nbPoints -= nbPoints ;}
+
 
 }

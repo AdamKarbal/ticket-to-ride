@@ -14,7 +14,7 @@ public class Robot implements Comparable<Robot> {
 
     private Score score;
     private Couleur couleur;
-    private MainJoueur destinations;
+    private MainJoueur<CarteDestination> destinations;
     private MainJoueur main;
     private boolean turnOver;
     private int piocheCount;
@@ -36,7 +36,8 @@ public class Robot implements Comparable<Robot> {
     public MainJoueur getMain() {
         return main;
     }
-    public MainJoueur getDestinations() { return destinations; }
+    public MainJoueur<CarteDestination> getDestinations() {
+        return destinations;}
     public Score getScore(){
         return score;
     }
