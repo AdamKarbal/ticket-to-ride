@@ -2,7 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.plateau;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionEtatJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
-import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
+import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,6 +46,24 @@ public class MapTest {
             map.ajouterTrajet(Ville.Ulm, Ville.Augsburg, 2, Couleur.Rouge );
         assertEquals(111, map.getTrajets().size());
     }
+
+    @Test
+    void MeeplesTest(){
+        int Mcompteur = 0;
+        for(Ville ville : Ville.values()){
+            Mcompteur += ville.getNbMeeple();
+        }
+        assertEquals(60, Mcompteur);
+        for(MCouleur couleur : MCouleur.values()){
+            assertEquals(0, couleur.getQuant());
+        }
+        assertEquals(4, Ville.Frankfurt.getNbMeeple());
+        Ville.Frankfurt.PDisplay();
+        assertEquals(3, Ville.Leipzig.getNbMeeple());
+        Ville.Leipzig.PDisplay();
+    }
+
+
 
 
 }

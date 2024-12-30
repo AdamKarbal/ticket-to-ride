@@ -27,6 +27,6 @@ public class Trajet {
 
     @Override
     public String toString() {
-        return "Trajet : " + "De " + from + " à " + to + " de " + route.getNbCases() +" cases et de couleur " + route.getCouleur() + "." ;
+        return "Trajet : " + "De " + getFrom() + " à " + getTo() + " de " + route.getNbCases() +" cases et de couleur " + route.getCouleur() + "." ;
     }
 }

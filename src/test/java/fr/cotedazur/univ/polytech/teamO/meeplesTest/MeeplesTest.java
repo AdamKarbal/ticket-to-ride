@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.teamO.meeplesTest;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
 import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,16 +15,16 @@ public class MeeplesTest {
 
     @BeforeEach
     void setUp() {
-        meeple1 = new Meeples(Couleur.Noir);
-        meeple2 = new Meeples(Couleur.Rouge);
-        meeple3 = new Meeples(Couleur.Bleu);
+        meeple1 = new Meeples(MCouleur.Noir);
+        meeple2 = new Meeples(MCouleur.Rouge);
+        meeple3 = new Meeples(MCouleur.Bleu);
     }
 
     @Test
     void getCouleurTest() {
-        assertEquals(Couleur.Noir, meeple1.getCouleur());
-        assertEquals(Couleur.Rouge, meeple2.getCouleur());
-        assertEquals(Couleur.Bleu, meeple3.getCouleur());
+        assertEquals(MCouleur.Noir, meeple1.getCouleur());
+        assertEquals(MCouleur.Rouge, meeple2.getCouleur());
+        assertEquals(MCouleur.Bleu, meeple3.getCouleur());
     }
 
     @Test
