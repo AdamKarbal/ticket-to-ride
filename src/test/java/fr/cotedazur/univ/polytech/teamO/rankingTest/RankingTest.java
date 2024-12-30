@@ -25,20 +25,20 @@ public class RankingTest {
         robots = new ArrayList<>();
 
 
-        Robot Un = new Robot(Couleur.Bleu);
-        Robot Deux = new Robot(Couleur.Rouge);
-        Robot Trois = new Robot(Couleur.Jaune);
-        Robot Quatre = new Robot(Couleur.Noir);
+        Robot Bleu = new Robot(Couleur.Bleu);
+        Robot Rouge = new Robot(Couleur.Rouge);
+        Robot Jaune = new Robot(Couleur.Jaune);
+        Robot Noir = new Robot(Couleur.Noir);
 
-        Un.getScore().addNbPoints(0);
-        Deux.getScore().addNbPoints(0);
-        Trois. getScore().addNbPoints(43);
-        Quatre.getScore().addNbPoints(17);
+        Bleu.getScore().addNbPoints(0);
+        Rouge.getScore().addNbPoints(0);
+        Jaune. getScore().addNbPoints(43);
+        Noir.getScore().addNbPoints(17);
 
-        robots.add(Un);
-        robots.add(Deux);
-        robots.add(Trois);
-        robots.add(Quatre);
+        robots.add(Bleu);
+        robots.add(Rouge);
+        robots.add(Jaune);
+        robots.add(Noir);
         classement = new Ranking(robots);
     }
 

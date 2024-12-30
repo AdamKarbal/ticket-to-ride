@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
+import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
 import fr.cotedazur.univ.polytech.teamO.plateau.Map;
 
 public class GestionEtatJeu {
@@ -10,4 +11,5 @@ public class GestionEtatJeu {
     public boolean isVoisin(Ville v1,Ville v2){
         return map.getMap().get(v1).contains(v2);
     }
+
 }
