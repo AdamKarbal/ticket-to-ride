@@ -4,16 +4,16 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 
 public class Meeples {
 
-    private Couleur couleur;
+    private MCouleur couleur;
     public boolean Free;
 
 
-    public Meeples(Couleur couleur) {
+    public Meeples(MCouleur couleur) {
         this.couleur = couleur;
         Free = true;
     }
 
-    public Couleur getCouleur() {
+    public MCouleur getCouleur() {
         return couleur;
     }
 
@@ -25,5 +25,9 @@ public class Meeples {
         return Free;
     }
 
+    @Override
+    public String toString() {
+        return "Un Meeple de couleur " + getCouleur()+ ".";
+    }
 
 }

@@ -2,9 +2,10 @@ package fr.cotedazur.univ.polytech.teamO.plateau;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
+import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
+import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Map {
 
@@ -19,9 +20,36 @@ public class Map {
         init();
     }
 
+    //Méthode pour récupérer une couleur au hasard parmi les couleurs des Meeples
+
+    public <T extends Enum<MCouleur>> T getRandomMeepleColor(Class<T> enumClass) {
+        T[] Couleurs = enumClass.getEnumConstants(); // Récupérer les valeurs de l'énum sous forme d'un tableau
+        int randomIndex = new Random().nextInt(Couleurs.length); // Générer un index aléatoire
+        return Couleurs[randomIndex];
+    }
+
     //Initialisation
     private void init(){
+        Random random = new Random();
         for(Ville ville : Ville.values()){
+            int nbMeeples = ville.getNbMeeple();
+            Set<MCouleur> couleursUtilisées = new HashSet<>();
+
+            for (int i = 0; i < nbMeeples; i++) {
+                // Génére une couleur unique pour chaque meeple dans une ville
+                MCouleur couleur;
+                do {
+                    couleur = getRandomMeepleColor(MCouleur.class);
+                } while (couleursUtilisées.contains(couleur) || couleur.getQuant() == 0);
+
+                couleursUtilisées.add(couleur);
+
+                //Crée le meeple et l'ajoute à la ville
+                Meeples meeple = new Meeples(couleur);
+                couleur.DecremQT(); //Décrémente l'attribut nombre de pions meeple restants pour chaque couleur de meeple
+                ville.getPassagers().add(meeple);
+            }
+
             map.put(ville, new ArrayList<>());
         }
 
@@ -245,8 +273,8 @@ public class Map {
 
         ajouterTrajet(Ville.Erfurt, Ville.Chemnitz, 4, Couleur.Noir );
         ajouterTrajet(Ville.Hannover, Ville.Erfurt, 5, Couleur.Vert );
-        ajouterTrajet(Ville.Erfurt, Ville.Dürnberg, 4, Couleur.Violet );
-        ajouterTrajet(Ville.Erfurt, Ville.Dürnberg, 4, Couleur.Jaune );
+        ajouterTrajet(Ville.Erfurt, Ville.Nürnberg, 4, Couleur.Violet );
+        ajouterTrajet(Ville.Erfurt, Ville.Nürnberg, 4, Couleur.Jaune );
 
         ajouterTrajet(Ville.Erfurt, Ville.Regensburg, 7, Couleur.Blanc );
         ajouterTrajet(Ville.Chemnitz, Ville.Regensburg, 6, Couleur.Violet );
@@ -307,14 +335,14 @@ public class Map {
         ajouterTrajet(Ville.Frankfurt, Ville.Würzburg, 2, Couleur.Default );
         ajouterTrajet(Ville.Frankfurt, Ville.Würzburg, 2, Couleur.Default );
 
-        ajouterTrajet(Ville.Würzburg, Ville.Dürnberg, 2, Couleur.Default );
-        ajouterTrajet(Ville.Würzburg, Ville.Dürnberg, 2, Couleur.Default );
+        ajouterTrajet(Ville.Würzburg, Ville.Nürnberg, 2, Couleur.Default );
+        ajouterTrajet(Ville.Würzburg, Ville.Nürnberg, 2, Couleur.Default );
 
-        ajouterTrajet(Ville.Dürnberg, Ville.Augsburg, 4, Couleur.Orange );
-        ajouterTrajet(Ville.Dürnberg, Ville.München, 5, Couleur.Bleu );
-        ajouterTrajet(Ville.Dürnberg, Ville.München, 5, Couleur.Noir );
+        ajouterTrajet(Ville.Nürnberg, Ville.Augsburg, 4, Couleur.Orange );
+        ajouterTrajet(Ville.Nürnberg, Ville.München, 5, Couleur.Bleu );
+        ajouterTrajet(Ville.Nürnberg, Ville.München, 5, Couleur.Noir );
 
-        ajouterTrajet(Ville.Dürnberg, Ville.Regensburg, 3, Couleur.Vert );
+        ajouterTrajet(Ville.Nürnberg, Ville.Regensburg, 3, Couleur.Vert );
 
         ajouterTrajet(Ville.Regensburg, Ville.München, 3, Couleur.Orange );
         ajouterTrajet(Ville.Regensburg, Ville.Österreich, 4, Couleur.Jaune );
