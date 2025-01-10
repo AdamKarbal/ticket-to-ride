@@ -37,7 +37,8 @@ public class Robot implements Comparable<Robot> {
         return main;
     }
     public MainJoueur<CarteDestination> getDestinations() {
-        return destinations;}
+        return destinations;
+    }
     public Score getScore(){
         return score;
     }
@@ -67,6 +68,7 @@ public class Robot implements Comparable<Robot> {
     public int getPlayerScore(){
         return score.getNbPoints();
     }
+
     // Actions du joueur
     public void piocher(MoteurDeJeu g){
         Carte carte=g.piocher(this);

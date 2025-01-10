@@ -53,10 +53,10 @@ public class MapTest {
         for(Ville ville : Ville.values()){
             Mcompteur += ville.getNbMeeple();
         }
-        assertEquals(60, Mcompteur);
+        assertEquals(60, Mcompteur); //Teste que les meeples au total sont bien 60 sur la map
         for(MCouleur couleur : MCouleur.values()){
             assertEquals(0, couleur.getQuant());
-        }
+        } // Teste que tous les meeples de chaque couleurs sont bien utilisés après leur pose sur le plateau
         assertEquals(4, Ville.Frankfurt.getNbMeeple());
         Ville.Frankfurt.PDisplay();
         assertEquals(3, Ville.Leipzig.getNbMeeple());
