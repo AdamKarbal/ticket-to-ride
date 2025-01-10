@@ -20,7 +20,6 @@ public class MoteurDeJeu {
         this.piocheDestinationLongue = new PiocheDestinationLongue();
         this.piocheDesinationCourte = new PiocheDestinationCourte();
     }
-
     // Accesseurs et setters
 
     public Pioche getPioche() { return pioche; }
@@ -49,7 +48,6 @@ public class MoteurDeJeu {
         robot.getWagonByCouleur().put(carte.getCouleur(),robot.getWagonByCouleur().get(carte.getCouleur())+1);
         return carte;
     }
-
     public Carte piocherSurTable(Robot robot,Carte carte){
         Carte cartePiochee=getPiocheSurTable().piocher(carte);
         getPiocheSurTable().addCarte(pioche.piocher());
@@ -71,7 +69,6 @@ public class MoteurDeJeu {
         }
         return cartePiochee;
     }
-
     public static HashMap<Couleur,Integer> initWagonByCouleur(Robot robot){
         HashMap<Couleur,Integer> carteWagonByCouleur=new HashMap<>();
         for(Couleur couleur:Couleur.values()){
@@ -79,7 +76,7 @@ public class MoteurDeJeu {
         }
         return carteWagonByCouleur;
     }
-
+    //JE VAIS CHANGER TOUTES LES "ROUTES" PAR TRAJETS PCQ CA MARCHE PAS ENFT LES REUF C OBSOLETE CETTE IMPLEMENTATION
     public void poseTrain(Robot robot,Route route){
         Couleur couleurRoute=route.getCouleur();
         if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
@@ -98,7 +95,7 @@ public class MoteurDeJeu {
     }
 
     public void checkCarteDestination(Robot robot) {
-        isCarteDestinationCompleted(robot);
+        isCarteDestinationClaim(robot);
         for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes())
         {
                 if(!(carteDestination.isCompleted())){
@@ -108,7 +105,7 @@ public class MoteurDeJeu {
         }
     }
 
-    public void isCarteDestinationCompleted(Robot robot){
+    public void isCarteDestinationClaim(Robot robot){
         // la il me faut la maindecartedestination comme ça je parcours tout les cartes de destination et je regarde si les trajet sont fait
         // et après j'attribue les points avec l'autre fonction.
         for(CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()){
