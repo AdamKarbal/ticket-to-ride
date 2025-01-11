@@ -26,7 +26,7 @@ public class GestionEtatJeu {
     public void isDestinationsCardCompleted(List<Robot> robots) {
         for (Robot robot : robots) {
             for (CarteDestination card : robot.getDestinations().getMainDeCartes()) {
-                for (Trajet trajet : map.getTrajets()) {
+                for (Trajet trajet : robot.getTrajet()) {
                     if((trajet.getFrom().equals(card.getVille1())||trajet.getFrom().equals(card.getVille2()))&&(trajet.getTo().equals(card.getVille1())||trajet.getTo().equals(card.getVille2()))){
                         if (trajet.isDone()) card.setCompleted(true);
                     }
