@@ -53,7 +53,7 @@ public class Jeu {
                 System.out.println(robot.getNbWagons()+" "+robot.getCouleur().name());}
         }
     }
-    public static void main (String... args) throws Exception{
+    public static void play () throws Exception{
         setup();
         //while(!(gestionnaire.isFinished(robotBleu) || gestionnaire.isFinished(robotRouge) || gestionnaire.isFinished(robotJaune))){
         while(routeBleue.isAvailable()){

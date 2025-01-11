@@ -88,6 +88,9 @@ public class Map {
 
         ajouterVoisin(Ville.Düsseldorf, Ville.Köln);
         ajouterVoisin(Ville.Düsseldorf, Ville.Dortmund);
+        ajouterVoisin(Ville.Düsseldorf, Ville.Niederlande);
+
+        ajouterVoisin(Ville.Emden, Ville.Niederlande);
 
         ajouterVoisin(Ville.Erfurt, Ville.Leipzig);
         ajouterVoisin(Ville.Erfurt,Ville.Nürnberg);
@@ -184,6 +187,11 @@ public class Map {
         ajouterVoisin(Ville.Münster, Ville.Dortmund);
         ajouterVoisin(Ville.Münster, Ville.Hannover);
         ajouterVoisin(Ville.Münster, Ville.Emden);
+        ajouterVoisin(Ville.Münster, Ville.Niederlande);
+
+        ajouterVoisin(Ville.Niederlande, Ville.Emden);
+        ajouterVoisin(Ville.Niederlande, Ville.Münster);
+        ajouterVoisin(Ville.Niederlande, Ville.Düsseldorf);
 
         ajouterVoisin(Ville.Nürnberg, Ville.Würzburg);
         ajouterVoisin(Ville.Nürnberg, Ville.Regensburg);
@@ -222,6 +230,7 @@ public class Map {
 
         ajouterVoisin(Ville.Würzburg, Ville.Frankfurt);
         ajouterVoisin(Ville.Würzburg, Ville.Nürnberg);
+
 
         // Création des trajets uns à uns entre les villes.
 
@@ -380,9 +389,9 @@ public class Map {
 
     //La méthode marche nickel, mais l'exeption peut pas être implémentée correctement pcq il manque des voisins.
     void ajouterTrajet(Ville ville1, Ville ville2, int nbCases, Couleur couleur){
-       /* if(!map.get(ville1).contains(ville2) && !map.get(ville2).contains(ville1)){
+       if(!map.get(ville1).contains(ville2) && !map.get(ville2).contains(ville1)){
             throw new NotNearbyCitiesException("Vous ne pouvez pas créer de trajet entre deux villes non adjacentes !");
-        }*/
+       }
         Route routeTr = new Route(nbCases, couleur);
         trajets.add(new Trajet(ville1, ville2, routeTr));
     }

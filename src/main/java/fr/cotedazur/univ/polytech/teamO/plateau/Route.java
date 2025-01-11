@@ -30,8 +30,19 @@ public class Route {
     }
 
     public boolean isClaimable(int nbWagons, Wagon wagon) {
-        if(nbWagons<getNbCases()||!wagon.getCouleur().equals(couleur)||!isAvailable()) return false;
-        else return true;
+        if(couleur==Couleur.Default){
+            if(nbWagons>=getNbCases() && isAvailable()){
+                return true;
+            }
+            return false;
+        }
+        else{
+            if(nbWagons>=getNbCases() && isAvailable() && wagon.getCouleur().equals(couleur)){
+                return true;
+            }
+            return false;
+        }
+
     }
 
     @Override
