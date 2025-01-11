@@ -27,8 +27,7 @@ public class Trajet {
     }
 
     public boolean isDone() {
-        if(!route.isAvailable())return true;
-        else return false;
+        return !route.isAvailable();
     }
 
     @Override

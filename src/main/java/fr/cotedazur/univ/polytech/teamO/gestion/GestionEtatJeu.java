@@ -12,6 +12,14 @@ public class GestionEtatJeu {
     public GestionEtatJeu(Map map){
         this.map=map;
     }
+    public void checkCarteDestination(Robot robot) {
+        for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()) {
+            if(!carteDestination.isCompleted()){
+                robot.getScore().removeNbPoints(carteDestination.getValue());
+            }
+            else robot.getScore().addNbPoints(carteDestination.getValue());
+        }
+    }
     public boolean isVoisin(Ville v1,Ville v2){
         return map.getMap().get(v1).contains(v2);
     }

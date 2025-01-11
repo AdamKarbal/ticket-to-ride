@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
+import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
 
 import java.util.HashMap;
@@ -77,7 +78,8 @@ public class MoteurDeJeu {
         return carteWagonByCouleur;
     }
     //JE VAIS CHANGER TOUTES LES "ROUTES" PAR TRAJETS PCQ CA MARCHE PAS ENFT LES REUF C OBSOLETE CETTE IMPLEMENTATION
-    public void poseTrain(Robot robot,Route route){
+    public void poseTrain(Robot robot, Trajet trajet){
+        Route route=trajet.getRoute();
         Couleur couleurRoute=route.getCouleur();
         if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
             route.setAvailable(false);
@@ -87,20 +89,12 @@ public class MoteurDeJeu {
                 robot.getMain().removeCarte(new CarteWagon((couleurRoute)));
             }
             robot.removeNbWagons(route.getNbCases());
+            robot.addTrajetDone(trajet);
         }
     }
 
     public boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
         return robot.getNbWagons()<2;
-    }
-
-    public void checkCarteDestination(Robot robot) {
-        for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()) {
-                if(!carteDestination.isCompleted()){
-                    robot.getScore().removeNbPoints(carteDestination.getValue());
-                }
-                else robot.getScore().addNbPoints(carteDestination.getValue());
-        }
     }
 
 }
