@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Map;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
+import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -55,16 +56,16 @@ public class Jeu {
         }
         if (choix==2){
             if(robot.getWagonByCouleur().get(Couleur.Bleu)==routeBleue.getNbCases()){
-                int trajetRandom=rand.nextInt(map.getTrajets().size());
-                robot.poseTrain(map.getTrajets().get(trajetRandom), moteurDeJeu);
-                System.out.println("Le robot "+robot.getCouleur().name()+" a posé une route");
+                Trajet trajetRandom=map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
+                robot.poseTrain(trajetRandom, moteurDeJeu);
+                System.out.println("Le robot "+robot.getCouleur().name()+" a posé une route sur le trajet "+trajetRandom);
                 System.out.println(robot.getNbWagons()+" "+robot.getCouleur().name());}
         }
     }
     public static void play () throws Exception{
         setup();
-        //while(!(gestionnaire.isFinished(robotBleu) || gestionnaire.isFinished(robotRouge) || gestionnaire.isFinished(robotJaune))){
-        while(routeBleue.isAvailable()){
+        while(!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune))){
+        //while(routeBleue.isAvailable()){
             randomAction(robotBleu);
             randomAction(robotRouge);
             randomAction(robotJaune);
