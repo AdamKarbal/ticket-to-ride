@@ -3,11 +3,8 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
-import fr.cotedazur.univ.polytech.teamO.pioche.CarteLocomotive;
-import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
-import fr.cotedazur.univ.polytech.teamO.pioche.PiocheSurTable;
+import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
-import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +12,10 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -29,6 +30,8 @@ class RobotTest {
     MoteurDeJeu moteurDeJeu;
     PiocheSurTable piocheSurTable;
     Pioche pioche;
+    PiocheDestinationLongue piocheDestinationLongue;
+    PiocheDestinationCourte piocheDestinationCourte;
     Trajet trajet;
     @BeforeEach
     void setUp() {
@@ -39,7 +42,7 @@ class RobotTest {
         carteBleue = new CarteWagon(Couleur.Bleu);
         carteJaune = new CarteWagon(Couleur.Jaune);
         carteRouge = new CarteWagon(Couleur.Rouge);
-        moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTable);
+        moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
         taillePiocheInit= moteurDeJeu.getPioche().size();
         routeBleue= new Route(1,Couleur.Bleu);
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);
@@ -105,6 +108,7 @@ class RobotTest {
         System.out.println(robot.getWagonByCouleur());
         robot.poseTrain(trajet, moteurDeJeu);
         assertEquals(robot.getTrajet().size(),1);
+        assertEquals(robot.getTrajet(),new ArrayList<>(Arrays.asList(trajet)));
         assertEquals(routeBleue.isAvailable(),false);
     }
 

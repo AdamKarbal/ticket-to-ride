@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
+import fr.cotedazur.univ.polytech.teamO.plateau.Map;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ public class Jeu {
     static MoteurDeJeu moteurDeJeu;
     static Pioche pioche;
     static PiocheSurTable piocheSurTable;
+    static PiocheDestinationCourte piocheDestinationCourte;
+    static PiocheDestinationLongue piocheDestinationLongue;
+    static Map map;
     public static String hello() {
         return "Hello World!";
     }
@@ -27,11 +31,14 @@ public class Jeu {
     public static void setup() throws Exception {
         robotBleu=new Robot(Couleur.Bleu);
         pioche = new Pioche();
+        map = new Map();
         piocheSurTable = new PiocheSurTable();
         robotRouge=new Robot(Couleur.Rouge);
         robotJaune=new Robot(Couleur.Jaune);
         routeBleue=new Route(4,Couleur.Bleu);
-        moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable);
+        piocheDestinationCourte=new PiocheDestinationCourte();
+        piocheDestinationLongue=new PiocheDestinationLongue();
+        moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
         for(int i=0;i<4;i++){
             robotBleu.piocher(moteurDeJeu);
             robotRouge.piocher(moteurDeJeu);
@@ -48,7 +55,8 @@ public class Jeu {
         }
         if (choix==2){
             if(robot.getWagonByCouleur().get(Couleur.Bleu)==routeBleue.getNbCases()){
-                robot.poseTrain(routeBleue, moteurDeJeu);
+                int trajetRandom=rand.nextInt(map.getTrajets().size());
+                robot.poseTrain(map.getTrajets().get(trajetRandom), moteurDeJeu);
                 System.out.println("Le robot "+robot.getCouleur().name()+" a posé une route");
                 System.out.println(robot.getNbWagons()+" "+robot.getCouleur().name());}
         }
