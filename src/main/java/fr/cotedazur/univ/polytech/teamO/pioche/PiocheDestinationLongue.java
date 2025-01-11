@@ -49,9 +49,11 @@ public class PiocheDestinationLongue {
     public PiocheDestinationLongue(){
         init();
     }
+
     public Stack<CarteDestination> getCartesDestinationLongues() {
         return cartesDestinationLongues;
     }
+
     public CarteDestination popCartesDestinationLongue() {
         if(!cartesDestinationLongues.isEmpty())return cartesDestinationLongues.pop();
         else throw new IllegalArgumentException("Pioche vide");
@@ -59,6 +61,7 @@ public class PiocheDestinationLongue {
     public boolean valide(){
         return cartesDestinationLongues.size()==nbCartesDestinations;
     }
+
     public CarteDestination peekCartesDestinationLongue() {
         if(!cartesDestinationLongues.isEmpty())return cartesDestinationLongues.peek();
         else throw new IllegalArgumentException("Pioche vide");

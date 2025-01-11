@@ -95,21 +95,12 @@ public class MoteurDeJeu {
     }
 
     public void checkCarteDestination(Robot robot) {
-        isCarteDestinationClaim(robot);
-        for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes())
-        {
-                if(!(carteDestination.isCompleted())){
+        for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()) {
+                if(!carteDestination.isCompleted()){
                     robot.getScore().removeNbPoints(carteDestination.getValue());
                 }
                 else robot.getScore().addNbPoints(carteDestination.getValue());
         }
     }
 
-    public void isCarteDestinationClaim(Robot robot){
-        // la il me faut la maindecartedestination comme ça je parcours tout les cartes de destination et je regarde si les trajet sont fait
-        // et après j'attribue les points avec l'autre fonction.
-        for(CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()){
-
-        }
-    }
 }

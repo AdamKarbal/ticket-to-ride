@@ -7,6 +7,7 @@ public class Trajet {
     private Ville from;
     private Ville to;
 
+
     public Trajet(Ville from, Ville to, Route route) {
         this.from = from;
         this.to = to;
@@ -25,8 +26,15 @@ public class Trajet {
         return route;
     }
 
+    public boolean isDone() {
+        if(!route.isAvailable())return true;
+        else return false;
+    }
+
     @Override
     public String toString() {
         return "Trajet : " + "De " + getFrom() + " à " + getTo() + " de " + route.getNbCases() +" cases et de couleur " + route.getCouleur() + "." ;
     }
+
+
 }

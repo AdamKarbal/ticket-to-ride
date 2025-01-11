@@ -27,6 +27,7 @@ class RouteTest {
         assertEquals(Couleur.Blanc, routeBlanc6.getCouleur());
         assertEquals(3,routeNoir3.getNbCases());
         assertEquals(6,routeBlanc6.getNbCases());
+        assertEquals("Route de couleur \"Blanc\" de 3 case(s)",routeBlanc3.toString());
 
 
     }
