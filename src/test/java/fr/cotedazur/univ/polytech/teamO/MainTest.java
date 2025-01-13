@@ -11,7 +11,7 @@ class MainTest {
 
     @BeforeEach
     void setUp() {
-        varToBeInitInSetup = "Hello World!";
+        varToBeInitInSetup = "Hello world !";
     }
 
     @Test

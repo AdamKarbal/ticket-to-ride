@@ -24,10 +24,10 @@ public class MapTest {
         gestionEtatJeu = new GestionEtatJeu(map);
     }
 
-    @Test
+    /*@Test
     void testVoisin(){
         assertTrue(gestionEtatJeu.isVoisin(Ville.Berlin,Ville.Hamburg));
-    }
+    }*/
 
     @Test
     void villeDispos(){

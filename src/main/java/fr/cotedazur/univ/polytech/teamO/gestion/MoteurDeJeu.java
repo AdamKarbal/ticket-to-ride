@@ -1,26 +1,25 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
-import fr.cotedazur.univ.polytech.teamO.affichage.Affichage;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
+import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
 
 import java.util.HashMap;
 
 public class MoteurDeJeu {
     // Ajouter ici tous les trucs relatifs aux actions du joueur
-    private Affichage affichage;
     private Pioche pioche;
     private PiocheSurTable piocheSurTable;
     private PiocheDestinationLongue piocheDestinationLongue;
     private PiocheDestinationCourte piocheDesinationCourte;
-    public MoteurDeJeu(Pioche pioche, PiocheSurTable piocheSurTable) {
+    public MoteurDeJeu(Pioche pioche, PiocheSurTable piocheSurTable, PiocheDestinationLongue piocheDestinationLongue, PiocheDestinationCourte piocheDesinationCourte) {
         this.pioche = pioche;
         this.piocheSurTable = piocheSurTable;
-        this.piocheDestinationLongue = new PiocheDestinationLongue();
-        this.piocheDesinationCourte = new PiocheDestinationCourte();
+        this.piocheDestinationLongue = piocheDestinationLongue;
+        this.piocheDesinationCourte = piocheDesinationCourte;
     }
     // Accesseurs et setters
 
@@ -47,13 +46,11 @@ public class MoteurDeJeu {
             robot.setTurnOver(true);
         }
         Carte carte=getPioche().piocher();
-        affichage.affichePiocher(robot,carte);
         robot.getWagonByCouleur().put(carte.getCouleur(),robot.getWagonByCouleur().get(carte.getCouleur())+1);
         return carte;
     }
     public Carte piocherSurTable(Robot robot,Carte carte){
         Carte cartePiochee=getPiocheSurTable().piocher(carte);
-        affichage.affichePiocherSurTable(robot,cartePiochee);
         getPiocheSurTable().addCarte(pioche.piocher());
         if(robot.getPiocheCount()==0){
             if(cartePiochee.getCouleur()==Couleur.Rainbow) {
@@ -80,8 +77,9 @@ public class MoteurDeJeu {
         }
         return carteWagonByCouleur;
     }
-    //JE VAIS CHANGER TOUTES LES "ROUTES" PAR TRAJETS PCQ CA MARCHE PAS ENFT LES REUF C OBSOLETE CETTE IMPLEMENTATION
-    public void poseTrain(Robot robot,Route route){
+
+    public void poseTrain(Robot robot, Trajet trajet){
+        Route route=trajet.getRoute();
         Couleur couleurRoute=route.getCouleur();
         if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
             route.setAvailable(false);
@@ -91,6 +89,7 @@ public class MoteurDeJeu {
                 robot.getMain().removeCarte(new CarteWagon((couleurRoute)));
             }
             robot.removeNbWagons(route.getNbCases());
+            robot.addTrajetDone(trajet);
         }
     }
 
@@ -98,26 +97,4 @@ public class MoteurDeJeu {
         return robot.getNbWagons()<2;
     }
 
-    public void checkCarteDestination(Robot robot) {
-        isCarteDestinationClaim(robot);
-        for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes())
-        {
-                if(!(carteDestination.isCompleted())){
-                    robot.getScore().removeNbPoints(carteDestination.getValue());
-                    affichage.afficheCheckCarteDestinationPASOK(robot,carteDestination);
-                }
-                else {
-                    robot.getScore().addNbPoints(carteDestination.getValue());
-                    affichage.afficheCheckCarteDestinationOK(robot,carteDestination);
-                }
-        }
-    }
-
-    public void isCarteDestinationClaim(Robot robot){
-        // la il me faut la maindecartedestination comme ça je parcours tout les cartes de destination et je regarde si les trajet sont fait
-        // et après j'attribue les points avec l'autre fonction.
-        for(CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()){
-
-        }
-    }
 }

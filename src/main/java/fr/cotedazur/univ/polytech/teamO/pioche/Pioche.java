@@ -21,8 +21,10 @@ public class Pioche<T extends Carte> {
     public void creerPiocheComplete() { // bien handle le cas des locomotives
         Stack<T> nouvellePioche = new Stack<T>();
         for (Couleur couleur : Couleur.values()) { // créer une carte pour tout les couleurs
-            for (int i = 0; i < cartesParCouleur; i++) {
-                nouvellePioche.push((T) new CarteWagon(couleur));
+            if(!couleur.equals(Couleur.Default)) {
+                for (int i = 0; i < cartesParCouleur; i++) {
+                    nouvellePioche.push((T) new CarteWagon(couleur));
+                }
             }
         }
         // Mélanger la pioche

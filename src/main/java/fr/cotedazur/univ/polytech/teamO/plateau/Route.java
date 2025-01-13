@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.teamO.plateau;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-import fr.cotedazur.univ.polytech.teamO.gestion.TableauDesScores;
 import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
 
 public class Route {
@@ -31,8 +30,24 @@ public class Route {
     }
 
     public boolean isClaimable(int nbWagons, Wagon wagon) {
-        if(nbWagons<getNbCases()||!wagon.getCouleur().equals(couleur)||!isAvailable()) return false;
-        else return true;
+        if(couleur==Couleur.Default){
+            if(nbWagons>=getNbCases() && isAvailable()){
+                return true;
+            }
+            return false;
+        }
+        else{
+            if(nbWagons>=getNbCases() && isAvailable() && wagon.getCouleur().equals(couleur)){
+                return true;
+            }
+            return false;
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return "Route de couleur "+"\""+getCouleur()+"\""+" de "+getNbCases()+" case(s)";
     }
 
 
