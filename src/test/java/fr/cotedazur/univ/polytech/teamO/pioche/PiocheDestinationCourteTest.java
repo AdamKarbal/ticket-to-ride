@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
