@@ -77,7 +77,7 @@ public class MoteurDeJeu {
         }
         return carteWagonByCouleur;
     }
-    //JE VAIS CHANGER TOUTES LES "ROUTES" PAR TRAJETS PCQ CA MARCHE PAS ENFT LES REUF C OBSOLETE CETTE IMPLEMENTATION
+
     public void poseTrain(Robot robot, Trajet trajet){
         Route route=trajet.getRoute();
         Couleur couleurRoute=route.getCouleur();

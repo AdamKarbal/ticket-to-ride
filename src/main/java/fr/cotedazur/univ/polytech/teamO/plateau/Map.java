@@ -10,7 +10,7 @@ import java.util.*;
 public class Map {
 
     //Instance
-    private HashMap<Ville, ArrayList<Ville>> map;
+    private HashMap<Ville, HashMap<Ville,Integer>> map;
     private ArrayList<Trajet> trajets;
 
     //Constructeur
@@ -50,10 +50,10 @@ public class Map {
                 ville.getPassagers().add(meeple);
             }
 
-            map.put(ville, new ArrayList<>());
+            map.put(ville, new HashMap<>());
         }
 
-        ajouterVoisin(Ville.Augsburg, Ville.Ulm);
+        /*ajouterVoisin(Ville.Augsburg, Ville.Ulm);
         ajouterVoisin(Ville.Augsburg, Ville.Nürnberg);
         ajouterVoisin(Ville.Augsburg, Ville.München);
 
@@ -249,7 +249,7 @@ public class Map {
         ajouterVoisin(Ville.Ulm, Ville.Lindau);
 
         ajouterVoisin(Ville.Würzburg, Ville.Frankfurt);
-        ajouterVoisin(Ville.Würzburg, Ville.Nürnberg);
+        ajouterVoisin(Ville.Würzburg, Ville.Nürnberg);*/
 
 
         // Création des trajets uns à uns entre les villes.
@@ -411,27 +411,25 @@ public class Map {
     public ArrayList<Trajet> getTrajets() {
         return trajets;
     }
-    public HashMap<Ville, ArrayList<Ville>> getMap() {
+    public HashMap<Ville, HashMap<Ville,Integer>> getMap() {
         return map;
     }
 
     // Méthode
-    void ajouterTrajet(Ville ville1, Ville ville2, int nbCases, Couleur couleur){
-
-        if(!map.get(ville1).contains(ville2) && !map.get(ville2).contains(ville1)){
-            throw new NotNearbyCitiesException("Vous ne pouvez pas créer de trajet entre "+ville1.name()+" et "+ville2.name());
-        }
-        Route routeTr = new Route(nbCases, couleur);
-        Route routeTr2 = new Route(nbCases, couleur);
-        trajets.add(new Trajet(ville1, ville2, routeTr));
-        trajets.add(new Trajet(ville2, ville1, routeTr2));
+    void ajouterTrajet(Ville ville, Ville voisin, int nbCases, Couleur couleur){
+        Trajet trajet1 = new Trajet(ville,voisin,new Route(nbCases,couleur));
+        Trajet trajet2 = new Trajet(voisin,ville,new Route(nbCases,couleur));
+        map.get(ville).put(voisin,nbCases);
+        map.get(voisin).put(ville,nbCases);
+        trajets.add(trajet1);
+        trajets.add(trajet2);
     }
 
-    private void ajouterVoisin(Ville ville,Ville voisin){
+    /*private void ajouterVoisin(Ville ville,Ville voisin){
         map.get(ville).add(voisin);
-    }
+    }*/
 
-    public ArrayList<Ville> getVillesFrom(Ville ville) {
+    public HashMap<Ville,Integer> getVillesFrom(Ville ville) {
         return map.get(ville);
     }
 

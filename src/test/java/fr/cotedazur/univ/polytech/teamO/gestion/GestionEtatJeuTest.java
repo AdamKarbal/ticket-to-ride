@@ -17,36 +17,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class GestionEtatJeuTest {
     Map map;
     GestionEtatJeu gestionEtatJeu;
-    List<Robot>robots;
-    Robot robot;
-    List<CarteDestination>listeDestinations;
-    Trajet trajetNiederlandeBerlin;
-
+    Trajet berlinRostock;
+    Trajet rostockKiel;
+    Route routeViolet;
+    Route routeOrange;
+    List<Trajet> trajetList;
     @BeforeEach
     void setUp() {
-         map=new Map();
+        map=new Map();
         gestionEtatJeu=new GestionEtatJeu(map);
-        robots=new ArrayList<>();
-        robot = new Robot(Couleur.Bleu);
-        robots.add(robot);
-        listeDestinations =List.of(new CarteDestination(Couleur.Bleu,Ville.Niederlande,Ville.Berlin,5));
-        trajetNiederlandeBerlin=new Trajet(Ville.Berlin,Ville.Niederlande,new Route(5,Couleur.Bleu));
-        robot.chooseDestination(listeDestinations.getFirst());
-        robot.getTrajet().add(trajetNiederlandeBerlin);
+        routeOrange=new Route(4,Couleur.Orange);
+        routeViolet=new Route(6,Couleur.Violet);
+        berlinRostock=new Trajet(Ville.Berlin,Ville.Rostock,routeViolet);
+        rostockKiel=new Trajet(Ville.Rostock,Ville.Kiel,routeViolet);
+        trajetList=new ArrayList<>();
+        trajetList.add(berlinRostock);
+        trajetList.add(rostockKiel);
     }
-
     @Test
-    void testIsDestinationsCardCompleted(){
-        gestionEtatJeu.isDestinationsCardCompleted(robots);
-        assertFalse(robots.isEmpty());
-        assertFalse(listeDestinations.getFirst().isCompleted());
-        assertFalse(trajetNiederlandeBerlin.isDone());
-        assertTrue(trajetNiederlandeBerlin.getRoute().isAvailable());
-        trajetNiederlandeBerlin.getRoute().setAvailable(false);
-        assertFalse(trajetNiederlandeBerlin.getRoute().isAvailable());
-        assertTrue(trajetNiederlandeBerlin.isDone());
-        gestionEtatJeu.isDestinationsCardCompleted(robots);
-        assertTrue(robot.getDestinations().getMainDeCartes().getFirst().isCompleted());
+    void areCitiesConnected(){
+        assertTrue(gestionEtatJeu.isConnected(Ville.Berlin,Ville.Rostock,trajetList));
+        assertFalse(gestionEtatJeu.isConnected(Ville.Berlin,Ville.Hamburg,trajetList));
     }
 
 
