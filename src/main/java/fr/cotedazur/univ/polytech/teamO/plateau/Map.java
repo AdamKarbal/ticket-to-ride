@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.teamO.plateau;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
 

@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
 import fr.cotedazur.univ.polytech.teamO.plateau.Map;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
 import java.util.*;
 
