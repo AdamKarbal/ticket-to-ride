@@ -88,6 +88,9 @@ public class Map {
 
         ajouterVoisin(Ville.Düsseldorf, Ville.Köln);
         ajouterVoisin(Ville.Düsseldorf, Ville.Dortmund);
+        ajouterVoisin(Ville.Düsseldorf, Ville.Niederlande);
+
+        ajouterVoisin(Ville.Emden, Ville.Niederlande);
 
         ajouterVoisin(Ville.Erfurt, Ville.Leipzig);
         ajouterVoisin(Ville.Erfurt,Ville.Nürnberg);
@@ -99,6 +102,8 @@ public class Map {
         ajouterVoisin(Ville.Freiburg, Ville.Karlsruhe);
         ajouterVoisin(Ville.Freiburg, Ville.Stuttgart);
         ajouterVoisin(Ville.Freiburg, Ville.Konstanz);
+        ajouterVoisin(Ville.Freiburg, Ville.Frankreich);
+        ajouterVoisin(Ville.Freiburg, Ville.Schweiz);
 
         ajouterVoisin(Ville.Frankfurt, Ville.Mainz);
         ajouterVoisin(Ville.Frankfurt, Ville.Kassel);
@@ -125,6 +130,7 @@ public class Map {
         ajouterVoisin(Ville.Karlsruhe, Ville.Stuttgart);
         ajouterVoisin(Ville.Karlsruhe, Ville.Saarbrücken);
         ajouterVoisin(Ville.Karlsruhe, Ville.Mannheim);
+        ajouterVoisin(Ville.Karlsruhe, Ville.Frankreich);
 
         ajouterVoisin(Ville.Kassel, Ville.Frankfurt);
         ajouterVoisin(Ville.Kassel, Ville.Erfurt);
@@ -145,6 +151,7 @@ public class Map {
         ajouterVoisin(Ville.Konstanz, Ville.Lindau);
         ajouterVoisin(Ville.Konstanz, Ville.Stuttgart);
         ajouterVoisin(Ville.Konstanz,Ville.Freiburg);
+        ajouterVoisin(Ville.Konstanz,Ville.Schweiz);
 
         ajouterVoisin(Ville.Köln, Ville.Düsseldorf);
         ajouterVoisin(Ville.Köln, Ville.Koblenz);
@@ -159,6 +166,8 @@ public class Map {
         ajouterVoisin(Ville.Lindau, Ville.Konstanz);
         ajouterVoisin(Ville.Lindau, Ville.Ulm);
         ajouterVoisin(Ville.Lindau,Ville.München);
+        ajouterVoisin(Ville.Lindau, Ville.Schweiz);
+        ajouterVoisin(Ville.Lindau,Ville.Österreich);
 
         ajouterVoisin(Ville.Magdeburg, Ville.Berlin);
         ajouterVoisin(Ville.Magdeburg, Ville.Hannover);
@@ -179,11 +188,18 @@ public class Map {
         ajouterVoisin(Ville.München, Ville.Augsburg);
         ajouterVoisin(Ville.München, Ville.Regensburg);
         ajouterVoisin(Ville.München, Ville.Nürnberg);
+        ajouterVoisin(Ville.München,Ville.Österreich);
+        ajouterVoisin(Ville.München, Ville.Konstanz);
 
         ajouterVoisin(Ville.Münster, Ville.Bremen);
         ajouterVoisin(Ville.Münster, Ville.Dortmund);
         ajouterVoisin(Ville.Münster, Ville.Hannover);
         ajouterVoisin(Ville.Münster, Ville.Emden);
+        ajouterVoisin(Ville.Münster, Ville.Niederlande);
+
+        ajouterVoisin(Ville.Niederlande, Ville.Emden);
+        ajouterVoisin(Ville.Niederlande, Ville.Münster);
+        ajouterVoisin(Ville.Niederlande, Ville.Düsseldorf);
 
         ajouterVoisin(Ville.Nürnberg, Ville.Würzburg);
         ajouterVoisin(Ville.Nürnberg, Ville.Regensburg);
@@ -196,6 +212,7 @@ public class Map {
         ajouterVoisin(Ville.Regensburg, Ville.Dresden);
         ajouterVoisin(Ville.Regensburg, Ville.Chemnitz);
         ajouterVoisin(Ville.Regensburg, Ville.Erfurt);
+        ajouterVoisin(Ville.Regensburg, Ville.Österreich);
 
         ajouterVoisin(Ville.Rostock, Ville.Schwerin);
         ajouterVoisin(Ville.Rostock, Ville.Kiel);
@@ -205,6 +222,7 @@ public class Map {
         ajouterVoisin(Ville.Saarbrücken, Ville.Koblenz);
         ajouterVoisin(Ville.Saarbrücken, Ville.Mannheim);
         ajouterVoisin(Ville.Saarbrücken, Ville.Karlsruhe);
+        ajouterVoisin(Ville.Saarbrücken, Ville.Frankreich);
 
         ajouterVoisin(Ville.Schwerin, Ville.Hamburg);
         ajouterVoisin(Ville.Schwerin, Ville.Rostock);
@@ -222,6 +240,7 @@ public class Map {
 
         ajouterVoisin(Ville.Würzburg, Ville.Frankfurt);
         ajouterVoisin(Ville.Würzburg, Ville.Nürnberg);
+
 
         // Création des trajets uns à uns entre les villes.
 
@@ -380,9 +399,9 @@ public class Map {
 
     //La méthode marche nickel, mais l'exeption peut pas être implémentée correctement pcq il manque des voisins.
     void ajouterTrajet(Ville ville1, Ville ville2, int nbCases, Couleur couleur){
-       /* if(!map.get(ville1).contains(ville2) && !map.get(ville2).contains(ville1)){
-            throw new NotNearbyCitiesException("Vous ne pouvez pas créer de trajet entre deux villes non adjacentes !");
-        }*/
+        if(!map.get(ville1).contains(ville2) && !map.get(ville2).contains(ville1)){
+            throw new NotNearbyCitiesException("Vous ne pouvez pas créer de trajet entre "+ville1.name()+" et "+ville2.name());
+        }
         Route routeTr = new Route(nbCases, couleur);
         trajets.add(new Trajet(ville1, ville2, routeTr));
     }
