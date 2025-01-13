@@ -1,8 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-import fr.cotedazur.univ.polytech.teamO.gestion.Score;
-import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
 import java.util.Objects;
 

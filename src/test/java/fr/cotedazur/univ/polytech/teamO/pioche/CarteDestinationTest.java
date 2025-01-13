@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-import fr.cotedazur.univ.polytech.teamO.gestion.Ville;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CarteDestinationTest {
 
-    Ville ville1= Ville.Augsburg;
+    Ville villeAugsburg = Ville.Augsburg;
     Ville ville2= Ville.Berlin;
     CarteDestination carteAB;
     CarteDestination carteAB2;
@@ -17,9 +17,9 @@ class CarteDestinationTest {
 
         @BeforeEach
         void setUp() {
-             carteAB = new CarteDestination(Couleur.Marron, ville1, ville2, 15);
-             carteAB2 =new CarteDestination(Couleur.Bleu,  ville1, ville2, 5);
-             carteAB3 =new CarteDestination(Couleur.Marron,  ville1, ville2, 20);
+             carteAB = new CarteDestination(Couleur.Marron, villeAugsburg, ville2, 15);
+             carteAB2 =new CarteDestination(Couleur.Bleu, villeAugsburg, ville2, 5);
+             carteAB3 =new CarteDestination(Couleur.Marron, villeAugsburg, ville2, 20);
         }
 
         @Test
@@ -28,7 +28,7 @@ class CarteDestinationTest {
 
             assertEquals(Couleur.Marron, carteAB.getCouleur());
             assertTrue(carteAB.isLongue());
-            assertEquals(ville1, carteAB.getVille1());
+            assertEquals(villeAugsburg, carteAB.getVille1());
             assertEquals(ville2, carteAB.getVille2());
             assertEquals(15, carteAB.getValue());
         }
@@ -38,7 +38,7 @@ class CarteDestinationTest {
 
             assertEquals(Couleur.Bleu, carteAB2.getCouleur());
             assertFalse(carteAB2.isLongue());
-            assertEquals(ville1, carteAB2.getVille1());
+            assertEquals(villeAugsburg, carteAB2.getVille1());
             assertEquals(ville2, carteAB2.getVille2());
             assertEquals(5, carteAB2.getValue());
         }
@@ -46,28 +46,28 @@ class CarteDestinationTest {
         @Test
         void testConstructeurInvalide_CouleurLongue() {
             assertThrows(IllegalArgumentException.class, () -> {
-                new CarteDestination(Couleur.Bleu,  ville1, ville2, 15);
+                new CarteDestination(Couleur.Bleu, villeAugsburg, ville2, 15);
             }, "Couleur Invalide");
         }
 
         @Test
         void testConstructeurInvalide_CouleurCourte() {
             assertThrows(IllegalArgumentException.class, () -> {
-                new CarteDestination(Couleur.Marron,  ville1, ville2, 5);
+                new CarteDestination(Couleur.Marron, villeAugsburg, ville2, 5);
             }, "Couleur Invalide");
         }
 
         @Test
         void testConstructeurInvalide_ValeurLongue() {
             assertThrows(IllegalArgumentException.class, () -> {
-                new CarteDestination(Couleur.Marron,  ville1, ville2, 10);
+                new CarteDestination(Couleur.Marron, villeAugsburg, ville2, 10);
             }, "Valeur invalide");
         }
 
         @Test
         void testConstructeurInvalide_ValeurCourte() {
             assertThrows(IllegalArgumentException.class, () -> {
-                new CarteDestination(Couleur.Bleu,  ville1, ville2, 12);
+                new CarteDestination(Couleur.Bleu, villeAugsburg, ville2, 12);
             }, "Valeur invalide");
         }
 
@@ -89,7 +89,7 @@ class CarteDestinationTest {
         void testAccesseurs() {
             assertEquals(Couleur.Marron, carteAB3.getCouleur());
             assertTrue(carteAB3.isLongue());
-            assertEquals(ville1, carteAB3.getVille1());
+            assertEquals(villeAugsburg, carteAB3.getVille1());
             assertEquals(ville2, carteAB3.getVille2());
             assertEquals(20, carteAB3.getValue());
         }

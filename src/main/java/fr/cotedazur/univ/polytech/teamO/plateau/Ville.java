@@ -1,10 +1,9 @@
-package fr.cotedazur.univ.polytech.teamO.gestion;
+package fr.cotedazur.univ.polytech.teamO.plateau;
 
 import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
 public enum Ville {
     Berlin(5),

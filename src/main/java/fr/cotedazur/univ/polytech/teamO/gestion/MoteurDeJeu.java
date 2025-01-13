@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
+import fr.cotedazur.univ.polytech.teamO.affichage.Affichage;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 
 public class MoteurDeJeu {
     // Ajouter ici tous les trucs relatifs aux actions du joueur
+    private Affichage affichage;
     private Pioche pioche;
     private PiocheSurTable piocheSurTable;
     private PiocheDestinationLongue piocheDestinationLongue;
@@ -45,11 +47,13 @@ public class MoteurDeJeu {
             robot.setTurnOver(true);
         }
         Carte carte=getPioche().piocher();
+        affichage.affichePiocher(robot,carte);
         robot.getWagonByCouleur().put(carte.getCouleur(),robot.getWagonByCouleur().get(carte.getCouleur())+1);
         return carte;
     }
     public Carte piocherSurTable(Robot robot,Carte carte){
         Carte cartePiochee=getPiocheSurTable().piocher(carte);
+        affichage.affichePiocherSurTable(robot,cartePiochee);
         getPiocheSurTable().addCarte(pioche.piocher());
         if(robot.getPiocheCount()==0){
             if(cartePiochee.getCouleur()==Couleur.Rainbow) {
@@ -100,8 +104,12 @@ public class MoteurDeJeu {
         {
                 if(!(carteDestination.isCompleted())){
                     robot.getScore().removeNbPoints(carteDestination.getValue());
+                    affichage.afficheCheckCarteDestinationPASOK(robot,carteDestination);
                 }
-                else robot.getScore().addNbPoints(carteDestination.getValue());
+                else {
+                    robot.getScore().addNbPoints(carteDestination.getValue());
+                    affichage.afficheCheckCarteDestinationOK(robot,carteDestination);
+                }
         }
     }
 
