@@ -64,7 +64,7 @@ public class Map {
         ajouterVoisin(Ville.Berlin,Ville.Hannover);
         ajouterVoisin(Ville.Berlin,Ville.Hamburg);
         ajouterVoisin(Ville.Berlin,Ville.Rostock);
-        ajouterVoisin(Ville.Kiel,Ville.Danemark);
+
         ajouterVoisin(Ville.Bremen, Ville.Hamburg);
         ajouterVoisin(Ville.Bremen, Ville.Hannover);
         ajouterVoisin(Ville.Bremen, Ville.Münster);
@@ -75,6 +75,7 @@ public class Map {
         ajouterVoisin(Ville.Bremerhaven, Ville.Bremen);
         ajouterVoisin(Ville.Bremerhaven,Ville.Hamburg);
         ajouterVoisin(Ville.Bremerhaven,Ville.Kiel);
+        ajouterVoisin(Ville.Bremerhaven, Ville.Danemark);
 
         ajouterVoisin(Ville.Chemnitz, Ville.Leipzig);
         ajouterVoisin(Ville.Chemnitz, Ville.Dresden);
@@ -86,11 +87,18 @@ public class Map {
         ajouterVoisin(Ville.Dresden,Ville.Berlin);
         ajouterVoisin(Ville.Dresden,Ville.Regensburg);
 
+        ajouterVoisin(Ville.Dortmund,Ville.Münster);
+        ajouterVoisin(Ville.Dortmund,Ville.Düsseldorf);
+        ajouterVoisin(Ville.Dortmund,Ville.Kassel);
+
         ajouterVoisin(Ville.Düsseldorf, Ville.Köln);
         ajouterVoisin(Ville.Düsseldorf, Ville.Dortmund);
         ajouterVoisin(Ville.Düsseldorf, Ville.Niederlande);
 
         ajouterVoisin(Ville.Emden, Ville.Niederlande);
+        ajouterVoisin(Ville.Emden, Ville.Bremen);
+        ajouterVoisin(Ville.Emden, Ville.Bremerhaven);
+        ajouterVoisin(Ville.Emden, Ville.Münster);
 
         ajouterVoisin(Ville.Erfurt, Ville.Leipzig);
         ajouterVoisin(Ville.Erfurt,Ville.Nürnberg);
@@ -137,11 +145,10 @@ public class Map {
         ajouterVoisin(Ville.Kassel,Ville.Dortmund);
         ajouterVoisin(Ville.Kassel, Ville.Hannover);
 
-
         ajouterVoisin(Ville.Kiel, Ville.Hamburg);
         ajouterVoisin(Ville.Kiel,Ville.Rostock);
         ajouterVoisin(Ville.Kiel,Ville.Bremerhaven);
-        ajouterVoisin(Ville.Bremerhaven, Ville.Danemark);
+        ajouterVoisin(Ville.Kiel,Ville.Danemark);
         ajouterVoisin(Ville.Kiel,Ville.Schwerin);
 
         ajouterVoisin(Ville.Koblenz, Ville.Saarbrücken);
@@ -152,6 +159,7 @@ public class Map {
         ajouterVoisin(Ville.Konstanz, Ville.Stuttgart);
         ajouterVoisin(Ville.Konstanz,Ville.Freiburg);
         ajouterVoisin(Ville.Konstanz,Ville.Schweiz);
+        ajouterVoisin(Ville.Konstanz,Ville.München);
 
         ajouterVoisin(Ville.Köln, Ville.Düsseldorf);
         ajouterVoisin(Ville.Köln, Ville.Koblenz);
@@ -228,11 +236,13 @@ public class Map {
         ajouterVoisin(Ville.Schwerin, Ville.Rostock);
         ajouterVoisin(Ville.Schwerin, Ville.Kiel);
         ajouterVoisin(Ville.Schwerin, Ville.Berlin);
+        ajouterVoisin(Ville.Schwerin, Ville.Freiburg);
 
         ajouterVoisin(Ville.Stuttgart, Ville.Karlsruhe);
         ajouterVoisin(Ville.Stuttgart, Ville.Ulm);
         ajouterVoisin(Ville.Stuttgart, Ville.Mannheim);
         ajouterVoisin(Ville.Stuttgart, Ville.Konstanz);
+        ajouterVoisin(Ville.Stuttgart, Ville.Freiburg);
 
         ajouterVoisin(Ville.Ulm, Ville.Stuttgart);
         ajouterVoisin(Ville.Ulm, Ville.Augsburg);
@@ -299,7 +309,6 @@ public class Map {
         ajouterTrajet(Ville.Chemnitz, Ville.Regensburg, 6, Couleur.Violet );
 
         ajouterTrajet(Ville.Dresden, Ville.Regensburg, 7, Couleur.Rouge );
-        ajouterTrajet(Ville.Dresden, Ville.Berlin, 5, Couleur.Vert );
         ajouterTrajet(Ville.Erfurt, Ville.Kassel, 3, Couleur.Default );
 
         ajouterTrajet(Ville.Kassel, Ville.Hannover, 3, Couleur.Default );
@@ -397,26 +406,26 @@ public class Map {
         ajouterTrajet(Ville.Konstanz, Ville.München, 5, Couleur.Default );
     }
 
-    //La méthode marche nickel, mais l'exeption peut pas être implémentée correctement pcq il manque des voisins.
-    void ajouterTrajet(Ville ville1, Ville ville2, int nbCases, Couleur couleur){
-       if(!map.get(ville1).contains(ville2) && !map.get(ville2).contains(ville1)){
-            throw new NotNearbyCitiesException("Vous ne pouvez pas créer de trajet entre "+ville1.name()+" et "+ville2.name());
-       }
-        Route routeTr = new Route(nbCases, couleur);
-        trajets.add(new Trajet(ville1, ville2, routeTr));
-    }
 
+    // Accesseurs
     public ArrayList<Trajet> getTrajets() {
         return trajets;
     }
-
-    // Accesseurs
-
     public HashMap<Ville, ArrayList<Ville>> getMap() {
         return map;
     }
 
     // Méthode
+    void ajouterTrajet(Ville ville1, Ville ville2, int nbCases, Couleur couleur){
+
+        if(!map.get(ville1).contains(ville2) && !map.get(ville2).contains(ville1)){
+            throw new NotNearbyCitiesException("Vous ne pouvez pas créer de trajet entre "+ville1.name()+" et "+ville2.name());
+        }
+        Route routeTr = new Route(nbCases, couleur);
+        Route routeTr2 = new Route(nbCases, couleur);
+        trajets.add(new Trajet(ville1, ville2, routeTr));
+        trajets.add(new Trajet(ville2, ville1, routeTr2));
+    }
 
     private void ajouterVoisin(Ville ville,Ville voisin){
         map.get(ville).add(voisin);
@@ -434,6 +443,4 @@ public class Map {
         }
         return builder.toString();
     }
-
-    // j'ai besoin de trajet pour tester les méthodes des que c bon dites moi merci l'équipe
 }
