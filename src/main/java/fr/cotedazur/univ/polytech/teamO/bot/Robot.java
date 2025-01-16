@@ -63,9 +63,9 @@ public class Robot implements Comparable<Robot> {
     public Couleur getCouleur() {
         return couleur;
     }
-    public void chooseDestination(CarteDestination destination){
+    /*public void chooseDestination(CarteDestination destination){
         destinations.addCarte(destination);
-    }
+    }*/
     public int getPlayerScore(){
         return score.getNbPoints();
     }
@@ -74,12 +74,27 @@ public class Robot implements Comparable<Robot> {
     // Actions du joueur
     public void piocher(MoteurDeJeu g){
         Carte carte=g.piocher(this);
-        getMain().addCarte(carte);
+        getMain().addCarte(carte);//piocher
     }
 
     public void piocherSurTable(Carte carteAPiocher, MoteurDeJeu g){
         Carte carte=g.piocherSurTable(this,carteAPiocher);
         getMain().addCarte(carte);
+    }
+
+    public void chooseDestinations( MoteurDeJeu g){
+        Random rand = new Random();
+        int choice = rand.nextInt(2)+1;
+        //Logique
+        CarteDestination carteDestinationPioche=g.giveDestinationsCard(this,choice);
+        getDestinations().addCarte(carteDestinationPioche);
+    }
+
+    public void refuseDestinations(MoteurDeJeu g){
+        Random rand = new Random();
+        int choice = rand.nextInt(2);
+
+
     }
 
     public void poseTrain(Trajet trajet, MoteurDeJeu g){

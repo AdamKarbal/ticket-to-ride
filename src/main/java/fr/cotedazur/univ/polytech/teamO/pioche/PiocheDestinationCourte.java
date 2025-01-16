@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.teamO.pioche;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
+import java.util.Collections;
 import java.util.Stack;
 
 public class PiocheDestinationCourte{
@@ -71,6 +72,7 @@ public class PiocheDestinationCourte{
     }
     public PiocheDestinationCourte(){
         init();
+        Collections.shuffle(cartesDestinationCourtes);
     }
 
     public Stack<CarteDestination> getCartesDestinationCourtes() {

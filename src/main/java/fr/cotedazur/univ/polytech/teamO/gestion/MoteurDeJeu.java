@@ -7,7 +7,10 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class MoteurDeJeu {
     // Ajouter ici tous les trucs relatifs aux actions du joueur
@@ -69,6 +72,28 @@ public class MoteurDeJeu {
             }
         }
         return cartePiochee;
+    }
+    public CarteDestination giveDestinationsCard(Robot robot, int choice){
+        CarteDestination carteDestinationL=piocheDestinationLongue.peekCartesDestinationLongue();
+        CarteDestination carteDestinationC=piocheDesinationCourte.peekCartesDestinationCourtes();
+        if(choice==1)return carteDestinationC;
+        if(choice==2)return carteDestinationL;
+        else return null;
+    }
+    public void removeDestinationsCard(Robot robot,int choice){
+        List<CarteDestination> cartesEnlevees= new ArrayList<>();
+        for(int i=0;i<choice;i++){
+            cartesEnlevees.add(robot.getDestinations().getMainDeCartes().remove(i));
+        //Enlève le nb de cartes non voulues
+        }
+        for(CarteDestination carteDestination:cartesEnlevees){
+            if(carteDestination.isLongue())piocheDestinationLongue.pushCartesDestinationLongues(carteDestination);
+            else piocheDesinationCourte.pushCartesDestinationCourtes(carteDestination);
+        }//Remet dans la pioche correspondante
+        Collections.shuffle(piocheDesinationCourte.getCartesDestinationCourtes());
+        Collections.shuffle(piocheDestinationLongue.getCartesDestinationLongues());
+
+
     }
     public static HashMap<Couleur,Integer> initWagonByCouleur(Robot robot){
         HashMap<Couleur,Integer> carteWagonByCouleur=new HashMap<>();

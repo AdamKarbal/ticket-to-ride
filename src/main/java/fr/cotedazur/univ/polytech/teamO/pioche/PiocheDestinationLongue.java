@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.teamO.pioche;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
+import java.util.Collections;
 import java.util.Stack;
 
 public class PiocheDestinationLongue {
@@ -48,6 +49,7 @@ public class PiocheDestinationLongue {
     }
     public PiocheDestinationLongue(){
         init();
+        Collections.shuffle(cartesDestinationLongues);
     }
 
     public Stack<CarteDestination> getCartesDestinationLongues() {
@@ -65,6 +67,9 @@ public class PiocheDestinationLongue {
     public CarteDestination peekCartesDestinationLongue() {
         if(!cartesDestinationLongues.isEmpty())return cartesDestinationLongues.peek();
         else throw new IllegalArgumentException("Pioche vide");
+    }
+    public void pushCartesDestinationLongues(CarteDestination cartesDestination) {
+        cartesDestinationLongues.push(cartesDestination);
     }
 
 }
