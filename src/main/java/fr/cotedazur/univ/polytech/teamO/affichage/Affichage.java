@@ -1,10 +1,13 @@
 package fr.cotedazur.univ.polytech.teamO.affichage;
 
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
+import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
+import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.Carte;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
+import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 
 public class Affichage {
 
@@ -13,42 +16,51 @@ public class Affichage {
     public Affichage(){
     }
     //Adam
-    public void affichePiocher(Robot robot, Carte carte){
+    public String affichePiocher(Robot robot, Carte carte){
             String disp = "Le " + robot + " à piocher la carte : " + carte + " dans la pioche invisible. \n";
             System.out.print(disp);
+            return disp;
     }
     //Adam
-    public void affichePiocherSurTable(Robot robot, Carte carte){
+    public String affichePiocherSurTable(Robot robot, Carte carte){
         String disp = "Le " + robot + " à piocher la carte : " + carte + " dans la pioche visible. \n";
         System.out.println(disp);
+        return disp;
     }
     //Younes
-    public void affichePoseTrain(Robot robot, Route route){
-        String disp = "" + robot + "a posé une route sur ";
-
+    public String affichePoseTrain(Robot robot, Trajet trajet){
+        String disp = "" + robot + "a posé un train de "+ trajet.getRoute().getNbCases() +" wagons entre " + trajet.getFrom() +" et " + trajet.getTo() + ".\n";
+        System.out.print(disp);
+        return disp;
     }
     //Younes
-    public void afficheIsFinished(Robot robot){
-
+    public String afficheIsFinished(Robot robot){
+        String disp = "Il reste deux wagons ou moins à " + robot + ". Le jeu est donc arrivé à son terme. \n";
+        System.out.println(disp);
+        return disp;
     }
     //Adam
-    public void afficheCheckCarteDestinationOK(Robot robot, CarteDestination carteDestination){
-        String disp = "Le " + robot + " à réussi la carte destination : " + carteDestination + " et ajoute " + carteDestination.getValue() +" au score. \n";
+    public String afficheCheckCarteDestinationOK(Robot robot, CarteDestination carteDestination){
+        String disp = "Le " + robot + " à réussie la carte destination : " + carteDestination + " et ajoute " + carteDestination.getValue() +" au score. \n";
         System.out.println(disp);
+        return disp;
     }
 
-    public void afficheCheckCarteDestinationPASOK(Robot robot, CarteDestination carteDestination){
-        String disp = "Le " + robot + " n'a pas réussi la carte destination : " + carteDestination + " et perd " + carteDestination.getValue() +" au score. \n";
+    public String afficheCheckCarteDestinationPASOK(Robot robot, CarteDestination carteDestination){
+        String disp = "Le " + robot + " n'as pas réussie la carte destination : " + carteDestination + " et perd " + carteDestination.getValue() +" au score. \n";
         System.out.println(disp);
+        return disp;
     }
 
     //Younes
-    public void afficheTakeMeeples(){
-
+    public String afficheTakeMeeples(Robot robot, int nbMeeples, MCouleur couleur){
+        String disp = robot + "prends " + nbMeeples + " passagers de couleur "+ couleur + ".\n";
+        System.out.println(disp);
+        return disp;
     }
     //Younes
-    public void afficheLastScore(){
-
+    public void afficheLastScore(Ranking classement){
+        System.out.println(classement);
     }
 
 }
