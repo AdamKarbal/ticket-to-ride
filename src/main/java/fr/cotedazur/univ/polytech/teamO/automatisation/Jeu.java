@@ -49,12 +49,12 @@ public class Jeu {
         piocheDestinationLongue=new PiocheDestinationLongue();
 
         moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
+        gestionEtatJeu=new GestionEtatJeu(map);
 
         for(int i=0;i<4;i++){
             robotBleu.piocher(moteurDeJeu);
             robotRouge.piocher(moteurDeJeu);
             robotJaune.piocher(moteurDeJeu);
-
             robotBleu.chooseDestinations(moteurDeJeu);
             robotRouge.chooseDestinations(moteurDeJeu);
             robotJaune.chooseDestinations(moteurDeJeu);
@@ -68,10 +68,8 @@ public class Jeu {
         Random rand = new Random();
         choix=rand.nextInt(2)+1;
         if (choix==1){
-            if(!pioche.getPioche().isEmpty()){
                 robot.piocher(moteurDeJeu);
                 System.out.println("Le robot "+robot.getCouleur().name()+" a pioché "+robot.getMain().getMainDeCartes().getLast());
-            }
 
         }
         if (choix==2){
@@ -83,8 +81,6 @@ public class Jeu {
     }
 
     public static void endofGame(){
-        map=new Map();
-        gestionEtatJeu=new GestionEtatJeu(map);
         gestionEtatJeu.isDestinationsCardCompleted(robots);
         for(Robot robot:robots){
             gestionEtatJeu.updateScoreCarteDestination(robot);
@@ -96,7 +92,7 @@ public class Jeu {
         robots.add(robotJaune);
         robots.add(robotBleu);
         robots.add(robotRouge);
-        while (!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune))){
+        while (!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune)||pioche.getPioche().isEmpty())){
             randomAction(robotBleu);
             randomAction(robotRouge);
             randomAction(robotJaune);

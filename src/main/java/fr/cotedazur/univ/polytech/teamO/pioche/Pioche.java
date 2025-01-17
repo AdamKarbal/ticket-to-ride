@@ -1,6 +1,9 @@
 package  fr.cotedazur.univ.polytech.teamO.pioche;
 import java.util.Collections;
+import java.util.EmptyStackException;
 import java.util.Stack;
+
+import fr.cotedazur.univ.polytech.teamO.classement.EmptyListException;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 
 public class Pioche<T extends Carte> {
@@ -37,7 +40,8 @@ public class Pioche<T extends Carte> {
     // Méthode
 
     public T piocher(){
-        return pioche.pop();
+        if(pioche.empty()){throw new EmptyStackException();}
+        else return pioche.pop();
     }
 
     public int size(){
