@@ -39,7 +39,7 @@ public class Jeu {
         routeBleue=new Route(4,Couleur.Bleu);
         piocheDestinationCourte=new PiocheDestinationCourte();
         piocheDestinationLongue=new PiocheDestinationLongue();
-        moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
+        //moteurDeJeu =  new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
         for(int i=0;i<4;i++){
             robotBleu.piocher(moteurDeJeu);
             robotRouge.piocher(moteurDeJeu);
