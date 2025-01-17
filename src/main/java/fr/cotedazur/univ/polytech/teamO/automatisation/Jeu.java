@@ -49,7 +49,7 @@ public class Jeu {
         piocheDestinationLongue=new PiocheDestinationLongue();
 
         moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
-
+        gestionEtatJeu= new GestionEtatJeu(map);
         for(int i=0;i<4;i++){
             robotBleu.piocher(moteurDeJeu);
             robotRouge.piocher(moteurDeJeu);
@@ -68,11 +68,9 @@ public class Jeu {
         Random rand = new Random();
         choix=rand.nextInt(2)+1;
         if (choix==1){
-            while(!pioche.getPioche().isEmpty()){
-                robot.piocher(moteurDeJeu);
-                System.out.println("Le robot "+robot.getCouleur().name()+" a pioché "+robot.getMain().getMainDeCartes().getLast());
-            }
-
+            robot.piocher(moteurDeJeu);
+            System.out.println(pioche.getPioche().size());
+            System.out.println("Le robot "+robot.getCouleur().name()+" a pioché "+robot.getMain().getMainDeCartes().getLast());
         }
         if (choix==2){
                     Trajet trajetRandom=map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
@@ -83,8 +81,6 @@ public class Jeu {
     }
 
     public static void endofGame(){
-        map=new Map();
-        gestionEtatJeu=new GestionEtatJeu(map);
         gestionEtatJeu.isDestinationsCardCompleted(robots);
         for(Robot robot:robots){
             gestionEtatJeu.updateScoreCarteDestination(robot);
@@ -96,11 +92,12 @@ public class Jeu {
         robots.add(robotJaune);
         robots.add(robotBleu);
         robots.add(robotRouge);
-        while(!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune))){
+        while(!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune) || pioche.getPioche().isEmpty())){
             randomAction(robotBleu);
             randomAction(robotRouge);
             randomAction(robotJaune);
         }
+        //System.out.println("Coucou");
         endofGame();
         ranking=new Ranking(robots);
         System.out.println(ranking);
