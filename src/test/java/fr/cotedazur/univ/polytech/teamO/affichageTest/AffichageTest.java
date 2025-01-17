@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AffichageTest {
-    /*private Affichage affichage;
+    private Affichage affichage;
     private Robot robot;
     private CarteWagon carteWagonBleu;
     private CarteDestination carteDestinationAugsburgBerlin;
@@ -24,7 +24,8 @@ public class AffichageTest {
     void setUp() {
         affichage = new Affichage();
         robot = new Robot(Couleur.Marron);
-        carteDestinationAugsburgBerlin = new CarteDestination(Couleur.Noir, villeAugsburg, villeBerlin, 15);
+        carteDestinationAugsburgBerlin = new CarteDestination(Couleur.Marron, villeAugsburg, villeBerlin, 15);
+        carteWagonBleu = new CarteWagon(Couleur.Bleu);
     }
 
     @Test
@@ -46,5 +47,5 @@ public class AffichageTest {
         String expected = "Le  à réussie la carte destination : Marron entre Augsburg et Berlin et ajoute 15 au score.";
         String actual = affichage.afficheCheckCarteDestinationOK(robot, carteDestinationAugsburgBerlin);
         assertEquals(expected, actual);
-    }*/
+    }
 }
