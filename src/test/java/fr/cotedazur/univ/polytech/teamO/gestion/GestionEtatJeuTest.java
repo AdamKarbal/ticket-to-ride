@@ -2,7 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.gestion;
 
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
+import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Map;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
@@ -26,8 +26,10 @@ class GestionEtatJeuTest {
     List<Trajet> trajetList;
     Robot robot;
     CarteDestination berlinRostockDestination;
+    MoteurDeJeu moteurDeJeu;
     @BeforeEach
     void setUp() {
+        moteurDeJeu=new MoteurDeJeu(new Pioche<>(),new PiocheSurTable<>(),new PiocheDestinationLongue(),new PiocheDestinationCourte());
         map=new Map();
         gestionEtatJeu=new GestionEtatJeu(map);
         routeOrange=new Route(4,Couleur.Orange);
@@ -35,6 +37,9 @@ class GestionEtatJeuTest {
         robot= new Robot(Couleur.Rouge);
         berlinRostock=new Trajet(Ville.Berlin,Ville.Rostock,routeViolet);
         rostockKiel=new Trajet(Ville.Rostock,Ville.Kiel,routeViolet);
+        trajetList=new ArrayList<>();
+        trajetList.add(berlinRostock);
+        trajetList.add(rostockKiel);
         berlinRostockDestination= new CarteDestination(Couleur.Marron,Ville.Berlin,Ville.Rostock,22);
     }
     @Test
@@ -47,7 +52,7 @@ class GestionEtatJeuTest {
     void completeDestinationCard(){
         robot.addTrajetDone(berlinRostock);
         robot.addTrajetDone(rostockKiel);
-        robot.chooseDestination(berlinRostockDestination);
+        robot.chooseDestinations(moteurDeJeu);
         gestionEtatJeu.isDestinationsCardCompleted(new ArrayList<>(Arrays.asList(robot)));
         gestionEtatJeu.updateScoreCarteDestination(robot);
         assertEquals(robot.getScore().getNbPoints(),22);

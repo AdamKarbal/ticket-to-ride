@@ -93,6 +93,7 @@ public class Robot implements Comparable<Robot> {
     public void refuseDestinations(MoteurDeJeu g){
         Random rand = new Random();
         int choice = rand.nextInt(2);
+        g.removeDestinationsCard(this,choice);
 
 
     }
