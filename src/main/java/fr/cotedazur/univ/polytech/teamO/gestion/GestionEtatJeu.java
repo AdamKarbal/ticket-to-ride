@@ -21,9 +21,6 @@ public class GestionEtatJeu {
             else robot.getScore().addNbPoints(carteDestination.getValue());
         }
     }
-    public boolean isVoisin(Map map, Ville v1,Ville v2){
-        return map.getMap().get(v1).containsKey(v2);
-    }
 
     public void isDestinationsCardCompleted(List<Robot> robots) {
         for (Robot robot : robots) {
@@ -60,7 +57,7 @@ public class GestionEtatJeu {
             Ville current = queue.poll();
             visited.add(current);
 
-            for(Ville voisin : subgraph.keySet()){
+            for(Ville voisin : subgraph.get(current).keySet()){
                 if(voisin.equals(to)){ return true;}
                 if(!visited.contains(voisin)){ queue.add(voisin);}
             }
