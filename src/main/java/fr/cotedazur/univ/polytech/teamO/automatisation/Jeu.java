@@ -92,7 +92,7 @@ public class Jeu {
         robots.add(robotJaune);
         robots.add(robotBleu);
         robots.add(robotRouge);
-        while (!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune)||pioche.getPioche().isEmpty())){
+        while (!pioche.getPioche().isEmpty()){
             randomAction(robotBleu);
             randomAction(robotRouge);
             randomAction(robotJaune);

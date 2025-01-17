@@ -20,7 +20,7 @@ public class MoteurDeJeu {
     private PiocheSurTable piocheSurTable;
     private PiocheDestinationLongue piocheDestinationLongue;
     private PiocheDestinationCourte piocheDesinationCourte;
-    public MoteurDeJeu(Pioche pioche, PiocheSurTable piocheSurTable) {
+    public MoteurDeJeu(Pioche pioche, PiocheSurTable piocheSurTable, PiocheDestinationLongue piocheDestinationLongue, PiocheDestinationCourte piocheDesinationCourte) {
         this.pioche = pioche;
         this.piocheSurTable = piocheSurTable;
         this.piocheDestinationLongue = new PiocheDestinationLongue();
