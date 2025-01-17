@@ -68,7 +68,7 @@ public class Jeu {
         Random rand = new Random();
         choix=rand.nextInt(2)+1;
         if (choix==1){
-            while(!pioche.getPioche().isEmpty()){
+            if(!pioche.getPioche().isEmpty()){
                 robot.piocher(moteurDeJeu);
                 System.out.println("Le robot "+robot.getCouleur().name()+" a pioché "+robot.getMain().getMainDeCartes().getLast());
             }
@@ -96,7 +96,7 @@ public class Jeu {
         robots.add(robotJaune);
         robots.add(robotBleu);
         robots.add(robotRouge);
-        while(!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune))){
+        while (!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune))){
             randomAction(robotBleu);
             randomAction(robotRouge);
             randomAction(robotJaune);
