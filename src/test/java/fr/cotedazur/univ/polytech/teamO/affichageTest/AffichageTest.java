@@ -24,7 +24,8 @@ public class AffichageTest {
     void setUp() {
         affichage = new Affichage();
         robot = new Robot(Couleur.Marron);
-        carteDestinationAugsburgBerlin = new CarteDestination(Couleur.Noir, villeAugsburg, villeBerlin, 15);
+        carteDestinationAugsburgBerlin = new CarteDestination(Couleur.Marron, villeAugsburg, villeBerlin, 15);
+        carteWagonBleu = new CarteWagon(Couleur.Bleu);
     }
 
     @Test
