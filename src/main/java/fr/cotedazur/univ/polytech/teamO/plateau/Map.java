@@ -410,6 +410,7 @@ public class Map {
     public ArrayList<Trajet> getTrajets() {
         return trajets;
     }
+
     public HashMap<Ville, HashMap<Ville,Integer>> getMap() {
         return map;
     }
@@ -431,6 +432,7 @@ public class Map {
     public HashMap<Ville,Integer> getVillesFrom(Ville ville) {
         return map.get(ville);
     }
+
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
