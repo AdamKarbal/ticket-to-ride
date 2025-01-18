@@ -52,7 +52,7 @@ public class CarteDestination extends Carte {
         String str ="";
         if(isLongue())str+="longue";
         else str+="courte";
-        return "Carte destination "+str+": de "+getVille1()+" à "+getVille2();
+        return "Carte destination "+str+" entre "+getVille1()+" et "+getVille2();
     }
 
     @Override

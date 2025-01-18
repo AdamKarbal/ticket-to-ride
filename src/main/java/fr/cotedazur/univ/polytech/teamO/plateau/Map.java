@@ -410,6 +410,7 @@ public class Map {
     public ArrayList<Trajet> getTrajets() {
         return trajets;
     }
+
     public HashMap<Ville, HashMap<Ville,Integer>> getMap() {
         return map;
     }
