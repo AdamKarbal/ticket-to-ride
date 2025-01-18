@@ -3,10 +3,14 @@ package fr.cotedazur.univ.polytech.teamO.gestion;
 import fr.cotedazur.univ.polytech.teamO.affichage.Affichage;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
+import java.util.Scanner;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,12 +18,15 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MoteurDeJeu {
+
     // Ajouter ici tous les trucs relatifs aux actions du joueur
     private Affichage affichage;
     private Pioche pioche;
     private PiocheSurTable piocheSurTable;
     private PiocheDestinationLongue piocheDestinationLongue;
     private PiocheDestinationCourte piocheDesinationCourte;
+    private Scanner scanner = new Scanner(System.in);
+
     public MoteurDeJeu(Pioche pioche, PiocheSurTable piocheSurTable, PiocheDestinationLongue piocheDestinationLongue, PiocheDestinationCourte piocheDesinationCourte) {
         this.pioche = pioche;
         this.piocheSurTable = piocheSurTable;
@@ -122,6 +129,12 @@ public class MoteurDeJeu {
         }
     }
 
+    public void poseTrainPUp(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi){
+        poseTrain(robot,trajet);
+        robot.setTaking(true);
+        TakeMeeples(robot, trajet, villeChoisie, meepleChoisi);
+    }
+
     public boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
         return robot.getNbWagons()<2;
     }
@@ -146,6 +159,13 @@ public class MoteurDeJeu {
         // et après j'attribue les points avec l'autre fonction.
         for(CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()){
 
+        }
+    }
+
+    public void TakeMeeples(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi){
+        if(villeChoisie == trajet.getFrom() || villeChoisie == trajet.getTo()){
+            robot.addMeeple(meepleChoisi);
+            villeChoisie.getPassagers().remove(meepleChoisi);
         }
     }
 }
