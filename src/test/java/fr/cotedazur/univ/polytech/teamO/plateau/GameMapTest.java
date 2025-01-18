@@ -11,16 +11,16 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class MapTest {
+public class GameMapTest {
 
-    Map map;
+    GameMap gameMap;
     GestionEtatJeu gestionEtatJeu;
     //Initialisation
 
     @BeforeEach
     public void testInit(){
-        map = new Map();
-        gestionEtatJeu = new GestionEtatJeu(map);
+        gameMap = new GameMap();
+        gestionEtatJeu = new GestionEtatJeu(gameMap);
     }
 
     /*@Test
@@ -30,20 +30,20 @@ public class MapTest {
 
     @Test
     void villeDispos(){
-        assertEquals(map.getVillesFrom(Ville.Ulm).size(),3);
-        assertEquals(map.getVillesFrom(Ville.Ulm),new ArrayList<>(Arrays.asList(Ville.Stuttgart,Ville.Augsburg,Ville.Lindau)));
+        assertEquals(gameMap.getVillesFrom(Ville.Ulm).size(),3);
+        assertEquals(gameMap.getVillesFrom(Ville.Ulm),new ArrayList<>(Arrays.asList(Ville.Stuttgart,Ville.Augsburg,Ville.Lindau)));
     }
 
     @Test
     void trajetsExistants(){
-        System.out.println(map);
+        System.out.println(gameMap);
     }
 
     @Test
     void ajouterTrajetTest() {
-            map.ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 2, Couleur.Default );
-            map.ajouterTrajet(Ville.Ulm, Ville.Augsburg, 2, Couleur.Rouge );
-        assertEquals(111, map.getTrajets().size());
+            gameMap.ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 2, Couleur.Default );
+            gameMap.ajouterTrajet(Ville.Ulm, Ville.Augsburg, 2, Couleur.Rouge );
+        assertEquals(111, gameMap.getTrajets().size());
     }
 
     @Test

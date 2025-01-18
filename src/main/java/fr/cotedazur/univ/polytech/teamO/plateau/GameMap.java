@@ -6,14 +6,14 @@ import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
 
 import java.util.*;
 
-public class Map {
+public class GameMap {
 
     //Instance
     private HashMap<Ville, HashMap<Ville,Integer>> map;
     private ArrayList<Trajet> trajets;
 
     //Constructeur
-    public Map(){
+    public GameMap(){
         this.map= new HashMap<>();
         this.trajets = new ArrayList<>();
         init();
