@@ -5,8 +5,6 @@ import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.Carte;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
-import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
-import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 
 public class Affichage {
@@ -14,6 +12,7 @@ public class Affichage {
     //Constructeur
 
     public Affichage(){
+        // c'est bon :)
     }
     //Adam
     public String affichePiocher(Robot robot, Carte carte){
@@ -29,7 +28,7 @@ public class Affichage {
     }
     //Younes
     public String affichePoseTrain(Robot robot, Trajet trajet){
-        String disp = "" + robot + " a posé un train de "+ trajet.getRoute().getNbCases() +" wagons entre " + trajet.getFrom() +" et " + trajet.getTo() + ".\n";
+        String disp = robot + " a posé un train de "+ trajet.getRoute().getNbCases() +" wagons entre " + trajet.getFrom() +" et " + trajet.getTo() + ".\n";
         System.out.print(disp);
         return disp;
     }

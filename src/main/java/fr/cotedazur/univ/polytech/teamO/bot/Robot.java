@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughtWagonCard;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
@@ -78,6 +79,7 @@ public class Robot implements Comparable<Robot> {
     public List<Trajet> getTrajet() { return trajets; }
     public void addTrajetDone(Trajet trajet){ trajets.add(trajet); }
     // Actions du joueur
+
     public void piocher(MoteurDeJeu g){
         Carte carte=g.piocher(this);
         getMain().addCarte(carte);//piocher
@@ -88,7 +90,7 @@ public class Robot implements Comparable<Robot> {
         getMain().addCarte(carte);
     }
 
-    public void chooseDestinations( MoteurDeJeu g){
+    public void chooseDestinations( MoteurDeJeu g){ // A CHANGER PRCK ALEATOIRE
         Random rand = new Random();
         int choice = rand.nextInt(2)+1;
         //Logique
@@ -104,7 +106,7 @@ public class Robot implements Comparable<Robot> {
 
     }
 
-    public void poseTrain(Trajet trajet, MoteurDeJeu g){
+    public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughtWagonCard {
         g.poseTrain(this,trajet);
     }
 

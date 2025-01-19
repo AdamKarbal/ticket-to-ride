@@ -4,14 +4,13 @@ import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionEtatJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughtWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Map;
-import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-import java.util.List;
 import java.util.Random;
 
 
@@ -22,15 +21,12 @@ public class Jeu {
     static ArrayList<Robot> robots;
     static Ranking ranking;
     static MoteurDeJeu moteurDeJeu;
-    static Pioche pioche;
-    static PiocheSurTable piocheSurTable;
+    static Pioche<CarteWagon> pioche;
+    static PiocheSurTable<CarteWagon> piocheSurTable;
     static PiocheDestinationCourte piocheDestinationCourte;
     static PiocheDestinationLongue piocheDestinationLongue;
     static Map map;
     static GestionEtatJeu gestionEtatJeu;
-    public static String hello() {
-        return "Hello World!";
-    }
 
     public static void setup() throws Exception {
         robotBleu=new Robot(Couleur.Bleu);
@@ -42,10 +38,10 @@ public class Jeu {
         robots.add(robotJaune);
 
 
-        pioche = new Pioche();
+        pioche = new Pioche<>();
 
         map = new Map();
-        piocheSurTable = new PiocheSurTable();
+        piocheSurTable = new PiocheSurTable<>();
         piocheDestinationCourte=new PiocheDestinationCourte();
         piocheDestinationLongue=new PiocheDestinationLongue();
 
@@ -64,7 +60,7 @@ public class Jeu {
             robot.refuseDestinations(moteurDeJeu);
         }
     }
-    public static void randomAction(Robot robot){
+    public static void randomAction(Robot robot) throws NotEnoughtWagonCard {
         int choix;
         Random rand = new Random();
         choix=rand.nextInt(2)+1;

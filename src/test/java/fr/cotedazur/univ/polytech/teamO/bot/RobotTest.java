@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughtWagonCard;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
@@ -101,7 +102,7 @@ class RobotTest {
         System.out.println(robot.getWagonByCouleur());
     }
     @Test
-    void poseTrain(){
+    void poseTrain() throws NotEnoughtWagonCard {
         for(int i=0;i<120;i++){
             robot.piocher(moteurDeJeu);
         }
