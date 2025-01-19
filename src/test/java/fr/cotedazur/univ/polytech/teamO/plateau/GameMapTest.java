@@ -20,7 +20,6 @@ public class GameMapTest {
     @BeforeEach
     public void testInit(){
         gameMap = new GameMap();
-        gestionEtatJeu = new GestionEtatJeu(gameMap);
     }
 
     /*@Test
