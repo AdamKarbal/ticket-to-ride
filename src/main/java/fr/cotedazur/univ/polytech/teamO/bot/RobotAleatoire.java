@@ -2,7 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
-import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughtWagonCard;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.plateau.Map;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 
@@ -14,7 +14,7 @@ public class RobotAleatoire extends Robot {
         super(couleur);
     }
 
-    public void chooseaction(MoteurDeJeu moteurDeJeu,Map map) throws NotEnoughtWagonCard {
+    public void chooseaction(MoteurDeJeu moteurDeJeu,Map map) throws NotEnoughWagonCard {
         int choix;
         Random rand = new Random();
         choix=rand.nextInt(4)+1;

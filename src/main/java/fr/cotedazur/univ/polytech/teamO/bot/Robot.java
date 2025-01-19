@@ -2,7 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughtWagonCard;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
@@ -106,7 +106,7 @@ public class Robot implements Comparable<Robot> {
 
     }
 
-    public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughtWagonCard {
+    public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughWagonCard {
         g.poseTrain(this,trajet);
     }
 

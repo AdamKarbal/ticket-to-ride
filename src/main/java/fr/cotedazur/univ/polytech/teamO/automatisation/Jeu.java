@@ -4,7 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionEtatJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
-import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughtWagonCard;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Map;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
@@ -60,7 +60,7 @@ public class Jeu {
             robot.refuseDestinations(moteurDeJeu);
         }
     }
-    public static void randomAction(Robot robot) throws NotEnoughtWagonCard {
+    public static void randomAction(Robot robot) throws NotEnoughWagonCard {
         int choix;
         Random rand = new Random();
         choix=rand.nextInt(2)+1;
