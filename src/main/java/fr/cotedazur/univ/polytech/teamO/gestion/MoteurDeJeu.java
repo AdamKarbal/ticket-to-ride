@@ -52,7 +52,7 @@ public class MoteurDeJeu {
             robot.setTurnOver(true);
         }
         Carte carte=getPioche().piocher();
-        affichage.affichePiocher(robot,carte);
+        //affichage.affichePiocher(robot,carte);
         robot.getWagonByCouleur().put(carte.getCouleur(),robot.getWagonByCouleur().get(carte.getCouleur())+1);
         return carte;
     }
@@ -111,14 +111,16 @@ public class MoteurDeJeu {
     public void poseTrain(Robot robot, Trajet trajet){
         Route route=trajet.getRoute();
         Couleur couleurRoute=route.getCouleur();
-        if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
+        if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){ // x réprésentera le nombre de wagons posés dans le tour
             route.setAvailable(false);
-            robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases());
-            robot.getScore().addNbPoints(TableauDesScores.getValue(route.getNbCases()));
+            robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases()); //enlève x nombre de wagons de la couleur correspondante
+            robot.getScore().addNbPoints(TableauDesScores.getValue(route.getNbCases())); // ajoute le score correspondant à x
             for(int i=0;i<route.getNbCases();i++){
-                robot.getMain().removeCarte(new CarteWagon((couleurRoute)));
+                robot.getMain().removeCarte(new CarteWagon((couleurRoute))); //va enlever x carte carteWagon de la main du joueur
             }
-            robot.removeNbWagons(route.getNbCases());
+            robot.removeNbWagons(route.getNbCases()); // décremente de x le nombre de wagons total du joueur
+            robot.addTrajetDone(trajet); // ajoute le trajet aux trajets déjà faits du joueur
+            affichage.affichePoseTrain(robot,trajet);
         }
     }
 

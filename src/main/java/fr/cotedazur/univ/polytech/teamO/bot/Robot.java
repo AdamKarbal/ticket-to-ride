@@ -1,6 +1,4 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
-
-
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
@@ -63,9 +61,6 @@ public class Robot implements Comparable<Robot> {
     public Couleur getCouleur() {
         return couleur;
     }
-    /*public void chooseDestination(CarteDestination destination){
-        destinations.addCarte(destination);
-    }*/
     public int getPlayerScore(){
         return score.getNbPoints();
     }
@@ -85,7 +80,6 @@ public class Robot implements Comparable<Robot> {
     public void chooseDestinations( MoteurDeJeu g){
         Random rand = new Random();
         int choice = rand.nextInt(2)+1;
-        //Logique
         CarteDestination carteDestinationPioche=g.giveDestinationsCard(this,choice);
         getDestinations().addCarte(carteDestinationPioche);
     }
@@ -94,8 +88,6 @@ public class Robot implements Comparable<Robot> {
         Random rand = new Random();
         int choice = rand.nextInt(2);
         g.removeDestinationsCard(this,choice);
-
-
     }
 
     public void poseTrain(Trajet trajet, MoteurDeJeu g){
