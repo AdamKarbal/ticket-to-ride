@@ -3,15 +3,14 @@ import fr.cotedazur.univ.polytech.teamO.bot.*;
 import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionEtatJeu;
+import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
-import fr.cotedazur.univ.polytech.teamO.plateau.Map;
-import fr.cotedazur.univ.polytech.teamO.plateau.Route;
+import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-import java.util.List;
 import java.util.Random;
 
 
@@ -26,8 +25,9 @@ public class Jeu {
     static PiocheSurTable piocheSurTable;
     static PiocheDestinationCourte piocheDestinationCourte;
     static PiocheDestinationLongue piocheDestinationLongue;
-    static Map map;
+    static GameMap gameMap;
     static GestionEtatJeu gestionEtatJeu;
+    static GestionTrajets gestionTrajets;
     public static String hello() {
         return "Hello World!";
     }
@@ -40,17 +40,14 @@ public class Jeu {
         robots.add(robotBleu);
         robots.add(robotRouge);
         robots.add(robotJaune);
-
-
         pioche = new Pioche();
-
-        map = new Map();
+        gameMap = new GameMap();
         piocheSurTable = new PiocheSurTable();
         piocheDestinationCourte=new PiocheDestinationCourte();
         piocheDestinationLongue=new PiocheDestinationLongue();
-
         moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
-        gestionEtatJeu=new GestionEtatJeu(map);
+        gestionTrajets = new GestionTrajets(gameMap);
+        gestionEtatJeu=new GestionEtatJeu(gestionTrajets);
 
         for(int i=0;i<4;i++){
             robotBleu.piocher(moteurDeJeu);
@@ -74,7 +71,7 @@ public class Jeu {
 
         }
         if (choix==2){
-                    Trajet trajetRandom=map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
+                    Trajet trajetRandom= gameMap.getTrajets().get(rand.nextInt(gameMap.getTrajets().size()));
                     robot.poseTrain(trajetRandom, moteurDeJeu);
                     System.out.println("Le robot "+robot.getCouleur().name()+" a posé une route sur le trajet "+trajetRandom);
                     System.out.println(robot.getNbWagons()+" "+robot.getCouleur().name());
@@ -90,10 +87,6 @@ public class Jeu {
 
     public static void play () throws Exception{
         setup();
-        robots=new ArrayList<>();
-        robots.add(robotJaune);
-        robots.add(robotBleu);
-        robots.add(robotRouge);
         while (!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune)||pioche.getPioche().isEmpty())){
             try{
                 randomAction(robotBleu);
@@ -107,7 +100,6 @@ public class Jeu {
         endofGame();
         ranking=new Ranking(robots);
         System.out.println(ranking);
-
     }
 
 }

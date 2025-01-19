@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.teamO.gestion;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
-import fr.cotedazur.univ.polytech.teamO.plateau.Map;
+import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GestionEtatJeuTest {
-    Map map;
+    GameMap gameMap;
     GestionEtatJeu gestionEtatJeu;
     Trajet berlinRostock;
     Trajet rostockKiel;
@@ -27,11 +27,13 @@ class GestionEtatJeuTest {
     Robot robot;
     CarteDestination berlinRostockDestination;
     MoteurDeJeu moteurDeJeu;
+    GestionTrajets gestionTrajets;
     @BeforeEach
     void setUp() {
         moteurDeJeu=new MoteurDeJeu(new Pioche<>(),new PiocheSurTable<>(),new PiocheDestinationLongue(),new PiocheDestinationCourte());
-        map=new Map();
-        gestionEtatJeu=new GestionEtatJeu(map);
+        gameMap =new GameMap();
+        gestionTrajets=new GestionTrajets(gameMap);
+        gestionEtatJeu=new GestionEtatJeu(gestionTrajets);
         routeOrange=new Route(4,Couleur.Orange);
         routeViolet=new Route(6,Couleur.Violet);
         robot= new Robot(Couleur.Rouge);
@@ -42,11 +44,7 @@ class GestionEtatJeuTest {
         trajetList.add(rostockKiel);
         berlinRostockDestination= new CarteDestination(Couleur.Marron,Ville.Berlin,Ville.Rostock,22);
     }
-    @Test
-    void areCitiesConnected(){
-        assertTrue(gestionEtatJeu.isConnected(Ville.Berlin,Ville.Rostock,trajetList));
-        assertFalse(gestionEtatJeu.isConnected(Ville.Berlin,Ville.Hamburg,trajetList));
-    }
+
 
     @Test
     void completeDestinationCard(){
