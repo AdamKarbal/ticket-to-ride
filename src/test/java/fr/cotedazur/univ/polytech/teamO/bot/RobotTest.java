@@ -42,7 +42,7 @@ class RobotTest {
         carteBleue = new CarteWagon(Couleur.Bleu);
         carteJaune = new CarteWagon(Couleur.Jaune);
         carteRouge = new CarteWagon(Couleur.Rouge);
-        //moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
+        moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
         taillePiocheInit= moteurDeJeu.getPioche().size();
         routeBleue= new Route(1,Couleur.Bleu);
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);
@@ -105,8 +105,9 @@ class RobotTest {
         for(int i=0;i<120;i++){
             robot.piocher(moteurDeJeu);
         }
-        System.out.println(robot.getWagonByCouleur());
         robot.poseTrain(trajet, moteurDeJeu);
+        assertTrue(trajet.isDone());
+        assertEquals(robot.getWagonByCouleur().get(trajet.getRoute().getCouleur()),12-trajet.getRoute().getNbCases());
         assertEquals(robot.getTrajet().size(),1);
         assertEquals(robot.getTrajet(),new ArrayList<>(Arrays.asList(trajet)));
         assertEquals(routeBleue.isAvailable(),false);
