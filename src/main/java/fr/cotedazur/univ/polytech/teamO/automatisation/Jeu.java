@@ -94,13 +94,13 @@ public class Jeu {
         robots.add(robotJaune);
         robots.add(robotBleu);
         robots.add(robotRouge);
-        while (!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune)||pioche.getPioche().isEmpty())){
+        while (!(moteurDeJeu.isFinished(robots))){
             try{
                 randomAction(robotBleu);
                 randomAction(robotRouge);
                 randomAction(robotJaune);
             } catch (EmptyStackException e){
-                break;
+                moteurDeJeu.replacePiocheByDefausse();
             }
 
         }

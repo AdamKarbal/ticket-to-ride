@@ -22,6 +22,7 @@ public class MoteurDeJeu {
     // Ajouter ici tous les trucs relatifs aux actions du joueur
     private Affichage affichage;
     private Pioche pioche;
+    private Pioche defaussePioche;
     private PiocheSurTable piocheSurTable;
     private PiocheDestinationLongue piocheDestinationLongue;
     private PiocheDestinationCourte piocheDesinationCourte;
@@ -33,6 +34,8 @@ public class MoteurDeJeu {
         this.piocheDestinationLongue = new PiocheDestinationLongue();
         this.piocheDesinationCourte = new PiocheDestinationCourte();
         this.affichage = new Affichage();
+        this.defaussePioche = new Pioche();
+        this.defaussePioche.viderPioche();
     }
     // Accesseurs et setters
 
@@ -85,6 +88,11 @@ public class MoteurDeJeu {
         }
         return cartePiochee;
     }
+
+    public void replacePiocheByDefausse(){
+        pioche=defaussePioche;
+    }
+
     public CarteDestination giveDestinationsCard(Robot robot, int choice){
         CarteDestination carteDestinationL=piocheDestinationLongue.peekCartesDestinationLongue();
         CarteDestination carteDestinationC=piocheDesinationCourte.peekCartesDestinationCourtes();
@@ -123,7 +131,10 @@ public class MoteurDeJeu {
             robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases());
             robot.getScore().addNbPoints(TableauDesScores.getValue(route.getNbCases()));
             for(int i=0;i<route.getNbCases();i++){
-                robot.getMain().removeCarte(new CarteWagon((couleurRoute)));
+                CarteWagon carteWagon=new CarteWagon(couleurRoute);
+                robot.getMain().removeCarte(carteWagon);
+                defaussePioche.getPioche().push(carteWagon);
+
             }
             robot.removeNbWagons(route.getNbCases());
         }
@@ -135,8 +146,11 @@ public class MoteurDeJeu {
         TakeMeeples(robot, trajet, villeChoisie, meepleChoisi);
     }
 
-    public boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
-        return robot.getNbWagons()<2;
+    public boolean isFinished(List<Robot> robots){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
+        for(Robot robot:robots){
+            if(robot.getNbWagons()<2)return true;
+        }
+        return false;
     }
 
     public void checkCarteDestination(Robot robot) {

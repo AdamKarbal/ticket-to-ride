@@ -44,6 +44,10 @@ public class Pioche<T extends Carte> {
         else return pioche.pop();
     }
 
+    public void viderPioche(){
+        if(!pioche.empty())pioche.clear();
+    }
+
     public int size(){
         return pioche.size();
     }
