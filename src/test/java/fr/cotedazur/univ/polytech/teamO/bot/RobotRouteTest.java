@@ -34,14 +34,14 @@ class RobotRouteTest {
         piocheDestinationLongue=new PiocheDestinationLongue();
         map=new GameMap();
         moteurDeJeu= new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
+        gestionTrajets=new GestionTrajets(map);
         gestionEtatJeu=new GestionEtatJeu(gestionTrajets);
+        for(int i=0;i<120;i++) robotRouteBleu.piocher(moteurDeJeu);
     }
 
     @Test
     void testShortestPath(){
         robotRouteBleu.chooseDestinations(moteurDeJeu);
-        System.out.println(robotRouteBleu.getDestinations());
-        for(int i=0;i<120;i++) robotRouteBleu.piocher(moteurDeJeu);
         robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu);
         assertTrue(robotRouteBleu.getTrajet().size()==1);
         assertTrue(robotRouteBleu.getTrajet().get(0).isDone());

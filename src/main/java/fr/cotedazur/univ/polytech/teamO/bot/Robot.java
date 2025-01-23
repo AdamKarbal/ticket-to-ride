@@ -11,7 +11,7 @@ import java.util.*;
 public class Robot implements Comparable<Robot> {
 
     private Score score;
-    private Couleur couleur;
+    private final Couleur couleur;
     private MainJoueur<CarteDestination> destinations;
     private MainJoueur main;
     private boolean turnOver;
@@ -36,6 +36,9 @@ public class Robot implements Comparable<Robot> {
     public MainJoueur getMain() {
         return main;
     }
+    public void chooseDestination(CarteDestination destination) {
+        this.destinations.addCarte(destination);
+    }
     public MainJoueur<CarteDestination> getDestinations() {
         return destinations;}
     public Score getScore(){
@@ -56,16 +59,24 @@ public class Robot implements Comparable<Robot> {
     public HashMap<Couleur,Integer> getWagonByCouleur() {
         return wagonByCouleur;
     }
-    public int getNbWagons() { return nbWagons; }
-    public void removeNbWagons(int nbWagons) { this.nbWagons-=nbWagons; }
+    public int getNbWagons() {
+        return nbWagons;
+    }
+    public void removeNbWagons(int nbWagons) {
+        this.nbWagons-=nbWagons;
+    }
     public Couleur getCouleur() {
         return couleur;
     }
     public int getPlayerScore(){
         return score.getNbPoints();
     }
-    public List<Trajet> getTrajet() { return trajets; }
-    public void addTrajetDone(Trajet trajet){ trajets.add(trajet); }
+    public List<Trajet> getTrajet() {
+        return trajets;
+    }
+    public void addTrajetDone(Trajet trajet){
+        trajets.add(trajet);
+    }
     // Actions du joueur
     public void piocher(MoteurDeJeu g){
         Carte carte=g.piocher(this);

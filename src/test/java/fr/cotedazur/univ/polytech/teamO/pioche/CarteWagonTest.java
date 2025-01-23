@@ -32,8 +32,8 @@ public class CarteWagonTest {
 
     @Test
     void testAffichageNom(){
-        assertEquals("Carte Wagon de Couleur : Noir",CarteWagonNoirValide.getNom());
-        assertEquals("Carte Wagon de Couleur : Rouge",CarteWagonRougeValide.getNom());
-        assertEquals("Carte Wagon de Couleur : Bleu",CarteWagonBleuValide.getNom());
+        assertEquals("CarteWagon de Couleur : Noir",CarteWagonNoirValide.getNom());
+        assertEquals("CarteWagon de Couleur : Rouge",CarteWagonRougeValide.getNom());
+        assertEquals("CarteWagon de Couleur : Bleu",CarteWagonBleuValide.getNom());
     }
 }

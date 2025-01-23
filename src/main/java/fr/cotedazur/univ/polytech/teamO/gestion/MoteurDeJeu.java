@@ -79,8 +79,8 @@ public class MoteurDeJeu {
         return cartePiochee;
     }
     public CarteDestination giveDestinationsCard(Robot robot, int choice){
-        CarteDestination carteDestinationL=piocheDestinationLongue.peekCartesDestinationLongue();
-        CarteDestination carteDestinationC=piocheDesinationCourte.peekCartesDestinationCourtes();
+        CarteDestination carteDestinationL=piocheDestinationLongue.popCartesDestinationLongue();
+        CarteDestination carteDestinationC=piocheDesinationCourte.popCartesDestinationCourtes(); // devrait être pop ?
         if(choice==1)return carteDestinationC;
         if(choice==2)return carteDestinationL;
         else return null;
@@ -95,7 +95,7 @@ public class MoteurDeJeu {
             if(carteDestination.isLongue())piocheDestinationLongue.pushCartesDestinationLongues(carteDestination);
             else piocheDesinationCourte.pushCartesDestinationCourtes(carteDestination);
         }//Remet dans la pioche correspondante
-        Collections.shuffle(piocheDesinationCourte.getCartesDestinationCourtes());
+        Collections.shuffle(piocheDesinationCourte.getCartesDestinationCourtes()); // shuffle dans la pioche correspondante directement ?
         Collections.shuffle(piocheDestinationLongue.getCartesDestinationLongues());
 
 
@@ -111,7 +111,8 @@ public class MoteurDeJeu {
     public void poseTrain(Robot robot, Trajet trajet){
         Route route=trajet.getRoute();
         Couleur couleurRoute=route.getCouleur();
-        if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){ // x réprésentera le nombre de wagons posés dans le tour
+        // x réprésentera le nombre de wagons posés dans le tour
+        if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
             route.setAvailable(false);
             robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases()); //enlève x nombre de wagons de la couleur correspondante
             robot.getScore().addNbPoints(TableauDesScores.getValue(route.getNbCases())); // ajoute le score correspondant à x
@@ -125,7 +126,7 @@ public class MoteurDeJeu {
     }
 
     public boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
-        return robot.getNbWagons()<2;
+        return robot.getNbWagons()<2; // refactor pour prendre une liste de robots ?
     }
 
     public void checkCarteDestination(Robot robot) {

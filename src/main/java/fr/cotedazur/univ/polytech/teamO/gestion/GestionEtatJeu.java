@@ -24,7 +24,7 @@ public class GestionEtatJeu {
         }
     }
 
-    public void isDestinationsCardCompleted(List<Robot> robots) {
+    public void isDestinationsCardCompleted(List<Robot> robots) { // refactor cette méthode en combinant avec celle d'en haut ?
         for (Robot robot : robots) {
             for (CarteDestination card : robot.getDestinations().getMainDeCartes()) {
                 if(gestionTrajets.isConnected(card.getVille1(), card.getVille2(), robot.getTrajet()) || gestionTrajets.isConnected(card.getVille2(), card.getVille1(), robot.getTrajet())){

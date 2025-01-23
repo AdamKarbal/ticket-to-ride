@@ -5,8 +5,8 @@ import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,13 +30,14 @@ public class GameMapTest {
     @Test
     void villeDispos(){
         assertEquals(gameMap.getVillesFrom(Ville.Ulm).size(),3);
-        assertEquals(gameMap.getVillesFrom(Ville.Ulm),new ArrayList<>(Arrays.asList(Ville.Stuttgart,Ville.Augsburg,Ville.Lindau)));
+        Map<Ville, Integer> expectedMap = new HashMap<>();
+        expectedMap.put(Ville.Stuttgart, 2);
+        expectedMap.put(Ville.Augsburg, 1);
+        expectedMap.put(Ville.Lindau, 2);
+
+        assertEquals(expectedMap, gameMap.getVillesFrom(Ville.Ulm));
     }
 
-    @Test
-    void trajetsExistants(){
-        System.out.println(gameMap);
-    }
 
     @Test
     void ajouterTrajetTest() {

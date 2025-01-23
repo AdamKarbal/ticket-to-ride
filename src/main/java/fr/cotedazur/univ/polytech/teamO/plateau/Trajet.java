@@ -39,7 +39,7 @@ public class Trajet {
         if (this==obj) return true;
         if (obj==null || !(obj instanceof Trajet)) return false;
         Trajet other = (Trajet) obj;
-        return from.equals(other.from) && to.equals(other.to);
+        return from.equals(other.from) && to.equals(other.to) || from.equals(other.to) && to.equals(other.from);
     }
 
 
