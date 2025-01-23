@@ -44,6 +44,10 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
     public void removeCarte(T carte) {
         cartesSurTable.remove(carte);
     }
+
+    public int size(){
+        return cartesSurTable.size();
+    }
     public T piocher(T carte){
         if(containCarte(carte)){
             removeCarte(carte);

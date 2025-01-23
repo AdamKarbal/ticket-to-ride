@@ -18,6 +18,7 @@ public class Jeu {
     static Robot robotBleu;
     static Robot robotRouge;
     static Robot robotJaune;
+    static RobotAleatoire robotNoir;
     static ArrayList<Robot> robots;
     static Ranking ranking;
     static MoteurDeJeu moteurDeJeu;
@@ -32,10 +33,12 @@ public class Jeu {
         robotBleu=new Robot(Couleur.Bleu);
         robotRouge=new Robot(Couleur.Rouge);
         robotJaune=new Robot(Couleur.Jaune);
+        robotNoir=new RobotAleatoire(Couleur.Noir);
         robots=new ArrayList<>();
         robots.add(robotBleu);
         robots.add(robotRouge);
         robots.add(robotJaune);
+        robots.add(robotNoir);
 
 
         pioche = new Pioche<>();
@@ -52,9 +55,11 @@ public class Jeu {
             robotBleu.piocher(moteurDeJeu);
             robotRouge.piocher(moteurDeJeu);
             robotJaune.piocher(moteurDeJeu);
+            robotNoir.piocher(moteurDeJeu);
             robotBleu.chooseDestinations(moteurDeJeu);
             robotRouge.chooseDestinations(moteurDeJeu);
             robotJaune.chooseDestinations(moteurDeJeu);
+            robotNoir.chooseactionnotenought(moteurDeJeu);
         }
         for(Robot robot:robots){
             robot.refuseDestinations(moteurDeJeu);
@@ -90,11 +95,13 @@ public class Jeu {
         robots.add(robotJaune);
         robots.add(robotBleu);
         robots.add(robotRouge);
-        while (!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune)||pioche.getPioche().isEmpty())){
+        robots.add(robotNoir);
+        while (!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotNoir) || moteurDeJeu.isFinished(robotJaune)||pioche.getPioche().isEmpty())){
             try{
                 randomAction(robotBleu);
                 randomAction(robotRouge);
                 randomAction(robotJaune);
+                robotNoir.chooseaction(moteurDeJeu,map);
             } catch (EmptyStackException e){
                 break;
             }

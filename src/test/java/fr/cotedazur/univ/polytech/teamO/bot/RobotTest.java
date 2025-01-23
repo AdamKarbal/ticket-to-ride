@@ -40,7 +40,7 @@ class RobotTest {
         carteBleue = new CarteWagon(Couleur.Bleu);
         carteJaune = new CarteWagon(Couleur.Jaune);
         carteRouge = new CarteWagon(Couleur.Rouge);
-        //moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
+        moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
         taillePiocheInit= moteurDeJeu.getPioche().size();
         routeBleue= new Route(1,Couleur.Bleu);
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);

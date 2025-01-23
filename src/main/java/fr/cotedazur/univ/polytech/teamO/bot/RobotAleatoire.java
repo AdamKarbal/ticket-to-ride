@@ -17,24 +17,39 @@ public class RobotAleatoire extends Robot {
     public void chooseaction(MoteurDeJeu moteurDeJeu,Map map) throws NotEnoughWagonCard {
         int choix;
         Random rand = new Random();
-        choix=rand.nextInt(4)+1;
-        if (choix==1){
+        choix=rand.nextInt(100)+1;
+        if (1<=choix && choix<=30){
             piocher(moteurDeJeu);
         }
-        if (choix==2){
+        if (30<choix && choix<=60){
             try{
                 Trajet trajetRandom=map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
                 poseTrain(trajetRandom, moteurDeJeu);}
             finally{
-                chooseaction(moteurDeJeu, map);
+                chooseactionnotenought(moteurDeJeu);
             }
         }
-        if(choix==3){
-            choix=rand.nextInt(moteurDeJeu.getPiocheSurTable().size())+1;
-            piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(choix),moteurDeJeu);
+        if(60<choix && choix<=90){
+            int pos;
+            pos=rand.nextInt(moteurDeJeu.getPiocheSurTable().size());
+            piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(pos),moteurDeJeu);
         }
-        if(choix==4){
+        if(90<choix && choix<=100){
             chooseDestinations(moteurDeJeu);
+        }
+    }
+
+    public void chooseactionnotenought(MoteurDeJeu moteurDeJeu){
+        int choix;
+        Random rand = new Random();
+        choix=rand.nextInt(100)+1;
+        if (1<=choix && choix<=50){
+            piocher(moteurDeJeu);
+        }
+        if(choix<50 && choix<=100){
+            int pos;
+            pos=rand.nextInt(moteurDeJeu.getPiocheSurTable().size());
+            piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(pos),moteurDeJeu);
         }
     }
 
