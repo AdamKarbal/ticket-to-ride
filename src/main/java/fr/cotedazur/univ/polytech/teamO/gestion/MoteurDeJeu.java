@@ -9,13 +9,8 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
-import java.util.Scanner;
 
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class MoteurDeJeu {
 
@@ -52,20 +47,32 @@ public class MoteurDeJeu {
     }
 
     // Méthodes du jeu
-    public Carte piocher(Robot robot){
-        if(robot.getPiocheCount()==0){
-            robot.setPiocheCount(robot.getPiocheCount()+1);
-            robot.setTurnOver(false);
+    public Carte piocher(Robot robot) {
+        try {
+            if (robot.getPiocheCount() == 0) {
+                robot.setPiocheCount(robot.getPiocheCount() + 1);
+                robot.setTurnOver(false);
+            } else {
+                robot.setPiocheCount(robot.getPiocheCount() - 1);
+                robot.setTurnOver(true);
+            }
+            return piocherCarte(robot);
+        } catch (EmptyStackException e) {
+            replacePiocheByDefausse();
+            return piocherCarte(robot);
         }
-        else{
-            robot.setPiocheCount(robot.getPiocheCount()-1);
-            robot.setTurnOver(true);
-        }
-        Carte carte=getPioche().piocher();
-        affichage.affichePiocher(robot,carte);
-        robot.getWagonByCouleur().put(carte.getCouleur(),robot.getWagonByCouleur().get(carte.getCouleur())+1);
+    }
+
+    private Carte piocherCarte(Robot robot) {
+        Carte carte = getPioche().piocher();
+        affichage.affichePiocher(robot, carte);
+        robot.getWagonByCouleur().put(
+                carte.getCouleur(),
+                robot.getWagonByCouleur().get(carte.getCouleur()) + 1
+        );
         return carte;
     }
+
     public Carte piocherSurTable(Robot robot,Carte carte){
         Carte cartePiochee=getPiocheSurTable().piocher(carte);
         affichage.affichePiocherSurTable(robot,cartePiochee);
@@ -136,10 +143,11 @@ public class MoteurDeJeu {
                 defaussePioche.getPioche().push(carteWagon);
 
             }
+            affichage.affichePoseTrain(robot,trajet);
             robot.removeNbWagons(route.getNbCases());
         }
         else{
-            throw new NotEnoughWagonCard("Le " + robot + "n'as pas assez de carte wagon. \n");
+            throw new NotEnoughWagonCard(robot + "n'a pas assez de carte wagon. \n");
         }
     }
 
