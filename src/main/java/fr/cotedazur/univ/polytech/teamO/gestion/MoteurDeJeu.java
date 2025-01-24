@@ -3,10 +3,14 @@ package fr.cotedazur.univ.polytech.teamO.gestion;
 import fr.cotedazur.univ.polytech.teamO.affichage.Affichage;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
+import java.util.Scanner;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,18 +18,24 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MoteurDeJeu {
+
     // Ajouter ici tous les trucs relatifs aux actions du joueur
     private Affichage affichage;
     private Pioche pioche;
+    private Pioche defaussePioche;
     private PiocheSurTable piocheSurTable;
     private PiocheDestinationLongue piocheDestinationLongue;
     private PiocheDestinationCourte piocheDesinationCourte;
-    public MoteurDeJeu(Pioche pioche, PiocheSurTable piocheSurTable) {
+    private Scanner scanner = new Scanner(System.in);
+
+    public MoteurDeJeu(Pioche pioche, PiocheSurTable piocheSurTable, PiocheDestinationLongue piocheDestinationLongue, PiocheDestinationCourte piocheDesinationCourte) {
         this.pioche = pioche;
         this.piocheSurTable = piocheSurTable;
         this.piocheDestinationLongue = new PiocheDestinationLongue();
         this.piocheDesinationCourte = new PiocheDestinationCourte();
         this.affichage = new Affichage();
+        this.defaussePioche = new Pioche();
+        this.defaussePioche.viderPioche();
     }
     // Accesseurs et setters
 
@@ -78,6 +88,11 @@ public class MoteurDeJeu {
         }
         return cartePiochee;
     }
+
+    public void replacePiocheByDefausse(){
+        pioche=defaussePioche;
+    }
+
     public CarteDestination giveDestinationsCard(Robot robot, int choice){
         CarteDestination carteDestinationL=piocheDestinationLongue.peekCartesDestinationLongue();
         CarteDestination carteDestinationC=piocheDesinationCourte.peekCartesDestinationCourtes();
@@ -108,7 +123,7 @@ public class MoteurDeJeu {
         return carteWagonByCouleur;
     }
 
-    public void poseTrain(Robot robot, Trajet trajet){
+    public void poseTrain(Robot robot, Trajet trajet) throws NotEnoughWagonCard {
         Route route=trajet.getRoute();
         Couleur couleurRoute=route.getCouleur();
         if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
@@ -116,14 +131,29 @@ public class MoteurDeJeu {
             robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases());
             robot.getScore().addNbPoints(TableauDesScores.getValue(route.getNbCases()));
             for(int i=0;i<route.getNbCases();i++){
-                robot.getMain().removeCarte(new CarteWagon((couleurRoute)));
+                CarteWagon carteWagon=new CarteWagon(couleurRoute);
+                robot.getMain().removeCarte(carteWagon);
+                defaussePioche.getPioche().push(carteWagon);
+
             }
             robot.removeNbWagons(route.getNbCases());
         }
+        else{
+            throw new NotEnoughWagonCard("Le " + robot + "n'as pas assez de carte wagon. \n");
+        }
     }
 
-    public boolean isFinished(Robot robot){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
-        return robot.getNbWagons()<2;
+    public void poseTrainPUp(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi) throws NotEnoughWagonCard {
+        poseTrain(robot,trajet);
+        robot.setTaking(true);
+        TakeMeeples(robot, trajet, villeChoisie, meepleChoisi);
+    }
+
+    public boolean isFinished(List<Robot> robots){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
+        for(Robot robot:robots){
+            if(robot.getNbWagons()<2)return true;
+        }
+        return false;
     }
 
     public void checkCarteDestination(Robot robot) {
@@ -146,6 +176,13 @@ public class MoteurDeJeu {
         // et après j'attribue les points avec l'autre fonction.
         for(CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()){
 
+        }
+    }
+
+    public void TakeMeeples(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi){
+        if(villeChoisie == trajet.getFrom() || villeChoisie == trajet.getTo()){
+            robot.addMeeple(meepleChoisi);
+            villeChoisie.getPassagers().remove(meepleChoisi);
         }
     }
 }

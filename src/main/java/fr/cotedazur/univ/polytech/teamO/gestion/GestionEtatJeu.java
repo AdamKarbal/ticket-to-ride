@@ -57,10 +57,18 @@ public class GestionEtatJeu {
             Ville current = queue.poll();
             visited.add(current);
 
-            for(Ville voisin : subgraph.get(current).keySet()){
-                if(voisin.equals(to)){ return true;}
-                if(!visited.contains(voisin)){ queue.add(voisin);}
+            HashMap<Ville, Integer> neighbors = subgraph.get(current);
+            if(neighbors!=null){
+                for(Ville voisin : subgraph.get(current).keySet()){
+                    if(voisin.equals(to)){
+                        return true;
+                    }
+                    if(!visited.contains(voisin)){
+                        queue.add(voisin);
+                    }
+                }
             }
+
         }
         return false;
     }

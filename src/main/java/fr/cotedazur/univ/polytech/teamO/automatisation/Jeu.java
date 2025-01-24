@@ -10,6 +10,7 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Random;
 
@@ -86,16 +87,22 @@ public class Jeu {
             gestionEtatJeu.updateScoreCarteDestination(robot);
         }
     }
+
     public static void play () throws Exception{
         setup();
         robots=new ArrayList<>();
         robots.add(robotJaune);
         robots.add(robotBleu);
         robots.add(robotRouge);
-        while (!(moteurDeJeu.isFinished(robotBleu) || moteurDeJeu.isFinished(robotRouge) || moteurDeJeu.isFinished(robotJaune)||pioche.getPioche().isEmpty())){
-            randomAction(robotBleu);
-            randomAction(robotRouge);
-            randomAction(robotJaune);
+        while (!(moteurDeJeu.isFinished(robots))){
+            try{
+                randomAction(robotBleu);
+                randomAction(robotRouge);
+                randomAction(robotJaune);
+            } catch (EmptyStackException e){
+                moteurDeJeu.replacePiocheByDefausse();
+            }
+
         }
         endofGame();
         ranking=new Ranking(robots);

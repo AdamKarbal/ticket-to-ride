@@ -2,7 +2,9 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
+import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
@@ -21,6 +23,9 @@ public class Robot implements Comparable<Robot> {
     private HashMap<Couleur,Integer> wagonByCouleur;
     private int nbWagons;
     private List<Trajet> trajets;
+    private HashMap<MCouleur,Integer> takenMeeples;
+    private boolean taking;
+
     //Constructeur
     public Robot(Couleur couleur) {
         this.score = new Score();
@@ -32,6 +37,8 @@ public class Robot implements Comparable<Robot> {
         this.piocheCount=0;
         this.nbWagons=45;
         this.trajets =new ArrayList<>();
+        this.takenMeeples=new HashMap<>();
+        this.taking=false;
     }
 
     // Getters & setters
@@ -72,6 +79,7 @@ public class Robot implements Comparable<Robot> {
     public List<Trajet> getTrajet() { return trajets; }
     public void addTrajetDone(Trajet trajet){ trajets.add(trajet); }
     // Actions du joueur
+
     public void piocher(MoteurDeJeu g){
         Carte carte=g.piocher(this);
         getMain().addCarte(carte);//piocher
@@ -82,7 +90,7 @@ public class Robot implements Comparable<Robot> {
         getMain().addCarte(carte);
     }
 
-    public void chooseDestinations( MoteurDeJeu g){
+    public void chooseDestinations( MoteurDeJeu g){ // A CHANGER PRCK ALEATOIRE
         Random rand = new Random();
         int choice = rand.nextInt(2)+1;
         //Logique
@@ -98,8 +106,26 @@ public class Robot implements Comparable<Robot> {
 
     }
 
-    public void poseTrain(Trajet trajet, MoteurDeJeu g){
+    public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughWagonCard {
         g.poseTrain(this,trajet);
+    }
+
+    public HashMap<MCouleur,Integer> getTakenMeeples() {
+        return takenMeeples;
+    }
+
+    public boolean getTaking(){
+        return taking;
+    }
+
+    public void setTaking(boolean val){
+        this.taking = val;
+    }
+
+    public void addMeeple(MCouleur couleur){
+        int compteur = takenMeeples.get(couleur);
+        compteur++;
+        takenMeeples.put(couleur,compteur);
     }
 
     // Méthodes générales
