@@ -24,7 +24,7 @@ public class Pioche<T extends Carte> {
     public void creerPiocheComplete() { // bien handle le cas des locomotives
         Stack<T> nouvellePioche = new Stack<T>();
         for (Couleur couleur : Couleur.values()) { // créer une carte pour tout les couleurs
-            if(!couleur.equals(Couleur.Default)) {
+            if(!couleur.equals(Couleur.Default) && !couleur.equals(Couleur.Marron)) {
                 for (int i = 0; i < cartesParCouleur; i++) {
                     nouvellePioche.push((T) new CarteWagon(couleur));
                 }
@@ -40,8 +40,8 @@ public class Pioche<T extends Carte> {
     // Méthode
 
     public T piocher(){
-        if(pioche.empty()){throw new EmptyStackException();}
-        else return pioche.pop();
+        if(pioche.empty()) throw new EmptyStackException();
+        return pioche.pop();
     }
 
     public void viderPioche(){

@@ -23,12 +23,12 @@ public class Affichage {
     //Adam
     public String affichePiocherSurTable(Robot robot, Carte carte){
         String disp = "Le " + robot + " a pioché la " + carte + " dans la pioche visible.\n";
-        System.out.println(disp);
+        System.out.print(disp);
         return disp;
     }
     //Younes
     public String affichePoseTrain(Robot robot, Trajet trajet){
-        String disp = robot + " a posé un train de "+ trajet.getRoute().getNbCases() +" wagons entre " + trajet.getFrom() +" et " + trajet.getTo() + ".\n";
+        String disp = "Le " + robot + " a posé un train de "+ trajet.getRoute().getNbCases() +" wagons entre " + trajet.getFrom() +" et " + trajet.getTo() + ".\n";
         System.out.print(disp);
         return disp;
     }
@@ -53,7 +53,7 @@ public class Affichage {
 
     //Younes
     public String afficheTakeMeeples(Robot robot, int nbMeeples, MCouleur couleur){
-        String disp = robot + " prends " + nbMeeples + " passagers de couleur "+ couleur + ".\n";
+        String disp = "Le " + robot + " prends " + nbMeeples + " passagers de couleur "+ couleur + ".\n";
         System.out.println(disp);
         return disp;
     }

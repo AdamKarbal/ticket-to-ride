@@ -18,24 +18,27 @@ public class RobotAleatoire extends Robot {
         int choix;
         Random rand = new Random();
         choix=rand.nextInt(100)+1;
-        if (1<=choix && choix<=30){
+        if (1<=choix && choix<=20){
             piocher(moteurDeJeu);
-        }
-        if (30<choix && choix<=60){
-            if (30 < choix && choix <= 60) {
-                try {
-                    Trajet trajetRandom = map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
-                    poseTrain(trajetRandom, moteurDeJeu);
-                } catch (NotEnoughWagonCard e) {
-                    chooseactionnotenought(moteurDeJeu);
-                }
+            if(!(isTurnOver())){
+                chooseactionnotenought(moteurDeJeu);
             }
-
         }
-        if(60<choix && choix<=100){
+        if (20< choix && choix <= 80) {
+            try {
+                Trajet trajetRandom = map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
+                poseTrain(trajetRandom, moteurDeJeu);
+            } catch (NotEnoughWagonCard e) {
+                chooseactionnotenought(moteurDeJeu);
+            }
+        }
+        if(80<choix && choix<=100){
             int pos;
             pos=rand.nextInt(moteurDeJeu.getPiocheSurTable().size());
             piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(pos),moteurDeJeu);
+            if(!(isTurnOver())){
+                chooseactionnotenought(moteurDeJeu);
+            }
         }
     }
 
@@ -45,16 +48,22 @@ public class RobotAleatoire extends Robot {
         choix=rand.nextInt(100)+1;
         if (1<=choix && choix<=50){
             piocher(moteurDeJeu);
+            if(!isTurnOver()){
+                chooseactionnotenought(moteurDeJeu);
+            }
         }
-        if(choix<50 && choix<=100){
+        if(50<choix && choix<=100){
             int pos;
             pos=rand.nextInt(moteurDeJeu.getPiocheSurTable().size());
             piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(pos),moteurDeJeu);
+            if(!(isTurnOver())){
+                chooseactionnotenought(moteurDeJeu);
+            }
         }
     }
 
     @Override
     public String toString(){
-        return "Le robot aleatoire " + getCouleur();
+        return "robot aleatoire " + getCouleur();
     }
 }

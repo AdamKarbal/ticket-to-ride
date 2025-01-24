@@ -1,9 +1,11 @@
 package fr.cotedazur.univ.polytech.teamO.automatisation;
 import fr.cotedazur.univ.polytech.teamO.bot.*;
+import fr.cotedazur.univ.polytech.teamO.classement.EmptyListException;
 import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionEtatJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Map;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
@@ -16,9 +18,9 @@ import java.util.Random;
 
 
 public class Jeu {
-    static Robot robotBleu;
-    static Robot robotRouge;
-    static Robot robotJaune;
+    static RobotAleatoire robotBleu;
+    static RobotAleatoire robotRouge;
+    static RobotAleatoire robotJaune;
     static ArrayList<Robot> robots;
     static Ranking ranking;
     static MoteurDeJeu moteurDeJeu;
@@ -31,16 +33,16 @@ public class Jeu {
     public static String hello() {
         return "Hello World!";
     }
+    ;
 
-    public static void setup() throws Exception {
-        robotBleu=new Robot(Couleur.Bleu);
-        robotRouge=new Robot(Couleur.Rouge);
-        robotJaune=new Robot(Couleur.Jaune);
+    public static void setup() throws NotEnoughWagonCard {
+        robotBleu=new RobotAleatoire(Couleur.Bleu);
+        robotRouge=new RobotAleatoire(Couleur.Rouge);
+        robotJaune=new RobotAleatoire(Couleur.Jaune);
         robots=new ArrayList<>();
         robots.add(robotBleu);
         robots.add(robotRouge);
         robots.add(robotJaune);
-
 
         pioche = new Pioche();
 
@@ -63,22 +65,7 @@ public class Jeu {
         for(Robot robot:robots){
             robot.refuseDestinations(moteurDeJeu);
         }
-    }
-    public static void randomAction(Robot robot){
-        int choix;
-        Random rand = new Random();
-        choix=rand.nextInt(2)+1;
-        if (choix==1){
-                robot.piocher(moteurDeJeu);
-                System.out.println("Le robot "+robot.getCouleur().name()+" a pioché "+robot.getMain().getMainDeCartes().getLast());
-
-        }
-        if (choix==2){
-                    Trajet trajetRandom=map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
-                    robot.poseTrain(trajetRandom, moteurDeJeu);
-                    System.out.println("Le robot "+robot.getCouleur().name()+" a posé une route sur le trajet "+trajetRandom);
-                    System.out.println(robot.getNbWagons()+" "+robot.getCouleur().name());
-        }
+        System.out.println("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
 
     public static void endofGame(){
@@ -88,26 +75,27 @@ public class Jeu {
         }
     }
 
-    public static void play () throws Exception{
+    public static void play () throws NotEnoughWagonCard, EmptyListException {
+        int tour = 1;
         setup();
         robots=new ArrayList<>();
         robots.add(robotJaune);
         robots.add(robotBleu);
         robots.add(robotRouge);
         while (!(moteurDeJeu.isFinished(robots))){
+            System.out.println("---------------------- Début du tour numéro : " + tour++ + "---------------------- \n");
             try{
-                randomAction(robotBleu);
-                randomAction(robotRouge);
-                randomAction(robotJaune);
-            } catch (EmptyStackException e){
-                moteurDeJeu.replacePiocheByDefausse();
+            robotBleu.chooseaction(moteurDeJeu,map);
+            robotRouge.chooseaction(moteurDeJeu,map);
+            robotJaune.chooseaction(moteurDeJeu,map);}
+            catch(EmptyStackException e){
+                break;
             }
-
+            System.out.print("\n");
         }
         endofGame();
         ranking=new Ranking(robots);
         System.out.println(ranking);
-
     }
 
 }

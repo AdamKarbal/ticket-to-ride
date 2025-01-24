@@ -76,7 +76,11 @@ public class MoteurDeJeu {
     public Carte piocherSurTable(Robot robot,Carte carte){
         Carte cartePiochee=getPiocheSurTable().piocher(carte);
         affichage.affichePiocherSurTable(robot,cartePiochee);
-        getPiocheSurTable().addCarte(pioche.piocher());
+        try {
+            getPiocheSurTable().addCarte(pioche.piocher());
+        } catch(EmptyStackException e) {
+            replacePiocheByDefausse();
+        }
         if(robot.getPiocheCount()==0){
             if(cartePiochee.getCouleur()==Couleur.Rainbow) {
                 robot.setTurnOver(true);
@@ -125,14 +129,27 @@ public class MoteurDeJeu {
     public static HashMap<Couleur,Integer> initWagonByCouleur(Robot robot){
         HashMap<Couleur,Integer> carteWagonByCouleur=new HashMap<>();
         for(Couleur couleur:Couleur.values()){
-            carteWagonByCouleur.put(couleur,0);
+            if(!couleur.equals(Couleur.Default) && !couleur.equals(Couleur.Marron)) carteWagonByCouleur.put(couleur,0);
         }
         return carteWagonByCouleur;
     }
-
+    private Couleur findMaxWagon(Robot robot){
+        Couleur couleurMax = Couleur.Default;
+        int max=0;
+        for(Couleur couleur: robot.getWagonByCouleur().keySet()){
+            if(max<robot.getWagonByCouleur().get(couleur)){
+                max=robot.getWagonByCouleur().get(couleur);
+                couleurMax = couleur;
+            }
+        }
+        return couleurMax;
+    }
     public void poseTrain(Robot robot, Trajet trajet) throws NotEnoughWagonCard {
         Route route=trajet.getRoute();
         Couleur couleurRoute=route.getCouleur();
+        if(couleurRoute.equals(Couleur.Default)){
+            couleurRoute=findMaxWagon(robot);
+        }
         if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
             route.setAvailable(false);
             robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases());
@@ -159,7 +176,10 @@ public class MoteurDeJeu {
 
     public boolean isFinished(List<Robot> robots){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
         for(Robot robot:robots){
-            if(robot.getNbWagons()<2)return true;
+            if(robot.getNbWagons()<2 || (getPioche().getPioche().empty() && defaussePioche.getPioche().empty())){
+                affichage.afficheIsFinished(robot);
+                return true;
+            }
         }
         return false;
     }
