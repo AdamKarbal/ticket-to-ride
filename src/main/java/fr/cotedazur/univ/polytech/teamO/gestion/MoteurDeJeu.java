@@ -123,7 +123,7 @@ public class MoteurDeJeu {
         return carteWagonByCouleur;
     }
 
-    public void poseTrain(Robot robot, Trajet trajet){
+    public void poseTrain(Robot robot, Trajet trajet) throws NotEnoughWagonCard {
         Route route=trajet.getRoute();
         Couleur couleurRoute=route.getCouleur();
         if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
@@ -138,9 +138,12 @@ public class MoteurDeJeu {
             }
             robot.removeNbWagons(route.getNbCases());
         }
+        else{
+            throw new NotEnoughWagonCard("Le " + robot + "n'as pas assez de carte wagon. \n");
+        }
     }
 
-    public void poseTrainPUp(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi){
+    public void poseTrainPUp(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi) throws NotEnoughWagonCard {
         poseTrain(robot,trajet);
         robot.setTaking(true);
         TakeMeeples(robot, trajet, villeChoisie, meepleChoisi);
