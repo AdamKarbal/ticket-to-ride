@@ -64,14 +64,7 @@ public class GestionTrajets {
         // Subgraph based on the robot's current trips
         HashMap<Ville, HashMap<Ville, Integer>> subgraph = buildSubgraph(robot.getTrajet());
 
-        // Check if the cities are already connected
-        if (isConnectedByGraph(ville1, ville2, subgraph)) {
-            // Return the shortest trip between them from the robot's current trips
-            return findShortestTrip(ville1, ville2, subgraph);
-        }
-
-        // If not connected, find the shortest path in the global map
-        return findShortestTrip(ville1, ville2, gameMap.getMap());
+        return findShortestTrip(ville1, ville2, subgraph);
     }
 
     // Helper method to find the shortest trip
@@ -129,7 +122,7 @@ public class GestionTrajets {
         for (Ville to : path) {
             if (from != null) {
                 // Create a new Route and add to Trajet
-                Route route = new Route(graph.get(from).get(to), Couleur.Bleu); // Color is optional here
+                Route route = new Route(graph.get(from).get(to),Couleur.Default); // Color is optional here
                 trajet = new Trajet(from, to, route);
             }
             from = to;
