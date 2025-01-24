@@ -22,20 +22,20 @@ public class RobotAleatoire extends Robot {
             piocher(moteurDeJeu);
         }
         if (30<choix && choix<=60){
-            try{
-                Trajet trajetRandom=map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
-                poseTrain(trajetRandom, moteurDeJeu);}
-            finally{
-                chooseactionnotenought(moteurDeJeu);
+            if (30 < choix && choix <= 60) {
+                try {
+                    Trajet trajetRandom = map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
+                    poseTrain(trajetRandom, moteurDeJeu);
+                } catch (NotEnoughWagonCard e) {
+                    chooseactionnotenought(moteurDeJeu);
+                }
             }
+
         }
-        if(60<choix && choix<=90){
+        if(60<choix && choix<=100){
             int pos;
             pos=rand.nextInt(moteurDeJeu.getPiocheSurTable().size());
             piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(pos),moteurDeJeu);
-        }
-        if(90<choix && choix<=100){
-            chooseDestinations(moteurDeJeu);
         }
     }
 
