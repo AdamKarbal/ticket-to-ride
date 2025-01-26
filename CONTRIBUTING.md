@@ -4,8 +4,18 @@
 Comment contribuer ?
 
 \## Créer une issue 
+- Vérifiez les issues existantes
+Avant de créer une nouvelle issue, consultez les issues ouvertes pour éviter les doublons.
 
+  \## Créer une User Story
+  - `New Issue` --> `User Story` puis utiliser le modèle déja fourni pour trouver un titre.
+  \## Créer une Task
+  - `New Issue` --> `T{NUMBER OF THE US}.{NUMBER OF THE TASK} {TASK TITLE}`
 
+- Soyez clair et précis
+    Donnez un titre descriptif à votre issue.
+    Décrivez le problème ou la suggestion avec des détails clairs.
+    Assignez chaque issue à un Milestone
 
 \## Branches et fonctions
 
@@ -19,7 +29,7 @@ Comment contribuer ?
 \- 
 
 - `main`:
-- Cette est branche est utilisée pour regrouper les différentes features.
+- Cette branche est utilisée pour regrouper les différentes features.
 
 \-
 
