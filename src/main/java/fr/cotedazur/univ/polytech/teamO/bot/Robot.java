@@ -1,6 +1,4 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
-
-
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
@@ -15,7 +13,7 @@ import java.util.*;
 public class Robot implements Comparable<Robot> {
 
     private Score score;
-    private Couleur couleur;
+    private final Couleur couleur;
     private MainJoueur<CarteDestination> destinations;
     private MainJoueur main;
     private boolean turnOver;
@@ -45,6 +43,9 @@ public class Robot implements Comparable<Robot> {
     public MainJoueur getMain() {
         return main;
     }
+    public void chooseDestination(CarteDestination destination) {
+        this.destinations.addCarte(destination);
+    }
     public MainJoueur<CarteDestination> getDestinations() {
         return destinations;}
     public Score getScore(){
@@ -65,19 +66,24 @@ public class Robot implements Comparable<Robot> {
     public HashMap<Couleur,Integer> getWagonByCouleur() {
         return wagonByCouleur;
     }
-    public int getNbWagons() { return nbWagons; }
-    public void removeNbWagons(int nbWagons) { this.nbWagons-=nbWagons; }
+    public int getNbWagons() {
+        return nbWagons;
+    }
+    public void removeNbWagons(int nbWagons) {
+        this.nbWagons-=nbWagons;
+    }
     public Couleur getCouleur() {
         return couleur;
     }
-    /*public void chooseDestination(CarteDestination destination){
-        destinations.addCarte(destination);
-    }*/
     public int getPlayerScore(){
         return score.getNbPoints();
     }
-    public List<Trajet> getTrajet() { return trajets; }
-    public void addTrajetDone(Trajet trajet){ trajets.add(trajet); }
+    public List<Trajet> getTrajet() {
+        return trajets;
+    }
+    public void addTrajetDone(Trajet trajet){
+        trajets.add(trajet);
+    }
     // Actions du joueur
 
     public void piocher(MoteurDeJeu g){
@@ -93,7 +99,6 @@ public class Robot implements Comparable<Robot> {
     public void chooseDestinations( MoteurDeJeu g){ // A CHANGER PRCK ALEATOIRE
         Random rand = new Random();
         int choice = rand.nextInt(2)+1;
-        //Logique
         CarteDestination carteDestinationPioche=g.giveDestinationsCard(this,choice);
         getDestinations().addCarte(carteDestinationPioche);
     }
@@ -102,8 +107,6 @@ public class Robot implements Comparable<Robot> {
         Random rand = new Random();
         int choice = rand.nextInt(2);
         g.removeDestinationsCard(this,choice);
-
-
     }
 
     public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughWagonCard {

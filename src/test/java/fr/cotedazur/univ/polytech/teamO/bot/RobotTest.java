@@ -103,8 +103,9 @@ class RobotTest {
         for(int i=0;i<120;i++){
             robot.piocher(moteurDeJeu);
         }
-        System.out.println(robot.getWagonByCouleur());
         robot.poseTrain(trajet, moteurDeJeu);
+        assertTrue(trajet.isDone());
+        assertEquals(robot.getWagonByCouleur().get(trajet.getRoute().getCouleur()),12-trajet.getRoute().getNbCases());
         assertEquals(robot.getTrajet().size(),1);
         assertEquals(robot.getTrajet(),new ArrayList<>(Arrays.asList(trajet)));
         assertEquals(routeBleue.isAvailable(),false);
