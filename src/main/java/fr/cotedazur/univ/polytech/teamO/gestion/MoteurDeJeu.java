@@ -21,13 +21,12 @@ public class MoteurDeJeu {
     private PiocheSurTable piocheSurTable;
     private PiocheDestinationLongue piocheDestinationLongue;
     private PiocheDestinationCourte piocheDesinationCourte;
-    private Scanner scanner = new Scanner(System.in);
 
     public MoteurDeJeu(Pioche pioche, PiocheSurTable piocheSurTable, PiocheDestinationLongue piocheDestinationLongue, PiocheDestinationCourte piocheDesinationCourte) {
         this.pioche = pioche;
         this.piocheSurTable = piocheSurTable;
-        this.piocheDestinationLongue = new PiocheDestinationLongue();
-        this.piocheDesinationCourte = new PiocheDestinationCourte();
+        this.piocheDestinationLongue = piocheDestinationLongue;
+        this.piocheDesinationCourte = piocheDesinationCourte;
         this.affichage = new Affichage();
         this.defaussePioche = new Pioche();
         this.defaussePioche.viderPioche();
@@ -45,33 +44,82 @@ public class MoteurDeJeu {
     public PiocheDestinationCourte getPiocheDesinationCourte() {
         return piocheDesinationCourte;
     }
-
-    // Méthodes du jeu
-    public Carte piocher(Robot robot) {
-        try {
-            if (robot.getPiocheCount() == 0) {
-                robot.setPiocheCount(robot.getPiocheCount() + 1);
-                robot.setTurnOver(false);
-            } else {
-                robot.setPiocheCount(robot.getPiocheCount() - 1);
-                robot.setTurnOver(true);
-            }
-            return piocherCarte(robot);
-        } catch (EmptyStackException e) {
-            replacePiocheByDefausse();
-            return piocherCarte(robot);
+    // Méthodes intermédiaires
+    private void updateRobotPioche(Robot robot) {
+        if (robot.getPiocheCount() == 0) {
+            robot.setPiocheCount(robot.getPiocheCount() + 1);
+            robot.setTurnOver(false);
+        } else {
+            robot.setPiocheCount(robot.getPiocheCount() - 1);
+            robot.setTurnOver(true);
         }
     }
-
     private Carte piocherCarte(Robot robot) {
         Carte carte = getPioche().piocher();
-        affichage.affichePiocher(robot, carte);
+        //affichage.affichePiocher(robot, carte);
         robot.getWagonByCouleur().put(
                 carte.getCouleur(),
                 robot.getWagonByCouleur().get(carte.getCouleur()) + 1
         );
         return carte;
     }
+    private void updateRobotPiocheSurTable(Robot robot, Carte cartePiochee) {
+        boolean isRainbow = cartePiochee.getCouleur() == Couleur.Rainbow;
+
+        if (robot.getPiocheCount() == 0) {
+            robot.setTurnOver(isRainbow);
+            if (!isRainbow) robot.setPiocheCount(1);
+        } else {
+            robot.setTurnOver(true);
+            robot.setPiocheCount(robot.getPiocheCount() - 1);
+
+            if (isRainbow) {
+                pioche.piocher();
+            }
+        }
+    }
+    private Couleur findMaxWagon(Robot robot){
+        Couleur couleurMax = Couleur.Default;
+        int max=0;
+        for(Couleur couleur: robot.getWagonByCouleur().keySet()){
+            if(max<robot.getWagonByCouleur().get(couleur)){
+                max=robot.getWagonByCouleur().get(couleur);
+                couleurMax = couleur;
+            }
+        }
+        return couleurMax;
+    }
+    private Couleur determineRouteColor(Robot robot, Route route) {
+        return route.getCouleur().equals(Couleur.Default) ? findMaxWagon(robot) : route.getCouleur();
+    }
+
+    private void processRouteClaim(Robot robot, Trajet trajet, Route route, Couleur couleurRoute) {
+        route.setAvailable(false);
+        for (int i = 0; i < route.getNbCases(); i++) {
+            defaussePioche.getPioche().push(new CarteWagon(couleurRoute));
+        }
+        affichage.affichePoseTrain(robot, trajet);
+    }
+
+    private void updateRobotWagonData(Robot robot, Route route, Couleur couleurRoute) {
+        int nbCases = route.getNbCases();
+        robot.getWagonByCouleur().put(couleurRoute, robot.getWagonByCouleur().get(couleurRoute) - nbCases);
+        robot.getScore().addNbPoints(TableauDesScores.getValue(nbCases));
+        robot.removeNbWagons(nbCases);
+    }
+
+    // Méthodes du jeu
+    public Carte piocher(Robot robot) {
+        try {
+            updateRobotPioche(robot);
+            return piocherCarte(robot);
+        } catch (EmptyStackException e) {
+            replacePiocheByDefausse();
+            updateRobotPioche(robot);
+            return piocherCarte(robot);
+        }
+    }
+
 
     public Carte piocherSurTable(Robot robot,Carte carte){
         Carte cartePiochee=getPiocheSurTable().piocher(carte);
@@ -80,23 +128,9 @@ public class MoteurDeJeu {
             getPiocheSurTable().addCarte(pioche.piocher());
         } catch(EmptyStackException e) {
             replacePiocheByDefausse();
+            getPiocheSurTable().addCarte(pioche.piocher());
         }
-        if(robot.getPiocheCount()==0){
-            if(cartePiochee.getCouleur()==Couleur.Rainbow) {
-                robot.setTurnOver(true);
-            }
-            else{
-                robot.setTurnOver(false);
-                robot.setPiocheCount(robot.getPiocheCount()+1);
-            }
-        }
-        else{
-            robot.setTurnOver(true);
-            robot.setPiocheCount(robot.getPiocheCount()-1);
-            if(cartePiochee.getCouleur()==Couleur.Rainbow) {
-                cartePiochee = getPioche().piocher();
-            }
-        }
+        updateRobotPiocheSurTable(robot,cartePiochee);
         return cartePiochee;
     }
 
@@ -133,40 +167,19 @@ public class MoteurDeJeu {
         }
         return carteWagonByCouleur;
     }
-    private Couleur findMaxWagon(Robot robot){
-        Couleur couleurMax = Couleur.Default;
-        int max=0;
-        for(Couleur couleur: robot.getWagonByCouleur().keySet()){
-            if(max<robot.getWagonByCouleur().get(couleur)){
-                max=robot.getWagonByCouleur().get(couleur);
-                couleurMax = couleur;
-            }
-        }
-        return couleurMax;
-    }
-    public void poseTrain(Robot robot, Trajet trajet) throws NotEnoughWagonCard {
-        Route route=trajet.getRoute();
-        Couleur couleurRoute=route.getCouleur();
-        if(couleurRoute.equals(Couleur.Default)){
-            couleurRoute=findMaxWagon(robot);
-        }
-        if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
-            route.setAvailable(false);
-            robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases());
-            robot.getScore().addNbPoints(TableauDesScores.getValue(route.getNbCases()));
-            for(int i=0;i<route.getNbCases();i++){
-                CarteWagon carteWagon=new CarteWagon(couleurRoute);
-                robot.getMain().removeCarte(carteWagon);
-                defaussePioche.getPioche().push(carteWagon);
 
-            }
-            affichage.affichePoseTrain(robot,trajet);
-            robot.removeNbWagons(route.getNbCases());
-        }
-        else{
-            throw new NotEnoughWagonCard(robot + "n'a pas assez de carte wagon. \n");
+    public void poseTrain(Robot robot, Trajet trajet) throws NotEnoughWagonCard {
+        Route route = trajet.getRoute();
+        Couleur couleurRoute = determineRouteColor(robot, route);
+
+        if (route.isClaimable(robot.getWagonByCouleur().get(couleurRoute), new Wagon(couleurRoute))) {
+            processRouteClaim(robot, trajet, route, couleurRoute);
+            updateRobotWagonData(robot, route, couleurRoute);
+        } else {
+            throw new NotEnoughWagonCard(robot + " n'a pas assez de carte wagon.");
         }
     }
+
 
     public void poseTrainPUp(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi) throws NotEnoughWagonCard {
         poseTrain(robot,trajet);
@@ -182,29 +195,6 @@ public class MoteurDeJeu {
             }
         }
         return false;
-    }
-
-    public void checkCarteDestination(Robot robot) {
-        isCarteDestinationClaim(robot);
-        for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes())
-        {
-            if(!(carteDestination.isCompleted())){
-                robot.getScore().removeNbPoints(carteDestination.getValue());
-                affichage.afficheCheckCarteDestinationPASOK(robot,carteDestination);
-            }
-            else {
-                robot.getScore().addNbPoints(carteDestination.getValue());
-                affichage.afficheCheckCarteDestinationOK(robot,carteDestination);
-            }
-        }
-    }
-
-    public void isCarteDestinationClaim(Robot robot){
-        // la il me faut la maindecartedestination comme ça je parcours tout les cartes de destination et je regarde si les trajet sont fait
-        // et après j'attribue les points avec l'autre fonction.
-        for(CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()){
-
-        }
     }
 
     public void TakeMeeples(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi){
