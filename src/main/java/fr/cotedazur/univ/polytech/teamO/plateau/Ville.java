@@ -6,58 +6,65 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public enum Ville {
-    Berlin(5),
-    Bremen(1),
-    Bremerhaven(1),
-    Chemnitz(1),
-    Dresden(1),
-    Dortmund(1),
-    Düsseldorf(1),
-    Erfurt(1),
-    Freiburg(1),
-    Frankfurt(4),
-    Hamburg(4),
-    Hannover(1),
-    Karlsruhe(1),
-    Kassel(1),
-    Kiel(1),
-    Koblenz(1),
-    Konstanz(1),
-    Köln(4),
-    Leipzig(3),
-    Lindau(1),
-    Magdeburg(1),
-    Mainz(1),
-    Mannheim(1),
-    München(4),
-    Münster(1),
-    Nürnberg(1),
-    Regensburg(1),
-    Rostock(1),
-    Saarbrücken(1),
-    Schwerin(1),
-    Stuttgart(3),
-    Ulm(1),
-    Würzburg(1),
-    Augsburg(1),
-    Emden(1),
+    Berlin(5, true),
+    Bremen(1, true),
+    Bremerhaven(1, true),
+    Chemnitz(1, true),
+    Dresden(1, true),
+    Dortmund(1, true),
+    Düsseldorf(1, true),
+    Erfurt(1, true),
+    Freiburg(1, true),
+    Frankfurt(4, true),
+    Hamburg(4, true),
+    Hannover(1, true),
+    Karlsruhe(1, true),
+    Kassel(1, true),
+    Kiel(1, true),
+    Koblenz(1, true),
+    Konstanz(1, true),
+    Köln(4, true),
+    Leipzig(3, true),
+    Lindau(1, true),
+    Magdeburg(1, true),
+    Mainz(1, true),
+    Mannheim(1, true),
+    München(4, true),
+    Münster(1, true),
+    Nürnberg(1, true),
+    Regensburg(1, true),
+    Rostock(1, true),
+    Saarbrücken(1, true),
+    Schwerin(1, true),
+    Stuttgart(3, true),
+    Ulm(1, true),
+    Würzburg(1, true),
+    Augsburg(1, true),
+    Emden(1, true),
     //Pays
-    Niederlande(1),
-    Frankreich(1),
-    Danemark(1),
-    Österreich(1),
-    Schweiz(1);
+    Niederlande(1, false),
+    Frankreich(1, false),
+    Danemark(1, false),
+    Österreich(1, false),
+    Schweiz(1, false);
+
 
     private final int NbMeeple;
+    private final boolean isVille;
     private ArrayList<Meeples> passagers;
 
-    Ville(int NbMeeple) {
+    Ville(int NbMeeple, boolean isVille) {
         this.NbMeeple = NbMeeple;
+        this.isVille=isVille;
         this.passagers = new ArrayList<>();
     }
 
     public int getNbMeeple() {
         return NbMeeple;
+    }
+
+    public boolean getIsVille(){
+        return isVille;
     }
 
     public static boolean isValid(Ville ville) {

@@ -16,7 +16,7 @@ public abstract class Carte {
 
     // Set the name
     void setNom() {
-        this.nom = getClass().getSimpleName() + " de Couleur : " + couleur;
+        this.nom = getClass().getSimpleName() + " de couleur " + couleur;
     }
 
     // Abstract methods
