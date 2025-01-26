@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionEtatJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
 import fr.cotedazur.univ.polytech.teamO.pioche.PiocheDestinationCourte;
 import fr.cotedazur.univ.polytech.teamO.pioche.PiocheDestinationLongue;
@@ -40,7 +41,7 @@ class RobotRouteTest {
     }
 
     @Test
-    void testShortestPath(){
+    void testShortestPath() throws NotEnoughWagonCard {
         robotRouteBleu.chooseDestinations(moteurDeJeu);
         robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu);
         assertTrue(robotRouteBleu.getTrajet().size()==1);

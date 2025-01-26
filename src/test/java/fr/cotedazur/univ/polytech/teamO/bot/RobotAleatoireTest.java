@@ -4,7 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
-import fr.cotedazur.univ.polytech.teamO.plateau.Map;
+import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
@@ -25,7 +25,7 @@ class RobotAleatoireTest {
     PiocheDestinationLongue piocheDestinationLongue;
     PiocheDestinationCourte piocheDestinationCourte;
     Trajet trajet;
-    Map map;
+    GameMap map;
 
     @BeforeEach
     void setUp() {
@@ -40,7 +40,7 @@ class RobotAleatoireTest {
         taillePiocheInit= moteurDeJeu.getPioche().size();
         routeBleue= new Route(1,Couleur.Bleu);
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);
-        map = new Map();
+        map = new GameMap();
     }
 
     @Test

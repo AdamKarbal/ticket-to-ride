@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionEtatJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
@@ -61,7 +62,7 @@ public class Jeu {
             robot.refuseDestinations(moteurDeJeu);
         }
     }
-    public static void randomAction(Robot robot){
+    public static void randomAction(Robot robot) throws NotEnoughWagonCard {
         int choix;
         Random rand = new Random();
         choix=rand.nextInt(2)+1;
