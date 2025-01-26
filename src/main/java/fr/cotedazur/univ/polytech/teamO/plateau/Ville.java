@@ -49,7 +49,7 @@ public enum Ville {
     Schweiz(1, false);
 
 
-    private final int NbMeeple;
+    private int NbMeeple;
     private final boolean isVille;
     private ArrayList<Meeples> passagers;
 
@@ -61,6 +61,10 @@ public enum Ville {
 
     public int getNbMeeple() {
         return NbMeeple;
+    }
+
+    public void setNbMeeple(int nbMeeple){
+        this.NbMeeple= nbMeeple;
     }
 
     public boolean getIsVille(){

@@ -105,22 +105,18 @@ public class MoteurDeJeu {
     }
 
     public CarteDestination giveDestinationsCard(Robot robot, int choice){
-        CarteDestination carteDestinationL=piocheDestinationLongue.peekCartesDestinationLongue();
-        CarteDestination carteDestinationC=piocheDesinationCourte.peekCartesDestinationCourtes();
-        if(choice==1)return carteDestinationC;
-        if(choice==2)return carteDestinationL;
-        else return null;
+        CarteDestination carteDestination = null;
+        if(choice==1) carteDestination= piocheDesinationCourte.popCartesDestinationCourtes();
+        if(choice==2) carteDestination = piocheDestinationLongue.popCartesDestinationLongue();
+        affichage.afficheCarteDestinationPiocher(robot,carteDestination);
+        return carteDestination;
     }
-    public void removeDestinationsCard(Robot robot,int choice){
-        List<CarteDestination> cartesEnlevees= new ArrayList<>();
-        for(int i=0;i<choice;i++){
-            cartesEnlevees.add(robot.getDestinations().getMainDeCartes().remove(i));
-        //Enlève le nb de cartes non voulues
-        }
-        for(CarteDestination carteDestination:cartesEnlevees){
-            if(carteDestination.isLongue())piocheDestinationLongue.pushCartesDestinationLongues(carteDestination);
-            else piocheDesinationCourte.pushCartesDestinationCourtes(carteDestination);
-        }//Remet dans la pioche correspondante
+    public void removeDestinationsCard(Robot robot,int choice){//enleve la carte destination a la place choice de son deck
+        CarteDestination carteDestination = robot.getDestinations().getMainDeCartes().remove(choice);
+        affichage.afficheCarteDestinationRefuser(robot,carteDestination);
+        if(carteDestination.isLongue())piocheDestinationLongue.pushCartesDestinationLongues(carteDestination);
+        else piocheDesinationCourte.pushCartesDestinationCourtes(carteDestination);
+        //Remet dans la pioche correspondante
         Collections.shuffle(piocheDesinationCourte.getCartesDestinationCourtes());
         Collections.shuffle(piocheDestinationLongue.getCartesDestinationLongues());
 
@@ -184,33 +180,12 @@ public class MoteurDeJeu {
         return false;
     }
 
-    public void checkCarteDestination(Robot robot) {
-        isCarteDestinationClaim(robot);
-        for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes())
-        {
-                if(!(carteDestination.isCompleted())){
-                    robot.getScore().removeNbPoints(carteDestination.getValue());
-                    affichage.afficheCheckCarteDestinationPASOK(robot,carteDestination);
-                }
-                else {
-                    robot.getScore().addNbPoints(carteDestination.getValue());
-                    affichage.afficheCheckCarteDestinationOK(robot,carteDestination);
-                }
-        }
-    }
-
-    public void isCarteDestinationClaim(Robot robot){
-        // la il me faut la maindecartedestination comme ça je parcours tout les cartes de destination et je regarde si les trajet sont fait
-        // et après j'attribue les points avec l'autre fonction.
-        for(CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()){
-
-        }
-    }
 
     public void TakeMeeples(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi){
         if(villeChoisie == trajet.getFrom() || villeChoisie == trajet.getTo()){
             robot.addMeeple(meepleChoisi);
             villeChoisie.getPassagers().remove(meepleChoisi);
+            affichage.afficheTakeMeeples(robot,1,meepleChoisi);
         }
     }
 }
