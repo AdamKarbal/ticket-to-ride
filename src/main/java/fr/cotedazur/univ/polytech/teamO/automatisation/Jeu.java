@@ -20,25 +20,25 @@ import java.util.Random;
 
 
 public class Jeu {
-    static RobotAleatoire robotBleu;
-    static RobotAleatoire robotRouge;
-    static RobotAleatoire robotJaune;
-    static ArrayList<Robot> robots;
-    static Ranking ranking;
-    static MoteurDeJeu moteurDeJeu;
-    static Pioche pioche;
-    static PiocheSurTable piocheSurTable;
-    static PiocheDestinationCourte piocheDestinationCourte;
-    static PiocheDestinationLongue piocheDestinationLongue;
-    static GameMap map;
-    static GestionEtatJeu gestionEtatJeu;
-    static GestionTrajets gestionTrajets;
-    public static String hello() {
+     RobotAleatoire robotBleu;
+     RobotAleatoire robotRouge;
+     RobotAleatoire robotJaune;
+     ArrayList<Robot> robots;
+     Ranking ranking;
+     MoteurDeJeu moteurDeJeu;
+     Pioche pioche;
+     PiocheSurTable piocheSurTable;
+     PiocheDestinationCourte piocheDestinationCourte;
+     PiocheDestinationLongue piocheDestinationLongue;
+     GameMap map;
+     GestionEtatJeu gestionEtatJeu;
+     GestionTrajets gestionTrajets;
+    public  String hello() {
         return "Hello World!";
     }
     ;
 
-    public static void setup() throws NotEnoughWagonCard {
+    public  void setup() throws NotEnoughWagonCard {
         robotBleu=new RobotAleatoire(Couleur.Bleu,new Random());
         robotRouge=new RobotAleatoire(Couleur.Rouge,new Random());
         robotJaune=new RobotAleatoire(Couleur.Jaune,new Random());
@@ -72,14 +72,14 @@ public class Jeu {
         System.out.println("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
 
-    public static void endofGame(){
+    public  void endofGame(){
         gestionEtatJeu.isDestinationsCardCompleted(robots);
         for(Robot robot:robots){
             gestionEtatJeu.updateScoreCarteDestination(robot);
         }
     }
 
-    public static void play () throws NotEnoughWagonCard, EmptyListException {
+    public  void play () throws NotEnoughWagonCard, EmptyListException {
         int tour = 1;
         setup();
         robots=new ArrayList<>();
