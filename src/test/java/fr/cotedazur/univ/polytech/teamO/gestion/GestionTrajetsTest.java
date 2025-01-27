@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
+import fr.cotedazur.univ.polytech.teamO.bot.RobotRoute;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +23,7 @@ class GestionTrajetsTest {
     Trajet berlinSchwerin;
     Trajet kielSchwerin;
     List<Trajet> trajetList;
-    Robot robot;
+    RobotRoute robotRoute;
     CarteDestination berlinKielDestination;
     MoteurDeJeu moteurDeJeu;
     GestionTrajets gestionTrajets;
@@ -34,7 +34,7 @@ class GestionTrajetsTest {
         gameMap =new GameMap();
         gestionTrajets=new GestionTrajets(gameMap);
         gestionEtatJeu= new GestionEtatJeu(gestionTrajets);
-        robot= new Robot(Couleur.Rouge);
+        robotRoute = new RobotRoute(Couleur.Rouge);
         berlinRostock=new Trajet(Ville.Berlin,Ville.Rostock,new Route(4,Couleur.Default));
         rostockKiel=new Trajet(Ville.Rostock,Ville.Kiel,new Route(6,Couleur.Default));
         berlinSchwerin=new Trajet(Ville.Berlin,Ville.Schwerin,new Route(5, Couleur.Default));
@@ -42,7 +42,7 @@ class GestionTrajetsTest {
         trajetList=new ArrayList<>();
         trajetList.add(berlinRostock);
         trajetList.add(rostockKiel);
-        berlinKielDestination = new CarteDestination(Couleur.Marron,Ville.Berlin,Ville.Kiel,22);
+        berlinKielDestination = new CarteDestination(Couleur.Marron,Ville.Kiel,Ville.Berlin,22);
     }
 
     @Test
@@ -52,12 +52,13 @@ class GestionTrajetsTest {
     }
 
     @Test
-    void shortestTrip(){
-        robot.chooseDestination(berlinKielDestination);
-        robot.addTrajetDone(rostockKiel);
-        robot.addTrajetDone(berlinRostock);
-        //assertEquals(gestionTrajets.trajetOpti(robot,robot.getDestinations().getMainDeCartes().get(0)),kielSchwerin);
-        System.out.println(gestionTrajets.trajetOpti(robot,robot.getDestinations().getMainDeCartes().get(0)));
+    void shortestTrip() throws NotEnoughWagonCard {
+        for(int i=0;i<moteurDeJeu.getPioche().size();) robotRoute.piocher(moteurDeJeu);
+        robotRoute.chooseDestination(berlinKielDestination);
+        //assertEquals(gestionTrajets.trajetOpti(robotRoute, robotRoute.getDestinations().getMainDeCartes().get(0)),kielSchwerin);
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        //assertEquals(gestionTrajets.trajetOpti(robotRoute, robotRoute.getDestinations().getMainDeCartes().get(0)),berlinSchwerin);
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
     }
 
 

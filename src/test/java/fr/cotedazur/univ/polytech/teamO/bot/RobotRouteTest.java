@@ -5,12 +5,10 @@ import fr.cotedazur.univ.polytech.teamO.gestion.GestionEtatJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
-import fr.cotedazur.univ.polytech.teamO.pioche.Pioche;
-import fr.cotedazur.univ.polytech.teamO.pioche.PiocheDestinationCourte;
-import fr.cotedazur.univ.polytech.teamO.pioche.PiocheDestinationLongue;
-import fr.cotedazur.univ.polytech.teamO.pioche.PiocheSurTable;
+import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +24,7 @@ class RobotRouteTest {
     GestionEtatJeu gestionEtatJeu;
     GameMap map;
     GestionTrajets gestionTrajets;
+    CarteDestination berlinKiel;
     @BeforeEach
     void setUp() {
         robotRouteBleu=new RobotRoute(Couleur.Bleu);
@@ -37,14 +36,16 @@ class RobotRouteTest {
         moteurDeJeu= new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
         gestionTrajets=new GestionTrajets(map);
         gestionEtatJeu=new GestionEtatJeu(gestionTrajets);
+        berlinKiel= new CarteDestination(Couleur.Marron, Ville.Kiel,Ville.Berlin,22);
         for(int i=0;i<pioche.size();i++) robotRouteBleu.piocher(moteurDeJeu);
     }
 
     @Test
     void testShortestPath() throws NotEnoughWagonCard {
-        robotRouteBleu.chooseDestinations(moteurDeJeu);
+        robotRouteBleu.chooseDestination(berlinKiel);
         robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu);
-        assertTrue(robotRouteBleu.getTrajet().size()==1);
+        robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        assertTrue(robotRouteBleu.getTrajet().size()==2);
         assertTrue(robotRouteBleu.getTrajet().get(0).isDone());
     }
 
