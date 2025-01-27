@@ -4,10 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.bot.RobotRoute;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
-import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
-import fr.cotedazur.univ.polytech.teamO.plateau.Route;
-import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
-import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
+import fr.cotedazur.univ.polytech.teamO.plateau.*;
 
 import java.util.*;
 
@@ -18,11 +15,9 @@ public class GestionTrajets {
         this.gameMap = map;
         this.trajetsDisponibles = new HashMap<>(map.getMap());
     }
-    public boolean isConnected(Ville From, Ville To, List<Trajet> trajets){
-        HashMap<Ville, HashMap<Ville, Integer>> subgraph = buildSubgraph(trajets);
-        return isConnectedByGraph(From,To,subgraph);
-    }
-    public void updateTrajetsDisponibles(Trajet trajet) {
+    // Méthodes auxiliaires
+
+    private void updateTrajetsDisponibles(Trajet trajet) {
         Ville from = trajet.getFrom();
         Ville to = trajet.getTo();
         if (trajetsDisponibles.containsKey(from)) {
@@ -38,7 +33,7 @@ public class GestionTrajets {
             }
         }
     }
-    public HashMap<Ville,HashMap<Ville,Integer>> buildSubgraph(List<Trajet> trajets){
+    private HashMap<Ville,HashMap<Ville,Integer>> buildSubgraph(List<Trajet> trajets){
         HashMap<Ville,HashMap<Ville,Integer>> subgraph = new HashMap<>();
         for (Trajet trajet : trajets) {
             Ville from=trajet.getFrom();
@@ -51,7 +46,7 @@ public class GestionTrajets {
         return subgraph;
     }
 
-    public boolean isConnectedByGraph(Ville from,Ville to,HashMap<Ville,HashMap<Ville,Integer>> subgraph){
+    private boolean isConnectedByGraph(Ville from,Ville to,HashMap<Ville,HashMap<Ville,Integer>> subgraph){
         Set<Ville> visited = new HashSet<>();
         Queue<Ville> queue = new LinkedList<>();
         queue.add(from);
@@ -75,88 +70,8 @@ public class GestionTrajets {
         return false;
     }
 
-    public Trajet trajetOpti(Robot robot, CarteDestination carteDestination) {
-        Ville ville1 = carteDestination.getVille1();
-        Ville ville2 = carteDestination.getVille2();
-
-        if(isConnectedByGraph(ville1,ville2,trajetsDisponibles)) return findShortestTrip(ville1, ville2, trajetsDisponibles);
-
-        return null;
-    }
-
-    // Helper method to find the shortest trip
-    private Trajet findShortestTrip(Ville start, Ville end, HashMap<Ville, HashMap<Ville, Integer>> graph) {
-        // Dijkstra's algorithm for shortest path
-        Map<Ville, Integer> distances = new HashMap<>();
-        Map<Ville, Ville> previous = new HashMap<>();
-        PriorityQueue<Ville> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(distances::get));
-
-        for (Ville ville : graph.keySet()) {
-            distances.put(ville, Integer.MAX_VALUE);
-            previous.put(ville, null);
-        }
-        distances.put(start, 0);
-        priorityQueue.add(start);
-
-        while (!priorityQueue.isEmpty()) {
-            Ville current = priorityQueue.poll();
-
-            if (current.equals(end)) {
-                break; // Reached the destination
-            }
-
-            HashMap<Ville, Integer> neighbors = graph.get(current);
-            if (neighbors != null) {
-                for (Map.Entry<Ville, Integer> neighborEntry : neighbors.entrySet()) {
-                    Ville neighbor = neighborEntry.getKey();
-                    int weight = neighborEntry.getValue();
-                    int newDist = distances.get(current) + weight;
-
-                    if (newDist < distances.get(neighbor)) {
-                        distances.put(neighbor, newDist);
-                        previous.put(neighbor, current);
-                        priorityQueue.add(neighbor);
-                    }
-                }
-            }
-        }
-
-        // Backtrack to build the Trajet
-        LinkedList<Ville> path = new LinkedList<>();
-        Ville step = end;
-        while (step != null && !step.equals(start)) {
-            path.addFirst(step);
-            step = previous.get(step);
-        }
-        if (step == null) {
-            return null; // No path found
-        }
-        path.addFirst(start);
-
-        // Create a Trajet from the path
-        Ville from = null;
-        Trajet trajet = null;
-        for (Ville to : path) {
-            if (from != null) {
-                // Create a new Route and add to Trajet
-                Route route = new Route(graph.get(from).get(to),Couleur.Default); // Color is optional here
-                trajet = new Trajet(to, from, route);
-            }
-            from = to;
-        }
-        updateTrajetsDisponibles(trajet);
-        return trajet;
-    }
-    // Trouver le trajet optimal à partir de la ville actuelle
-    public Trajet findOptimalTrajet(RobotRoute robotRoute, Ville currentVille, Ville destination) {
-        Trajet trajetOpti = findNextStep(currentVille, destination, trajetsDisponibles);
-        robotRoute.setVilleActuelle(trajetOpti.getTo());
-        updateTrajetsDisponibles(trajetOpti);
-        return trajetOpti;
-    }
-
     // Algorithme de Dijkstra pour trouver le prochain segment optimal
-    private Trajet findNextStep(Ville start, Ville end, HashMap<Ville, HashMap<Ville, Integer>> graph) {
+    private Trajet findNextStep(RobotRoute robotRoute,Ville start, Ville end, HashMap<Ville, HashMap<Ville, Integer>> graph) {
         Map<Ville, Integer> distances = new HashMap<>();
         Map<Ville, Ville> previous = new HashMap<>();
         PriorityQueue<Ville> queue = new PriorityQueue<>(Comparator.comparingInt(distances::get));
@@ -197,7 +112,55 @@ public class GestionTrajets {
         if (previous.get(nextStep) == null) {
             return null; // Aucun chemin trouvé
         }
-
-        return new Trajet(start, nextStep, new Route(graph.get(start).get(nextStep), Couleur.Default));
+        Couleur couleur=findMatchingCouleur(robotRoute,start,nextStep);
+        return new Trajet(start, nextStep, new Route(graph.get(start).get(nextStep), couleur));
     }
+
+    private Couleur findMatchingCouleur(RobotRoute robotRoute, Ville from,Ville to){
+        List<Couleur> couleurs=new ArrayList<>();
+        Trajet trajetVoulu=new Trajet(from,to,new Route(1,Couleur.Default));
+        for(Trajet trajet : gameMap.getTrajets()){
+            if(trajetVoulu.equals(trajet)){
+                couleurs.add(trajet.getRoute().getCouleur());
+            }
+        }
+        if(couleurs.size()>1){
+            return findMaxCouleurBetween(robotRoute,couleurs);
+        }
+        return couleurs.get(0);
+    }
+
+    private Couleur findMaxCouleurBetween(RobotRoute robotRoute,List<Couleur> couleurs){
+        Couleur couleurMax=Couleur.Default;
+        int max = 0;
+        for(Couleur couleur : couleurs ){
+            if(max<robotRoute.getWagonByCouleur().get(couleur)){
+                max=robotRoute.getWagonByCouleur().get(couleur);
+                couleurMax = couleur;
+            }
+        }
+        return couleurMax;
+    }
+
+    // Méthodes principales
+    public boolean isConnected(Ville From, Ville To, List<Trajet> trajets){
+        HashMap<Ville, HashMap<Ville, Integer>> subgraph = buildSubgraph(trajets);
+        return isConnectedByGraph(From,To,subgraph);
+    }
+
+
+
+    // Trouver le trajet optimal à partir de la ville actuelle
+    public Trajet findOptimalTrajet(RobotRoute robotRoute, Ville currentVille, Ville destination) throws NoAvailableTrip {
+        Trajet trajetOpti = findNextStep(robotRoute,currentVille, destination, trajetsDisponibles);
+        System.out.println(trajetOpti);
+        if(trajetOpti != null) {
+            robotRoute.setVilleActuelle(trajetOpti.getTo());
+            updateTrajetsDisponibles(trajetOpti);
+            return trajetOpti;
+        }
+        else throw new NoAvailableTrip("Il n'y a pas de trajet disponible entre ces deux villes");
+    }
+
+
 }
