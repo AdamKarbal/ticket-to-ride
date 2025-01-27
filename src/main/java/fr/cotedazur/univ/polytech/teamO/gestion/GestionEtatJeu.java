@@ -102,8 +102,13 @@ public class GestionEtatJeu {
                 }
             }
             first.getScore().addNbPoints(20);
-            second.getScore().addNbPoints(10);
-            affichage.affichePointMeeples(couleur, first, second);
+            if(!(second.equals(first))) {
+                second.getScore().addNbPoints(10);
+                affichage.affichePointMeeples(couleur, first, second);
+            }
+            else{
+                affichage.affichePointMeeplespasSecond(couleur, first);
+            }
         }
     }
 

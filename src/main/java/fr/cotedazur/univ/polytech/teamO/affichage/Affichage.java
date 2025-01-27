@@ -77,8 +77,15 @@ public class Affichage {
     }
 
     public void affichePointMeeples(MCouleur couleur, Robot first, Robot second){
-        String disp1 = "Le " + first + " a ramasser le plus de passagers de couleur" + couleur + " et gagne 20 points ! \n";
-        String disp2 =  "Le " + second + " a ramasser le plus de passagers de couleur" + couleur + " et gagne 10 points ! \n";
+        String disp1 = "Le " + first + " a ramasser le plus de passagers de couleur " + couleur + " et gagne 20 points ! \n";
+        String disp2 =  "Le " + second + " a ramasser le plus de passagers de couleur " + couleur + " et gagne 10 points ! \n";
+        System.out.print(disp1);
+        System.out.print(disp2);
+    }
+
+    public void affichePointMeeplespasSecond(MCouleur couleur,Robot first){
+        String disp1 = "Le " + first + " a ramasser le plus de passagers de couleur " + couleur + " et gagne 20 points ! \n";
+        String disp2 = "Il n'y a pas de robot en deuxieme position pour les passagers de couleur " + couleur + "\n";
         System.out.print(disp1);
         System.out.print(disp2);
     }
