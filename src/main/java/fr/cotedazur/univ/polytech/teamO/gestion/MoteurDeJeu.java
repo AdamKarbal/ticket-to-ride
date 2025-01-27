@@ -101,11 +101,12 @@ public class MoteurDeJeu {
         affichage.affichePoseTrain(robot, trajet);
     }
 
-    private void updateRobotWagonData(Robot robot, Route route, Couleur couleurRoute) {
+    private void updateRobotWagonData(Robot robot, Route route, Trajet trajet, Couleur couleurRoute) {
         int nbCases = route.getNbCases();
         robot.getWagonByCouleur().put(couleurRoute, robot.getWagonByCouleur().get(couleurRoute) - nbCases);
         robot.getScore().addNbPoints(TableauDesScores.getValue(nbCases));
         robot.removeNbWagons(nbCases);
+        robot.addTrajetDone(trajet);
     }
 
     // Méthodes du jeu
@@ -168,13 +169,13 @@ public class MoteurDeJeu {
         return carteWagonByCouleur;
     }
 
-    public void poseTrain(Robot robot, Trajet trajet) throws NotEnoughWagonCard {
+    public void poseTrain(Robot robot, Trajet trajet) throws NotEnoughWagonCard { // prendre en compte le cas où on a assez de locomotives pour terminer un trajet
         Route route = trajet.getRoute();
         Couleur couleurRoute = determineRouteColor(robot, route);
 
         if (route.isClaimable(robot.getWagonByCouleur().get(couleurRoute), new Wagon(couleurRoute))) {
             processRouteClaim(robot, trajet, route, couleurRoute);
-            updateRobotWagonData(robot, route, couleurRoute);
+            updateRobotWagonData(robot, route, trajet, couleurRoute);
         } else {
             throw new NotEnoughWagonCard(robot + " n'a pas assez de carte wagon.");
         }

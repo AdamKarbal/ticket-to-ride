@@ -8,7 +8,7 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 
 public class Pioche<T extends Carte> {
     // Instances
-    public Stack<T> pioche;
+    private Stack<T> pioche;
 
     public Pioche(){
         creerPiocheComplete();
