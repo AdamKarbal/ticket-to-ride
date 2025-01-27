@@ -10,6 +10,13 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+
+import java.util.Random;
+
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class RobotAleatoireTest {
     RobotAleatoire robot;
@@ -26,10 +33,11 @@ class RobotAleatoireTest {
     PiocheDestinationCourte piocheDestinationCourte;
     Trajet trajet;
     GameMap map;
+    @Mock Random random = mock(Random.class);
 
     @BeforeEach
     void setUp() {
-        robot=new RobotAleatoire(Couleur.Bleu);
+        robot=new RobotAleatoire(Couleur.Bleu,new Random());
         pioche= new Pioche();
         piocheSurTable=new PiocheSurTable();
         robotRouge=new Robot(Couleur.Rouge);
@@ -45,6 +53,9 @@ class RobotAleatoireTest {
 
     @Test
     void testChooseAction() throws NotEnoughWagonCard {
+        robot=new RobotAleatoire(Couleur.Bleu,random);
+        for(int i=0;i<pioche.size();) robot.piocher(moteurDeJeu);
+        when(random.nextInt(anyInt())).thenReturn(21);
         robot.chooseaction(moteurDeJeu,map);
     }
 

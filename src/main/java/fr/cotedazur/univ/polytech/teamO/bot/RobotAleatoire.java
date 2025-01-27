@@ -9,15 +9,15 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import java.util.Random;
 
 public class RobotAleatoire extends Robot {
-
-    public RobotAleatoire(Couleur couleur) {
+    private Random random;
+    public RobotAleatoire(Couleur couleur,Random random) {
         super(couleur);
+        this.random=random;
     }
 
     public void chooseaction(MoteurDeJeu moteurDeJeu,GameMap map) throws NotEnoughWagonCard {
         int choix;
-        Random rand = new Random();
-        choix=rand.nextInt(100)+1;
+        choix=random.nextInt(100)+1;
         if (1<=choix && choix<=20){
             piocher(moteurDeJeu);
             if(!(isTurnOver())){
@@ -26,7 +26,7 @@ public class RobotAleatoire extends Robot {
         }
         if (20< choix && choix <= 80) {
             try {
-                Trajet trajetRandom = map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
+                Trajet trajetRandom = map.getTrajets().get(random.nextInt(map.getTrajets().size()));
                 poseTrain(trajetRandom, moteurDeJeu);
             } catch (NotEnoughWagonCard e) {
                 chooseactionnotenought(moteurDeJeu);
@@ -34,7 +34,7 @@ public class RobotAleatoire extends Robot {
         }
         if(80<choix && choix<=100){
             int pos;
-            pos=rand.nextInt(moteurDeJeu.getPiocheSurTable().size());
+            pos=random.nextInt(moteurDeJeu.getPiocheSurTable().size());
             piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(pos),moteurDeJeu);
             if(!(isTurnOver())){
                 chooseactionnotenought(moteurDeJeu);
