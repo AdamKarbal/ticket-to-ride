@@ -16,25 +16,25 @@ import java.util.EmptyStackException;
 
 
 public class Jeu {
-    static RobotRoute robotBleu;
-    static RobotAleatoire robotRouge;
-    static RobotAleatoire robotJaune;
-    static ArrayList<Robot> robots;
-    static Ranking ranking;
-    static MoteurDeJeu moteurDeJeu;
-    static Pioche pioche;
-    static PiocheSurTable piocheSurTable;
-    static PiocheDestinationCourte piocheDestinationCourte;
-    static PiocheDestinationLongue piocheDestinationLongue;
-    static GameMap map;
-    static GestionEtatJeu gestionEtatJeu;
-    static GestionTrajets gestionTrajets;
-    public static String hello() {
+     RobotRoute robotBleu;
+     RobotAleatoire robotRouge;
+     RobotAleatoire robotJaune;
+     ArrayList<Robot> robots;
+     Ranking ranking;
+     MoteurDeJeu moteurDeJeu;
+     Pioche pioche;
+     PiocheSurTable piocheSurTable;
+     PiocheDestinationCourte piocheDestinationCourte;
+     PiocheDestinationLongue piocheDestinationLongue;
+     GameMap map;
+     GestionEtatJeu gestionEtatJeu;
+     GestionTrajets gestionTrajets;
+    public  String hello() {
         return "Hello World!";
     }
 
 
-    public static void setup() throws NotEnoughWagonCard {
+    public  void setup() throws NotEnoughWagonCard {
         robotBleu=new RobotRoute(Couleur.Bleu);
         robotRouge=new RobotAleatoire(Couleur.Rouge);
         robotJaune=new RobotAleatoire(Couleur.Jaune);
@@ -66,7 +66,7 @@ public class Jeu {
         System.out.println("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
 
-    public static void endofGame() throws EmptyListException {
+    public  void endofGame() throws EmptyListException {
         System.out.print("\n---------------------- Le jeu est finit ! ----------------------\n");
         System.out.print("Voici la mise à jour par rapport au carte destination !\n");
         gestionEtatJeu.isDestinationsCardCompleted(robots);
@@ -78,7 +78,7 @@ public class Jeu {
         System.out.println(ranking);
     }
 
-    public static void play () throws NotEnoughWagonCard, EmptyListException {
+    public  void play () throws NotEnoughWagonCard, EmptyListException {
         int tour = 1;
         setup();
         robots=new ArrayList<>();
