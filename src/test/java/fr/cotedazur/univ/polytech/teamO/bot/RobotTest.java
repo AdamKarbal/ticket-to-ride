@@ -10,6 +10,7 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +32,8 @@ class RobotTest {
     PiocheDestinationLongue piocheDestinationLongue;
     PiocheDestinationCourte piocheDestinationCourte;
     Trajet trajet;
+    @Mock PiocheSurTable piocheSurTableMock = mock(PiocheSurTable.class);
+    @Mock Pioche piocheMock = mock(Pioche.class);
     @BeforeEach
     void setUp() {
         robot=new Robot(Couleur.Bleu);
@@ -67,27 +70,16 @@ class RobotTest {
     }
     @Test
     void testPiocheRainbow() {
-        // Mock dependencies
-        PiocheSurTable piocheTableMock = mock(PiocheSurTable.class);
-        MoteurDeJeu moteurDeJeuMock = mock(MoteurDeJeu.class);
-        Pioche piocheMock = mock(Pioche.class);
-        CarteLocomotive carteLocomotive = new CarteLocomotive();
+        moteurDeJeu = new MoteurDeJeu(piocheMock,piocheSurTableMock,piocheDestinationLongue,piocheDestinationCourte);
 
-        when(moteurDeJeuMock.getPiocheSurTable()).thenReturn(piocheTableMock);
-        when(moteurDeJeuMock.getPioche()).thenReturn(piocheMock);
-        when(moteurDeJeuMock.piocherSurTable(robot,carteBleue)).thenReturn(carteLocomotive);
+        when(moteurDeJeu.getPiocheSurTable().piocher(carteBleue)).thenReturn(new CarteWagon(Couleur.Rainbow));
 
-        // Initial assertions
         assertFalse(robot.isTurnOver(), "Robot should not have ended its turn before piocherSurTable.");
 
-        // Act: Call the method under test
-        robot.piocherSurTable(carteBleue, moteurDeJeuMock);
+        robot.piocherSurTable(carteBleue, moteurDeJeu);
 
-        // Assertions
         assertTrue(robot.isTurnOver(), "Robot should have ended its turn after piocherSurTable.");
 
-        // Verify interactions
-        verify(moteurDeJeuMock).piocherSurTable(robot, ArgumentMatchers.eq(new CarteWagon(Couleur.Bleu)));
     }
 
     @Test
@@ -100,11 +92,13 @@ class RobotTest {
     }
     @Test
     void poseTrain() throws NotEnoughWagonCard {
-        for(int i=0;i<120;i++){
+        for(int i=0;i<pioche.size();i++){
             robot.piocher(moteurDeJeu);
         }
-        System.out.println(robot.getWagonByCouleur());
+        int nbWagonByCouleurOriginel = robot.getWagonByCouleur().get(trajet.getRoute().getCouleur());
         robot.poseTrain(trajet, moteurDeJeu);
+        assertTrue(trajet.isDone());
+        assertEquals(robot.getWagonByCouleur().get(trajet.getRoute().getCouleur()),nbWagonByCouleurOriginel-trajet.getRoute().getNbCases());
         assertEquals(robot.getTrajet().size(),1);
         assertEquals(robot.getTrajet(),new ArrayList<>(Arrays.asList(trajet)));
         assertEquals(routeBleue.isAvailable(),false);

@@ -4,12 +4,19 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
-import fr.cotedazur.univ.polytech.teamO.plateau.Map;
+import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+
+import java.util.Random;
+
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class RobotAleatoireTest {
     RobotAleatoire robot;
@@ -25,11 +32,12 @@ class RobotAleatoireTest {
     PiocheDestinationLongue piocheDestinationLongue;
     PiocheDestinationCourte piocheDestinationCourte;
     Trajet trajet;
-    Map map;
+    GameMap map;
+    @Mock Random random = mock(Random.class);
 
     @BeforeEach
     void setUp() {
-        robot=new RobotAleatoire(Couleur.Bleu);
+        robot=new RobotAleatoire(Couleur.Bleu,new Random());
         pioche= new Pioche();
         piocheSurTable=new PiocheSurTable();
         robotRouge=new Robot(Couleur.Rouge);
@@ -40,11 +48,14 @@ class RobotAleatoireTest {
         taillePiocheInit= moteurDeJeu.getPioche().size();
         routeBleue= new Route(1,Couleur.Bleu);
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);
-        map = new Map();
+        map = new GameMap();
     }
 
     @Test
     void testChooseAction() throws NotEnoughWagonCard {
+        robot=new RobotAleatoire(Couleur.Bleu,random);
+        for(int i=0;i<pioche.size();) robot.piocher(moteurDeJeu);
+        when(random.nextInt(anyInt())).thenReturn(21);
         robot.chooseaction(moteurDeJeu,map);
     }
 

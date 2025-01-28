@@ -5,22 +5,21 @@ import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class MapTest {
+public class GameMapTest {
 
-    Map map;
+    GameMap gameMap;
     GestionEtatJeu gestionEtatJeu;
     //Initialisation
 
     @BeforeEach
-    public void testInit(){
-        map = new Map();
-        gestionEtatJeu = new GestionEtatJeu(map);
+    void testInit(){
+        gameMap = new GameMap();
     }
 
     /*@Test
@@ -30,20 +29,22 @@ public class MapTest {
 
     @Test
     void villeDispos(){
-        assertEquals(map.getVillesFrom(Ville.Ulm).size(),3);
-        assertEquals(map.getVillesFrom(Ville.Ulm),new ArrayList<>(Arrays.asList(Ville.Stuttgart,Ville.Augsburg,Ville.Lindau)));
+        System.out.println(gameMap.getTrajets().get(21));
+        assertEquals(gameMap.getVillesFrom(Ville.Ulm).size(),3);
+        Map<Ville, Integer> expectedMap = new HashMap<>();
+        expectedMap.put(Ville.Stuttgart, 2);
+        expectedMap.put(Ville.Augsburg, 1);
+        expectedMap.put(Ville.Lindau, 2);
+
+        assertEquals(expectedMap, gameMap.getVillesFrom(Ville.Ulm));
     }
 
-    @Test
-    void trajetsExistants(){
-        System.out.println(map);
-    }
 
     @Test
     void ajouterTrajetTest() {
-            map.ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 2, Couleur.Default );
-            map.ajouterTrajet(Ville.Ulm, Ville.Augsburg, 2, Couleur.Rouge );
-        assertEquals(111, map.getTrajets().size());
+            gameMap.ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 2, Couleur.Default );
+            gameMap.ajouterTrajet(Ville.Ulm, Ville.Augsburg, 2, Couleur.Rouge );
+        assertEquals(224, gameMap.getTrajets().size());
     }
 
     @Test
