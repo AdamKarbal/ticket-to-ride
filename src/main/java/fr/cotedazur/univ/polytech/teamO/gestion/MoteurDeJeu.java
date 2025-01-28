@@ -207,6 +207,8 @@ public class MoteurDeJeu {
         if(villeChoisie == trajet.getFrom() || villeChoisie == trajet.getTo()){
             robot.addMeeple(meepleChoisi);
             villeChoisie.getPassagers().remove(meepleChoisi);
+            affichage.afficheTakeMeeples(robot,1,meepleChoisi);
         }
     }
+
 }
