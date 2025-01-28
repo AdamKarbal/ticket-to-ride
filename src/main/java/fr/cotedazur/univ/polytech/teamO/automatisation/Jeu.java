@@ -4,42 +4,36 @@ import fr.cotedazur.univ.polytech.teamO.classement.EmptyListException;
 import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionEtatJeu;
-import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
-import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
-import fr.cotedazur.univ.polytech.teamO.plateau.Route;
-import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-import java.util.List;
-import java.util.Random;
 
 
 public class Jeu {
-     RobotRoute robotBleu;
-     RobotAleatoire robotRouge;
-     RobotAleatoire robotJaune;
-     ArrayList<Robot> robots;
-     Ranking ranking;
-     MoteurDeJeu moteurDeJeu;
-     Pioche pioche;
-     PiocheSurTable piocheSurTable;
-     PiocheDestinationCourte piocheDestinationCourte;
-     PiocheDestinationLongue piocheDestinationLongue;
-     GameMap map;
-     GestionEtatJeu gestionEtatJeu;
-     GestionTrajets gestionTrajets;
-    public  String hello() {
+    static RobotAleatoire robotBleu;
+    static RobotAleatoire robotRouge;
+    static RobotAleatoire robotJaune;
+    static ArrayList<Robot> robots;
+    static Ranking ranking;
+    static MoteurDeJeu moteurDeJeu;
+    static Pioche pioche;
+    static PiocheSurTable piocheSurTable;
+    static PiocheDestinationCourte piocheDestinationCourte;
+    static PiocheDestinationLongue piocheDestinationLongue;
+    static GameMap map;
+    static GestionEtatJeu gestionEtatJeu;
+    public static String hello() {
         return "Hello World!";
     }
 
 
-    public  void setup() throws NotEnoughWagonCard {
-        robotBleu=new RobotRoute(Couleur.Bleu);
+    public static void setup() throws NotEnoughWagonCard {
+        robotBleu=new RobotAleatoire(Couleur.Bleu);
         robotRouge=new RobotAleatoire(Couleur.Rouge);
         robotJaune=new RobotAleatoire(Couleur.Jaune);
         robots=new ArrayList<>();
@@ -48,15 +42,15 @@ public class Jeu {
         robots.add(robotJaune);
 
         pioche = new Pioche();
+        pioche.creerPiocheComplete();
 
         map = new GameMap();
-        gestionTrajets=new GestionTrajets(map);
         piocheSurTable = new PiocheSurTable();
         piocheDestinationCourte=new PiocheDestinationCourte();
         piocheDestinationLongue=new PiocheDestinationLongue();
 
         moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
-        gestionEtatJeu=new GestionEtatJeu(gestionTrajets);
+        gestionEtatJeu=new GestionEtatJeu(map);
 
         for(int i=0;i<4;i++){
             robotBleu.piocher(moteurDeJeu);
@@ -66,17 +60,23 @@ public class Jeu {
         robotJaune.init(moteurDeJeu);
         robotBleu.init(moteurDeJeu);
         robotRouge.init(moteurDeJeu);
+
         System.out.println("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
 
-    public  void endofGame(){
+    public static void endofGame() throws EmptyListException {
+        System.out.print("\n---------------------- Le jeu est finit ! ----------------------\n");
+        System.out.print("Voici la mise à jour par rapport au carte destination !\n");
         gestionEtatJeu.isDestinationsCardCompleted(robots);
         for(Robot robot:robots){
             gestionEtatJeu.updateScoreCarteDestination(robot);
         }
+        gestionEtatJeu.whoHaveMostMeeples(robots);
+        ranking=new Ranking(robots);
+        System.out.println(ranking);
     }
 
-    public  void play () throws NotEnoughWagonCard, EmptyListException {
+    public static void play () throws NotEnoughWagonCard, EmptyListException {
         int tour = 1;
         setup();
         robots=new ArrayList<>();
@@ -86,7 +86,7 @@ public class Jeu {
         while (!(moteurDeJeu.isFinished(robots))){
             System.out.println("---------------------- Début du tour numéro : " + tour++ + "---------------------- \n");
             try{
-                robotBleu.choixAction(gestionTrajets,moteurDeJeu);
+                robotBleu.chooseaction(moteurDeJeu,map);
                 robotRouge.chooseaction(moteurDeJeu,map);
                 robotJaune.chooseaction(moteurDeJeu,map);}
             catch(EmptyStackException e){
@@ -95,8 +95,6 @@ public class Jeu {
             System.out.print("\n");
         }
         endofGame();
-        ranking=new Ranking(robots);
-        System.out.println(ranking);
     }
 
 }
