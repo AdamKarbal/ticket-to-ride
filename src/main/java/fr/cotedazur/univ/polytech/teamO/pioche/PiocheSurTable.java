@@ -51,12 +51,12 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
     public int size(){
         return cartesSurTable.size();
     }
-    public T piocher(T carte){
+    public T piocher(T carte) throws NullPointerException{
         if(containsCarte(carte)){
             removeCarte(carte);
             return carte;
         }
-        return null;
+        throw new NullPointerException("La carte n'est pas présente dans la pioche visible");
     }
     @Override
     public String toString() {

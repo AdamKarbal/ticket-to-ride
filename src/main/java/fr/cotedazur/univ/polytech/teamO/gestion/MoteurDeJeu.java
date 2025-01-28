@@ -56,7 +56,7 @@ public class MoteurDeJeu {
     }
     private Carte piocherCarte(Robot robot) {
         Carte carte = getPioche().piocher();
-        //affichage.affichePiocher(robot, carte);
+        affichage.affichePiocher(robot, carte);
         robot.getWagonByCouleur().put(
                 carte.getCouleur(),
                 robot.getWagonByCouleur().get(carte.getCouleur()) + 1
@@ -64,17 +64,22 @@ public class MoteurDeJeu {
         return carte;
     }
     private void updateRobotPiocheSurTable(Robot robot, Carte cartePiochee) {
-        boolean isRainbow = cartePiochee.getCouleur() == Couleur.Rainbow;
+        Couleur couleurCarte= cartePiochee.getCouleur();
+        boolean isRainbow = couleurCarte== Couleur.Rainbow;
 
         if (robot.getPiocheCount() == 0) {
             robot.setTurnOver(isRainbow);
+            robot.getWagonByCouleur().put(couleurCarte, robot.getWagonByCouleur().get(couleurCarte) + 1);
             if (!isRainbow) robot.setPiocheCount(1);
-        } else {
+        }
+        else {
             robot.setTurnOver(true);
             robot.setPiocheCount(robot.getPiocheCount() - 1);
-
             if (isRainbow) {
-                pioche.piocher();
+                robot.getWagonByCouleur().put(pioche.piocher().getCouleur(), robot.getWagonByCouleur().get(pioche.piocher().getCouleur()) + 1);
+            }
+            else{
+                robot.getWagonByCouleur().put(couleurCarte, robot.getWagonByCouleur().get(couleurCarte) + 1);
             }
         }
     }
@@ -122,17 +127,22 @@ public class MoteurDeJeu {
     }
 
 
-    public Carte piocherSurTable(Robot robot,Carte carte){
-        Carte cartePiochee=getPiocheSurTable().piocher(carte);
-        affichage.affichePiocherSurTable(robot,cartePiochee);
-        try {
-            getPiocheSurTable().addCarte(pioche.piocher());
-        } catch(EmptyStackException e) {
-            replacePiocheByDefausse();
-            getPiocheSurTable().addCarte(pioche.piocher());
-        }
+    public Carte piocherSurTable(Robot robot,Carte carte) throws NullPointerException{
+        try{
+            Carte cartePiochee=getPiocheSurTable().piocher(carte);
+            affichage.affichePiocherSurTable(robot,cartePiochee);
+            try {
+                getPiocheSurTable().addCarte(pioche.piocher());
+            }
+            catch(EmptyStackException e) {
+                replacePiocheByDefausse();
+                getPiocheSurTable().addCarte(pioche.piocher());
+            }
         updateRobotPiocheSurTable(robot,cartePiochee);
-        return cartePiochee;
+        return cartePiochee;}
+        catch(NullPointerException e){
+            throw e;
+        }
     }
 
     public void replacePiocheByDefausse(){
