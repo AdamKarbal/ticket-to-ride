@@ -20,6 +20,12 @@ public class RobotRoute extends Robot{
     public void setVilleActuelle(Ville villeActuelle) {
         this.villeActuelle = villeActuelle;
     }
+    public Ville getVilleActuelle() {
+        return villeActuelle;
+    }
+    public CarteDestination getCurrentDestination() {
+        return currentDestination;
+    }
     @Override
     public void chooseDestinations(MoteurDeJeu moteurDeJeu) {
         for(int i=0;i<4;i++){
@@ -56,9 +62,14 @@ public class RobotRoute extends Robot{
         this.villeActuelle=currentDestination.getVille1();
     }
 
-    public void updateCarteDestination(){
-        currentDestination=getDestinations().getMainDeCartes().get(getDestinations().getMainDeCartes().indexOf(currentDestination)+1);
-        this.villeActuelle=currentDestination.getVille1();
+    private void updateCarteDestination(MoteurDeJeu moteurDeJeu) {
+        int currentIndex = getDestinations().getMainDeCartes().indexOf(currentDestination);
+        if (currentIndex + 1 < getDestinations().getMainDeCartes().size()) { // Ensure there is a next card
+            currentDestination = getDestinations().getMainDeCartes().get(currentIndex + 1);
+            this.villeActuelle = currentDestination.getVille1();
+        } else {
+            moteurDeJeu.giveDestinationsCard(this, 2); // No more cards, draw new destination cards
+        }
     }
 
     public Couleur poseTrainOpti(GestionTrajets gestionTrajets, MoteurDeJeu moteurDeJeu) throws NotEnoughWagonCard {
@@ -68,19 +79,29 @@ public class RobotRoute extends Robot{
     }
 
     public void choixAction(GestionTrajets gestionTrajets, MoteurDeJeu moteurDeJeu) {
-        try{
-            poseTrainOpti(gestionTrajets,moteurDeJeu);
-        } catch (NotEnoughWagonCard e) { // s'il n'a pas assez de CarteWagon pour compléter son trajet, il va essaie de piocher
-            Couleur couleurTrajet;
-            try{
-                couleurTrajet=gestionTrajets.findOptimalTrajet(this,villeActuelle,currentDestination.getVille2()).getRoute().getCouleur();
-                choosePioche(couleurTrajet,moteurDeJeu);
-            }
-            catch(NoAvailableTrip noAvailableTrip){ // s'il n'y a pas de trajets pour compléter sa carteDestination, on passe à l'autre
-                updateCarteDestination();
-            }
+        try {
+            Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this, villeActuelle, currentDestination.getVille2());
+            poseTrainOpti(gestionTrajets, moteurDeJeu);
+            gestionTrajets.updateAfterTrainPlacement(this,trajetOpti);
+        } catch (NotEnoughWagonCard e) {
+            // Handle insufficient cards by attempting to draw
+            handleNotEnoughWagonCard(gestionTrajets, moteurDeJeu);
+        } catch (NoAvailableTrip noAvailableTrip) {
+            // If no available trip, move to the next destination
+            updateCarteDestination(moteurDeJeu);
         }
     }
+
+    private void handleNotEnoughWagonCard(GestionTrajets gestionTrajets, MoteurDeJeu moteurDeJeu) {
+        try {
+            Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this, villeActuelle, currentDestination.getVille2());
+            Couleur couleurTrajet = trajetOpti.getRoute().getCouleur();
+            choosePioche(couleurTrajet, moteurDeJeu);
+        } catch (NoAvailableTrip noAvailableTrip) {
+            updateCarteDestination(moteurDeJeu);
+        }
+    }
+
 
     public void choosePioche(Couleur couleurTrajet,MoteurDeJeu moteurDeJeu) {
         try {
