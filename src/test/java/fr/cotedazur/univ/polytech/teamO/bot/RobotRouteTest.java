@@ -7,6 +7,7 @@ import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
+import fr.cotedazur.univ.polytech.teamO.plateau.NoAvailableTrip;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,6 +46,7 @@ class RobotRouteTest {
         robotRouteBleu.chooseDestination(berlinKiel);
         robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu);
         robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        assertThrows(NoAvailableTrip.class, ()-> robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu));
         assertTrue(robotRouteBleu.getTrajet().size()==2);
         assertTrue(robotRouteBleu.getTrajet().get(0).isDone());
     }
