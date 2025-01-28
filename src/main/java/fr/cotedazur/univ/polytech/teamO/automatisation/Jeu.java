@@ -58,21 +58,24 @@ public class Jeu {
             robotBleu.piocher(moteurDeJeu);
             robotRouge.piocher(moteurDeJeu);
             robotJaune.piocher(moteurDeJeu);
-            robotBleu.chooseDestinations(moteurDeJeu);
-            robotRouge.chooseDestinations(moteurDeJeu);
-            robotJaune.chooseDestinations(moteurDeJeu);
         }
-        for(Robot robot:robots){
-            robot.refuseDestinations(moteurDeJeu);
-        }
+        robotJaune.init(moteurDeJeu);
+        robotBleu.init(moteurDeJeu);
+        robotRouge.init(moteurDeJeu);
+
         System.out.println("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
 
-    public static void endofGame(){
+    public static void endofGame() throws EmptyListException {
+        System.out.print("\n---------------------- Le jeu est finit ! ----------------------\n");
+        System.out.print("Voici la mise à jour par rapport au carte destination !\n");
         gestionEtatJeu.isDestinationsCardCompleted(robots);
         for(Robot robot:robots){
             gestionEtatJeu.updateScoreCarteDestination(robot);
         }
+        gestionEtatJeu.whoHaveMostMeeples(robots);
+        ranking=new Ranking(robots);
+        System.out.println(ranking);
     }
 
     public static void play () throws NotEnoughWagonCard, EmptyListException {
@@ -94,8 +97,6 @@ public class Jeu {
             System.out.print("\n");
         }
         endofGame();
-        ranking=new Ranking(robots);
-        System.out.println(ranking);
     }
 
 }

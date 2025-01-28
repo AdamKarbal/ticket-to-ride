@@ -123,7 +123,7 @@ public class Robot implements Comparable<Robot> {
     }
 
     public void addMeeple(MCouleur couleur){
-        int compteur = takenMeeples.get(couleur);
+        int compteur = takenMeeples.containsKey(couleur) ? takenMeeples.get(couleur) : 0; // Si absent, on initialise à 0
         compteur++;
         takenMeeples.put(couleur,compteur);
     }
@@ -154,6 +154,10 @@ public class Robot implements Comparable<Robot> {
         }
         else if(this.getScore().getNbPoints()>o.getScore().getNbPoints()) return 1;
         else return -1;
+    }
+
+    public int getTakenMeeplesByCouleur(MCouleur couleur){
+        return takenMeeples.getOrDefault(couleur, 0);
     }
 
 }

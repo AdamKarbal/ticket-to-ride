@@ -41,25 +41,53 @@ public class Affichage {
     //Adam
     public String afficheCheckCarteDestinationOK(Robot robot, CarteDestination carteDestination){
         String disp = "Le " + robot + " a réussi la " + carteDestination + " et ajoute " + carteDestination.getValue() +" à son score.\n";
-        System.out.println(disp);
+        System.out.print(disp);
         return disp;
     }
 
     public String afficheCheckCarteDestinationPASOK(Robot robot, CarteDestination carteDestination){
         String disp = "Le " + robot + " n'as pas réussie la carte destination : " + carteDestination + " et perd " + carteDestination.getValue() +" au score. \n";
-        System.out.println(disp);
+        System.out.print(disp);
         return disp;
     }
+
+    public String afficheCarteDestinationPiocher(Robot robot, CarteDestination carteDestination){
+        String disp = "Le " + robot + " à piocher la carte destination : " + carteDestination +". \n";
+        System.out.print(disp);
+        return disp;
+    }
+
+    public String afficheCarteDestinationRefuser(Robot robot, CarteDestination carteDestination){
+        String disp = "Le " + robot + " à refuser la carte destination : " + carteDestination + ". \n";
+        System.out.print(disp);
+        return disp;
+    }
+
+
 
     //Younes
     public String afficheTakeMeeples(Robot robot, int nbMeeples, MCouleur couleur){
         String disp = "Le " + robot + " prends " + nbMeeples + " passagers de couleur "+ couleur + ".\n";
-        System.out.println(disp);
+        System.out.print(disp);
         return disp;
     }
     //Younes
     public void afficheLastScore(Ranking classement){
         System.out.println(classement);
+    }
+
+    public void affichePointMeeples(MCouleur couleur, Robot first, Robot second){
+        String disp1 = "Le " + first + " a ramasser le plus de passagers de couleur " + couleur + " et gagne 20 points ! \n";
+        String disp2 =  "Le " + second + " a ramasser le plus de passagers de couleur " + couleur + " et gagne 10 points ! \n";
+        System.out.print(disp1);
+        System.out.print(disp2);
+    }
+
+    public void affichePointMeeplespasSecond(MCouleur couleur,Robot first){
+        String disp1 = "Le " + first + " a ramasser le plus de passagers de couleur " + couleur + " et gagne 20 points ! \n";
+        String disp2 = "Il n'y a pas de robot en deuxieme position pour les passagers de couleur " + couleur + "\n";
+        System.out.print(disp1);
+        System.out.print(disp2);
     }
 
 }
