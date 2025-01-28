@@ -28,34 +28,36 @@ public class GameMap {
     }
 
     //Initialisation
-    private void init(){
+    private void init() {
         Random random = new Random();
-        for(Ville ville : Ville.values()){
-            int nbMeeples = ville.getNbMeeple();
+        for (Ville ville : Ville.values()) {
+            /*int nbMeeples = ville.getNbMeeple();
             Set<MCouleur> couleursUtilisées = new HashSet<>();
-
             for (int i = 0; i < nbMeeples; i++) {
-                // Génére une couleur unique pour chaque meeple dans une ville
                 MCouleur couleur;
+                int attempts = 0;
                 do {
                     couleur = getRandomMeepleColor(MCouleur.class);
+                    attempts++;
+                    // Si trop d'essais, c'est qu'on n'a plus de couleurs valides
+                    if (attempts > 100) {
+                        throw new IllegalStateException("Trop d'essais pour générer des meeples avec des couleurs disponibles.");
+                    }
                 } while (couleursUtilisées.contains(couleur) || couleur.getQuant() == 0);
-
                 couleursUtilisées.add(couleur);
-
-                //Crée le meeple et l'ajoute à la ville
                 Meeples meeple = new Meeples(couleur);
-                couleur.DecremQT(); //Décrémente l'attribut nombre de pions meeple restants pour chaque couleur de meeple
+                couleur.DecremQT(); // Décrémente le nombre de meeples restants pour cette couleur
                 ville.getPassagers().add(meeple);
-            }
-
+            }*/
             map.put(ville, new HashMap<>());
         }
 
 
 
-        // Création des trajets uns à uns entre les villes.
 
+        // Création des trajets uns à uns entre les villes.
+        ajouterTrajet(Ville.Kassel, Ville.Hannover, 3, Couleur.Default );
+        ajouterTrajet(Ville.Kassel, Ville.Hannover, 3, Couleur.Default );
         ajouterTrajet(Ville.Kiel, Ville.Hamburg, 2, Couleur.Violet);
         ajouterTrajet(Ville.Kiel, Ville.Hamburg, 2, Couleur.Noir);
 

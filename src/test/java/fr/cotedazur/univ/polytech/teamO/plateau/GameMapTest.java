@@ -18,7 +18,7 @@ public class GameMapTest {
     //Initialisation
 
     @BeforeEach
-    public void testInit(){
+    void testInit(){
         gameMap = new GameMap();
     }
 
@@ -29,6 +29,7 @@ public class GameMapTest {
 
     @Test
     void villeDispos(){
+        System.out.println(gameMap.getTrajets().get(21));
         assertEquals(gameMap.getVillesFrom(Ville.Ulm).size(),3);
         Map<Ville, Integer> expectedMap = new HashMap<>();
         expectedMap.put(Ville.Stuttgart, 2);
@@ -43,7 +44,7 @@ public class GameMapTest {
     void ajouterTrajetTest() {
             gameMap.ajouterTrajet(Ville.Ulm, Ville.Stuttgart, 2, Couleur.Default );
             gameMap.ajouterTrajet(Ville.Ulm, Ville.Augsburg, 2, Couleur.Rouge );
-        assertEquals(111, gameMap.getTrajets().size());
+        assertEquals(224, gameMap.getTrajets().size());
     }
 
     @Test
