@@ -36,7 +36,7 @@ public class Jeu {
     public  String hello() {
         return "Hello World!";
     }
-    ;
+
 
     public  void setup() throws NotEnoughWagonCard {
         robotBleu=new RobotRoute(Couleur.Bleu);

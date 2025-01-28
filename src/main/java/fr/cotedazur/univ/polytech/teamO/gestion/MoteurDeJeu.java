@@ -150,27 +150,22 @@ public class MoteurDeJeu {
     }
 
     public CarteDestination giveDestinationsCard(Robot robot, int choice){
-        CarteDestination carteDestinationL=piocheDestinationLongue.peekCartesDestinationLongue();
-        CarteDestination carteDestinationC=piocheDesinationCourte.peekCartesDestinationCourtes();
-        if(choice==1)return carteDestinationC;
-        if(choice==2)return carteDestinationL;
-        else return null;
+        CarteDestination carteDestination = null;
+        if(choice==1) carteDestination= piocheDesinationCourte.popCartesDestinationCourtes();
+        if(choice==2) carteDestination = piocheDestinationLongue.popCartesDestinationLongue();
+        affichage.afficheCarteDestinationPiocher(robot,carteDestination);
+        return carteDestination;
     }
-    public void removeDestinationsCard(Robot robot,int choice){
-        List<CarteDestination> cartesEnlevees= new ArrayList<>();
-        for(int i=0;i<choice;i++){
-            cartesEnlevees.add(robot.getDestinations().getMainDeCartes().remove(i));
-            //Enlève le nb de cartes non voulues
-        }
-        for(CarteDestination carteDestination:cartesEnlevees){
-            if(carteDestination.isLongue())piocheDestinationLongue.pushCartesDestinationLongues(carteDestination);
-            else piocheDesinationCourte.pushCartesDestinationCourtes(carteDestination);
-        }//Remet dans la pioche correspondante
+    public void removeDestinationsCard(Robot robot,int choice){//enleve la carte destination a la place choice de son deck
+        CarteDestination carteDestination = robot.getDestinations().getMainDeCartes().remove(choice);
+        affichage.afficheCarteDestinationRefuser(robot,carteDestination);
+        if(carteDestination.isLongue())piocheDestinationLongue.pushCartesDestinationLongues(carteDestination);
+        else piocheDesinationCourte.pushCartesDestinationCourtes(carteDestination);
+        //Remet dans la pioche correspondante
         Collections.shuffle(piocheDesinationCourte.getCartesDestinationCourtes());
         Collections.shuffle(piocheDestinationLongue.getCartesDestinationLongues());
-
-
     }
+
     public static HashMap<Couleur,Integer> initWagonByCouleur(Robot robot){
         HashMap<Couleur,Integer> carteWagonByCouleur=new HashMap<>();
         for(Couleur couleur:Couleur.values()){
@@ -212,6 +207,8 @@ public class MoteurDeJeu {
         if(villeChoisie == trajet.getFrom() || villeChoisie == trajet.getTo()){
             robot.addMeeple(meepleChoisi);
             villeChoisie.getPassagers().remove(meepleChoisi);
+            affichage.afficheTakeMeeples(robot,1,meepleChoisi);
         }
     }
+
 }
