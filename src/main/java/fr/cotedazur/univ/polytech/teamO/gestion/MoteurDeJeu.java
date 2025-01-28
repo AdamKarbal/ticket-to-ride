@@ -30,7 +30,6 @@ public class MoteurDeJeu {
         this.piocheDesinationCourte = new PiocheDestinationCourte();
         this.affichage = new Affichage();
         this.defaussePioche = new Pioche();
-        this.defaussePioche.viderPioche();
     }
     // Accesseurs et setters
 
@@ -164,11 +163,6 @@ public class MoteurDeJeu {
         }
     }
 
-    public void poseTrainPUp(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi) throws NotEnoughWagonCard {
-        poseTrain(robot,trajet);
-        robot.setTaking(true);
-        TakeMeeples(robot, trajet, villeChoisie, meepleChoisi);
-    }
 
     public boolean isFinished(List<Robot> robots){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
         for(Robot robot:robots){

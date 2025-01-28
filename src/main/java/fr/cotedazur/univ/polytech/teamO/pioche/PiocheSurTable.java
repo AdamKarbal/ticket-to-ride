@@ -19,10 +19,6 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
         }
     }
 
-    public PiocheSurTable(ArrayList<T> carteSurTable){
-        this.cartesSurTable = carteSurTable;
-    }
-
     // Accesseurs
     /*@Override*/
     public ArrayList<T> getMainDeCartes(){
@@ -34,20 +30,23 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
     public void addCarte(T CarteWagon){ // ajouter une carte wagon
         cartesSurTable.add(CarteWagon);
     }
+
     public boolean containCarte(T CarteWagon){
         if(cartesSurTable.contains(CarteWagon)) return true;
         return false;
-    }
-    public T carteAtPosI(int i){
-        return cartesSurTable.get(i);
-    }
-    public void removeCarte(T carte) {
-        cartesSurTable.remove(carte);
     }
 
     public int size(){
         return cartesSurTable.size();
     }
+    public T carteAtPosI(int i){
+        return cartesSurTable.get(i);
+    }
+
+    public void removeCarte(T carte) {
+        cartesSurTable.remove(carte);
+    }
+
     public T piocher(T carte){
         if(containCarte(carte)){
             removeCarte(carte);
@@ -55,6 +54,7 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
         }
         return null;
     }
+
     @Override
     public String toString() {
         String str = "";

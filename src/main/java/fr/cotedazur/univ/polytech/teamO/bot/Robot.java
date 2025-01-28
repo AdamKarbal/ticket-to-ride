@@ -24,7 +24,6 @@ public class Robot implements Comparable<Robot> {
     private int nbWagons;
     private List<Trajet> trajets;
     private HashMap<MCouleur,Integer> takenMeeples;
-    private boolean taking;
 
     //Constructeur
     public Robot(Couleur couleur) {
@@ -38,7 +37,6 @@ public class Robot implements Comparable<Robot> {
         this.nbWagons=45;
         this.trajets =new ArrayList<>();
         this.takenMeeples=new HashMap<>();
-        this.taking=false;
     }
 
     // Getters & setters
@@ -67,68 +65,42 @@ public class Robot implements Comparable<Robot> {
     }
     public int getNbWagons() { return nbWagons; }
     public void removeNbWagons(int nbWagons) { this.nbWagons-=nbWagons; }
-    public Couleur getCouleur() {
-        return couleur;
-    }
-    /*public void chooseDestination(CarteDestination destination){
-        destinations.addCarte(destination);
-    }*/
     public int getPlayerScore(){
         return score.getNbPoints();
     }
     public List<Trajet> getTrajet() { return trajets; }
     public void addTrajetDone(Trajet trajet){ trajets.add(trajet); }
+    public Couleur getCouleur(){
+        return couleur;
+    }
     // Actions du joueur
 
-    public void piocher(MoteurDeJeu g){
+    public void piocher(MoteurDeJeu g){ // Le moteur de jeu pioche une carte et la main dans la main du joueur
         Carte carte=g.piocher(this);
-        getMain().addCarte(carte);//piocher
+        getMain().addCarte(carte);
     }
 
-    public void piocherSurTable(Carte carteAPiocher, MoteurDeJeu g){
+    public void piocherSurTable(Carte carteAPiocher, MoteurDeJeu g){ // De même mais pour une carte dans la pioche visible
         Carte carte=g.piocherSurTable(this,carteAPiocher);
         getMain().addCarte(carte);
     }
 
-    public void chooseDestinations( MoteurDeJeu g){ // A CHANGER PRCK ALEATOIRE
-        Random rand = new Random();
-        int choice = rand.nextInt(2)+1;
-        //Logique
-        CarteDestination carteDestinationPioche=g.giveDestinationsCard(this,choice);
-        getDestinations().addCarte(carteDestinationPioche);
-    }
-
-    public void refuseDestinations(MoteurDeJeu g){
-        Random rand = new Random();
-        int choice = rand.nextInt(2);
-        g.removeDestinationsCard(this,choice);
-
-
-    }
-
-    public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughWagonCard {
+    public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughWagonCard { // Le moteurdejeu pose un des wagons sur le trajet voulue
         g.poseTrain(this,trajet);
     }
 
-    public HashMap<MCouleur,Integer> getTakenMeeples() {
-        return takenMeeples;
-    }
-
-    public boolean getTaking(){
-        return taking;
-    }
-
-    public void setTaking(boolean val){
-        this.taking = val;
-    }
-
-    public void addMeeple(MCouleur couleur){
-        int compteur = takenMeeples.containsKey(couleur) ? takenMeeples.get(couleur) : 0; // Si absent, on initialise à 0
+    public void addMeeple(MCouleur couleur){ // Le moteurdejeu rajoute un meeples au joueuer
+        int compteur = takenMeeples.getOrDefault(couleur, 0); // Si absent, on initialise à 0
         compteur++;
         takenMeeples.put(couleur,compteur);
     }
 
+    public int getTakenMeeplesByCouleur(MCouleur couleur){ // Renvoie le nombre de meeple d'une couleur du joueuer
+        return takenMeeples.getOrDefault(couleur, 0);
+    }
+
     // Méthodes générales
+
     @Override
     public String toString() {
         return couleur.name();
@@ -137,8 +109,7 @@ public class Robot implements Comparable<Robot> {
     @Override
     public boolean equals(Object obj) {
         if (this==obj) return true;
-        if (obj==null || !(obj instanceof Robot)) return false;
-        Robot other = (Robot) obj;
+        if (!(obj instanceof Robot other)) return false;
         return couleur.equals(other.couleur);
     }
 
@@ -154,10 +125,6 @@ public class Robot implements Comparable<Robot> {
         }
         else if(this.getScore().getNbPoints()>o.getScore().getNbPoints()) return 1;
         else return -1;
-    }
-
-    public int getTakenMeeplesByCouleur(MCouleur couleur){
-        return takenMeeples.getOrDefault(couleur, 0);
     }
 
 }

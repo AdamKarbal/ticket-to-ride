@@ -35,6 +35,7 @@ class RobotTest {
     void setUp() {
         robot=new Robot(Couleur.Bleu);
         pioche= new Pioche();
+        pioche.creerPiocheComplete();
         piocheSurTable=new PiocheSurTable();
         robotRouge=new Robot(Couleur.Rouge);
         carteBleue = new CarteWagon(Couleur.Bleu);
@@ -71,11 +72,9 @@ class RobotTest {
         PiocheSurTable piocheTableMock = mock(PiocheSurTable.class);
         MoteurDeJeu moteurDeJeuMock = mock(MoteurDeJeu.class);
         Pioche piocheMock = mock(Pioche.class);
-        CarteLocomotive carteLocomotive = new CarteLocomotive();
 
         when(moteurDeJeuMock.getPiocheSurTable()).thenReturn(piocheTableMock);
         when(moteurDeJeuMock.getPioche()).thenReturn(piocheMock);
-        when(moteurDeJeuMock.piocherSurTable(robot,carteBleue)).thenReturn(carteLocomotive);
 
         // Initial assertions
         assertFalse(robot.isTurnOver(), "Robot should not have ended its turn before piocherSurTable.");

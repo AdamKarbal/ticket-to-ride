@@ -8,13 +8,10 @@ import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Map;
-import fr.cotedazur.univ.polytech.teamO.plateau.Route;
-import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-import java.util.List;
-import java.util.Random;
 
 
 public class Jeu {
@@ -33,7 +30,7 @@ public class Jeu {
     public static String hello() {
         return "Hello World!";
     }
-    ;
+
 
     public static void setup() throws NotEnoughWagonCard {
         robotBleu=new RobotAleatoire(Couleur.Bleu);
@@ -45,6 +42,7 @@ public class Jeu {
         robots.add(robotJaune);
 
         pioche = new Pioche();
+        pioche.creerPiocheComplete();
 
         map = new Map();
         piocheSurTable = new PiocheSurTable();
