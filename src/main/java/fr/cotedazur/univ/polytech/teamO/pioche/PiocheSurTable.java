@@ -34,12 +34,15 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
     public void addCarte(T CarteWagon){ // ajouter une carte wagon
         cartesSurTable.add(CarteWagon);
     }
-    public boolean containCarte(T CarteWagon){
-        if(cartesSurTable.contains(CarteWagon)) return true;
-        return false;
+    public boolean containsCarte(T CarteWagon){
+        return cartesSurTable.contains(CarteWagon);
     }
     public T carteAtPosI(int i){
         return cartesSurTable.get(i);
+    }
+    public T get(T carte){
+        if(cartesSurTable.contains(carte)) return carteAtPosI(cartesSurTable.indexOf(carte));
+        return null;
     }
     public void removeCarte(T carte) {
         cartesSurTable.remove(carte);
@@ -49,7 +52,7 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
         return cartesSurTable.size();
     }
     public T piocher(T carte){
-        if(containCarte(carte)){
+        if(containsCarte(carte)){
             removeCarte(carte);
             return carte;
         }
