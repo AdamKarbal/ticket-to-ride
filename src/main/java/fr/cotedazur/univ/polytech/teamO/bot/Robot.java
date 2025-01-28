@@ -96,12 +96,7 @@ public class Robot implements Comparable<Robot> {
         getMain().addCarte(carte);
     }
 
-    public void chooseDestinations( MoteurDeJeu g){ // A CHANGER PRCK ALEATOIRE
-        Random rand = new Random();
-        int choice = rand.nextInt(2)+1;
-        CarteDestination carteDestinationPioche=g.giveDestinationsCard(this,choice);
-        getDestinations().addCarte(carteDestinationPioche);
-    }
+    public void chooseDestinations( MoteurDeJeu g){}
 
     public void refuseDestinations(MoteurDeJeu g){
         Random rand = new Random();
