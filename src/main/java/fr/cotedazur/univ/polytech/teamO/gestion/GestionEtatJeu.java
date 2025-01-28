@@ -23,8 +23,12 @@ public class GestionEtatJeu {
         for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()) {
             if(!carteDestination.isCompleted()){
                 robot.getScore().removeNbPoints(carteDestination.getValue());
+                affichage.afficheCheckCarteDestinationPASOK(robot, carteDestination);
             }
-            else robot.getScore().addNbPoints(carteDestination.getValue());
+            else{
+                robot.getScore().addNbPoints(carteDestination.getValue());
+                affichage.afficheCheckCarteDestinationOK(robot,carteDestination);
+            }
         }
     }
 
