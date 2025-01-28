@@ -37,7 +37,7 @@ class RobotAleatoireTest {
 
     @BeforeEach
     void setUp() {
-        robot=new RobotAleatoire(Couleur.Bleu,new Random());
+        robot=new RobotAleatoire(Couleur.Bleu);
         pioche= new Pioche();
         piocheSurTable=new PiocheSurTable();
         robotRouge=new Robot(Couleur.Rouge);
@@ -53,7 +53,7 @@ class RobotAleatoireTest {
 
     @Test
     void testChooseAction() throws NotEnoughWagonCard {
-        robot=new RobotAleatoire(Couleur.Bleu,random);
+        robot=new RobotAleatoire(Couleur.Bleu);
         for(int i=0;i<pioche.size();) robot.piocher(moteurDeJeu);
         when(random.nextInt(anyInt())).thenReturn(21);
         robot.chooseaction(moteurDeJeu,map);

@@ -153,7 +153,6 @@ public class GestionTrajets {
     // Trouver le trajet optimal à partir de la ville actuelle
     public Trajet findOptimalTrajet(RobotRoute robotRoute, Ville currentVille, Ville destination) throws NoAvailableTrip {
         Trajet trajetOpti = findNextStep(robotRoute,currentVille, destination, trajetsDisponibles);
-        System.out.println(trajetOpti);
         if(trajetOpti != null) {
             robotRoute.setVilleActuelle(trajetOpti.getTo());
             updateTrajetsDisponibles(trajetOpti);
