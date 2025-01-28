@@ -16,6 +16,7 @@ public class RobotAleatoire extends Robot {
         super(couleur);
     }
 
+    @Override
     public void chooseDestination(MoteurDeJeu moteurDeJeu){ // Le robot aléatoire choisie aléatoirement c'est carte entre une destination longue ou courte
         Random rand = new Random();
         int choice;
@@ -26,7 +27,7 @@ public class RobotAleatoire extends Robot {
         }
     }
 
-
+    @Override
     public void refuseDestinations(MoteurDeJeu moteurDeJeu){ // pour chaque carte destination le robot a 1/2 de la refuser.
         int choice;
         Random rand = new Random();

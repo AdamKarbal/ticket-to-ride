@@ -89,6 +89,10 @@ public class Robot implements Comparable<Robot> {
         g.poseTrain(this,trajet);
     }
 
+    public void chooseDestination(MoteurDeJeu moteurDeJeu){ }// chaque robot doit override
+
+    public void refuseDestinations(MoteurDeJeu moteurDeJeu){}
+
     public void addMeeple(MCouleur couleur){ // Le moteurdejeu rajoute un meeples au joueuer
         int compteur = takenMeeples.getOrDefault(couleur, 0); // Si absent, on initialise à 0
         compteur++;
