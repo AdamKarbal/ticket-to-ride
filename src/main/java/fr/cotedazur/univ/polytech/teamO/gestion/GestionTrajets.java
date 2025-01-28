@@ -7,6 +7,7 @@ import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
 import fr.cotedazur.univ.polytech.teamO.plateau.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GestionTrajets {
     private GameMap gameMap;
@@ -116,22 +117,30 @@ public class GestionTrajets {
         return new Trajet(start, nextStep, new Route(graph.get(start).get(nextStep), couleur));
     }
 
-    private Couleur findMatchingCouleur(RobotRoute robotRoute, Ville from,Ville to){
-        List<Couleur> couleurs=new ArrayList<>();
-        Trajet trajetVoulu=new Trajet(from,to,new Route(1,Couleur.Default));
-        for(Trajet trajet : gameMap.getTrajets()){
-            if(trajetVoulu.equals(trajet)){
-                couleurs.add(trajet.getRoute().getCouleur());
-            }
+    private Couleur findMatchingCouleur(RobotRoute robotRoute, Ville from, Ville to) {
+        // Crée un trajet fictif pour la recherche
+        Trajet trajetVoulu = new Trajet(from, to, new Route(1, Couleur.Default));
+
+        // Filtre les trajets correspondants, récupère leurs couleurs et élimine les doublons
+        List<Couleur> couleurs = gameMap.getTrajets().stream()
+                .filter(trajet -> trajetVoulu.equals(trajet))
+                .map(trajet -> trajet.getRoute().getCouleur())
+                .distinct() // Élimine les doublons
+                .collect(Collectors.toList());
+
+        // Retourne la couleur avec la priorité maximale si plusieurs sont trouvées
+        if (couleurs.size() > 1) {
+            return findMaxCouleurBetween(robotRoute, couleurs);
         }
-        if(couleurs.size()>1){
-            return findMaxCouleurBetween(robotRoute,couleurs);
-        }
-        return couleurs.get(0);
+
+        // Retourne la seule couleur trouvée ou null si aucune n'existe
+        return couleurs.isEmpty() ? null : couleurs.get(0);
     }
 
+
+
     private Couleur findMaxCouleurBetween(RobotRoute robotRoute,List<Couleur> couleurs){
-        Couleur couleurMax=Couleur.Default;
+        Couleur couleurMax=couleurs.get(0);
         int max = 0;
         for(Couleur couleur : couleurs ){
             if(max<robotRoute.getWagonByCouleur().get(couleur)){

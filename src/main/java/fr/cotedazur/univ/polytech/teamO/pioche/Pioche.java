@@ -11,7 +11,7 @@ public class Pioche<T extends Carte> {
     private Stack<T> pioche;
 
     public Pioche(){
-        creerPiocheComplete();
+        pioche=new Stack<>();
     }
     // Constantes
     private static int cartesParCouleur = 12;
@@ -22,7 +22,7 @@ public class Pioche<T extends Carte> {
         return pioche;
     }
     // Méthode pour créer une pioche complète
-    public void creerPiocheComplete() { // bien handle le cas des locomotives
+    public void creerPiocheComplete() {
         Stack<T> nouvellePioche = new Stack<T>();
         for (Couleur couleur : Couleur.values()) { // créer une carte pour tout les couleurs
             if(isCouleurStandard(couleur)) {

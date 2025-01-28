@@ -44,6 +44,8 @@ public class MoteurDeJeu {
     public PiocheDestinationCourte getPiocheDesinationCourte() {
         return piocheDesinationCourte;
     }
+
+
     // Méthodes intermédiaires
     private void updateRobotPioche(Robot robot) {
         if (robot.getPiocheCount() == 0) {

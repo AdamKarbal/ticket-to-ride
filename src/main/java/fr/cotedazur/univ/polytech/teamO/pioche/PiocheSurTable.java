@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.pioche;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,23 +13,20 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
     // Constructeurs
     public PiocheSurTable() {
         this.cartesSurTable=new ArrayList<>();
-        Random random=new Random();
-        Couleur[] couleurs=Couleur.values();
-        for(int i=0;i<5;i++){
-            this.cartesSurTable.add((T) new CarteWagon(couleurs[random.nextInt(couleurs.length)]));
-        }
     }
 
     public PiocheSurTable(ArrayList<T> carteSurTable){
         this.cartesSurTable = carteSurTable;
     }
-
+    public void initPiocheSurTable(MoteurDeJeu moteurDeJeu){
+        System.out.println(moteurDeJeu.getPioche().size());
+        for(int i=0;i<5;i++) addCarte((T) moteurDeJeu.getPioche().piocher());
+    }
     // Accesseurs
     /*@Override*/
     public ArrayList<T> getMainDeCartes(){
         return cartesSurTable;
     }
-
     // Méthode
 
     public void addCarte(T CarteWagon){ // ajouter une carte wagon
