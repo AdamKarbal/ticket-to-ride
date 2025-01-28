@@ -36,12 +36,12 @@ public class Jeu {
     public  String hello() {
         return "Hello World!";
     }
-    ;
+
 
     public  void setup() throws NotEnoughWagonCard {
         robotBleu=new RobotRoute(Couleur.Bleu);
-        robotRouge=new RobotAleatoire(Couleur.Rouge,new Random());
-        robotJaune=new RobotAleatoire(Couleur.Jaune,new Random());
+        robotRouge=new RobotAleatoire(Couleur.Rouge);
+        robotJaune=new RobotAleatoire(Couleur.Jaune);
         robots=new ArrayList<>();
         robots.add(robotBleu);
         robots.add(robotRouge);
