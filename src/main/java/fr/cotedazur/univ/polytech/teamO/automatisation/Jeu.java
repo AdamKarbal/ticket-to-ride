@@ -20,7 +20,7 @@ import java.util.Random;
 
 
 public class Jeu {
-     RobotAleatoire robotBleu;
+     RobotRoute robotBleu;
      RobotAleatoire robotRouge;
      RobotAleatoire robotJaune;
      ArrayList<Robot> robots;
@@ -39,7 +39,7 @@ public class Jeu {
     ;
 
     public  void setup() throws NotEnoughWagonCard {
-        robotBleu=new RobotAleatoire(Couleur.Bleu,new Random());
+        robotBleu=new RobotRoute(Couleur.Bleu);
         robotRouge=new RobotAleatoire(Couleur.Rouge,new Random());
         robotJaune=new RobotAleatoire(Couleur.Jaune,new Random());
         robots=new ArrayList<>();
@@ -62,13 +62,10 @@ public class Jeu {
             robotBleu.piocher(moteurDeJeu);
             robotRouge.piocher(moteurDeJeu);
             robotJaune.piocher(moteurDeJeu);
-            robotBleu.chooseDestinations(moteurDeJeu);
-            robotRouge.chooseDestinations(moteurDeJeu);
-            robotJaune.chooseDestinations(moteurDeJeu);
         }
-        for(Robot robot:robots){
-            robot.refuseDestinations(moteurDeJeu);
-        }
+        robotJaune.init(moteurDeJeu);
+        robotBleu.init(moteurDeJeu);
+        robotRouge.init(moteurDeJeu);
         System.out.println("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
 
@@ -89,7 +86,7 @@ public class Jeu {
         while (!(moteurDeJeu.isFinished(robots))){
             System.out.println("---------------------- Début du tour numéro : " + tour++ + "---------------------- \n");
             try{
-                robotBleu.chooseaction(moteurDeJeu,map);
+                robotBleu.choixAction(gestionTrajets,moteurDeJeu);
                 robotRouge.chooseaction(moteurDeJeu,map);
                 robotJaune.chooseaction(moteurDeJeu,map);}
             catch(EmptyStackException e){
