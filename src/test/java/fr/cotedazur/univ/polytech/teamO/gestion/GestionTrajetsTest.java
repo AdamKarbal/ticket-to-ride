@@ -4,10 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.bot.RobotRoute;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
-import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
-import fr.cotedazur.univ.polytech.teamO.plateau.Route;
-import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
-import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
+import fr.cotedazur.univ.polytech.teamO.plateau.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,9 +25,14 @@ class GestionTrajetsTest {
     MoteurDeJeu moteurDeJeu;
     GestionTrajets gestionTrajets;
     GestionEtatJeu gestionEtatJeu;
+    Pioche pioche;
+    PiocheSurTable piocheSurTable;
     @BeforeEach
     void setUp() {
-        moteurDeJeu=new MoteurDeJeu(new Pioche<>(),new PiocheSurTable<>(),new PiocheDestinationLongue(),new PiocheDestinationCourte());
+        pioche=new Pioche();
+        pioche.creerPiocheComplete();
+        piocheSurTable=new PiocheSurTable();
+        moteurDeJeu=new MoteurDeJeu(pioche,piocheSurTable,new PiocheDestinationLongue(),new PiocheDestinationCourte());
         gameMap =new GameMap();
         gestionTrajets=new GestionTrajets(gameMap);
         gestionEtatJeu= new GestionEtatJeu(gestionTrajets);
@@ -60,6 +62,16 @@ class GestionTrajetsTest {
         //assertEquals(gestionTrajets.trajetOpti(robotRoute, robotRoute.getDestinations().getMainDeCartes().get(0)),berlinSchwerin);
         robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
     }
-
+    @Test
+    void noCitiesStep() throws NotEnoughWagonCard {
+        for(int i=0;i<moteurDeJeu.getPioche().size();i++) {
+            robotRoute.piocher(moteurDeJeu);
+        }
+        robotRoute.chooseDestination(new CarteDestination(Couleur.Marron,Ville.Emden,Ville.Düsseldorf,21));
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        assertThrows(NoAvailableTrip.class, ()-> robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu));
+    }
 
 }

@@ -72,11 +72,12 @@ public class GestionTrajets {
     }
 
     // Algorithme de Dijkstra pour trouver le prochain segment optimal
-    private Trajet findNextStep(RobotRoute robotRoute,Ville start, Ville end, HashMap<Ville, HashMap<Ville, Integer>> graph) {
+    private Trajet findNextStep(RobotRoute robotRoute, Ville start, Ville end, HashMap<Ville, HashMap<Ville, Integer>> graph) {
         Map<Ville, Integer> distances = new HashMap<>();
         Map<Ville, Ville> previous = new HashMap<>();
         PriorityQueue<Ville> queue = new PriorityQueue<>(Comparator.comparingInt(distances::get));
 
+        // Initialize distances and previous maps
         for (Ville ville : graph.keySet()) {
             distances.put(ville, Integer.MAX_VALUE);
             previous.put(ville, null);
@@ -84,6 +85,7 @@ public class GestionTrajets {
         distances.put(start, 0);
         queue.add(start);
 
+        // Dijkstra's algorithm to find the shortest path
         while (!queue.isEmpty()) {
             Ville current = queue.poll();
             if (current.equals(end)) break;
@@ -92,6 +94,12 @@ public class GestionTrajets {
             if (neighbors != null) {
                 for (Map.Entry<Ville, Integer> entry : neighbors.entrySet()) {
                     Ville neighbor = entry.getKey();
+
+                    // Skip countries as intermediate steps
+                    if (!neighbor.getIsVille() && !neighbor.equals(end)) {
+                        continue;
+                    }
+
                     int weight = entry.getValue();
                     int newDist = distances.get(current) + weight;
 
@@ -104,18 +112,26 @@ public class GestionTrajets {
             }
         }
 
-        // Identifier le premier segment du chemin optimal
+        // Identify the first segment of the optimal path
         Ville nextStep = end;
         while (previous.get(nextStep) != null && !previous.get(nextStep).equals(start)) {
             nextStep = previous.get(nextStep);
+
+            // Skip intermediate steps that are countries
+            if (!nextStep.getIsVille()) {
+                return null; // No valid path if an intermediate step is a country
+            }
         }
 
         if (previous.get(nextStep) == null) {
-            return null; // Aucun chemin trouvé
+            return null; // No path found
         }
-        Couleur couleur=findMatchingCouleur(robotRoute,start,nextStep);
+
+        // Create the trajectory with the matching color
+        Couleur couleur = findMatchingCouleur(robotRoute, start, nextStep);
         return new Trajet(start, nextStep, new Route(graph.get(start).get(nextStep), couleur));
     }
+
 
     private Couleur findMatchingCouleur(RobotRoute robotRoute, Ville from, Ville to) {
         // Crée un trajet fictif pour la recherche
@@ -151,6 +167,14 @@ public class GestionTrajets {
         return couleurMax;
     }
 
+    public void updateAfterTrainPlacement(RobotRoute robotRoute, Trajet trajet) {
+        // Update the robot's current city
+        robotRoute.setVilleActuelle(trajet.getTo());
+
+        // Update available trips
+        updateTrajetsDisponibles(trajet);
+    }
+
     // Méthodes principales
     public boolean isConnected(Ville From, Ville To, List<Trajet> trajets){
         HashMap<Ville, HashMap<Ville, Integer>> subgraph = buildSubgraph(trajets);
@@ -162,9 +186,7 @@ public class GestionTrajets {
     // Trouver le trajet optimal à partir de la ville actuelle
     public Trajet findOptimalTrajet(RobotRoute robotRoute, Ville currentVille, Ville destination) throws NoAvailableTrip {
         Trajet trajetOpti = findNextStep(robotRoute,currentVille, destination, trajetsDisponibles);
-        if(trajetOpti != null) {
-            robotRoute.setVilleActuelle(trajetOpti.getTo());
-            updateTrajetsDisponibles(trajetOpti);
+        if(trajetOpti != null) {;
             return trajetOpti;
         }
         else throw new NoAvailableTrip("Il n'y a pas de trajet disponible entre ces deux villes");
