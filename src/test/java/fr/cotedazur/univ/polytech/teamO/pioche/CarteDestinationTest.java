@@ -73,14 +73,14 @@ class CarteDestinationTest {
 
         @Test
         void testGetNom_Longue() {
-            String expected = "Carte destination longue: de Augsburg à Berlin";
+            String expected = "Carte destination longue entre Augsburg et Berlin";
 
             assertEquals(expected, carteAB.getNom());
         }
 
         @Test
         void testGetNom_Courte() {
-            String expected = "Carte destination courte: de Augsburg à Berlin";
+            String expected = "Carte destination courte entre Augsburg et Berlin";
 
             assertEquals(expected, carteAB2.getNom());
         }

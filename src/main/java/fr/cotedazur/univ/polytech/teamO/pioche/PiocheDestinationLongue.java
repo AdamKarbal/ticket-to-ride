@@ -47,6 +47,7 @@ public class PiocheDestinationLongue {
         cartesDestinationLongues.push(new CarteDestination(Couleur.Marron, Ville.Danemark, Ville.Lindau, 22));
         cartesDestinationLongues.push(new CarteDestination(Couleur.Marron, Ville.Kiel, Ville.Schweiz, 20));
     }
+
     public PiocheDestinationLongue(){
         init();
         Collections.shuffle(cartesDestinationLongues);
@@ -60,14 +61,12 @@ public class PiocheDestinationLongue {
         if(!cartesDestinationLongues.isEmpty())return cartesDestinationLongues.pop();
         else throw new IllegalArgumentException("Pioche vide");
     }
+
     public boolean valide(){
         return cartesDestinationLongues.size()==nbCartesDestinations;
     }
 
-    public CarteDestination peekCartesDestinationLongue() {
-        if(!cartesDestinationLongues.isEmpty())return cartesDestinationLongues.peek();
-        else throw new IllegalArgumentException("Pioche vide");
-    }
+
     public void pushCartesDestinationLongues(CarteDestination cartesDestination) {
         cartesDestinationLongues.push(cartesDestination);
     }

@@ -46,25 +46,6 @@ class PiocheDestinationLongueTest {
                 "Une exception doit être levée lorsque l'on pop une carte d'une pioche vide");
     }
 
-    @Test
-    void testPeekCarteDestinationLongue() {
-        // Test pour peek sans retirer la carte
-        CarteDestination carte = piocheDestinationLongue.peekCartesDestinationLongue();
-        assertNotNull(carte, "La carte peekée ne devrait pas être null");
-        assertEquals(34, piocheDestinationLongue.getCartesDestinationLongues().size(),
-                "La taille de la pioche ne devrait pas changer après un peek");
-    }
-
-    @Test
-    void testPeekCarteDestinationLonguePiocheVide() {
-        // Vider la pioche et tester le peek
-        while (!piocheDestinationLongue.getCartesDestinationLongues().isEmpty()) {
-            piocheDestinationLongue.popCartesDestinationLongue();
-        }
-        assertThrows(IllegalArgumentException.class,
-                () -> piocheDestinationLongue.peekCartesDestinationLongue(),
-                "Une exception doit être levée lorsqu'on peek une pioche vide");
-    }
 
     @Test
     void testValidePioche() {

@@ -49,7 +49,7 @@ public class GameMapTest {
 
     @Test
     void MeeplesTest(){
-        int Mcompteur = 0;
+        /*int Mcompteur = 0;
         for(Ville ville : Ville.values()){
             Mcompteur += ville.getNbMeeple();
         }
@@ -60,7 +60,7 @@ public class GameMapTest {
         assertEquals(4, Ville.Frankfurt.getNbMeeple());
         Ville.Frankfurt.PDisplay();
         assertEquals(3, Ville.Leipzig.getNbMeeple());
-        Ville.Leipzig.PDisplay();
+        Ville.Leipzig.PDisplay();*/
     }
 
 

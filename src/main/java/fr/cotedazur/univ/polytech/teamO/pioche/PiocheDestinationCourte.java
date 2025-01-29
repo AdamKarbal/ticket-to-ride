@@ -78,17 +78,16 @@ public class PiocheDestinationCourte{
     public Stack<CarteDestination> getCartesDestinationCourtes() {
         return cartesDestinationCourtes;
     }
-    public CarteDestination peekCartesDestinationCourtes() throws IllegalArgumentException {
-        if(!cartesDestinationCourtes.isEmpty())return cartesDestinationCourtes.peek();
-        else throw new IllegalArgumentException("Pile vide");
-    }
+
     public CarteDestination popCartesDestinationCourtes() throws IllegalArgumentException {
         if(!cartesDestinationCourtes.isEmpty())return cartesDestinationCourtes.pop();
         else throw new IllegalArgumentException("Pile vide");
     }
+
     public boolean valide(){
         return cartesDestinationCourtes.size()==nbCartesDestinationsCourtes;
     }
+
     public void pushCartesDestinationCourtes(CarteDestination cartesDestination) {
         cartesDestinationCourtes.push(cartesDestination);
     }

@@ -21,7 +21,9 @@ public abstract class Carte {
 
     // Abstract methods
     public abstract String getNom();
+
     public abstract Couleur getCouleur();
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -29,10 +31,12 @@ public abstract class Carte {
         Carte carte = (Carte) obj;
         return getCouleur().equals(carte.getCouleur());
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(couleur);
     }
+
     @Override
     public String toString(){
         return getNom();

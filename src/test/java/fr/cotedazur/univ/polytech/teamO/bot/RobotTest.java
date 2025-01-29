@@ -38,12 +38,14 @@ class RobotTest {
     void setUp() {
         robot=new Robot(Couleur.Bleu);
         pioche= new Pioche();
+        pioche.creerPiocheComplete();
         piocheSurTable=new PiocheSurTable();
         robotRouge=new Robot(Couleur.Rouge);
         carteBleue = new CarteWagon(Couleur.Bleu);
         carteJaune = new CarteWagon(Couleur.Jaune);
         carteRouge = new CarteWagon(Couleur.Rouge);
         moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
+        piocheSurTable.initPiocheSurTable(moteurDeJeu);
         taillePiocheInit= moteurDeJeu.getPioche().size();
         routeBleue= new Route(1,Couleur.Bleu);
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);
@@ -70,6 +72,7 @@ class RobotTest {
     }
     @Test
     void testPiocheRainbow() {
+
         moteurDeJeu = new MoteurDeJeu(piocheMock,piocheSurTableMock,piocheDestinationLongue,piocheDestinationCourte);
 
         when(moteurDeJeu.getPiocheSurTable().piocher(carteBleue)).thenReturn(new CarteWagon(Couleur.Rainbow));

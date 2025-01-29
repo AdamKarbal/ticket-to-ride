@@ -33,6 +33,7 @@ class GestionTrajetsTest {
         pioche.creerPiocheComplete();
         piocheSurTable=new PiocheSurTable();
         moteurDeJeu=new MoteurDeJeu(pioche,piocheSurTable,new PiocheDestinationLongue(),new PiocheDestinationCourte());
+
         gameMap =new GameMap();
         gestionTrajets=new GestionTrajets(gameMap);
         gestionEtatJeu= new GestionEtatJeu(gestionTrajets);

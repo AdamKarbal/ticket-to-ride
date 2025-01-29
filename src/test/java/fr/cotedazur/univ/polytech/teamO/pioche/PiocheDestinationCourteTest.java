@@ -25,14 +25,6 @@ class PiocheDestinationCourteTest {
     }
 
     @Test
-    void testPeekCartesDestinationCourtes() {
-        // Vérifie si la méthode peek retourne correctement la carte du haut
-        CarteDestination topCard = piocheDestinationCourte.peekCartesDestinationCourtes();
-        assertNotNull(topCard, "La carte du dessus ne devrait pas être null");
-        assertEquals(Couleur.Bleu, topCard.getCouleur(), "La couleur de la carte devrait être Bleue");
-    }
-
-    @Test
     void testPopCartesDestinationCourtes() {
         // Teste si pop enlève correctement la carte et la retourne
         int tailleAvant = piocheDestinationCourte.getCartesDestinationCourtes().size();
@@ -73,8 +65,7 @@ class PiocheDestinationCourteTest {
 
         assertEquals(56, piocheDestinationCourte.getCartesDestinationCourtes().size(),
                 "La taille de la pioche devrait augmenter de 1 après un push");
-        assertEquals(nouvelleCarte, piocheDestinationCourte.peekCartesDestinationCourtes(),
-                "La carte ajoutée devrait être en haut de la pile");
+
     }
 
 }
