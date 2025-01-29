@@ -22,6 +22,7 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
         System.out.println(moteurDeJeu.getPioche().size());
         for(int i=0;i<5;i++) addCarte((T) moteurDeJeu.getPioche().piocher());
     }
+
     // Accesseurs
     /*@Override*/
     public ArrayList<T> getMainDeCartes(){
@@ -32,19 +33,28 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
     public void addCarte(T CarteWagon){ // ajouter une carte wagon
         cartesSurTable.add(CarteWagon);
     }
+
     public boolean containsCarte(T CarteWagon){
         return cartesSurTable.contains(CarteWagon);
+
+    }
+
+    public int size(){
+        return cartesSurTable.size();
     }
     public T carteAtPosI(int i){
         return cartesSurTable.get(i);
     }
+
     public T get(T carte){
         if(cartesSurTable.contains(carte)) return carteAtPosI(cartesSurTable.indexOf(carte));
         return null;
     }
-    public void removeCarte(T carte) {
+
+  public void removeCarte(T carte) {
         cartesSurTable.remove(carte);
     }
+
 
     public int size(){
         return cartesSurTable.size();
@@ -56,6 +66,7 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
         }
         throw new NullPointerException("La carte n'est pas présente dans la pioche visible");
     }
+
     @Override
     public String toString() {
         String str = "";

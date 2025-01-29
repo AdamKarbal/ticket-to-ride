@@ -39,6 +39,7 @@ class RobotAleatoireTest {
     void setUp() {
         robot=new RobotAleatoire(Couleur.Bleu);
         pioche= new Pioche();
+        pioche.creerPiocheComplete();
         piocheSurTable=new PiocheSurTable();
         robotRouge=new Robot(Couleur.Rouge);
         carteBleue = new CarteWagon(Couleur.Bleu);

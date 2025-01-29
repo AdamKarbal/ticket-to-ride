@@ -13,7 +13,8 @@ public class PiocheTest {
     @BeforeEach
     void startup(){
         pioche = new Pioche();
-        piocheSurTable = new PiocheSurTable(carteSurTablee);
+        pioche.creerPiocheComplete();
+        piocheSurTable = new PiocheSurTable();
     }
 
     @Test
@@ -21,8 +22,4 @@ public class PiocheTest {
         System.out.print(pioche.getPioche());
     }
 
-
-    /*void testCarteSurTable(){
-        System.out.println(pioche.mettre5cartesurlatable(carteSurTable));
-    }*/
 }

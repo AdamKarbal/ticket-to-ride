@@ -15,7 +15,7 @@ public class CarteDestination extends Carte {
 
     public CarteDestination(Couleur couleur,Ville ville1, Ville ville2, int value) throws IllegalArgumentException {
         super(couleur);
-        if(!couleur.equals(Couleur.Marron) &&!couleur.equals(Couleur.Bleu))throw new IllegalArgumentException("Couleur Invalide");
+        if(!couleur.equals(Couleur.Marron) &&!couleur.equals(Couleur.Bleu))throw new IllegalArgumentException("Couleur Invalide"); // les carte destination doivent être bleu ou marron
         else this.couleur = couleur;
         this.ville1 = ville1;
         this.ville2 = ville2;
@@ -72,6 +72,4 @@ public class CarteDestination extends Carte {
         return Objects.hash(value,ville1,ville2);
     }
 
-
-    // POUR LE TIRAGE FAIRE UNE CLASSE AVEC UNE MAIN DE CARTE DESTINATION ? OU GARDER DANS LA CLASSE ROBOT ? PERSO PLUS POUR LE PREMIER CHOIX
 }

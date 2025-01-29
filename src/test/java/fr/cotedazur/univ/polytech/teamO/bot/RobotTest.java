@@ -38,6 +38,7 @@ class RobotTest {
     void setUp() {
         robot=new Robot(Couleur.Bleu);
         pioche= new Pioche();
+        pioche.creerPiocheComplete();
         piocheSurTable=new PiocheSurTable();
         robotRouge=new Robot(Couleur.Rouge);
         carteBleue = new CarteWagon(Couleur.Bleu);
@@ -70,6 +71,7 @@ class RobotTest {
     }
     @Test
     void testPiocheRainbow() {
+
         moteurDeJeu = new MoteurDeJeu(piocheMock,piocheSurTableMock,piocheDestinationLongue,piocheDestinationCourte);
 
         when(moteurDeJeu.getPiocheSurTable().piocher(carteBleue)).thenReturn(new CarteWagon(Couleur.Rainbow));

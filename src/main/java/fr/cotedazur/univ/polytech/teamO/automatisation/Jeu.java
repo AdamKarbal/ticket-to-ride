@@ -45,7 +45,9 @@ public class Jeu {
 
         pioche = new Pioche();
         pioche.creerPiocheComplete();
+
         map = new GameMap();
+
         piocheSurTable = new PiocheSurTable();
         piocheDestinationCourte=new PiocheDestinationCourte();
         piocheDestinationLongue=new PiocheDestinationLongue();
