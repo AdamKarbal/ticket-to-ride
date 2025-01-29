@@ -45,6 +45,7 @@ class RobotTest {
         carteJaune = new CarteWagon(Couleur.Jaune);
         carteRouge = new CarteWagon(Couleur.Rouge);
         moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
+        piocheSurTable.initPiocheSurTable(moteurDeJeu);
         taillePiocheInit= moteurDeJeu.getPioche().size();
         routeBleue= new Route(1,Couleur.Bleu);
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);

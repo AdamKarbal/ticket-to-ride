@@ -30,6 +30,7 @@ class RobotRouteTest {
     void setUp() {
         robotRouteBleu=new RobotRoute(Couleur.Bleu);
         pioche=new Pioche();
+        pioche.creerPiocheComplete();
         piocheSurTable=new PiocheSurTable();
         piocheDestinationCourte=new PiocheDestinationCourte();
         piocheDestinationLongue=new PiocheDestinationLongue();
@@ -38,11 +39,11 @@ class RobotRouteTest {
         gestionTrajets=new GestionTrajets(map);
         gestionEtatJeu=new GestionEtatJeu(gestionTrajets);
         berlinKiel= new CarteDestination(Couleur.Marron, Ville.Kiel,Ville.Berlin,22);
-        for(int i=0;i<pioche.size();i++) robotRouteBleu.piocher(moteurDeJeu);
     }
 
     @Test
     void testShortestPath() throws NotEnoughWagonCard {
+        for(int i=0;i<pioche.size();i++) robotRouteBleu.piocher(moteurDeJeu);
         robotRouteBleu.chooseDestination(berlinKiel);
         robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu);
         robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu);

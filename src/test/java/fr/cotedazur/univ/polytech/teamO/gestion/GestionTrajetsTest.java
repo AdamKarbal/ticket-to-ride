@@ -28,9 +28,12 @@ class GestionTrajetsTest {
     MoteurDeJeu moteurDeJeu;
     GestionTrajets gestionTrajets;
     GestionEtatJeu gestionEtatJeu;
+    Pioche pioche;
     @BeforeEach
     void setUp() {
-        moteurDeJeu=new MoteurDeJeu(new Pioche<>(),new PiocheSurTable<>(),new PiocheDestinationLongue(),new PiocheDestinationCourte());
+        pioche=new Pioche<>();
+        pioche.creerPiocheComplete();
+        moteurDeJeu=new MoteurDeJeu(pioche,new PiocheSurTable<>(),new PiocheDestinationLongue(),new PiocheDestinationCourte());
         gameMap =new GameMap();
         gestionTrajets=new GestionTrajets(gameMap);
         gestionEtatJeu= new GestionEtatJeu(gestionTrajets);
