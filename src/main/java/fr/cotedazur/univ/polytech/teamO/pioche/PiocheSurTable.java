@@ -19,7 +19,6 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
         this.cartesSurTable = carteSurTable;
     }
     public void initPiocheSurTable(MoteurDeJeu moteurDeJeu){
-        System.out.println(moteurDeJeu.getPioche().size());
         for(int i=0;i<5;i++) addCarte((T) moteurDeJeu.getPioche().piocher());
     }
 

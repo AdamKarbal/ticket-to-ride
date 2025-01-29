@@ -8,7 +8,6 @@ import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.NoAvailableTrip;
-import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RobotRouteTest {
-    RobotRoute robotRouteBleu;
+    RobotRoute robotRoute;
     MoteurDeJeu moteurDeJeu;
     Pioche pioche;
     PiocheSurTable piocheSurTable;
@@ -28,7 +27,7 @@ class RobotRouteTest {
     CarteDestination berlinKiel;
     @BeforeEach
     void setUp() {
-        robotRouteBleu=new RobotRoute(Couleur.Bleu);
+        robotRoute =new RobotRoute(Couleur.Bleu);
         pioche=new Pioche();
         pioche.creerPiocheComplete();
         piocheSurTable=new PiocheSurTable();
@@ -36,6 +35,7 @@ class RobotRouteTest {
         piocheDestinationLongue=new PiocheDestinationLongue();
         map=new GameMap();
         moteurDeJeu= new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
+        piocheSurTable.initPiocheSurTable(moteurDeJeu);
         gestionTrajets=new GestionTrajets(map);
         gestionEtatJeu=new GestionEtatJeu(gestionTrajets);
         berlinKiel= new CarteDestination(Couleur.Marron, Ville.Kiel,Ville.Berlin,22);
@@ -43,13 +43,43 @@ class RobotRouteTest {
 
     @Test
     void testShortestPath() throws NotEnoughWagonCard {
-        for(int i=0;i<pioche.size();i++) robotRouteBleu.piocher(moteurDeJeu);
-        robotRouteBleu.chooseDestination(berlinKiel);
-        robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu);
-        robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu);
-        assertThrows(NoAvailableTrip.class, ()-> robotRouteBleu.poseTrainOpti(gestionTrajets,moteurDeJeu));
-        assertTrue(robotRouteBleu.getTrajet().size()==2);
-        assertTrue(robotRouteBleu.getTrajet().get(0).isDone());
+        for(int i=0;i<pioche.size();i++) robotRoute.piocher(moteurDeJeu);
+        robotRoute.chooseDestination(berlinKiel);
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        assertThrows(NoAvailableTrip.class, ()-> robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu));
+        assertTrue(robotRoute.getTrajet().size()==2);
+        assertTrue(robotRoute.getTrajet().get(0).isDone());
     }
+
+    @Test
+    void shortestTrip() throws NotEnoughWagonCard {
+        for(int i=0;i<moteurDeJeu.getPioche().size();) robotRoute.piocher(moteurDeJeu);
+        robotRoute.chooseDestination(berlinKiel);
+        //assertEquals(gestionTrajets.trajetOpti(robotRoute, robotRoute.getDestinations().getMainDeCartes().get(0)),kielSchwerin);
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        //assertEquals(gestionTrajets.trajetOpti(robotRoute, robotRoute.getDestinations().getMainDeCartes().get(0)),berlinSchwerin);
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+    }
+    @Test
+    void noCitiesStep() throws NotEnoughWagonCard {
+        for(int i=0;i<moteurDeJeu.getPioche().size();i++) {
+            robotRoute.piocher(moteurDeJeu);
+        }
+        robotRoute.chooseDestination(new CarteDestination(Couleur.Marron,Ville.Emden,Ville.Düsseldorf,21));
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
+        assertThrows(NoAvailableTrip.class, ()-> robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu));
+    }
+
+    @Test
+    void testChoixNotEnoughWagonCard() throws NotEnoughWagonCard {
+        robotRoute.chooseDestination(berlinKiel);
+        assertDoesNotThrow(() ->
+                        gestionTrajets.findOptimalTrajet(robotRoute, robotRoute.getVilleActuelle(), robotRoute.getCurrentDestination().getVille2()),
+                "Le trajet optimal ne devrait pas lever d'exception (NoAvailableTrip)."
+        );
+        assertThrows(NotEnoughWagonCard.class, ()-> robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu));}
 
 }
