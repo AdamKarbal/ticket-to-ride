@@ -8,33 +8,41 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 
 public class Pioche<T extends Carte> {
     // Instances
-    public Stack<T> pioche;
+    private Stack<T> pioche;
 
     public Pioche(){
         pioche = new Stack<T>();
     }
     // Constantes
     private static int cartesParCouleur = 12;
+    private static int cartesLocomotives = 14;
 
     // Getter
     public Stack getPioche() {
         return pioche;
     }
     // Méthode pour créer une pioche complète
-    public void creerPiocheComplete() { // bien handle le cas des locomotives
+    public void creerPiocheComplete() {
         Stack<T> nouvellePioche = new Stack<T>();
         for (Couleur couleur : Couleur.values()) { // créer une carte pour tout les couleurs
-            if(!couleur.equals(Couleur.Default) && !couleur.equals(Couleur.Marron)) {
+            if(isCouleurStandard(couleur)) {
                 for (int i = 0; i < cartesParCouleur; i++) {
                     nouvellePioche.push((T) new CarteWagon(couleur));
+                }
+            }
+            else if (couleur.equals(Couleur.Rainbow)) {
+                for (int i = 0; i < cartesLocomotives; i++) {
+                    nouvellePioche.push((T) new CarteWagon(Couleur.Rainbow));
                 }
             }
         }
         // Mélanger la pioche
         Collections.shuffle(nouvellePioche);
-        Collections.shuffle(nouvellePioche);
-        Collections.shuffle(nouvellePioche);
         this.pioche=nouvellePioche;
+    }
+
+    private boolean isCouleurStandard(Couleur couleur) {
+        return !couleur.equals(Couleur.Default) && !couleur.equals(Couleur.Marron) && !couleur.equals(Couleur.Rainbow);
     }
 
     // Méthode

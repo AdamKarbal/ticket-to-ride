@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.plateau;
 
+import fr.cotedazur.univ.polytech.teamO.bot.Robot;
+
 public class Trajet {
     private final Route route;
     private Ville from;
@@ -31,6 +33,13 @@ public class Trajet {
     @Override
     public String toString() {
         return "Trajet : " + "De " + getFrom() + " à " + getTo() + " de " + route.getNbCases() +" cases et de couleur " + route.getCouleur() + "." ;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this==obj) return true;
+        if (obj==null || !(obj instanceof Trajet)) return false;
+        Trajet other = (Trajet) obj;
+        return from.equals(other.from) && to.equals(other.to) || from.equals(other.to) && to.equals(other.from);
     }
 
 

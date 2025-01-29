@@ -4,7 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
-import fr.cotedazur.univ.polytech.teamO.plateau.Map;
+import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 
 
@@ -45,7 +45,7 @@ public class RobotAleatoire extends Robot {
         refuseDestinations(moteurDeJeu);
     }
 
-    public void chooseaction(MoteurDeJeu moteurDeJeu,Map map) throws NotEnoughWagonCard {
+    public void chooseaction(MoteurDeJeu moteurDeJeu,GameMap map) throws NotEnoughWagonCard {
         int choix;
         Random rand = new Random();
         choix=rand.nextInt(100)+1;
@@ -88,7 +88,7 @@ public class RobotAleatoire extends Robot {
         }
     }
 
-    public void poseTrainAleatoire(MoteurDeJeu moteurDeJeu, Map map){
+    public void poseTrainAleatoire(MoteurDeJeu moteurDeJeu, GameMap map){
         int choice;
         int nbpassengers;
         Random rand = new Random();

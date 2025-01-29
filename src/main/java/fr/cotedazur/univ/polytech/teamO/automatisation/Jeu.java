@@ -4,10 +4,11 @@ import fr.cotedazur.univ.polytech.teamO.classement.EmptyListException;
 import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.couleur.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionEtatJeu;
+import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
-import fr.cotedazur.univ.polytech.teamO.plateau.Map;
+import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.EmptyStackException;
 
 
 public class Jeu {
-    static RobotAleatoire robotBleu;
+    static RobotRoute robotBleu;
     static RobotAleatoire robotRouge;
     static RobotAleatoire robotJaune;
     static ArrayList<Robot> robots;
@@ -25,15 +26,16 @@ public class Jeu {
     static PiocheSurTable piocheSurTable;
     static PiocheDestinationCourte piocheDestinationCourte;
     static PiocheDestinationLongue piocheDestinationLongue;
-    static Map map;
+    static GameMap map;
     static GestionEtatJeu gestionEtatJeu;
+    static GestionTrajets gestionTrajets;
     public static String hello() {
         return "Hello World!";
     }
 
 
     public static void setup() throws NotEnoughWagonCard {
-        robotBleu=new RobotAleatoire(Couleur.Bleu);
+        robotBleu=new RobotRoute(Couleur.Bleu);
         robotRouge=new RobotAleatoire(Couleur.Rouge);
         robotJaune=new RobotAleatoire(Couleur.Jaune);
         robots=new ArrayList<>();
@@ -44,13 +46,15 @@ public class Jeu {
         pioche = new Pioche();
         pioche.creerPiocheComplete();
 
-        map = new Map();
+        map = new GameMap();
+
         piocheSurTable = new PiocheSurTable();
         piocheDestinationCourte=new PiocheDestinationCourte();
         piocheDestinationLongue=new PiocheDestinationLongue();
-
+        gestionTrajets= new GestionTrajets(map);
         moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
-        gestionEtatJeu=new GestionEtatJeu(map);
+        piocheSurTable.initPiocheSurTable(moteurDeJeu);
+        gestionEtatJeu=new GestionEtatJeu(gestionTrajets);
 
         for(int i=0;i<4;i++){
             robotBleu.piocher(moteurDeJeu);
@@ -86,9 +90,9 @@ public class Jeu {
         while (!(moteurDeJeu.isFinished(robots))){
             System.out.println("---------------------- Début du tour numéro : " + tour++ + "---------------------- \n");
             try{
-            robotBleu.chooseaction(moteurDeJeu,map);
-            robotRouge.chooseaction(moteurDeJeu,map);
-            robotJaune.chooseaction(moteurDeJeu,map);}
+                robotBleu.choixAction(gestionTrajets,moteurDeJeu);
+                robotRouge.chooseaction(moteurDeJeu,map);
+                robotJaune.chooseaction(moteurDeJeu,map);}
             catch(EmptyStackException e){
                 break;
             }

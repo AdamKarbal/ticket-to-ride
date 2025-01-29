@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class PiocheDestinationCourte{
-
+    //refactor les deux en une classe ?
     private Stack<CarteDestination> cartesDestinationCourtes=new Stack<>();
     private static final int nbCartesDestinationsCourtes=55;
 

@@ -1,6 +1,4 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
-
-
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
@@ -15,7 +13,7 @@ import java.util.*;
 public class Robot implements Comparable<Robot> {
 
     private Score score;
-    private Couleur couleur;
+    private final Couleur couleur;
     private MainJoueur<CarteDestination> destinations;
     private MainJoueur main;
     private boolean turnOver;
@@ -43,6 +41,9 @@ public class Robot implements Comparable<Robot> {
     public MainJoueur getMain() {
         return main;
     }
+    public void chooseDestination(CarteDestination destination) {
+        this.destinations.addCarte(destination);
+    }
     public MainJoueur<CarteDestination> getDestinations() {
         return destinations;}
     public Score getScore(){
@@ -63,15 +64,24 @@ public class Robot implements Comparable<Robot> {
     public HashMap<Couleur,Integer> getWagonByCouleur() {
         return wagonByCouleur;
     }
-    public int getNbWagons() { return nbWagons; }
-    public void removeNbWagons(int nbWagons) { this.nbWagons-=nbWagons; }
+
+    public int getNbWagons() {
+        return nbWagons;
+    }
+    public void removeNbWagons(int nbWagons) {
+        this.nbWagons-=nbWagons;
+    }
+    public Couleur getCouleur() {
+        return couleur;
+    }
     public int getPlayerScore(){
         return score.getNbPoints();
     }
-    public List<Trajet> getTrajet() { return trajets; }
-    public void addTrajetDone(Trajet trajet){ trajets.add(trajet); }
-    public Couleur getCouleur(){
-        return couleur;
+    public List<Trajet> getTrajet() {
+        return trajets;
+    }
+    public void addTrajetDone(Trajet trajet){
+        trajets.add(trajet);
     }
     // Actions du joueur
 
@@ -86,6 +96,10 @@ public class Robot implements Comparable<Robot> {
     }
 
     public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughWagonCard { // Le moteurdejeu pose un des wagons sur le trajet voulue
+    public void chooseDestinations( MoteurDeJeu g){}
+
+    public void refuseDestinations(MoteurDeJeu g){}
+
         g.poseTrain(this,trajet);
     }
 
