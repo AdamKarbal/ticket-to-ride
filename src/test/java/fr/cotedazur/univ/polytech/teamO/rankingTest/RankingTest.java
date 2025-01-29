@@ -21,6 +21,7 @@ public class RankingTest {
     @BeforeEach
     void SetUp() throws EmptyListException {
         pioche = new Pioche();
+        pioche.creerPiocheComplete();
         piocheSurTable=new PiocheSurTable();
         robots = new ArrayList<>();
 

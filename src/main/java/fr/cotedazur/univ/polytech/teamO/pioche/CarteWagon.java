@@ -36,6 +36,5 @@ public class CarteWagon extends Carte {
     }
 
 
-
 }
 

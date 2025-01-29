@@ -17,10 +17,6 @@ public class Meeples {
         return couleur;
     }
 
-    public void setFree(boolean free) {
-        this.Free = free;
-    }
-
     public boolean isFree() {
         return Free;
     }

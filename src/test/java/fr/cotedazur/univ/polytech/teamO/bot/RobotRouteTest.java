@@ -80,7 +80,6 @@ class RobotRouteTest {
                         gestionTrajets.findOptimalTrajet(robotRoute, robotRoute.getVilleActuelle(), robotRoute.getCurrentDestination().getVille2()),
                 "Le trajet optimal ne devrait pas lever d'exception (NoAvailableTrip)."
         );
-        assertThrows(NotEnoughWagonCard.class, ()-> robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu));
-    }
+        assertThrows(NotEnoughWagonCard.class, ()-> robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu));}
 
 }

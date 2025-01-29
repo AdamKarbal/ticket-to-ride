@@ -25,11 +25,6 @@ public class MeeplesTest {
         assertEquals(MCouleur.Bleu, meepleBleu.getCouleur());
     }
 
-    @Test
-    void setFreeTest() {
-        meepleNoir.setFree(false);
-        assertFalse(meepleNoir.isFree());
-    }
 
     @Test
     void isFreeTest(){

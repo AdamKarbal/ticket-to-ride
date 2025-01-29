@@ -11,7 +11,7 @@ public class Pioche<T extends Carte> {
     private Stack<T> pioche;
 
     public Pioche(){
-        pioche=new Stack<>();
+        pioche = new Stack<T>();
     }
     // Constantes
     private static int cartesParCouleur = 12;
@@ -52,13 +52,10 @@ public class Pioche<T extends Carte> {
         return pioche.pop();
     }
 
-    public void viderPioche(){
-        if(!pioche.empty())pioche.clear();
-    }
-
     public int size(){
         return pioche.size();
     }
+
     @Override
     public String toString() {
         String str = "";
