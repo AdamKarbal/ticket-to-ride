@@ -96,14 +96,11 @@ public class Robot implements Comparable<Robot> {
     }
 
     public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughWagonCard { // Le moteurdejeu pose un des wagons sur le trajet voulue
-    public void chooseDestinations( MoteurDeJeu g){}
-
-    public void refuseDestinations(MoteurDeJeu g){}
-
         g.poseTrain(this,trajet);
     }
+    public void chooseDestination(MoteurDeJeu moteurDeJeu) {}
 
-    public void chooseDestination(MoteurDeJeu moteurDeJeu){ }// chaque robot doit override
+    public void chooseDestinations(MoteurDeJeu moteurDeJeu) {}
 
     public void refuseDestinations(MoteurDeJeu moteurDeJeu){}
 

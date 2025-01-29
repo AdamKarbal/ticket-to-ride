@@ -20,6 +20,7 @@ public class RobotRoute extends Robot{
     public void setVilleActuelle(Ville villeActuelle) {
         this.villeActuelle = villeActuelle;
     }
+
     @Override
     public void chooseDestinations(MoteurDeJeu moteurDeJeu) {
         for(int i=0;i<4;i++){

@@ -56,9 +56,6 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
     }
 
 
-    public int size(){
-        return cartesSurTable.size();
-    }
     public T piocher(T carte) throws NullPointerException{
         if(containsCarte(carte)){
             removeCarte(carte);
