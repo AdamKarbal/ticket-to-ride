@@ -6,20 +6,21 @@ import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
+import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
+import fr.cotedazur.univ.polytech.teamO.pioche.CarteWagon;
+import fr.cotedazur.univ.polytech.teamO.plateau.NoAvailableTrip;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class RobotMeeples extends Robot {
 
     public RobotMeeples(Couleur couleur) {
         super(couleur);
     }
+
 
     public Stack<MCouleur> StackTakenMeeples(){
         int maxMeeples = 0;
@@ -42,22 +43,79 @@ public class RobotMeeples extends Robot {
         return null;
     }
 
-    public void chooseNext(MoteurDeJeu moteur, GameMap map, GestionTrajets gestionTrajets) throws NotEnoughWagonCard {
-        boolean From = true;
-        boolean To = true;
+    public Trajet chooseNext(MoteurDeJeu moteur, GameMap map, GestionTrajets gestionTrajets) throws NoAvailableTrip {
         Ville villeDeDepart = map.getVilleMaxMeeples();
         ArrayList<Trajet> corresp = map.getCorresp(villeDeDepart);
         Trajet trajetPro = map.bestNext(corresp);
-        MCouleur couleurDepart = colorToPUp(StackTakenMeeples(), villeDeDepart);
-        MCouleur couleurArrivee = colorToPUp(StackTakenMeeples(), trajetPro.getTo());
-        if(couleurDepart == null){
-            From = false;
-        }
-        if(couleurArrivee == null){
-            To = false;
-        }
-        moteur.poseTrainPUp(this, trajetPro, From, To, couleurDepart, couleurArrivee,gestionTrajets);
+        return trajetPro;
     }
+
+    public MCouleur couleurDepart(Trajet trajetPro){
+        return colorToPUp(StackTakenMeeples(), trajetPro.getFrom());
+    }
+
+    public MCouleur couleurArrivee(Trajet trajetPro){
+        return colorToPUp(StackTakenMeeples(), trajetPro.getTo());
+    }
+
+    public void choosePioche(Couleur couleurTrajet,MoteurDeJeu moteurDeJeu) {
+        try {
+            piocherSurTable(new CarteWagon(couleurTrajet), moteurDeJeu); // essaie de piocher la carte qu'il lui faut pour compléter son trajet
+            if (!(isTurnOver())) {
+                choosePioche(couleurTrajet, moteurDeJeu);
+            }
+        }
+        catch(NullPointerException n){ // si elle n'est pas présente , il pioche
+            piocher(moteurDeJeu);
+            if (!(isTurnOver())) {
+                choosePioche(couleurTrajet, moteurDeJeu);
+            }
+        }
+    }
+
+
+    public void choixAction(MoteurDeJeu moteur, GameMap map, GestionTrajets gestionTrajets) throws NotEnoughWagonCard {
+        try {
+            Trajet trajetPro = chooseNext(moteur, map, gestionTrajets);
+            MCouleur couleurDepart = couleurDepart(trajetPro);
+            MCouleur couleurArrivee = couleurArrivee(trajetPro);
+            moteur.poseTrainPUp(this, trajetPro, couleurDepart == null, couleurArrivee == null, couleurDepart, couleurArrivee, gestionTrajets);
+        }
+        catch(NotEnoughWagonCard e) {
+            Couleur color = chooseNext(moteur, map, gestionTrajets).getRoute().getCouleur();
+            choosePioche(color, moteur);
+        }
+    }
+
+    @Override
+    public void chooseDestination(MoteurDeJeu moteurDeJeu){ // Le robot aléatoire choisie aléatoirement c'est carte entre une destination longue ou courte
+        int choice;
+        Random rand = new Random();
+        for(int i=0; i<4;i++){
+            choice = rand.nextInt(2)+1; // choisie entre 1 et 2 pour savoir si c'est long ou courte
+            CarteDestination carteDestinationPioche=moteurDeJeu.giveDestinationsCard(this,choice);
+            getDestinations().addCarte(carteDestinationPioche);
+        }
+    }
+
+    @Override
+    public void refuseDestinations(MoteurDeJeu moteurDeJeu){ // pour chaque carte destination le robot a 1/2 de la refuser.
+        int choice;
+        int temp=0;
+        Random rand = new Random();
+        for(int i=0;i<4;i++){
+            choice = rand.nextInt(2)+1;
+            if(choice==1){
+                moteurDeJeu.removeDestinationsCard(this,i-temp++);
+            }
+        }
+    }
+
+    public void init(MoteurDeJeu moteurDeJeu){
+        chooseDestination(moteurDeJeu);
+        refuseDestinations(moteurDeJeu);
+    }
+
 
     @Override
     public String toString(){

@@ -232,7 +232,6 @@ public class MoteurDeJeu {
         poseTrain(robot,trajet,gestionTrajets);
         if(From) takeMeeples(robot, trajet.getFrom(), meepleChoisiFrom);
         if(To) takeMeeples(robot, trajet.getTo(), meepleChoisiTo);
-
     }
 
 }
