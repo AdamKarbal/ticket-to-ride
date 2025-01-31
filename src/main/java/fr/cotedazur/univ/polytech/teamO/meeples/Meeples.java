@@ -1,7 +1,5 @@
 package fr.cotedazur.univ.polytech.teamO.meeples;
 
-import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
-
 public class Meeples {
 
     private MCouleur couleur;
