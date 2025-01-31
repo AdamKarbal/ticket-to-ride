@@ -256,10 +256,6 @@ public class GameMap {
         return bestNext;
     }
 
-    public HashMap<Ville,Integer> getVillesFrom(Ville ville) {
-        return map.get(ville);
-    }
-
     public Ville getVilleMaxMeeples(){
         int maxMeeples = 0;
         Ville maxVille = null;
