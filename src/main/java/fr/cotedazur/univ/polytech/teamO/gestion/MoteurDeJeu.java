@@ -211,8 +211,8 @@ public class MoteurDeJeu {
         robot.addMeeple(meepleChoisi);
     }
 
-    public void poseTrainPUp(Robot robot, Trajet trajet, boolean From, boolean To, MCouleur meepleChoisiFrom, MCouleur meepleChoisiTo) throws NotEnoughWagonCard {
-        poseTrain(robot,trajet);
+    public void poseTrainPUp(Robot robot, Trajet trajet, boolean From, boolean To, MCouleur meepleChoisiFrom, MCouleur meepleChoisiTo, GestionTrajets gestionTrajets) throws NotEnoughWagonCard {
+        poseTrain(robot,trajet,gestionTrajets);
         if(From) TakeMeeples(robot, trajet.getFrom(), meepleChoisiFrom);
         if(To) TakeMeeples(robot, trajet.getTo(), meepleChoisiTo);
     }
