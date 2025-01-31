@@ -10,6 +10,8 @@ import fr.cotedazur.univ.polytech.teamO.plateau.NoAvailableTrip;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
+import java.util.Random;
+
 public class RobotRoute extends Robot{
     // Ce robot va en priorité au plus vite terminer ses cartes de destination dans l'ordre où elles sont présentes dans sa main
     private Ville villeActuelle;
@@ -76,7 +78,7 @@ public class RobotRoute extends Robot{
 
     public Couleur poseTrainOpti(GestionTrajets gestionTrajets, MoteurDeJeu moteurDeJeu) throws NotEnoughWagonCard {
         Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this,villeActuelle,currentDestination.getVille2());
-        super.poseTrain(trajetOpti,moteurDeJeu);
+        super.poseTrain(trajetOpti,moteurDeJeu,gestionTrajets);
         return trajetOpti.getRoute().getCouleur();
     }
 
@@ -84,12 +86,19 @@ public class RobotRoute extends Robot{
         try {
             Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this, villeActuelle, currentDestination.getVille2());
             poseTrainOpti(gestionTrajets, moteurDeJeu);
+            Random random=new Random();
+            int choice=random.nextInt(2)+1;
+            if(choice==1){
+                takeMeeplesAleatory(trajetOpti.getFrom(),moteurDeJeu);
+            }
+            if(choice==2){
+                takeMeeplesAleatory(trajetOpti.getTo(),moteurDeJeu);
+            }
             gestionTrajets.updateAfterTrainPlacement(this,trajetOpti);
         } catch (NotEnoughWagonCard e) {
             // Handle insufficient cards by attempting to draw
             handleNotEnoughWagonCard(gestionTrajets, moteurDeJeu);
-        } catch (NoAvailableTrip noAvailableTrip) {
-            // If no available trip, move to the next destination
+        } catch (NoAvailableTrip noAvailableTrip) { // Cas où tous les trajets sont déjà
             updateCarteDestination(moteurDeJeu);
         }
     }

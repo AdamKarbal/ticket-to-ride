@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
@@ -41,7 +42,7 @@ public class RobotMeeples extends Robot {
         return null;
     }
 
-    public void chooseNext(MoteurDeJeu moteur, GameMap map) throws NotEnoughWagonCard {
+    public void chooseNext(MoteurDeJeu moteur, GameMap map, GestionTrajets gestionTrajets) throws NotEnoughWagonCard {
         boolean From = true;
         boolean To = true;
         Ville villeDeDepart = map.getVilleMaxMeeples();
@@ -55,7 +56,7 @@ public class RobotMeeples extends Robot {
         if(couleurArrivee == null){
             To = false;
         }
-        moteur.poseTrainPUp(this, trajetPro, From, To, couleurDepart, couleurArrivee);
+        moteur.poseTrainPUp(this, trajetPro, From, To, couleurDepart, couleurArrivee,gestionTrajets);
     }
 
     @Override

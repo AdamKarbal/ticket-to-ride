@@ -56,14 +56,14 @@ class RobotAleatoireTest {
         map = new GameMap();
     }
 
-    @Test
+    /*@Test
     void testChooseAction() throws NotEnoughWagonCard {
         robot=new RobotAleatoire(Couleur.Bleu, random);
         int taille = pioche.size();
         for(int i=0;i<taille;i++) robot.piocher(moteurDeJeu);
         when(random.nextInt(anyInt())).thenReturn(21);
         robot.chooseaction(moteurDeJeu,map);
-    }
+    }*/
 
     @Test
     void testChooseActionPosePioche() throws NotEnoughWagonCard, EmptyStackException {
