@@ -84,17 +84,21 @@ public class MoteurDeJeu {
             }
         }
     }
-    private Couleur findMaxWagon(Robot robot){
+    private Couleur findMaxWagon(Robot robot) {
+        if (robot == null || robot.getWagonByCouleur() == null || robot.getWagonByCouleur().isEmpty()) {
+            return Couleur.Default; // Valeur par défaut si aucune donnée disponible
+        }
         Couleur couleurMax = Couleur.Default;
-        int max=0;
-        for(Couleur couleur: robot.getWagonByCouleur().keySet()){
-            if(max<robot.getWagonByCouleur().get(couleur)){
-                max=robot.getWagonByCouleur().get(couleur);
-                couleurMax = couleur;
+        int max = 0;
+        for (Map.Entry<Couleur, Integer> entry : robot.getWagonByCouleur().entrySet()) {
+            if (entry.getValue() > max) {
+                max = entry.getValue();
+                couleurMax = entry.getKey();
             }
         }
         return couleurMax;
     }
+
     private Couleur determineRouteColor(Robot robot, Route route) {
         return route.getCouleur().equals(Couleur.Default) ? findMaxWagon(robot) : route.getCouleur();
     }
@@ -175,13 +179,14 @@ public class MoteurDeJeu {
         return carteWagonByCouleur;
     }
 
-    public void poseTrain(Robot robot, Trajet trajet) throws NotEnoughWagonCard { // prendre en compte le cas où on a assez de locomotives pour terminer un trajet
+    public void poseTrain(Robot robot, Trajet trajet,GestionTrajets gestionTrajets) throws NotEnoughWagonCard { // prendre en compte le cas où on a assez de locomotives pour terminer un trajet
         Route route = trajet.getRoute();
         Couleur couleurRoute = determineRouteColor(robot, route);
 
         if (route.isClaimable(robot.getWagonByCouleur().get(couleurRoute), new Wagon(couleurRoute))) {
             processRouteClaim(robot, trajet, route, couleurRoute);
             updateRobotWagonData(robot, route, trajet, couleurRoute);
+            gestionTrajets.updateTrajetsDisponibles(trajet);
         } else {
             throw new NotEnoughWagonCard(robot + " n'a pas assez de carte wagon.");
         }

@@ -18,7 +18,7 @@ public class GestionTrajets {
     }
     // Méthodes auxiliaires
 
-    private void updateTrajetsDisponibles(Trajet trajet) {
+    public void updateTrajetsDisponibles(Trajet trajet) {
         Ville from = trajet.getFrom();
         Ville to = trajet.getTo();
         if (trajetsDisponibles.containsKey(from)) {

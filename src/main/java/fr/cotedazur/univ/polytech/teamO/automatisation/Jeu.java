@@ -17,7 +17,7 @@ import java.util.EmptyStackException;
 
 public class Jeu {
      RobotRoute robotBleu;
-     RobotAleatoire robotRouge;
+     //RobotAleatoire robotRouge;
      RobotAleatoire robotJaune;
      ArrayList<Robot> robots;
      Ranking ranking;
@@ -36,11 +36,11 @@ public class Jeu {
 
     public  void setup() throws NotEnoughWagonCard {
         robotBleu=new RobotRoute(Couleur.Bleu);
-        robotRouge=new RobotAleatoire(Couleur.Rouge);
+        //robotRouge=new RobotAleatoire(Couleur.Rouge);
         robotJaune=new RobotAleatoire(Couleur.Jaune);
         robots=new ArrayList<>();
         robots.add(robotBleu);
-        robots.add(robotRouge);
+        //robots.add(robotRouge);
         robots.add(robotJaune);
 
         pioche = new Pioche();
@@ -58,12 +58,12 @@ public class Jeu {
 
         for(int i=0;i<4;i++){
             robotBleu.piocher(moteurDeJeu);
-            robotRouge.piocher(moteurDeJeu);
+            //robotRouge.piocher(moteurDeJeu);
             robotJaune.piocher(moteurDeJeu);
         }
         robotJaune.init(moteurDeJeu);
         robotBleu.init(moteurDeJeu);
-        robotRouge.init(moteurDeJeu);
+        //robotRouge.init(moteurDeJeu);
 
         System.out.println("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
@@ -86,13 +86,13 @@ public class Jeu {
         robots=new ArrayList<>();
         robots.add(robotJaune);
         robots.add(robotBleu);
-        robots.add(robotRouge);
+        //robots.add(robotRouge);
         while (!(moteurDeJeu.isFinished(robots))){
             System.out.println("---------------------- Début du tour numéro : " + tour++ + "---------------------- \n");
             try{
                 robotBleu.choixAction(gestionTrajets,moteurDeJeu);
-                robotRouge.chooseaction(moteurDeJeu,map);
-                robotJaune.chooseaction(moteurDeJeu,map);}
+                //robotRouge.chooseaction(moteurDeJeu,map);
+                robotJaune.chooseaction(moteurDeJeu,map,gestionTrajets);}
             catch(EmptyStackException e){
                 break;
             }

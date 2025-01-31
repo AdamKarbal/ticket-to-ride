@@ -1,8 +1,10 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
+import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
@@ -32,6 +34,8 @@ class RobotTest {
     PiocheDestinationLongue piocheDestinationLongue;
     PiocheDestinationCourte piocheDestinationCourte;
     Trajet trajet;
+    GestionTrajets gestionTrajets;
+    GameMap map;
     @Mock PiocheSurTable piocheSurTableMock = mock(PiocheSurTable.class);
     @Mock Pioche piocheMock = mock(Pioche.class);
     @BeforeEach
@@ -49,6 +53,8 @@ class RobotTest {
         taillePiocheInit= moteurDeJeu.getPioche().size();
         routeBleue= new Route(1,Couleur.Bleu);
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);
+        map=new GameMap();
+        gestionTrajets= new GestionTrajets(map);
     }
     @Test
     void equal(){
@@ -64,6 +70,7 @@ class RobotTest {
     @Test
     void testPiocheSurTable(){
         assertFalse(robot.isTurnOver());
+        taillePiocheInit= moteurDeJeu.getPioche().size();
         robot.piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(0),moteurDeJeu);
         robot.piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(0),moteurDeJeu);
         assertEquals(moteurDeJeu.getPioche().size(),taillePiocheInit -2);
@@ -99,7 +106,7 @@ class RobotTest {
             robot.piocher(moteurDeJeu);
         }
         int nbWagonByCouleurOriginel = robot.getWagonByCouleur().get(trajet.getRoute().getCouleur());
-        robot.poseTrain(trajet, moteurDeJeu);
+        robot.poseTrain(trajet, moteurDeJeu,gestionTrajets);
         assertTrue(trajet.isDone());
         assertEquals(robot.getWagonByCouleur().get(trajet.getRoute().getCouleur()),nbWagonByCouleurOriginel-trajet.getRoute().getNbCases());
         assertEquals(robot.getTrajet().size(),1);

@@ -1,11 +1,14 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
+import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
 
 import java.util.Random;
@@ -45,7 +48,7 @@ public class RobotAleatoire extends Robot {
         refuseDestinations(moteurDeJeu);
     }
 
-    public void chooseaction(MoteurDeJeu moteurDeJeu,GameMap map) throws NotEnoughWagonCard {
+    public void chooseaction(MoteurDeJeu moteurDeJeu, GameMap map, GestionTrajets gestionTrajets) throws NotEnoughWagonCard {
         int choix;
         Random rand = new Random();
         choix=rand.nextInt(100)+1;
@@ -56,7 +59,7 @@ public class RobotAleatoire extends Robot {
             }
         }
         if (20< choix && choix <= 80) { // Le robot a 60% de chance de poser un train
-            poseTrainAleatoire(moteurDeJeu,map);
+            poseTrainAleatoire(moteurDeJeu,map,gestionTrajets);
         }
         if(80<choix && choix<=100){ // Le robot a 20% de chance de piocher dans la pioche visible
             int pos;
@@ -88,45 +91,26 @@ public class RobotAleatoire extends Robot {
         }
     }
 
-    public void poseTrainAleatoire(MoteurDeJeu moteurDeJeu, GameMap map){
+    public void poseTrainAleatoire(MoteurDeJeu moteurDeJeu, GameMap map,GestionTrajets gestionTrajets){
         int choice;
         int nbpassengers;
         Random rand = new Random();
         Trajet trajetRandom = null;
         try { // Ici on essaye de poser un train si c'est impossible (pas assez de carte wagon) on retourne a la méthode ou on peut que piocher
             trajetRandom = map.getTrajets().get(rand.nextInt(map.getTrajets().size()));
-            poseTrain(trajetRandom, moteurDeJeu);
+            poseTrain(trajetRandom, moteurDeJeu,gestionTrajets);
             choice = rand.nextInt(2)+1;
-            if(choice==1){ // on choisit un meeples dans la ville from
-                nbpassengers = trajetRandom.getFrom().getPassagers().size(); // on regarde le nombre de meeples dans la ville from
-                if (nbpassengers == 0) { // s'il n'y a pas de meeples on quitte la méthode
-                    return;
-                }
-                else if (nbpassengers==1) {
-                    choice=0;
-                }
-                else {
-                    choice = rand.nextInt(nbpassengers);
-                }
-                moteurDeJeu.TakeMeeples(this,trajetRandom,trajetRandom.getFrom(),trajetRandom.getFrom().getPassagers().get(choice).getCouleur());
+            if(choice==1) { // on choisit un meeples dans la ville from
+                takeMeeplesAleatory(trajetRandom,trajetRandom.getFrom(),moteurDeJeu);
             }
             if(choice==2){
-                nbpassengers = trajetRandom.getTo().getPassagers().size();
-                if (nbpassengers == 0) {
-                    return;
-                }
-                else if (nbpassengers==1) {
-                    choice=0;
-                }
-                else {
-                    choice = rand.nextInt(nbpassengers);
-                }
-                moteurDeJeu.TakeMeeples(this,trajetRandom,trajetRandom.getTo(),trajetRandom.getTo().getPassagers().get(choice).getCouleur());
+               takeMeeplesAleatory(trajetRandom,trajetRandom.getTo(),moteurDeJeu);
             }
         } catch (NotEnoughWagonCard e) {
             chooseactionnotenought(moteurDeJeu);
         }
     }
+
 
     @Override
     public String toString(){
