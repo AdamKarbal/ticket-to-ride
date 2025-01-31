@@ -62,3 +62,5 @@ public class RobotMeeples extends Robot {
         return "Le robot qui adopte une stratégie axée sur les Meeples. Sa couleur est : " + getCouleur();
     }
 }
+
+
