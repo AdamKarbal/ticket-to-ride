@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.affichage.Affichage;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
+import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
@@ -175,15 +176,23 @@ public class MoteurDeJeu {
         return carteWagonByCouleur;
     }
 
-    public void poseTrain(Robot robot, Trajet trajet) throws NotEnoughWagonCard { // prendre en compte le cas où on a assez de locomotives pour terminer un trajet
-        Route route = trajet.getRoute();
-        Couleur couleurRoute = determineRouteColor(robot, route);
+    public void poseTrain(Robot robot, Trajet trajet) throws NotEnoughWagonCard {
+        Route route=trajet.getRoute();
+        Couleur couleurRoute=route.getCouleur();
+        if(route.isClaimable(robot.getWagonByCouleur().get(couleurRoute),new Wagon(couleurRoute))){
+            route.setAvailable(false);
+            robot.getWagonByCouleur().put(couleurRoute,robot.getWagonByCouleur().get(couleurRoute)-route.getNbCases());
+            robot.getScore().addNbPoints(TableauDesScores.getValue(route.getNbCases()));
+            for(int i=0;i<route.getNbCases();i++){
+                CarteWagon carteWagon=new CarteWagon(couleurRoute);
+                robot.getMain().removeCarte(carteWagon);
+                defaussePioche.getPioche().push(carteWagon);
 
-        if (route.isClaimable(robot.getWagonByCouleur().get(couleurRoute), new Wagon(couleurRoute))) {
-            processRouteClaim(robot, trajet, route, couleurRoute);
-            updateRobotWagonData(robot, route, trajet, couleurRoute);
-        } else {
-            throw new NotEnoughWagonCard(robot + " n'a pas assez de carte wagon.");
+            }
+            robot.removeNbWagons(route.getNbCases());
+        }
+        else{
+            throw new NotEnoughWagonCard("Le " + robot + "n'as pas assez de carte wagon. \n");
         }
     }
 
@@ -206,4 +215,12 @@ public class MoteurDeJeu {
         }
     }
 
+    public void poseTrainPUp(Robot robot, Trajet trajet, boolean From, boolean To, MCouleur meepleChoisiFrom, MCouleur meepleChoisiTo) throws NotEnoughWagonCard {
+        poseTrain(robot,trajet);
+        if(From) TakeMeeples(robot, trajet.getFrom(), meepleChoisiFrom);
+        if(To) TakeMeeples(robot, trajet.getTo(), meepleChoisiTo);
+    }
+
 }
+
+
