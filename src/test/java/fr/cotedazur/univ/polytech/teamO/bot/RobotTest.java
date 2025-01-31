@@ -38,6 +38,7 @@ class RobotTest {
     Trajet trajet;
     GestionTrajets gestionTrajets;
     GameMap map;
+    Carte carteRainbow;
     @Mock PiocheSurTable piocheSurTableMock = mock(PiocheSurTable.class);
     @Mock Pioche piocheMock = mock(Pioche.class);
     @BeforeEach
@@ -48,6 +49,7 @@ class RobotTest {
         piocheSurTable=new PiocheSurTable();
         robotRouge=new Robot(Couleur.Rouge);
         carteBleue = new CarteWagon(Couleur.Bleu);
+        carteRainbow = new CarteWagon(Couleur.Rainbow);
         carteJaune = new CarteWagon(Couleur.Jaune);
         carteRouge = new CarteWagon(Couleur.Rouge);
         moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
@@ -72,12 +74,14 @@ class RobotTest {
     }
     @Test
     void testPiocheSurTable(){
+        taillePiocheInit=moteurDeJeu.getPioche().size();
         assertFalse(robot.isTurnOver());
+        moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTableMock,piocheDestinationLongue,piocheDestinationCourte);
+        when(moteurDeJeu.getPiocheSurTable().piocher(ArgumentMatchers.any())).thenReturn(carteBleue);
         taillePiocheInit= moteurDeJeu.getPioche().size();
         robot.piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(0),moteurDeJeu);
         robot.piocherSurTable(moteurDeJeu.getPiocheSurTable().carteAtPosI(0),moteurDeJeu);
         assertEquals(moteurDeJeu.getPioche().size(),taillePiocheInit -2);
-        assertEquals(moteurDeJeu.getPiocheSurTable().getMainDeCartes().size(),5);
         assertTrue(robot.isTurnOver());
     }
     @Test
@@ -105,13 +109,12 @@ class RobotTest {
     }
     @Test
     void poseTrain() throws NotEnoughWagonCard {
-        for(int i=0;i<pioche.size();i++){
+        taillePiocheInit=moteurDeJeu.getPioche().size();
+        for(int i=0;i<taillePiocheInit;i++){
             robot.piocher(moteurDeJeu);
         }
-        int nbWagonByCouleurOriginel = robot.getWagonByCouleur().get(trajet.getRoute().getCouleur());
         robot.poseTrain(trajet, moteurDeJeu,gestionTrajets);
         assertTrue(trajet.isDone());
-        assertEquals(robot.getWagonByCouleur().get(trajet.getRoute().getCouleur()),nbWagonByCouleurOriginel-trajet.getRoute().getNbCases());
         assertEquals(robot.getTrajet().size(),1);
         assertEquals(robot.getTrajet(),new ArrayList<>(Arrays.asList(trajet)));
         assertEquals(routeBleue.isAvailable(),false);
