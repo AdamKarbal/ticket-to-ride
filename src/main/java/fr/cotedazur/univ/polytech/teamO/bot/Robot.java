@@ -145,7 +145,7 @@ public class Robot implements Comparable<Robot> {
         else {
             choice = rand.nextInt(nbpassengers);
         }
-        moteurDeJeu.TakeMeeples(this,ville,ville.getPassagers().get(choice).getCouleur());
+        moteurDeJeu.takeMeeples(this,ville,ville.getPassagers().get(choice).getCouleur());
     }
 
     // Méthodes générales

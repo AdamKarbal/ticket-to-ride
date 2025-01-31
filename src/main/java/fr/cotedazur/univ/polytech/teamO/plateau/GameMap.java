@@ -32,7 +32,7 @@ public class GameMap {
         //Initialisation
             Random random = new Random();
             for (Ville ville : Ville.values()) {
-                /*int nbMeeples = ville.getBaseNbMeeple();
+                int nbMeeples = ville.getBaseNbMeeple();
                 Set<MCouleur> couleursUtilisées = new HashSet<>();
 
                 for (int i = 0; i < nbMeeples; i++) {
@@ -48,7 +48,7 @@ public class GameMap {
                     Meeples meeple = new Meeples(couleur);
                     couleur.DecremQT(); //Décrémente l'attribut nombre de pions meeple restants pour chaque couleur de meeple
                     ville.getPassagers().add(meeple);
-                }*/
+                }
 
                 map.put(ville, new HashMap<>());
             }
