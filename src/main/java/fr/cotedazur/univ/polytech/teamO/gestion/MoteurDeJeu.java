@@ -193,7 +193,6 @@ public class MoteurDeJeu {
             throw new NotEnoughWagonCard(robot + " n'a pas assez de carte wagon.");
         }
     }
-
   
     public boolean isFinished(List<Robot> robots){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
         for(Robot robot:robots){
@@ -213,8 +212,8 @@ public class MoteurDeJeu {
 
     public void poseTrainPUp(Robot robot, Trajet trajet, boolean From, boolean To, MCouleur meepleChoisiFrom, MCouleur meepleChoisiTo, GestionTrajets gestionTrajets) throws NotEnoughWagonCard {
         poseTrain(robot,trajet,gestionTrajets);
-        if(From) TakeMeeples(robot, trajet.getFrom(), meepleChoisiFrom);
-        if(To) TakeMeeples(robot, trajet.getTo(), meepleChoisiTo);
+        if(From) takeMeeples(robot, trajet.getFrom(), meepleChoisiFrom);
+        if(To) takeMeeples(robot, trajet.getTo(), meepleChoisiTo);
 
     }
 
