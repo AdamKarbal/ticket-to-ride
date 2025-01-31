@@ -9,6 +9,7 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+import fr.cotedazur.univ.polytech.teamO.wagon.Wagon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -27,6 +28,7 @@ class RobotTest {
     CarteWagon carteRouge;
     int taillePiocheInit;
     Route routeBleue;
+    Route routeRouge;
     Robot robotRouge;
     MoteurDeJeu moteurDeJeu;
     PiocheSurTable piocheSurTable;
@@ -52,6 +54,7 @@ class RobotTest {
         piocheSurTable.initPiocheSurTable(moteurDeJeu);
         taillePiocheInit= moteurDeJeu.getPioche().size();
         routeBleue= new Route(1,Couleur.Bleu);
+        routeRouge= new Route(5,Couleur.Rouge);
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);
         map=new GameMap();
         gestionTrajets= new GestionTrajets(map);
@@ -112,6 +115,28 @@ class RobotTest {
         assertEquals(robot.getTrajet().size(),1);
         assertEquals(robot.getTrajet(),new ArrayList<>(Arrays.asList(trajet)));
         assertEquals(routeBleue.isAvailable(),false);
+    }
+    @Test
+    void testRainbowCase_Success() throws NotEnoughWagonCard {
+        Trajet trajetRouge = new Trajet(Ville.Berlin,Ville.Niederlande,routeRouge);
+
+        Couleur couleurRoute = Couleur.Rouge;
+        robot.getWagonByCouleur().put(
+                couleurRoute, 3
+        );
+        robot.getWagonByCouleur().put(
+                Couleur.Rainbow, 3
+        );
+
+        assertTrue(routeRouge.isClaimable(5, new Wagon(couleurRoute)));
+
+        boolean result = moteurDeJeu.rainbowCase(robot, trajetRouge);
+        assertTrue(result);
+        System.out.println(robot.getWagonByCouleur());
+        moteurDeJeu.poseTrain(robot,trajetRouge,gestionTrajets);
+        System.out.println(robot.getWagonByCouleur());
+        assertEquals(0,robot.getWagonByCouleur().get(couleurRoute));
+        assertEquals(1,robot.getWagonByCouleur().get(Couleur.Rainbow));
     }
 
 

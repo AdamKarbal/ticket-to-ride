@@ -114,7 +114,15 @@ public class MoteurDeJeu {
 
     private void updateRobotWagonData(Robot robot, Route route, Trajet trajet, Couleur couleurRoute) {
         int nbCases = route.getNbCases();
-        robot.getWagonByCouleur().put(couleurRoute, robot.getWagonByCouleur().get(couleurRoute) - nbCases);
+        int nbRainbow=robot.getWagonByCouleur().get(Couleur.Rainbow);
+        int nbWagontoDiscard = nbCases-robot.getWagonByCouleur().get(couleurRoute);
+        if(rainbowCase(robot,trajet)){
+            robot.getWagonByCouleur().put(Couleur.Rainbow, nbRainbow-nbWagontoDiscard);
+            robot.getWagonByCouleur().put(couleurRoute, 0);
+        }
+        else {
+            robot.getWagonByCouleur().put(couleurRoute, robot.getWagonByCouleur().get(couleurRoute) - nbCases);
+        }
         robot.getScore().addNbPoints(TableauDesScores.getValue(nbCases));
         robot.removeNbWagons(nbCases);
         robot.addTrajetDone(trajet);
@@ -144,8 +152,8 @@ public class MoteurDeJeu {
                 replacePiocheByDefausse();
                 getPiocheSurTable().addCarte(pioche.piocher());
             }
-        updateRobotPiocheSurTable(robot,cartePiochee);
-        return cartePiochee;}
+            updateRobotPiocheSurTable(robot,cartePiochee);
+            return cartePiochee;}
         catch(NullPointerException e){
             throw e;
         }
@@ -185,15 +193,15 @@ public class MoteurDeJeu {
         Route route = trajet.getRoute();
         Couleur couleurRoute = determineRouteColor(robot, route);
 
-        if (route.isClaimable(robot.getWagonByCouleur().get(couleurRoute), new Wagon(couleurRoute))) {
-            processRouteClaim(robot, trajet, route, couleurRoute);
+        if (route.isClaimable(robot.getWagonByCouleur().get(couleurRoute), new Wagon(couleurRoute))||rainbowCase(robot,trajet)) {
             updateRobotWagonData(robot, route, trajet, couleurRoute);
+            processRouteClaim(robot, trajet, route, couleurRoute);
             gestionTrajets.updateTrajetsDisponibles(trajet);
         } else {
             throw new NotEnoughWagonCard(robot + " n'a pas assez de carte wagon.");
         }
     }
-  
+
     public boolean isFinished(List<Robot> robots){ // Méthode pour verifier le nombre de wagon, si c'est inferieur a deux alors fin de partie (dans un while qu'on fera pendant l'automatisation)
         for(Robot robot:robots){
             if(robot.getNbWagons()<2 || (getPioche().getPioche().empty() && defaussePioche.getPioche().empty())){
@@ -208,6 +216,16 @@ public class MoteurDeJeu {
         Meeples meepleToPick = new Meeples(meepleChoisi);
         ville.removePassenger(meepleToPick);
         robot.addMeeple(meepleChoisi);
+    }
+
+    public boolean rainbowCase(Robot robot, Trajet trajet) {
+        Route route = trajet.getRoute();
+        Couleur couleurRoute = determineRouteColor(robot, route);
+        int nbCouleurWagon = robot.getWagonByCouleur().get(couleurRoute);
+        int nbRainbowCard = robot.getWagonByCouleur().get(Couleur.Rainbow);
+        if (nbRainbowCard == 0) return false;
+        else return route.isClaimable(nbRainbowCard + nbCouleurWagon, new Wagon(couleurRoute));
+
     }
 
     public void poseTrainPUp(Robot robot, Trajet trajet, boolean From, boolean To, MCouleur meepleChoisiFrom, MCouleur meepleChoisiTo, GestionTrajets gestionTrajets) throws NotEnoughWagonCard {
