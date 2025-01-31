@@ -12,18 +12,19 @@ import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class RobotMeeples extends Robot {
 
-    RobotMeeples(Couleur couleur) {
+    public RobotMeeples(Couleur couleur) {
         super(couleur);
     }
 
     private Stack<MCouleur> StackTakenMeeples(){
         int maxMeeples = 0;
         Stack<MCouleur> StackMeeplesColors = new Stack<MCouleur>();
-        HashMap<MCouleur, Integer> takenMeeples = this.getTakenMeeples();
+        Map<MCouleur, Integer> takenMeeples = this.getTakenMeeples();
         for(MCouleur color : takenMeeples.keySet()){
             if(takenMeeples.get(color) >= maxMeeples) maxMeeples = takenMeeples.get(color);
             StackMeeplesColors.push(color);
@@ -31,12 +32,12 @@ public class RobotMeeples extends Robot {
         return StackMeeplesColors;
     }
 
-    private MCouleur colorToPUp(Stack <MCouleur> StackTakenMeeples, Ville ville){
-        while(!StackTakenMeeples.isEmpty()){
-            if(ville.getPassagersColors().contains(StackTakenMeeples.peek())){
-                return StackTakenMeeples.pop();
+    private MCouleur colorToPUp(Stack <MCouleur> stackTakenMeeples, Ville ville){
+        while(!stackTakenMeeples.isEmpty()){
+            if(ville.getPassagersColors().contains(stackTakenMeeples.peek())){
+                return stackTakenMeeples.pop();
             }
-            StackTakenMeeples.pop();
+            stackTakenMeeples.pop();
         }
         return null;
     }

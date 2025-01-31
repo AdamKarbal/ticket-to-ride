@@ -1,8 +1,5 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
-
-import org.jetbrains.annotations.NotNull;
-
 public class Score  {
     private int nbPoints;
 

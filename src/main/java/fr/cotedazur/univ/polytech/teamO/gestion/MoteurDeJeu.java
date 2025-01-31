@@ -172,8 +172,8 @@ public class MoteurDeJeu {
         Collections.shuffle(piocheDestinationLongue.getCartesDestinationLongues());
     }
 
-    public static HashMap<Couleur,Integer> initWagonByCouleur(Robot robot){
-        HashMap<Couleur,Integer> carteWagonByCouleur=new HashMap<>();
+    public static Map<Couleur,Integer> initWagonByCouleur(Robot robot){
+        Map<Couleur,Integer> carteWagonByCouleur=new HashMap<>();
         for(Couleur couleur:Couleur.values()){
             if(!couleur.equals(Couleur.Default) && !couleur.equals(Couleur.Marron)) carteWagonByCouleur.put(couleur,0);
         }
@@ -205,7 +205,7 @@ public class MoteurDeJeu {
         return false;
     }
 
-    public void TakeMeeples(Robot robot, Ville ville, MCouleur meepleChoisi){
+    public void takeMeeples(Robot robot, Ville ville, MCouleur meepleChoisi){
         Meeples meepleToPick = new Meeples(meepleChoisi);
         ville.removePassenger(meepleToPick);
         robot.addMeeple(meepleChoisi);
@@ -215,6 +215,7 @@ public class MoteurDeJeu {
         poseTrain(robot,trajet,gestionTrajets);
         if(From) TakeMeeples(robot, trajet.getFrom(), meepleChoisiFrom);
         if(To) TakeMeeples(robot, trajet.getTo(), meepleChoisiTo);
+
     }
 
 }

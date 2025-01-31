@@ -23,7 +23,7 @@ public class Pioche<T extends Carte> {
     }
     // Méthode pour créer une pioche complète
     public void creerPiocheComplete() {
-        Stack<T> nouvellePioche = new Stack<T>();
+        Stack<T> nouvellePioche = new Stack<>();
         for (Couleur couleur : Couleur.values()) { // créer une carte pour tout les couleurs
             if(isCouleurStandard(couleur)) {
                 for (int i = 0; i < cartesParCouleur; i++) {

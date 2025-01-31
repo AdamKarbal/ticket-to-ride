@@ -14,14 +14,15 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import java.util.Random;
 
 public class RobotAleatoire extends Robot {
+    private Random rand;
 
-    public RobotAleatoire(Couleur couleur) {
+    public RobotAleatoire(Couleur couleur, Random random) {
         super(couleur);
+        this.rand = random;
     }
 
     @Override
     public void chooseDestination(MoteurDeJeu moteurDeJeu){ // Le robot aléatoire choisie aléatoirement c'est carte entre une destination longue ou courte
-        Random rand = new Random();
         int choice;
         for(int i=0; i<4;i++){
             choice = rand.nextInt(2)+1; // choisie entre 1 et 2 pour savoir si c'est long ou courte
@@ -33,7 +34,6 @@ public class RobotAleatoire extends Robot {
     @Override
     public void refuseDestinations(MoteurDeJeu moteurDeJeu){ // pour chaque carte destination le robot a 1/2 de la refuser.
         int choice;
-        Random rand = new Random();
         int temp=0;
         for(int i=0;i<4;i++){
             choice = rand.nextInt(2)+1;
@@ -50,7 +50,6 @@ public class RobotAleatoire extends Robot {
 
     public void chooseaction(MoteurDeJeu moteurDeJeu, GameMap map, GestionTrajets gestionTrajets) throws NotEnoughWagonCard {
         int choix;
-        Random rand = new Random();
         choix=rand.nextInt(100)+1;
         if (1<=choix && choix<=20){ // Le robot a 20% de chance de piocher une carte, si c'est son premier tour il repioche.
             piocher(moteurDeJeu);
@@ -73,7 +72,6 @@ public class RobotAleatoire extends Robot {
 
     public void chooseactionnotenought(MoteurDeJeu moteurDeJeu){ // Même méthode mais pour le second tour s'il a piocher OU s'il a essayer de poser un train mais qu'il ne pouvait pas
         int choix;
-        Random rand = new Random();
         choix=rand.nextInt(100)+1;
         if (1<=choix && choix<=50){
             piocher(moteurDeJeu);
@@ -94,7 +92,6 @@ public class RobotAleatoire extends Robot {
     public void poseTrainAleatoire(MoteurDeJeu moteurDeJeu, GameMap map,GestionTrajets gestionTrajets){
         int choice;
         int nbpassengers;
-        Random rand = new Random();
         Trajet trajetRandom = null;
         try { // Ici on essaye de poser un train si c'est impossible (pas assez de carte wagon) on retourne a la méthode ou on peut que piocher
             trajetRandom = map.getTrajets().get(rand.nextInt(map.getTrajets().size()));

@@ -3,20 +3,21 @@ package  fr.cotedazur.univ.polytech.teamO.pioche;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainJoueur<T extends Carte> implements MainDeCarte<T>{ // peut être renommée pour faire des mains tout simplement
     // Instances
-    private ArrayList<T> mainJoueur;
+    private List<T> mainJoueur;
 
     // Constructeurs
     public MainJoueur() { this.mainJoueur = new ArrayList(); }
-    public MainJoueur(ArrayList<T> mainDeCartesWagon){
+    public MainJoueur(List<T> mainDeCartesWagon){
         this.mainJoueur=mainDeCartesWagon;
     }
 
     // Accesseurs
 
-    public ArrayList<T> getMainDeCartes(){
+    public List<T> getMainDeCartes(){
         return mainJoueur;
     }
 

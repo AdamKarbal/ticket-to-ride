@@ -9,8 +9,8 @@ import java.util.*;
 public class GameMap {
 
     //Instance
-    private HashMap<Ville, HashMap<Ville,Integer>> map;
-    private ArrayList<Trajet> trajets;
+    private Map<Ville, Map<Ville,Integer>> map;
+    private List<Trajet> trajets;
 
     //Constructeur
     public GameMap(){
@@ -209,11 +209,11 @@ public class GameMap {
 
 
     // Accesseurs
-    public ArrayList<Trajet> getTrajets() {
+    public List<Trajet> getTrajets() {
         return trajets;
     }
 
-    public HashMap<Ville, HashMap<Ville,Integer>> getMap() {
+    public Map<Ville, Map<Ville,Integer>> getMap() {
         return map;
     }
 
@@ -227,7 +227,7 @@ public class GameMap {
         trajets.add(trajet2);
     }
 
-    public HashMap<Ville,Integer> getVillesFrom(Ville ville) {
+    public Map<Ville,Integer> getVillesFrom(Ville ville) {
         return map.get(ville);
     }
 

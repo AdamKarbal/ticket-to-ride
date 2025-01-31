@@ -13,6 +13,7 @@ import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.Random;
 
 
 public class Jeu {
@@ -35,6 +36,7 @@ public class Jeu {
 
 
     public  void setup() throws NotEnoughWagonCard {
+        Random random = new Random();
         robotBleu=new RobotRoute(Couleur.Bleu);
         //robotRouge=new RobotAleatoire(Couleur.Rouge);
         robotJaune=new RobotAleatoire(Couleur.Jaune);
@@ -69,8 +71,8 @@ public class Jeu {
     }
 
     public  void endofGame() throws EmptyListException {
-        System.out.print("\n---------------------- Le jeu est finit ! ----------------------\n");
-        System.out.print("Voici la mise à jour par rapport au carte destination !\n");
+        System.out.print("\n---------------------- Le jeu est fini ! ----------------------\n");
+        System.out.print("Voici la mise à jour par rapport aux cartes destinations !\n");
         gestionEtatJeu.isDestinationsCardCompleted(robots);
         for(Robot robot:robots){
             gestionEtatJeu.updateScoreCarteDestination(robot);
