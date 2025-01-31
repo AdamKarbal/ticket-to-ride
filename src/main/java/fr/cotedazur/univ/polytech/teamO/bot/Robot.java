@@ -22,6 +22,7 @@ public class Robot implements Comparable<Robot> {
     private int nbWagons;
     private List<Trajet> trajets;
     private HashMap<MCouleur,Integer> takenMeeples;
+    private boolean taking;
 
     //Constructeur
     public Robot(Couleur couleur) {
@@ -35,6 +36,7 @@ public class Robot implements Comparable<Robot> {
         this.nbWagons=45;
         this.trajets =new ArrayList<>();
         this.takenMeeples=new HashMap<>();
+        this.taking=false;
     }
 
     // Getters & setters
@@ -98,6 +100,19 @@ public class Robot implements Comparable<Robot> {
     public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughWagonCard { // Le moteurdejeu pose un des wagons sur le trajet voulue
         g.poseTrain(this,trajet);
     }
+
+    public HashMap<MCouleur,Integer> getTakenMeeples() {
+        return takenMeeples;
+    }
+
+    public boolean getTaking(){
+        return taking;
+    }
+
+    public void setTaking(boolean val){
+        this.taking = val;
+    }
+
     public void chooseDestination(MoteurDeJeu moteurDeJeu) {}
 
     public void chooseDestinations(MoteurDeJeu moteurDeJeu) {}
