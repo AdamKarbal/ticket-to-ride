@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.affichage.Affichage;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
+import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.Route;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
@@ -179,6 +180,7 @@ public class MoteurDeJeu {
         return carteWagonByCouleur;
     }
 
+
     public void poseTrain(Robot robot, Trajet trajet,GestionTrajets gestionTrajets) throws NotEnoughWagonCard { // prendre en compte le cas où on a assez de locomotives pour terminer un trajet
         Route route = trajet.getRoute();
         Couleur couleurRoute = determineRouteColor(robot, route);
@@ -203,12 +205,18 @@ public class MoteurDeJeu {
         return false;
     }
 
-    public void TakeMeeples(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi){
-        if(villeChoisie == trajet.getFrom() || villeChoisie == trajet.getTo()){
-            robot.addMeeple(meepleChoisi);
-            villeChoisie.getPassagers().remove(meepleChoisi);
-            affichage.afficheTakeMeeples(robot,1,meepleChoisi);
-        }
+    public void TakeMeeples(Robot robot, Ville ville, MCouleur meepleChoisi){
+        Meeples meepleToPick = new Meeples(meepleChoisi);
+        ville.removePassenger(meepleToPick);
+        robot.addMeeple(meepleChoisi);
+    }
+
+    public void poseTrainPUp(Robot robot, Trajet trajet, boolean From, boolean To, MCouleur meepleChoisiFrom, MCouleur meepleChoisiTo) throws NotEnoughWagonCard {
+        poseTrain(robot,trajet);
+        if(From) TakeMeeples(robot, trajet.getFrom(), meepleChoisiFrom);
+        if(To) TakeMeeples(robot, trajet.getTo(), meepleChoisiTo);
     }
 
 }
+
+
