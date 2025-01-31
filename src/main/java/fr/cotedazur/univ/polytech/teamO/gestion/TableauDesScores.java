@@ -1,8 +1,9 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TableauDesScores {
-    private static final HashMap<Integer,Integer> tableauScores = new HashMap<>();
+    private static final Map<Integer,Integer> tableauScores = new HashMap<>();
 
     static {
         tableauScores.put(1, 1);

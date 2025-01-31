@@ -1,10 +1,9 @@
 package fr.cotedazur.univ.polytech.teamO.pioche;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public interface MainDeCarte<T extends Carte> {
 
-    ArrayList<T> getMainDeCartes();
+    List<T> getMainDeCartes();
     // Methode
 
     T carteAtPosI(int i);

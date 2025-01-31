@@ -3,9 +3,7 @@ package fr.cotedazur.univ.polytech.teamO.plateau;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
 
 public enum Ville {
     Berlin(5, true),
@@ -53,7 +51,7 @@ public enum Ville {
 
     private int NbMeeple;
     private final boolean isVille;
-    private ArrayList<Meeples> passagers;
+    private List<Meeples> passagers;
 
     Ville(int NbMeeple, boolean isVille) {
         this.NbMeeple = NbMeeple;
@@ -81,7 +79,7 @@ public enum Ville {
         return Arrays.asList(Ville.values()).contains(ville);
     }
 
-    public ArrayList<Meeples> getPassagers() {
+    public List<Meeples> getPassagers() {
         return this.passagers;
     }
 
@@ -89,8 +87,8 @@ public enum Ville {
         this.passagers.remove(meeple);
     }
 
-    public HashSet<MCouleur> getPassagersColors(){
-        HashSet<MCouleur> colors = new HashSet<>();
+    public Set<MCouleur> getPassagersColors(){
+        Set<MCouleur> colors = new HashSet<>();
         for(Meeples meeple : passagers) {
             colors.add(meeple.getCouleur());
         }
@@ -100,7 +98,7 @@ public enum Ville {
 
     public String PDisplay() {
         String output = "";
-        ArrayList<Meeples> p = getPassagers();
+        List<Meeples> p = getPassagers();
         for(Meeples passager : p){
             output += passager.toString() + "\n";
         }

@@ -27,6 +27,7 @@ class GestionTrajetsTest {
     GestionEtatJeu gestionEtatJeu;
     Pioche pioche;
     PiocheSurTable piocheSurTable;
+    int taille;
     @BeforeEach
     void setUp() {
         pioche=new Pioche();
@@ -46,6 +47,7 @@ class GestionTrajetsTest {
         trajetList.add(berlinRostock);
         trajetList.add(rostockKiel);
         berlinKielDestination = new CarteDestination(Couleur.Marron,Ville.Kiel,Ville.Berlin,22);
+        taille=pioche.size();
     }
 
     @Test
@@ -55,24 +57,12 @@ class GestionTrajetsTest {
     }
 
     @Test
-    void shortestTrip() throws NotEnoughWagonCard {
-        for(int i=0;i<moteurDeJeu.getPioche().size();) robotRoute.piocher(moteurDeJeu);
-        robotRoute.chooseDestination(berlinKielDestination);
-        //assertEquals(gestionTrajets.trajetOpti(robotRoute, robotRoute.getDestinations().getMainDeCartes().get(0)),kielSchwerin);
-        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
-        //assertEquals(gestionTrajets.trajetOpti(robotRoute, robotRoute.getDestinations().getMainDeCartes().get(0)),berlinSchwerin);
-        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
-    }
-    @Test
-    void noCitiesStep() throws NotEnoughWagonCard {
-        for(int i=0;i<moteurDeJeu.getPioche().size();i++) {
-            robotRoute.piocher(moteurDeJeu);
-        }
-        robotRoute.chooseDestination(new CarteDestination(Couleur.Marron,Ville.Emden,Ville.Düsseldorf,21));
-        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
-        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
-        robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu);
-        assertThrows(NoAvailableTrip.class, ()-> robotRoute.poseTrainOpti(gestionTrajets,moteurDeJeu));
+    void correctPath(){
+        robotRoute.chooseDestination(new CarteDestination(Couleur.Marron,Ville.Berlin,Ville.Kiel,13));
+        assertEquals(gestionTrajets.findOptimalTrajet(robotRoute, robotRoute.getVilleActuelle(), robotRoute.getCurrentDestination().getVille2()),new Trajet(Ville.Berlin,Ville.Schwerin,new Route(2,Couleur.Default)));
+        gestionTrajets.updateAfterTrainPlacement(robotRoute,new Trajet(Ville.Berlin,Ville.Schwerin,new Route(2,Couleur.Default)));
+        assertEquals(gestionTrajets.findOptimalTrajet(robotRoute, robotRoute.getVilleActuelle(), robotRoute.getCurrentDestination().getVille2()),new Trajet(Ville.Kiel,Ville.Schwerin,new Route(2,Couleur.Default)));
+
     }
 
 }

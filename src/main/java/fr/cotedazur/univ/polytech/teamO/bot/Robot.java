@@ -1,11 +1,13 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -18,10 +20,10 @@ public class Robot implements Comparable<Robot> {
     private MainJoueur main;
     private boolean turnOver;
     private int piocheCount;
-    private HashMap<Couleur,Integer> wagonByCouleur;
+    private Map<Couleur,Integer> wagonByCouleur;
     private int nbWagons;
     private List<Trajet> trajets;
-    private HashMap<MCouleur,Integer> takenMeeples;
+    private Map<MCouleur,Integer> takenMeeples;
     private boolean taking;
 
     //Constructeur
@@ -63,7 +65,7 @@ public class Robot implements Comparable<Robot> {
     public void setPiocheCount(int piocheCount) {
         this.piocheCount = piocheCount;
     }
-    public HashMap<Couleur,Integer> getWagonByCouleur() {
+    public Map<Couleur,Integer> getWagonByCouleur() {
         return wagonByCouleur;
     }
 
@@ -97,11 +99,11 @@ public class Robot implements Comparable<Robot> {
         getMain().addCarte(carte);
     }
 
-    public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughWagonCard { // Le moteurdejeu pose un des wagons sur le trajet voulue
-        g.poseTrain(this,trajet);
+    public void poseTrain(Trajet trajet, MoteurDeJeu g, GestionTrajets gestionTrajets) throws NotEnoughWagonCard { // Le moteurdejeu pose un des wagons sur le trajet voulue
+        g.poseTrain(this,trajet,gestionTrajets);
     }
 
-    public HashMap<MCouleur,Integer> getTakenMeeples() {
+    public Map<MCouleur,Integer> getTakenMeeples() {
         return takenMeeples;
     }
 
@@ -127,6 +129,23 @@ public class Robot implements Comparable<Robot> {
 
     public int getTakenMeeplesByCouleur(MCouleur couleur){ // Renvoie le nombre de meeple d'une couleur du joueuer
         return takenMeeples.getOrDefault(couleur, 0);
+    }
+
+    public void takeMeeplesAleatory(Ville ville, MoteurDeJeu moteurDeJeu){
+        int nbpassengers;
+        int choice;
+        Random rand = new Random();
+        nbpassengers = ville.getPassagers().size(); // on regarde le nombre de meeples dans la ville from
+        if (nbpassengers == 0) { // s'il n'y a pas de meeples on quitte la méthode
+            return;
+        }
+        else if (nbpassengers==1) {
+            choice=0;
+        }
+        else {
+            choice = rand.nextInt(nbpassengers);
+        }
+        moteurDeJeu.TakeMeeples(this,ville,ville.getPassagers().get(choice).getCouleur());
     }
 
     // Méthodes générales
