@@ -192,8 +192,8 @@ public class MoteurDeJeu {
     public void poseTrain(Robot robot, Trajet trajet,GestionTrajets gestionTrajets) throws NotEnoughWagonCard { // prendre en compte le cas où on a assez de locomotives pour terminer un trajet
         Route route = trajet.getRoute();
         Couleur couleurRoute = determineRouteColor(robot, route);
-
-        if (route.isClaimable(robot.getWagonByCouleur().get(couleurRoute), new Wagon(couleurRoute))||rainbowCase(robot,trajet)) {
+        int nombreWagons = robot.getWagonByCouleur().getOrDefault(couleurRoute, 0);
+        if (route.isClaimable(nombreWagons, new Wagon(couleurRoute)) || rainbowCase(robot, trajet)) {
             updateRobotWagonData(robot, route, trajet, couleurRoute);
             processRouteClaim(robot, trajet, route, couleurRoute);
             gestionTrajets.updateTrajetsDisponibles(trajet);
