@@ -167,8 +167,8 @@ public class MoteurDeJeu {
         Collections.shuffle(piocheDestinationLongue.getCartesDestinationLongues());
     }
 
-    public static HashMap<Couleur,Integer> initWagonByCouleur(Robot robot){
-        HashMap<Couleur,Integer> carteWagonByCouleur=new HashMap<>();
+    public static Map<Couleur,Integer> initWagonByCouleur(Robot robot){
+        Map<Couleur,Integer> carteWagonByCouleur=new HashMap<>();
         for(Couleur couleur:Couleur.values()){
             if(!couleur.equals(Couleur.Default) && !couleur.equals(Couleur.Marron)) carteWagonByCouleur.put(couleur,0);
         }

@@ -4,18 +4,19 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PiocheSurTable<T extends Carte> extends Pioche<T> {
     // Instances
-    private ArrayList<T> cartesSurTable;
+    private List<T> cartesSurTable;
 
     // Constructeurs
     public PiocheSurTable() {
         this.cartesSurTable=new ArrayList<>();
     }
 
-    public PiocheSurTable(ArrayList<T> carteSurTable){
+    public PiocheSurTable(List<T> carteSurTable){
         this.cartesSurTable = carteSurTable;
     }
     public void initPiocheSurTable(MoteurDeJeu moteurDeJeu){
@@ -24,7 +25,7 @@ public class PiocheSurTable<T extends Carte> extends Pioche<T> {
 
     // Accesseurs
     /*@Override*/
-    public ArrayList<T> getMainDeCartes(){
+    public List<T> getMainDeCartes(){
         return cartesSurTable;
     }
     // Méthode

@@ -18,10 +18,10 @@ public class Robot implements Comparable<Robot> {
     private MainJoueur main;
     private boolean turnOver;
     private int piocheCount;
-    private HashMap<Couleur,Integer> wagonByCouleur;
+    private Map<Couleur,Integer> wagonByCouleur;
     private int nbWagons;
     private List<Trajet> trajets;
-    private HashMap<MCouleur,Integer> takenMeeples;
+    private Map<MCouleur,Integer> takenMeeples;
 
     //Constructeur
     public Robot(Couleur couleur) {
@@ -61,7 +61,7 @@ public class Robot implements Comparable<Robot> {
     public void setPiocheCount(int piocheCount) {
         this.piocheCount = piocheCount;
     }
-    public HashMap<Couleur,Integer> getWagonByCouleur() {
+    public Map<Couleur,Integer> getWagonByCouleur() {
         return wagonByCouleur;
     }
 

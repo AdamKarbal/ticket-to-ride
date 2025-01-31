@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class GestionTrajets {
     private GameMap gameMap;
-    private HashMap<Ville,HashMap<Ville,Integer>> trajetsDisponibles;
+    private Map<Ville,Map<Ville,Integer>> trajetsDisponibles;
     public GestionTrajets(GameMap map){
         this.gameMap = map;
         this.trajetsDisponibles = new HashMap<>(map.getMap());
@@ -34,8 +34,8 @@ public class GestionTrajets {
             }
         }
     }
-    private HashMap<Ville,HashMap<Ville,Integer>> buildSubgraph(List<Trajet> trajets){
-        HashMap<Ville,HashMap<Ville,Integer>> subgraph = new HashMap<>();
+    private Map<Ville,Map<Ville,Integer>> buildSubgraph(List<Trajet> trajets){
+        Map<Ville,Map<Ville,Integer>> subgraph = new HashMap<>();
         for (Trajet trajet : trajets) {
             Ville from=trajet.getFrom();
             Ville to=trajet.getTo();
@@ -47,7 +47,7 @@ public class GestionTrajets {
         return subgraph;
     }
 
-    private boolean isConnectedByGraph(Ville from,Ville to,HashMap<Ville,HashMap<Ville,Integer>> subgraph){
+    private boolean isConnectedByGraph(Ville from,Ville to,Map<Ville,Map<Ville,Integer>> subgraph){
         Set<Ville> visited = new HashSet<>();
         Queue<Ville> queue = new LinkedList<>();
         queue.add(from);
@@ -55,7 +55,7 @@ public class GestionTrajets {
             Ville current = queue.poll();
             visited.add(current);
 
-            HashMap<Ville, Integer> neighbors = subgraph.get(current);
+            Map<Ville, Integer> neighbors = subgraph.get(current);
             if(neighbors!=null){
                 for(Ville voisin : subgraph.get(current).keySet()){
                     if(voisin.equals(to)){
@@ -72,7 +72,7 @@ public class GestionTrajets {
     }
 
     // Algorithme de Dijkstra pour trouver le prochain segment optimal
-    private Trajet findNextStep(RobotRoute robotRoute, Ville start, Ville end, HashMap<Ville, HashMap<Ville, Integer>> graph) {
+    private Trajet findNextStep(RobotRoute robotRoute, Ville start, Ville end, Map<Ville, Map<Ville, Integer>> graph) {
         Map<Ville, Integer> distances = new HashMap<>();
         Map<Ville, Ville> previous = new HashMap<>();
         PriorityQueue<Ville> queue = new PriorityQueue<>(Comparator.comparingInt(distances::get));
@@ -177,7 +177,7 @@ public class GestionTrajets {
 
     // Méthodes principales
     public boolean isConnected(Ville From, Ville To, List<Trajet> trajets){
-        HashMap<Ville, HashMap<Ville, Integer>> subgraph = buildSubgraph(trajets);
+        Map<Ville, Map<Ville, Integer>> subgraph = buildSubgraph(trajets);
         return isConnectedByGraph(From,To,subgraph);
     }
 

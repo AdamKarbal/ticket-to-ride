@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public enum Ville {
     Berlin(5, true),
@@ -51,7 +52,7 @@ public enum Ville {
 
     private int NbMeeple;
     private final boolean isVille;
-    private ArrayList<Meeples> passagers;
+    private List<Meeples> passagers;
 
     Ville(int NbMeeple, boolean isVille) {
         this.NbMeeple = NbMeeple;
@@ -75,13 +76,13 @@ public enum Ville {
         return Arrays.asList(Ville.values()).contains(ville);
     }
 
-    public ArrayList<Meeples> getPassagers() {
+    public List<Meeples> getPassagers() {
         return this.passagers;
     }
 
     public String PDisplay() {
         String output = "";
-        ArrayList<Meeples> p = getPassagers();
+        List<Meeples> p = getPassagers();
         for(Meeples passager : p){
             output += passager.toString() + "\n";
         }

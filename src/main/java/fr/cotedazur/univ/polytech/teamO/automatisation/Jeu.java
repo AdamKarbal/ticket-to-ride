@@ -71,8 +71,8 @@ public class Jeu {
     }
 
     public  void endofGame() throws EmptyListException {
-        System.out.print("\n---------------------- Le jeu est finit ! ----------------------\n");
-        System.out.print("Voici la mise à jour par rapport au carte destination !\n");
+        System.out.print("\n---------------------- Le jeu est fini ! ----------------------\n");
+        System.out.print("Voici la mise à jour par rapport aux cartes destinations !\n");
         gestionEtatJeu.isDestinationsCardCompleted(robots);
         for(Robot robot:robots){
             gestionEtatJeu.updateScoreCarteDestination(robot);
