@@ -13,6 +13,7 @@ import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.Random;
 
 
 public class Jeu {
@@ -35,9 +36,10 @@ public class Jeu {
 
 
     public  void setup() throws NotEnoughWagonCard {
+        Random random = new Random();
         robotBleu=new RobotRoute(Couleur.Bleu);
-        robotRouge=new RobotAleatoire(Couleur.Rouge);
-        robotJaune=new RobotAleatoire(Couleur.Jaune);
+        robotRouge=new RobotAleatoire(Couleur.Rouge, random);
+        robotJaune=new RobotAleatoire(Couleur.Jaune, random);
         robots=new ArrayList<>();
         robots.add(robotBleu);
         robots.add(robotRouge);
