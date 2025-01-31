@@ -1,11 +1,13 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.gestion.Score;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -97,8 +99,8 @@ public class Robot implements Comparable<Robot> {
         getMain().addCarte(carte);
     }
 
-    public void poseTrain(Trajet trajet, MoteurDeJeu g) throws NotEnoughWagonCard { // Le moteurdejeu pose un des wagons sur le trajet voulue
-        g.poseTrain(this,trajet);
+    public void poseTrain(Trajet trajet, MoteurDeJeu g, GestionTrajets gestionTrajets) throws NotEnoughWagonCard { // Le moteurdejeu pose un des wagons sur le trajet voulue
+        g.poseTrain(this,trajet,gestionTrajets);
     }
 
     public HashMap<MCouleur,Integer> getTakenMeeples() {
@@ -127,6 +129,23 @@ public class Robot implements Comparable<Robot> {
 
     public int getTakenMeeplesByCouleur(MCouleur couleur){ // Renvoie le nombre de meeple d'une couleur du joueuer
         return takenMeeples.getOrDefault(couleur, 0);
+    }
+
+    public void takeMeeplesAleatory(Trajet trajet, Ville ville, MoteurDeJeu moteurDeJeu){
+        int nbpassengers;
+        int choice;
+        Random rand = new Random();
+        nbpassengers = ville.getPassagers().size(); // on regarde le nombre de meeples dans la ville from
+        if (nbpassengers == 0) { // s'il n'y a pas de meeples on quitte la méthode
+            return;
+        }
+        else if (nbpassengers==1) {
+            choice=0;
+        }
+        else {
+            choice = rand.nextInt(nbpassengers);
+        }
+        moteurDeJeu.TakeMeeples(this,trajet,ville,ville.getPassagers().get(choice).getCouleur());
     }
 
     // Méthodes générales
