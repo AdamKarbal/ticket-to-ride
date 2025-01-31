@@ -234,6 +234,42 @@ public class GameMap {
         return map.get(ville);
     }
 
+    public ArrayList<Trajet> getCorresp(Ville VilleDeDepart){
+        ArrayList<Trajet> corresp = new ArrayList<Trajet>();
+        for (Trajet trajet : trajets) {
+            if(trajet.getFrom() == VilleDeDepart){
+                corresp.add(trajet);
+            }
+        }
+        return corresp;
+    }
+
+    public Trajet bestNext(ArrayList<Trajet> corresp){
+        int maxMeeples = 0;
+        Trajet bestNext = null;
+        for(Trajet trajet : corresp){
+            if(trajet.getTo().getCurrentNbMeeples() >= maxMeeples){
+                maxMeeples = trajet.getTo().getCurrentNbMeeples();
+                bestNext = trajet;
+            }
+        }
+        return bestNext;
+    }
+
+    public HashMap<Ville,Integer> getVillesFrom(Ville ville) {
+        return map.get(ville);
+    }
+
+    public Ville getVilleMaxMeeples(){
+        int maxMeeples = 0;
+        Ville maxVille = null;
+        for(Ville ville : Ville.values()){
+            if(ville.getCurrentNbMeeples() > maxMeeples) maxMeeples = ville.getCurrentNbMeeples();
+            maxVille = ville;
+        }
+        return maxVille;
+    }
+
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -243,4 +279,32 @@ public class GameMap {
         }
         return builder.toString();
     }
+
+    //Initialisation
+    /*private void init() {
+        Random random = new Random();
+        for (Ville ville : Ville.values()) {
+            int nbMeeples = ville.getBaseNbMeeple();
+            Set<MCouleur> couleursUtilisées = new HashSet<>();
+
+            for (int i = 0; i < nbMeeples; i++) {
+                // Génére une couleur unique pour chaque meeple dans une ville
+                MCouleur couleur;
+                do {
+                    couleur = getRandomMeepleColor(MCouleur.class);
+                } while (couleursUtilisées.contains(couleur) || couleur.getQuant() == 0);
+
+                couleursUtilisées.add(couleur);
+
+                //Crée le meeple et l'ajoute à la ville
+                Meeples meeple = new Meeples(couleur);
+                couleur.DecremQT(); //Décrémente l'attribut nombre de pions meeple restants pour chaque couleur de meeple
+                ville.getPassagers().add(meeple);
+            }
+
+            map.put(ville, new HashMap<>());
+        }
+    }*/
+
 }
+
