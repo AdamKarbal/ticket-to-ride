@@ -28,9 +28,11 @@ public class GameMap {
     }
 
     //Initialisation
-    private void init() {
+    public void init() {
         //Initialisation
             Random random = new Random();
+            Ville.allClearPassengers();
+            MCouleur.reset();
             for (Ville ville : Ville.values()) {
                 int nbMeeples = ville.getBaseNbMeeple();
                 Set<MCouleur> couleursUtilisées = new HashSet<>();

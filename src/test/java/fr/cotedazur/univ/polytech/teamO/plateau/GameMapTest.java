@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +22,6 @@ public class GameMapTest {
     void testInit(){
         gameMap = new GameMap();
     }
-
-    /*@Test
-    void testVoisin(){
-        assertTrue(gestionEtatJeu.isVoisin(Ville.Berlin,Ville.Hamburg));
-    }*/
 
     @Test
     void villeDispos(){
@@ -49,7 +45,7 @@ public class GameMapTest {
 
     @Test
     void MeeplesTest(){
-        /*int Mcompteur = 0;
+        int Mcompteur = 0;
         for(Ville ville : Ville.values()){
             Mcompteur += ville.getNbMeeple();
         }
@@ -60,10 +56,15 @@ public class GameMapTest {
         assertEquals(4, Ville.Frankfurt.getNbMeeple());
         Ville.Frankfurt.PDisplay();
         assertEquals(3, Ville.Leipzig.getNbMeeple());
-        Ville.Leipzig.PDisplay();*/
+        Ville.Leipzig.PDisplay();
     }
 
-
-
+    @Test
+    void getCorrespTest(){
+        ArrayList<Trajet> corresp = new ArrayList<Trajet>(gameMap.getCorresp(Ville.Magdeburg));
+        assertTrue(corresp.contains(Ville.Hannover));
+        assertTrue(corresp.contains(Ville.Leipzig));
+        assertTrue(corresp.contains(Ville.Berlin));
+    }
 
 }

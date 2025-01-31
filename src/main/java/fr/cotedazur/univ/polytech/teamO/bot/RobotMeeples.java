@@ -21,7 +21,7 @@ public class RobotMeeples extends Robot {
         super(couleur);
     }
 
-    private Stack<MCouleur> StackTakenMeeples(){
+    public Stack<MCouleur> StackTakenMeeples(){
         int maxMeeples = 0;
         Stack<MCouleur> StackMeeplesColors = new Stack<MCouleur>();
         Map<MCouleur, Integer> takenMeeples = this.getTakenMeeples();
@@ -32,7 +32,7 @@ public class RobotMeeples extends Robot {
         return StackMeeplesColors;
     }
 
-    private MCouleur colorToPUp(Stack <MCouleur> stackTakenMeeples, Ville ville){
+    public MCouleur colorToPUp(Stack <MCouleur> stackTakenMeeples, Ville ville){
         while(!stackTakenMeeples.isEmpty()){
             if(ville.getPassagersColors().contains(stackTakenMeeples.peek())){
                 return stackTakenMeeples.pop();

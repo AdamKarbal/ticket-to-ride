@@ -22,5 +22,15 @@ public enum MCouleur {
         return Quantité;
     }
 
+    public void rstQT(){
+        Quantité = 10;
+    }
+
+    public static void reset(){
+         for(MCouleur color : MCouleur.values()){
+             color.rstQT();
+         }
+    }
+
 }
 

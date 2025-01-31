@@ -75,6 +75,10 @@ public enum Ville {
         return isVille;
     }
 
+    public int getNbMeeple(){
+        return NbMeeple;
+    }
+
     public static boolean isValid(Ville ville) {
         return Arrays.asList(Ville.values()).contains(ville);
     }
@@ -103,6 +107,16 @@ public enum Ville {
             output += passager.toString() + "\n";
         }
         return output;
+    }
+
+    public void clearPassagers() {
+        this.passagers.clear();
+    }
+
+    public static void allClearPassengers() {
+        for(Ville ville : Ville.values()) {
+            ville.clearPassagers();
+        }
     }
 
 }

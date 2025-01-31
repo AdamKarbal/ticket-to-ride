@@ -22,7 +22,6 @@ public class RobotRoute extends Robot{
     public void setVilleActuelle(Ville villeActuelle) {
         this.villeActuelle = villeActuelle;
     }
-
     public Ville getVilleActuelle() {
         return villeActuelle;
     }
