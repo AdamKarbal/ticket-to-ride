@@ -81,4 +81,9 @@ public class Affichage {
         System.out.print(disp2);
     }
 
+    public void afficheFirstCarteDestination(Robot first){
+        String disp = "Le " + first + " a complété le plus de cartes destination et gagne 15 points ! De plus il obtient le titre de Globetrotter \n";
+        System.out.print(disp);
+    }
+
 }

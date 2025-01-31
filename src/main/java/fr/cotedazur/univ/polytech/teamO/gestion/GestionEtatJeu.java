@@ -43,6 +43,7 @@ public class GestionEtatJeu {
     }
 
     public void whoHaveMostMeeples(List<Robot> robots) {
+        System.out.println("Concernant les meeples ... \n");
         Robot first = robots.get(0);
         Robot second = robots.get(1);
         int max = 0;
@@ -72,5 +73,36 @@ public class GestionEtatJeu {
             }
         }
     }
+
+    public void whoHaveMostDestinationCards(List<Robot> robots) {
+        List<Robot> winners = new ArrayList<>();
+        int max = 0;
+        for (Robot robot : robots) {
+            int nbclaim = 0;
+            for (int i = 0; i < robot.getDestinations().getMainDeCartes().size(); i++) {
+                if (robot.getDestinations().getMainDeCartes().get(i).isCompleted()) {
+                    nbclaim++;
+                }
+            }
+            if (nbclaim > max) {
+                max = nbclaim;
+                winners.clear();
+                winners.add(robot);
+            } else if (nbclaim == max) {
+                winners.add(robot);
+            }
+        }
+        System.out.println("Le titre de GlobeTrotter est pour.... \n");
+        for (Robot winner : winners) {
+            winner.getScore().addNbPoints(15);
+            affichage.afficheFirstCarteDestination(winner);
+        }
+    }
+
+    public void endOfGameUpdate(List<Robot> robots){
+        whoHaveMostDestinationCards(robots);
+        whoHaveMostMeeples(robots);
+    }
+
 
 }
