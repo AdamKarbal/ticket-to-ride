@@ -207,12 +207,10 @@ public class MoteurDeJeu {
         return false;
     }
 
-    public void TakeMeeples(Robot robot, Trajet trajet, Ville villeChoisie, MCouleur meepleChoisi){
-        if(villeChoisie == trajet.getFrom() || villeChoisie == trajet.getTo()){
-            robot.addMeeple(meepleChoisi);
-            villeChoisie.getPassagers().remove(meepleChoisi);
-            affichage.afficheTakeMeeples(robot,1,meepleChoisi);
-        }
+    public void TakeMeeples(Robot robot, Ville ville, MCouleur meepleChoisi){
+        Meeples meepleToPick = new Meeples(meepleChoisi);
+        ville.removePassenger(meepleToPick);
+        robot.addMeeple(meepleChoisi);
     }
 
     public void poseTrainPUp(Robot robot, Trajet trajet, boolean From, boolean To, MCouleur meepleChoisiFrom, MCouleur meepleChoisiTo) throws NotEnoughWagonCard {
