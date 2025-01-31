@@ -101,10 +101,10 @@ public class RobotAleatoire extends Robot {
             poseTrain(trajetRandom, moteurDeJeu,gestionTrajets);
             choice = rand.nextInt(2)+1;
             if(choice==1) { // on choisit un meeples dans la ville from
-                takeMeeplesAleatory(trajetRandom,trajetRandom.getFrom(),moteurDeJeu);
+                takeMeeplesAleatory(trajetRandom.getFrom(),moteurDeJeu);
             }
             if(choice==2){
-               takeMeeplesAleatory(trajetRandom,trajetRandom.getTo(),moteurDeJeu);
+               takeMeeplesAleatory(trajetRandom.getTo(),moteurDeJeu);
             }
         } catch (NotEnoughWagonCard e) {
             chooseactionnotenought(moteurDeJeu);

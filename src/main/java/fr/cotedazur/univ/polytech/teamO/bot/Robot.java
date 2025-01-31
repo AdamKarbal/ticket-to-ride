@@ -131,7 +131,7 @@ public class Robot implements Comparable<Robot> {
         return takenMeeples.getOrDefault(couleur, 0);
     }
 
-    public void takeMeeplesAleatory(Trajet trajet, Ville ville, MoteurDeJeu moteurDeJeu){
+    public void takeMeeplesAleatory(Ville ville, MoteurDeJeu moteurDeJeu){
         int nbpassengers;
         int choice;
         Random rand = new Random();
@@ -145,7 +145,7 @@ public class Robot implements Comparable<Robot> {
         else {
             choice = rand.nextInt(nbpassengers);
         }
-        moteurDeJeu.TakeMeeples(this,trajet,ville,ville.getPassagers().get(choice).getCouleur());
+        moteurDeJeu.TakeMeeples(this,ville,ville.getPassagers().get(choice).getCouleur());
     }
 
     // Méthodes générales
