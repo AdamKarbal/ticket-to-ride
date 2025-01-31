@@ -14,13 +14,13 @@ public enum MCouleur {
         this.Quantité = Quantité;
     }
 
-    /*public void DecremQT(){
+    public void DecremQT(){
         this.Quantité -= 1;
     }
 
     public int getQuant(){
         return Quantité;
-    }*/
+    }
 
 }
 

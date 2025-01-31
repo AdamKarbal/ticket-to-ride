@@ -105,7 +105,7 @@ public class RobotAleatoire extends Robot {
                 else {
                     choice = rand.nextInt(nbpassengers);
                 }
-                moteurDeJeu.TakeMeeples(this,trajetRandom,trajetRandom.getFrom(),trajetRandom.getFrom().getPassagers().get(choice).getCouleur());
+                moteurDeJeu.takeMeeples(this,trajetRandom.getFrom(),trajetRandom.getFrom().getPassagers().get(choice).getCouleur());
             }
             if(choice==2){
                 nbpassengers = trajetRandom.getTo().getPassagers().size();
@@ -118,7 +118,7 @@ public class RobotAleatoire extends Robot {
                 else {
                     choice = rand.nextInt(nbpassengers);
                 }
-                moteurDeJeu.TakeMeeples(this,trajetRandom,trajetRandom.getTo(),trajetRandom.getTo().getPassagers().get(choice).getCouleur());
+                moteurDeJeu.takeMeeples(this,trajetRandom.getTo(),trajetRandom.getTo().getPassagers().get(choice).getCouleur());
             }
         } catch (NotEnoughWagonCard e) {
             chooseactionnotenought(moteurDeJeu);
