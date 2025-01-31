@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.bot;
 
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
@@ -35,6 +36,7 @@ class RobotAleatoireTest {
     PiocheDestinationCourte piocheDestinationCourte;
     Trajet trajet;
     GameMap map;
+    GestionTrajets gestionTrajets;
     @Mock Random random = mock(Random.class);
 
     @BeforeEach
@@ -54,6 +56,7 @@ class RobotAleatoireTest {
         routeBleue= new Route(1,Couleur.Bleu);
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);
         map = new GameMap();
+        gestionTrajets= new GestionTrajets(map);
     }
 
     /*@Test
@@ -69,7 +72,7 @@ class RobotAleatoireTest {
     void testChooseActionPosePioche() throws NotEnoughWagonCard, EmptyStackException {
         RobotAleatoire robotSpy = spy(robot);
         when(random.nextInt(100)).thenReturn(10); // 10 → doit piocher
-        robotSpy.chooseaction(moteurDeJeu, map);
+        robotSpy.chooseaction(moteurDeJeu, map,gestionTrajets);
         verify(robotSpy, times(2)).piocher(moteurDeJeu);
     }
 
@@ -81,8 +84,8 @@ class RobotAleatoireTest {
             robotSpy.piocher(moteurDeJeu);
         }
         when(random.nextInt(100)).thenReturn(40);
-        robotSpy.chooseaction(moteurDeJeu,map);
-        verify(robotSpy, times(1)).poseTrainAleatoire(moteurDeJeu,map);
+        robotSpy.chooseaction(moteurDeJeu,map,gestionTrajets);
+        verify(robotSpy, times(1)).poseTrainAleatoire(moteurDeJeu,map,gestionTrajets);
     }
 
     @Test
