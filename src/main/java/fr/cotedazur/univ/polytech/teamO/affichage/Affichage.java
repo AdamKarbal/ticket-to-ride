@@ -1,89 +1,70 @@
 package fr.cotedazur.univ.polytech.teamO.affichage;
-
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.Carte;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+import java.util.logging.Logger;
 
 public class Affichage {
 
-    //Constructeur
+    private static final Logger logger = Logger.getLogger(Affichage.class.getName());
 
-    public Affichage(){
+    public Affichage() {
     }
 
-    // Ici chaque méthode renvoie dans la console l'état actuel du jeu par rapport à l'action, les méthodes suivantes sont retrouvé dans
-    // MoteurDeJeu, GestionEtatJeu ou Jeu.
-
-    public void affichePiocher(Robot robot, Carte carte){
-            String disp = "Le " + robot + " a pioché la " + carte + " dans la pioche invisible.\n";
-            System.out.print(disp);
+    public void affichePiocher(Robot robot, Carte carte) {
+        logger.info("Le " + robot + " a pioché la " + carte + " dans la pioche invisible.");
     }
 
-    public void affichePiocherSurTable(Robot robot, Carte carte){
-        String disp = "Le " + robot + " a pioché la " + carte + " dans la pioche visible.\n";
-        System.out.print(disp);
+    public void affichePiocherSurTable(Robot robot, Carte carte) {
+        logger.info("Le " + robot + " a pioché la " + carte + " dans la pioche visible.");
     }
 
-    public void affichePoseTrain(Robot robot, Trajet trajet){
-        String disp = "Le " + robot + " a posé un train de "+ trajet.getRoute().getNbCases() +" wagons entre " + trajet.getFrom() +" et " + trajet.getTo() + ".\n";
-        System.out.print(disp);
+    public void affichePoseTrain(Robot robot, Trajet trajet) {
+        logger.info("Le " + robot + " a posé un train de " + trajet.getRoute().getNbCases() + " wagons entre " + trajet.getFrom() + " et " + trajet.getTo() + ".");
     }
 
-    public void afficheIsFinished(Robot robot){
-        String disp = "Il reste deux wagons ou moins à " + robot + ". Le jeu est donc arrivé à son terme. \n";
-        System.out.println(disp);
+    public void afficheIsFinished(Robot robot) {
+        logger.info("Il reste deux wagons ou moins à " + robot + ". Le jeu est donc arrivé à son terme.");
     }
 
-    public void afficheCheckCarteDestinationOK(Robot robot, CarteDestination carteDestination){
-        String disp = "Le " + robot + " a réussi la " + carteDestination + " et ajoute " + carteDestination.getValue() +" à son score.\n";
-        System.out.print(disp);
+    public void afficheCheckCarteDestinationOK(Robot robot, CarteDestination carteDestination) {
+        logger.info("Le " + robot + " a réussi la " + carteDestination + " et ajoute " + carteDestination.getValue() + " à son score.");
     }
 
-    public void afficheCheckCarteDestinationPASOK(Robot robot, CarteDestination carteDestination){
-        String disp = "Le " + robot + " n'as pas réussie la carte destination : " + carteDestination + " et perd " + carteDestination.getValue() +" au score. \n";
-        System.out.print(disp);
+    public void afficheCheckCarteDestinationPASOK(Robot robot, CarteDestination carteDestination) {
+        logger.info("Le " + robot + " n'a pas réussi la carte destination : " + carteDestination + " et perd " + carteDestination.getValue() + " au score.");
     }
 
-    public void afficheCarteDestinationPiocher(Robot robot, CarteDestination carteDestination){
-        String disp = "Le " + robot + " à piocher la carte destination : " + carteDestination +". \n";
-        System.out.print(disp);
+    public void afficheCarteDestinationPiocher(Robot robot, CarteDestination carteDestination) {
+        logger.info("Le " + robot + " a pioché la carte destination : " + carteDestination + ".");
     }
 
-    public void afficheCarteDestinationRefuser(Robot robot, CarteDestination carteDestination){
-        String disp = "Le " + robot + " à refuser la carte destination : " + carteDestination + ". \n";
-        System.out.print(disp);
+    public void afficheCarteDestinationRefuser(Robot robot, CarteDestination carteDestination) {
+        logger.info("Le " + robot + " a refusé la carte destination : " + carteDestination + ".");
     }
 
-    public void afficheTakeMeeples(Robot robot, int nbMeeples, MCouleur couleur){
-        String disp = "Le " + robot + " prends " + nbMeeples + " passagers de couleur "+ couleur + ".\n";
-        System.out.print(disp);
-
+    public void afficheTakeMeeples(Robot robot, int nbMeeples, MCouleur couleur) {
+        logger.info("Le " + robot + " prend " + nbMeeples + " passagers de couleur " + couleur + ".");
     }
 
-    public void afficheLastScore(Ranking classement){
-        System.out.println(classement);
+    public void afficheLastScore(Ranking classement) {
+        logger.info(classement.toString());
     }
 
-    public void affichePointMeeples(MCouleur couleur, Robot first, Robot second){
-        String disp1 = "Le " + first + " a ramasser le plus de passagers de couleur " + couleur + " et gagne 20 points ! \n";
-        String disp2 =  "Le " + second + " a ramasser le plus de passagers de couleur " + couleur + " et gagne 10 points ! \n";
-        System.out.print(disp1);
-        System.out.print(disp2);
+    public void affichePointMeeples(MCouleur couleur, Robot first, Robot second) {
+        logger.info("Le " + first + " a ramassé le plus de passagers de couleur " + couleur + " et gagne 20 points !");
+        logger.info("Le " + second + " a ramassé le plus de passagers de couleur " + couleur + " et gagne 10 points !");
     }
 
-    public void affichePointMeeplespasSecond(MCouleur couleur,Robot first){
-        String disp1 = "Le " + first + " a ramasser le plus de passagers de couleur " + couleur + " et gagne 20 points ! \n";
-        String disp2 = "Il n'y a pas de robot en deuxieme position pour les passagers de couleur " + couleur + "\n";
-        System.out.print(disp1);
-        System.out.print(disp2);
+    public void affichePointMeeplespasSecond(MCouleur couleur, Robot first) {
+        logger.info("Le " + first + " a ramassé le plus de passagers de couleur " + couleur + " et gagne 20 points !");
+        logger.info("Il n'y a pas de robot en deuxième position pour les passagers de couleur " + couleur + ".");
     }
 
-    public void afficheFirstCarteDestination(Robot first){
-        String disp = "Le " + first + " a complété le plus de cartes destination et gagne 15 points ! De plus il obtient le titre de Globetrotter \n";
-        System.out.print(disp);
+    public void afficheFirstCarteDestination(Robot first) {
+        logger.info("Le " + first + " a complété le plus de cartes destination et gagne 15 points ! De plus, il obtient le titre de Globetrotter.");
     }
-
 }
