@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.classement;
 
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -24,6 +25,18 @@ public class Ranking {
     public Robot first(){
         return classement.first();
     }
+
+    public int position(Robot robot){
+        int i=1;
+        for(Robot robotind : classement){
+            if(robot.equals(robotind)){
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+
     /*public TreeSet<Robot> getClassement(){
         return classement;
     }*/

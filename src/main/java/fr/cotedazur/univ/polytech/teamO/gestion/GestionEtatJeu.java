@@ -78,12 +78,7 @@ public class GestionEtatJeu {
         List<Robot> winners = new ArrayList<>();
         int max = 0;
         for (Robot robot : robots) {
-            int nbclaim = 0;
-            for (int i = 0; i < robot.getDestinations().getMainDeCartes().size(); i++) {
-                if (robot.getDestinations().getMainDeCartes().get(i).isCompleted()) {
-                    nbclaim++;
-                }
-            }
+            int nbclaim = nombreCarteDestination(robot);
             if (nbclaim > max) {
                 max = nbclaim;
                 winners.clear();
@@ -98,6 +93,17 @@ public class GestionEtatJeu {
             affichage.afficheFirstCarteDestination(winner);
         }
     }
+
+    public int nombreCarteDestination(Robot robot) {
+        int nbclaim = 0;
+        for (int i = 0; i < robot.getDestinations().getMainDeCartes().size(); i++) {
+            if (robot.getDestinations().getMainDeCartes().get(i).isCompleted()) {
+                nbclaim++;
+            }
+        }
+        return nbclaim;
+    }
+
 
     public void endOfGameUpdate(List<Robot> robots){
         whoHaveMostDestinationCards(robots);

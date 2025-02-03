@@ -47,11 +47,6 @@
     <dependencyManagement> <!-- helps maven to resolve conflicting transitive dependencies -->
         <dependencies>
             <dependency>
-                   <groupId>com.opencsv</groupId>
-                   <artifactId>opencsv</artifactId>
-                      <version>5.10</version>
-            </dependency>     
-            <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
                 <version>${junit.bom.version}</version>
@@ -84,6 +79,12 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.10</version>
         </dependency>
     </dependencies>
 
