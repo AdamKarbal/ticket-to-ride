@@ -1,0 +1,44 @@
+package fr.cotedazur.univ.polytech.teamO.plateau;
+
+public class Trajet {
+    private final Route route;
+    private Ville from;
+    private Ville to;
+
+
+    public Trajet(Ville from, Ville to, Route route) {
+        this.from = from;
+        this.to = to;
+        this.route = route;
+    }
+
+    public Ville getFrom() {
+        return from;
+    }
+
+    public Ville getTo() {
+        return to;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public boolean isDone() {
+        return !route.isAvailable();
+    }
+
+    @Override
+    public String toString() {
+        return "Trajet : " + "De " + getFrom() + " à " + getTo() + " de " + route.getNbCases() +" cases et de couleur " + route.getCouleur() + "." ;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this==obj) return true;
+        if (obj==null || !(obj instanceof Trajet)) return false;
+        Trajet other = (Trajet) obj;
+        return from.equals(other.from) && to.equals(other.to) || from.equals(other.to) && to.equals(other.from);
+    }
+
+
+}
