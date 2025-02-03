@@ -221,7 +221,7 @@ public class MoteurDeJeu {
     public boolean rainbowCase(Robot robot, Trajet trajet) {
         Route route = trajet.getRoute();
         Couleur couleurRoute = determineRouteColor(robot, route);
-        int nbCouleurWagon = robot.getWagonByCouleur().get(couleurRoute);
+        int nbCouleurWagon = robot.getWagonByCouleur().getOrDefault(couleurRoute,0);
         int nbRainbowCard = robot.getWagonByCouleur().get(Couleur.Rainbow);
         if (nbRainbowCard == 0) return false;
         else return route.isClaimable(nbRainbowCard + nbCouleurWagon, new Wagon(couleurRoute));
