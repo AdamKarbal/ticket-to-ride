@@ -1,17 +1,29 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
+import fr.cotedazur.univ.polytech.teamO.LogFormatter;
 import fr.cotedazur.univ.polytech.teamO.affichage.Affichage;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
 
 import java.util.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Logger;
 
 public class GestionEtatJeu {
+
     private static final Logger logger = Logger.getLogger(GestionEtatJeu.class.getName());
     private GestionTrajets gestionTrajets;
     private Affichage affichage;
+
+    static{
+        logger.setUseParentHandlers(false);
+        ConsoleHandler handler = new ConsoleHandler();
+        Formatter formatter = new LogFormatter();
+        handler.setFormatter(formatter);
+        logger.addHandler(handler);
+    }
 
     public GestionEtatJeu(GestionTrajets gestionTrajets) {
         this.gestionTrajets = gestionTrajets;

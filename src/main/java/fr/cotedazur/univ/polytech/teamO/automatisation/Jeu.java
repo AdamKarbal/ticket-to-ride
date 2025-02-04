@@ -10,11 +10,15 @@ import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
+import fr.cotedazur.univ.polytech.teamO.LogFormatter;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Random;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Logger;
+
 
 public class Jeu {
     private static final Logger logger = Logger.getLogger(Jeu.class.getName());
@@ -31,9 +35,14 @@ public class Jeu {
     GameMap map;
     GestionEtatJeu gestionEtatJeu;
     GestionTrajets gestionTrajets;
+    Robot winner;
 
-    public String hello() {
-        return "Hello World!";
+    static{
+        logger.setUseParentHandlers(false);
+        ConsoleHandler handler = new ConsoleHandler();
+        Formatter formatter = new LogFormatter();
+        handler.setFormatter(formatter);
+        logger.addHandler(handler);
     }
 
     public void setup() throws NotEnoughWagonCard {
@@ -74,6 +83,7 @@ public class Jeu {
         }
         gestionEtatJeu.endOfGameUpdate(robots);
         ranking = new Ranking(robots);
+        winner = ranking.first();
         logger.info(ranking.toString());
     }
 
@@ -96,5 +106,17 @@ public class Jeu {
             logger.info("\n");
         }
         endofGame();
+    }
+
+    public Robot getRobotAleatoire(){
+        return robotJaune;
+    }
+
+    public Robot getRobotRoute(){
+        return robotBleu;
+    }
+
+    public Robot getWinner(){
+        return winner;
     }
 }

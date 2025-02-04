@@ -1,15 +1,27 @@
 package fr.cotedazur.univ.polytech.teamO.affichage;
+import fr.cotedazur.univ.polytech.teamO.LogFormatter;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.Carte;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Logger;
 
 public class Affichage {
 
     private static final Logger logger = Logger.getLogger(Affichage.class.getName());
+
+    static{
+        logger.setUseParentHandlers(false);
+        ConsoleHandler handler = new ConsoleHandler();
+        Formatter formatter = new LogFormatter();
+        handler.setFormatter(formatter);
+        logger.addHandler(handler);
+    }
 
     public Affichage() {
     }
