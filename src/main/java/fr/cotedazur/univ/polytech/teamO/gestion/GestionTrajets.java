@@ -132,6 +132,65 @@ public class GestionTrajets {
         return new Trajet(start, nextStep, new Route(graph.get(start).get(nextStep), couleur));
     }
 
+    private List<Trajet> findOptimalSteps(RobotRoute robotRoute, Ville start, Ville end, Map<Ville, Map<Ville, Integer>> graph) {
+        Map<Ville, Integer> distances = new HashMap<>();
+        Map<Ville, Ville> previous = new HashMap<>();
+        PriorityQueue<Ville> queue = new PriorityQueue<>(Comparator.comparingInt(distances::get));
+
+        // Initialisation des distances et de la file de priorité
+        for (Ville ville : graph.keySet()) {
+            distances.put(ville, Integer.MAX_VALUE);
+            previous.put(ville, null);
+        }
+        distances.put(start, 0);
+        queue.add(start);
+
+        // Algorithme de Dijkstra pour trouver le chemin le plus court
+        while (!queue.isEmpty()) {
+            Ville current = queue.poll();
+            if (current.equals(end)) break;
+
+            Map<Ville, Integer> neighbors = graph.get(current);
+            if (neighbors != null) {
+                for (Map.Entry<Ville, Integer> entry : neighbors.entrySet()) {
+                    Ville neighbor = entry.getKey();
+
+                    // Ignorer les pays comme étapes intermédiaires
+                    if (!neighbor.getIsVille() && !neighbor.equals(end)) {
+                        continue;
+                    }
+
+                    int weight = entry.getValue();
+                    int newDist = distances.get(current) + weight;
+
+                    if (newDist < distances.get(neighbor)) {
+                        distances.put(neighbor, newDist);
+                        previous.put(neighbor, current);
+                        queue.add(neighbor);
+                    }
+                }
+            }
+        }
+
+        // Reconstruction du chemin optimal
+        List<Trajet> trajets = new ArrayList<>();
+        Ville currentStep = end;
+        while (previous.get(currentStep) != null) {
+            Ville nextStep = previous.get(currentStep);
+
+            // Ignorer les pays comme étapes intermédiaires
+            if (!currentStep.getIsVille()) {
+                return new ArrayList<>(); // Retourner une liste vide si un pays est rencontré
+            }
+
+            Couleur couleur = findMatchingCouleur(robotRoute, nextStep, currentStep);
+            trajets.add(0, new Trajet(nextStep, currentStep, new Route(graph.get(nextStep).get(currentStep), couleur)));
+            currentStep = nextStep;
+        }
+
+        return trajets;
+    }
+
 
     private Couleur findMatchingCouleur(RobotRoute robotRoute, Ville from, Ville to) {
         // Crée un trajet fictif pour la recherche
@@ -190,6 +249,22 @@ public class GestionTrajets {
             return trajetOpti;
         }
         else throw new NoAvailableTrip("Il n'y a pas de trajet disponible entre ces deux villes");
+    }
+    public List<Trajet> findOptimalTrajets(RobotRoute robotRoute,CarteDestination carteDestination) throws NoAvailableTrip {
+        List<Trajet> trajetsOpti = findOptimalSteps(robotRoute, carteDestination.getVille1(),carteDestination.getVille2(),trajetsDisponibles);
+        if(trajetsOpti != null) {
+            return trajetsOpti;
+        }
+        else throw new NoAvailableTrip("Il n'y a pas de trajets disponibles pour réaliser cette carte Destination");
+
+    }
+
+    public int getNbChemin(RobotRoute robotRoute,CarteDestination carteDestination) throws NoAvailableTrip {
+        List<Trajet> trajetsOpti=findOptimalTrajets(robotRoute,carteDestination);
+        if(trajetsOpti != null) {
+            return trajetsOpti.size();
+        }
+        else return 0;
     }
 
 

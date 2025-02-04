@@ -20,6 +20,7 @@ public class Jeu {
      RobotRoute robotBleu;
      //RobotMeeples robotRouge;
      RobotAleatoire robotJaune;
+     RobotNewStrategy robotRouge;
      ArrayList<Robot> robots;
      Ranking ranking;
      MoteurDeJeu moteurDeJeu;
@@ -38,12 +39,14 @@ public class Jeu {
     public  void setup() throws NotEnoughWagonCard {
         Random random = new Random();
         robotBleu=new RobotRoute(Couleur.Bleu);
+        robotRouge=new RobotNewStrategy(Couleur.Rouge);
         //robotRouge=new RobotMeeples(Couleur.Rouge);
         robotJaune=new RobotAleatoire(Couleur.Jaune, random);
         robots=new ArrayList<>();
         robots.add(robotBleu);
         //robots.add(robotRouge);
         robots.add(robotJaune);
+        robots.add(robotRouge);
 
         pioche = new Pioche();
         pioche.creerPiocheComplete();
@@ -60,12 +63,12 @@ public class Jeu {
 
         for(int i=0;i<4;i++){
             robotBleu.piocher(moteurDeJeu);
-            //robotRouge.piocher(moteurDeJeu);
+            robotRouge.piocher(moteurDeJeu);
             robotJaune.piocher(moteurDeJeu);
         }
         robotJaune.init(moteurDeJeu);
         robotBleu.init(moteurDeJeu);
-        //robotRouge.init(moteurDeJeu);
+        robotRouge.init(moteurDeJeu);
 
         System.out.println("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
@@ -88,12 +91,12 @@ public class Jeu {
         robots=new ArrayList<>();
         robots.add(robotJaune);
         robots.add(robotBleu);
-        //robots.add(robotRouge);
+        robots.add(robotRouge);
         while (!(moteurDeJeu.isFinished(robots))){
             System.out.println("---------------------- Début du tour numéro : " + tour++ + "---------------------- \n");
             try{
                 robotBleu.choixAction(gestionTrajets,moteurDeJeu);
-                //robotRouge.choixAction(moteurDeJeu,map,gestionTrajets);
+                robotRouge.choixAction(gestionTrajets,moteurDeJeu);
                 robotJaune.chooseaction(moteurDeJeu,map,gestionTrajets);}
             catch(EmptyStackException e){
                 break;

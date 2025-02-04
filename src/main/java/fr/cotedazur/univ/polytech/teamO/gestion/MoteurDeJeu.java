@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.gestion;
 
 import fr.cotedazur.univ.polytech.teamO.affichage.Affichage;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
+import fr.cotedazur.univ.polytech.teamO.bot.RobotRoute;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.meeples.Meeples;
@@ -232,6 +233,16 @@ public class MoteurDeJeu {
         poseTrain(robot,trajet,gestionTrajets);
         if(From) takeMeeples(robot, trajet.getFrom(), meepleChoisiFrom);
         if(To) takeMeeples(robot, trajet.getTo(), meepleChoisiTo);
+    }
+
+    public void sortDestinationsCardByPathNb(RobotRoute robotRoute,Map<CarteDestination,Integer> nbCheminsParCarte){
+        List<CarteDestination> mainJoueur=robotRoute.getDestinations().getMainDeCartes();
+        List<Map.Entry<CarteDestination, Integer>> destinationsSorted = new ArrayList<>(nbCheminsParCarte.entrySet());
+        destinationsSorted.sort(Map.Entry.comparingByValue());
+        mainJoueur.clear();
+        for(Map.Entry<CarteDestination,Integer> entry: destinationsSorted){
+            mainJoueur.add(entry.getKey());
+        }
     }
 
 }

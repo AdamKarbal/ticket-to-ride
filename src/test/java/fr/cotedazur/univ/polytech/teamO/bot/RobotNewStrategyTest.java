@@ -1,0 +1,67 @@
+package fr.cotedazur.univ.polytech.teamO.bot;
+
+import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
+import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
+import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
+import fr.cotedazur.univ.polytech.teamO.pioche.*;
+import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class RobotNewStrategyTest {
+    Pioche pioche;
+    PiocheSurTable piocheSurTable;
+    RobotNewStrategy robotNewStrategy;
+    MoteurDeJeu moteurDeJeu;
+    GestionTrajets gestionTrajets;
+    GameMap gameMap;
+
+    @BeforeEach
+    void setUp() {
+        piocheSurTable = new PiocheSurTable();
+        pioche = new Pioche();
+        pioche.creerPiocheComplete();
+        gameMap = new GameMap();
+        robotNewStrategy=new RobotNewStrategy(Couleur.Bleu);
+        moteurDeJeu=new MoteurDeJeu(pioche,piocheSurTable,new PiocheDestinationLongue(),new PiocheDestinationCourte());
+        piocheSurTable.initPiocheSurTable(moteurDeJeu);
+        gestionTrajets=new GestionTrajets(gameMap);
+
+    }
+
+    @Test
+    void testPiocherCarteDestination(){
+        robotNewStrategy.chooseDestinations(moteurDeJeu);
+        System.out.println(robotNewStrategy.getDestinations().getMainDeCartes());
+        assertEquals(2,robotNewStrategy.getDestinations().getMainDeCartes().size());
+        robotNewStrategy.getDestinations().getMainDeCartes().clear();
+        assertEquals(0,robotNewStrategy.getDestinations().getMainDeCartes().size());
+        robotNewStrategy.getDestinations().getMainDeCartes().addAll(List.of(new CarteDestination(Couleur.Bleu, Ville.Niederlande,Ville.Berlin,10),new CarteDestination(Couleur.Marron, Ville.Berlin,Ville.Bremerhaven,12),new CarteDestination(Couleur.Bleu, Ville.Leipzig,Ville.Hannover,8),new CarteDestination(Couleur.Marron, Ville.Augsburg,Ville.Dortmund,16)));
+        assertEquals(4,robotNewStrategy.getDestinations().getMainDeCartes().size());
+        assertTrue(robotNewStrategy.isVillesCommunes());
+        robotNewStrategy.refuseDestinations(moteurDeJeu);
+        assertEquals(2,robotNewStrategy.getDestinations().getMainDeCartes().size());
+        System.out.println(robotNewStrategy.getDestinations().getMainDeCartes());
+    }
+
+    @Test
+    void testChooseDestination() {
+        // Vérifie que le robot peut choisir une destination
+        robotNewStrategy.chooseDestination(new CarteDestination(Couleur.Bleu,Ville.Leipzig,Ville.Berlin,11));
+        assertTrue(robotNewStrategy.getDestinations().getMainDeCartes().contains(new CarteDestination(Couleur.Bleu,Ville.Leipzig,Ville.Berlin,11)));
+    }
+
+    @Test
+    void testIsVillesCommunes() {
+        robotNewStrategy.chooseDestination(new CarteDestination(Couleur.Bleu,Ville.Berlin,Ville.Hamburg,10));
+        robotNewStrategy.chooseDestination(new CarteDestination(Couleur.Bleu,Ville.Leipzig,Ville.Berlin,11));
+
+        // Vérifie que le robot détecte une ville commune (villeB)
+        assertTrue(robotNewStrategy.isVillesCommunes());
+    }
+
+}

@@ -14,8 +14,8 @@ import java.util.Random;
 
 public class RobotRoute extends Robot{
     // Ce robot va en priorité au plus vite terminer ses cartes de destination dans l'ordre où elles sont présentes dans sa main
-    private Ville villeActuelle;
-    private CarteDestination currentDestination;
+    Ville villeActuelle;
+    CarteDestination currentDestination;
     public RobotRoute(Couleur couleur) {
         super(couleur);
     }
@@ -39,8 +39,8 @@ public class RobotRoute extends Robot{
 
     @Override
     public void refuseDestinations(MoteurDeJeu moteurDeJeu) {
-        int maxvalue = getDestinations().getMainDeCartes().get(0).getValue();
-        CarteDestination temp = getDestinations().getMainDeCartes().get(0);
+        int maxvalue = getDestinations().getMainDeCartes().getFirst().getValue();
+        CarteDestination temp = getDestinations().getMainDeCartes().getFirst();
         for(int i =0 ; i<4 ; i++){
             if(getDestinations().getMainDeCartes().get(i).getValue()>maxvalue){
                 maxvalue = getDestinations().getMainDeCartes().get(i).getValue();
@@ -61,17 +61,17 @@ public class RobotRoute extends Robot{
     @Override
     public void chooseDestination(CarteDestination destination) {
         super.chooseDestination(destination);
-        currentDestination = getDestinations().getMainDeCartes().get(0);
+        currentDestination = getDestinations().getMainDeCartes().getFirst();
         this.villeActuelle=currentDestination.getVille1();
     }
 
-    private void updateCarteDestination(MoteurDeJeu moteurDeJeu) {
+    protected void updateCarteDestination(MoteurDeJeu moteurDeJeu) {
         int currentIndex = getDestinations().getMainDeCartes().indexOf(currentDestination);
         if (currentIndex + 1 < getDestinations().getMainDeCartes().size()) { // Ensure there is a next card
             currentDestination = getDestinations().getMainDeCartes().get(currentIndex + 1);
             this.villeActuelle = currentDestination.getVille1();
         } else {
-            moteurDeJeu.giveDestinationsCard(this, 2); // No more cards, draw new destination cards
+            if(!moteurDeJeu.getPiocheDestinationLongue().getCartesDestinationLongues().empty())moteurDeJeu.giveDestinationsCard(this, 2); // No more cards, draw new destination cards
         }
     }
 
@@ -102,7 +102,7 @@ public class RobotRoute extends Robot{
         }
     }
 
-    private void handleNotEnoughWagonCard(GestionTrajets gestionTrajets, MoteurDeJeu moteurDeJeu) {
+    protected void handleNotEnoughWagonCard(GestionTrajets gestionTrajets, MoteurDeJeu moteurDeJeu) {
         try {
             Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this, villeActuelle, currentDestination.getVille2());
             Couleur couleurTrajet = trajetOpti.getRoute().getCouleur();

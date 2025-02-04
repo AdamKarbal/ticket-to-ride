@@ -52,7 +52,13 @@ class RobotRouteTest {
         assertTrue(robotRoute.getTrajet().size()==2);
         assertTrue(robotRoute.getTrajet().get(0).isDone());
     }
+    @Test
+    void test(){
+        robotRoute.chooseDestination(berlinKiel);
 
+        robotRoute.choixAction(gestionTrajets,moteurDeJeu);
+        assertEquals(2,robotRoute.getMain().getMainDeCartes().size());
+    }
     @Test
     void shortestTrip() throws NotEnoughWagonCard {
         for(int i=0;i<taille;i++) robotRoute.piocher(moteurDeJeu);

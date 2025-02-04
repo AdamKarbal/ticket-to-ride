@@ -4,11 +4,9 @@ import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
-import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
-import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
 
 import java.util.Random;
@@ -107,7 +105,6 @@ public class RobotAleatoire extends Robot {
             chooseactionnotenought(moteurDeJeu);
         }
     }
-
 
     @Override
     public String toString(){
