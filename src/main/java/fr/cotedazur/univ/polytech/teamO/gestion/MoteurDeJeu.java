@@ -197,6 +197,7 @@ public class MoteurDeJeu {
             updateRobotWagonData(robot, route, trajet, couleurRoute);
             processRouteClaim(robot, trajet, route, couleurRoute);
             gestionTrajets.updateTrajetsDisponibles(trajet);
+            robot.addNbRoute();
         } else {
             throw new NotEnoughWagonCard(robot + " n'a pas assez de carte wagon.");
         }
@@ -222,7 +223,7 @@ public class MoteurDeJeu {
         Route route = trajet.getRoute();
         Couleur couleurRoute = determineRouteColor(robot, route);
         int nbCouleurWagon = robot.getWagonByCouleur().getOrDefault(couleurRoute,0);
-        int nbRainbowCard = robot.getWagonByCouleur().get(Couleur.Rainbow);
+        int nbRainbowCard = robot.getWagonByCouleur().getOrDefault(Couleur.Rainbow,0);
         if (nbRainbowCard == 0) return false;
         else return route.isClaimable(nbRainbowCard + nbCouleurWagon, new Wagon(couleurRoute));
 

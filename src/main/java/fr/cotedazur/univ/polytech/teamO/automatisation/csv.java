@@ -17,7 +17,7 @@ public class csv {
 
     public csv() throws IOException {
         csvWriter = new CSVWriter(new FileWriter(fichierCSV, false));
-        String[] entete = {"Numero de la partie", "Nombre de tours","Nom robot", "Positionnement","Nombre de point","Nombre de carte destination completer","Nombre de meeples NOIR","Nombre de meeples JAUNE","Nombre de meeples BLANC", "Nombre de meeples VERT", "Nombre de meeples ROUGE","Nombre de meeples BLEU",};
+        String[] entete = {"Numero de la partie", "Nombre de tours","Nom robot", "Positionnement","Nombre de point","Nombre de carte destination completer","Nombre de route","Nombre de meeples NOIR","Nombre de meeples JAUNE","Nombre de meeples BLANC", "Nombre de meeples VERT", "Nombre de meeples ROUGE","Nombre de meeples BLEU",};
         csvWriter.writeNext(entete);
     }
 
@@ -28,7 +28,7 @@ public class csv {
     public void updateStat(Jeu jeu,int compteur) throws IOException {
         ArrayList<Robot> robots = jeu.getRobots();
         for(Robot robot : robots){
-            String[] ligne = {String.valueOf(compteur), String.valueOf(jeu.getNombreTour()),robot.toString(), String.valueOf(jeu.getRanking().position(robot)),String.valueOf(robot.getScore().getNbPoints()),String.valueOf(jeu.getGestionEtatJeu().nombreCarteDestination(robot)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Noir)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Jaune)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Blanc)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Vert)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Rouge)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Bleu)) };
+            String[] ligne = {String.valueOf(compteur), String.valueOf(jeu.getNombreTour()),robot.toString(), String.valueOf(jeu.getRanking().position(robot)),String.valueOf(robot.getScore().getNbPoints()),String.valueOf(jeu.getGestionEtatJeu().nombreCarteDestination(robot)),String.valueOf(robot.getNbroute()),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Noir)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Jaune)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Blanc)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Vert)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Rouge)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Bleu)) };
             csvWriter.writeNext(ligne);
 
         }
