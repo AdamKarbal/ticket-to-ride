@@ -18,7 +18,7 @@ public class Main {
        Jeu jeu=new Jeu();
        csv csv = new csv();
        //jeu.play();
-       for(int i=0;i<100;i++){
+       for(int i=0;i<1000;i++){
            jeu.play();
            csv.updateStat(jeu);
        }
