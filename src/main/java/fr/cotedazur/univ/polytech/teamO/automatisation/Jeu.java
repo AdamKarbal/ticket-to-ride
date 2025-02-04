@@ -30,10 +30,32 @@ public class Jeu {
      GameMap map;
      GestionEtatJeu gestionEtatJeu;
      GestionTrajets gestionTrajets;
+     private int nombreTour;
+
     public  String hello() {
         return "Hello World!";
     }
 
+    // ACCESEURS POUR LE CSV
+    public MoteurDeJeu getMoteurDeJeu(){
+        return moteurDeJeu;
+    }
+
+    public ArrayList<Robot> getRobots(){
+        return robots;
+    }
+
+    public int getNombreTour(){
+        return nombreTour;
+    }
+
+    public Ranking getRanking(){
+        return ranking;
+    }
+
+    public GestionEtatJeu getGestionEtatJeu() {
+        return gestionEtatJeu;
+    }
 
     public  void setup() throws NotEnoughWagonCard {
         Random random = new Random();
@@ -83,14 +105,14 @@ public class Jeu {
     }
 
     public  void play () throws NotEnoughWagonCard, EmptyListException {
-        int tour = 1;
+        nombreTour = 1;
         setup();
         robots=new ArrayList<>();
         robots.add(robotJaune);
         robots.add(robotBleu);
         //robots.add(robotRouge);
         while (!(moteurDeJeu.isFinished(robots))){
-            System.out.println("---------------------- Début du tour numéro : " + tour++ + "---------------------- \n");
+            System.out.println("---------------------- Début du tour numéro : " + nombreTour++ + "---------------------- \n");
             try{
                 robotBleu.choixAction(gestionTrajets,moteurDeJeu);
                 //robotRouge.choixAction(moteurDeJeu,map,gestionTrajets);

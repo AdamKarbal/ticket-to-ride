@@ -21,6 +21,10 @@ public class RobotAleatoire extends Robot {
         this.rand = random;
     }
 
+    /**
+     * Cette méthode permet de choisir aleatoire les cartes destination 4 carte destination (entre longue et courte)
+     * @param moteurDeJeu
+     */
     @Override
     public void chooseDestination(MoteurDeJeu moteurDeJeu){ // Le robot aléatoire choisie aléatoirement c'est carte entre une destination longue ou courte
         int choice;
@@ -31,6 +35,10 @@ public class RobotAleatoire extends Robot {
         }
     }
 
+    /**
+     * Cette méthode permet de refuser les cartes destinations aléatoirement
+     * @param moteurDeJeu
+     */
     @Override
     public void refuseDestinations(MoteurDeJeu moteurDeJeu){ // pour chaque carte destination le robot a 1/2 de la refuser.
         int choice;
@@ -43,11 +51,23 @@ public class RobotAleatoire extends Robot {
         }
     }
 
+    /**
+     * Cette méthode appelle les deux méthodes précédentes afin d'automatiser le premier tour du jeu.
+     * @param moteurDeJeu
+     */
     public void init(MoteurDeJeu moteurDeJeu){
         chooseDestination(moteurDeJeu);
         refuseDestinations(moteurDeJeu);
     }
 
+    /**
+     * Cette méthode permet de choisir l'action du robot aléatoirement entre :
+     * Poser un train, piocher dans la pioche visible, piocher dans la pioche invisible
+     * @param moteurDeJeu
+     * @param map
+     * @param gestionTrajets
+     * @throws NotEnoughWagonCard si le robot a pas assez de wagon pour poser un train il throw l'exception
+     */
     public void chooseaction(MoteurDeJeu moteurDeJeu, GameMap map, GestionTrajets gestionTrajets) throws NotEnoughWagonCard {
         int choix;
         choix=rand.nextInt(100)+1;
@@ -70,6 +90,11 @@ public class RobotAleatoire extends Robot {
         }
     }
 
+    /**
+     * Cette méthode complemente la precendente, en effet si le robot pioche il ne peut que repiocher ducoup on appelle cette methode
+     * mais aussi s'il essaye de poser un train mais qu'il n'y arrive pas, on le renvoie sur cette méthode.
+     * @param moteurDeJeu
+     */
     public void chooseactionnotenought(MoteurDeJeu moteurDeJeu){ // Même méthode mais pour le second tour s'il a piocher OU s'il a essayer de poser un train mais qu'il ne pouvait pas
         int choix;
         choix=rand.nextInt(100)+1;
@@ -89,6 +114,12 @@ public class RobotAleatoire extends Robot {
         }
     }
 
+    /**
+     * Cette méthode permet de poser un train aléatoirement dans la map, il appelle aussi les méthodes necessaires pour prendre des meeples
+     * @param moteurDeJeu
+     * @param map
+     * @param gestionTrajets
+     */
     public void poseTrainAleatoire(MoteurDeJeu moteurDeJeu, GameMap map,GestionTrajets gestionTrajets){
         int choice;
         int nbpassengers;
