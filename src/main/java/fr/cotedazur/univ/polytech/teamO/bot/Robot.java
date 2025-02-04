@@ -87,32 +87,45 @@ public class Robot implements Comparable<Robot> {
     public void addTrajetDone(Trajet trajet){
         trajets.add(trajet);
     }
-    // Actions du joueur
-
-    public void piocher(MoteurDeJeu g){ // Le moteur de jeu pioche une carte et la main dans la main du joueur
-        Carte carte=g.piocher(this);
-        getMain().addCarte(carte);
-    }
-
-    public void piocherSurTable(Carte carteAPiocher, MoteurDeJeu g){ // De même mais pour une carte dans la pioche visible
-        Carte carte=g.piocherSurTable(this,carteAPiocher);
-        getMain().addCarte(carte);
-    }
-
-    public void poseTrain(Trajet trajet, MoteurDeJeu g, GestionTrajets gestionTrajets) throws NotEnoughWagonCard { // Le moteurdejeu pose un des wagons sur le trajet voulue
-        g.poseTrain(this,trajet,gestionTrajets);
-    }
-
     public Map<MCouleur,Integer> getTakenMeeples() {
         return takenMeeples;
     }
 
-    public boolean getTaking(){
-        return taking;
+    public int getTakenMeeplesByCouleur(MCouleur couleur){ // Renvoie le nombre de meeple d'une couleur du joueur
+        return takenMeeples.getOrDefault(couleur, 0);
     }
 
-    public void setTaking(boolean val){
-        this.taking = val;
+
+    // Actions du joueur
+
+    /**
+     * Le moteur de jeu pioche une carte dans la main du joueur
+     * @param moteurDeJeu
+     */
+    public void piocher(MoteurDeJeu moteurDeJeu){
+        Carte carte=moteurDeJeu.piocher(this);
+        getMain().addCarte(carte);
+    }
+
+    /**
+     * Le moteur de jeu pioche une carte dans la pioche visible dans la main du joueur
+     * @param carteAPiocher
+     * @param moteurDeJeu
+     */
+    public void piocherSurTable(Carte carteAPiocher, MoteurDeJeu moteurDeJeu){ // De même mais pour une carte dans la pioche visible
+        Carte carte=moteurDeJeu.piocherSurTable(this,carteAPiocher);
+        getMain().addCarte(carte);
+    }
+
+    /**
+     *
+     * @param trajet
+     * @param moteurDeJeu
+     * @param gestionTrajets
+     * @throws NotEnoughWagonCard dans quel cas ?
+     */
+    public void poseTrain(Trajet trajet, MoteurDeJeu moteurDeJeu, GestionTrajets gestionTrajets) throws NotEnoughWagonCard { // Le moteurdejeu pose un des wagons sur le trajet voulue
+        moteurDeJeu.poseTrain(this,trajet,gestionTrajets);
     }
 
     public void chooseDestination(MoteurDeJeu moteurDeJeu) {}
@@ -121,16 +134,21 @@ public class Robot implements Comparable<Robot> {
 
     public void refuseDestinations(MoteurDeJeu moteurDeJeu){}
 
-    public void addMeeple(MCouleur couleur){ // Le moteurdejeu rajoute un meeples au joueuer
+    /**
+     * Le moteurdejeu rajoute un meeples de la couleur du paramètre au joueur
+     * @param couleur
+     */
+    public void addMeeple(MCouleur couleur){
         int compteur = takenMeeples.getOrDefault(couleur, 0); // Si absent, on initialise à 0
         compteur++;
         takenMeeples.put(couleur,compteur);
     }
 
-    public int getTakenMeeplesByCouleur(MCouleur couleur){ // Renvoie le nombre de meeple d'une couleur du joueuer
-        return takenMeeples.getOrDefault(couleur, 0);
-    }
-
+    /**
+     * Le robot prend aléatoirement un meeple dans la ville de départ ou d'arrivée du dernier trajet
+     * @param ville
+     * @param moteurDeJeu
+     */
     public void takeMeeplesAleatory(Ville ville, MoteurDeJeu moteurDeJeu){
         int nbpassengers;
         int choice;

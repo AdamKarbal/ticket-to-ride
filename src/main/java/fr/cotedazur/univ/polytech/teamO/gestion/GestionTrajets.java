@@ -9,6 +9,9 @@ import fr.cotedazur.univ.polytech.teamO.plateau.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Gestion de tous les calculs liés aux trajets
+ */
 public class GestionTrajets {
     private GameMap gameMap;
     private Map<Ville,Map<Ville,Integer>> trajetsDisponibles;
