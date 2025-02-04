@@ -26,6 +26,11 @@ public class Ranking {
         return classement.first();
     }
 
+    /**
+     * Cette méthode permet de dire la position d'un robot dans le classement
+     * @param robot
+     * @return
+     */
     public int position(Robot robot){
         int i=1;
         for(Robot robotind : classement){
