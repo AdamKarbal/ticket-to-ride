@@ -47,7 +47,7 @@ public class RobotRoute extends Robot{
                 temp = getDestinations().getMainDeCartes().get(i);
             }
         }
-        for(int i = 0 ; i<4 ; i++){
+        for(int i = 3 ; i>=0 ; i--){
             moteurDeJeu.removeDestinationsCard(this,i);
         }
         getDestinations().getMainDeCartes().add(temp);
@@ -55,7 +55,7 @@ public class RobotRoute extends Robot{
 
     public void init(MoteurDeJeu moteurDeJeu){
         chooseDestinations(moteurDeJeu);
-        //refuseDestinations(moteurDeJeu);
+        refuseDestinations(moteurDeJeu);
     }
 
     @Override
