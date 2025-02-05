@@ -27,6 +27,7 @@ public class Jeu {
     static boolean displayLogs = true;
     RobotRoute robotBleu;
     RobotAleatoire robotJaune;
+    RobotNewStrategy robotRouge;
     ArrayList<Robot> robots;
     Ranking ranking;
     MoteurDeJeu moteurDeJeu;
@@ -51,9 +52,11 @@ public class Jeu {
         Random random = new Random();
         robotBleu = new RobotRoute(Couleur.Bleu);
         robotJaune = new RobotAleatoire(Couleur.Jaune, random);
+        robotRouge= new RobotNewStrategy(Couleur.Rouge);
         robots = new ArrayList<>();
         robots.add(robotBleu);
         robots.add(robotJaune);
+        robots.add(robotRouge);
         this.nombreTour=0;
         pioche = new Pioche();
         pioche.creerPiocheComplete();
@@ -70,9 +73,11 @@ public class Jeu {
         for (int i = 0; i < 4; i++) {
             robotBleu.piocher(moteurDeJeu);
             robotJaune.piocher(moteurDeJeu);
+            robotRouge.piocher(moteurDeJeu);
         }
         robotJaune.init(moteurDeJeu);
         robotBleu.init(moteurDeJeu);
+        robotRouge.init(moteurDeJeu);
 
         logger.info("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
@@ -97,12 +102,14 @@ public class Jeu {
         robots = new ArrayList<>();
         robots.add(robotJaune);
         robots.add(robotBleu);
+        robots.add(robotRouge);
 
         while (!(moteurDeJeu.isFinished(robots))) {
             logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
             try {
                 robotBleu.choixAction(gestionTrajets, moteurDeJeu);
                 robotJaune.chooseaction(moteurDeJeu, map, gestionTrajets);
+                robotRouge.choixAction(gestionTrajets, moteurDeJeu);
             } catch (EmptyStackException e) {
                 logger.warning("Fin du jeu prématurée : Pioche vide.");
                 break;
@@ -119,6 +126,7 @@ public class Jeu {
     public Robot getRobotRoute(){
         return robotBleu;
     }
+    public  Robot getRobotNewStrategy(){return robotRouge;}
 
     public Robot getWinner(){
         return winner;
