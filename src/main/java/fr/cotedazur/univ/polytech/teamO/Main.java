@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.teamO;
 
 import com.beust.jcommander.JCommander;
 import fr.cotedazur.univ.polytech.teamO.automatisation.Jeu;
+import fr.cotedazur.univ.polytech.teamO.automatisation.csv;
 import fr.cotedazur.univ.polytech.teamO.classement.EmptyListException;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 
@@ -33,8 +34,11 @@ public class Main {
 
        JCommander.parse(args);
 
+        csv csv = new csv();
+
         for(int i = 0 ; i < 10000; i++){
             jeu.play(false);
+            csv.updateStat(jeu);
             if(jeu.getWinner() == jeu.getRobotAleatoire()) randomWins++;
             else if(jeu.getWinner() == jeu.getRobotRoute()) routeWins++;
         }
