@@ -17,12 +17,14 @@ import java.util.EmptyStackException;
 import java.util.Random;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class Jeu {
     private static final Logger logger = Logger.getLogger(Jeu.class.getName());
 
+    static boolean displayLogs = true;
     RobotRoute robotBleu;
     RobotAleatoire robotJaune;
     ArrayList<Robot> robots;
@@ -45,7 +47,7 @@ public class Jeu {
         logger.addHandler(handler);
     }
 
-    public void setup() throws NotEnoughWagonCard {
+    public void setup(boolean Logs) throws NotEnoughWagonCard {
         Random random = new Random();
         robotBleu = new RobotRoute(Couleur.Bleu);
         robotJaune = new RobotAleatoire(Couleur.Jaune, random);
@@ -63,6 +65,7 @@ public class Jeu {
         moteurDeJeu = new MoteurDeJeu(pioche, piocheSurTable, piocheDestinationLongue, piocheDestinationCourte);
         piocheSurTable.initPiocheSurTable(moteurDeJeu);
         gestionEtatJeu = new GestionEtatJeu(gestionTrajets);
+        if(!Logs) gestionEtatJeu.DLogsOff();
 
         for (int i = 0; i < 4; i++) {
             robotBleu.piocher(moteurDeJeu);
@@ -87,9 +90,10 @@ public class Jeu {
         logger.info(ranking.toString());
     }
 
-    public void play() throws NotEnoughWagonCard, EmptyListException {
+    public void play(boolean Logs) throws NotEnoughWagonCard, EmptyListException {
+        if(!Logs) DLogsOff();
         int tour = 1;
-        setup();
+        setup(Logs);
         robots = new ArrayList<>();
         robots.add(robotJaune);
         robots.add(robotBleu);
@@ -118,5 +122,13 @@ public class Jeu {
 
     public Robot getWinner(){
         return winner;
+    }
+
+    public static void DLogsOn(){
+        logger.setLevel(Level.INFO);
+    }
+
+    public static void DLogsOff(){
+        logger.setLevel(Level.OFF);
     }
 }

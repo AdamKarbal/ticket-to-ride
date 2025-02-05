@@ -9,6 +9,7 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Affichage {
@@ -78,5 +79,13 @@ public class Affichage {
 
     public void afficheFirstCarteDestination(Robot first) {
         logger.info("Le " + first + " a complété le plus de cartes destination et gagne 15 points ! De plus, il obtient le titre de Globetrotter.");
+    }
+
+    public void DLogsOn(){
+        logger.setLevel(Level.INFO);
+    }
+
+    public void DLogsOff(){
+        logger.setLevel(Level.OFF);
     }
 }

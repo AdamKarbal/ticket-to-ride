@@ -19,6 +19,7 @@ public class Main {
         Formatter formatter = new LogFormatter();
         handler.setFormatter(formatter);
         logger.addHandler(handler);
+        logger.setLevel(Level.OFF);
     }
 
     private static Jeu jeu = new Jeu();
@@ -32,13 +33,13 @@ public class Main {
 
        JCommander.parse(args);
 
-        for(int i = 0 ; i < 1000; i++){
-            jeu.play();
+        for(int i = 0 ; i < 10000; i++){
+            jeu.play(false);
             if(jeu.getWinner() == jeu.getRobotAleatoire()) randomWins++;
             else if(jeu.getWinner() == jeu.getRobotRoute()) routeWins++;
         }
 
-        logger.info("Aléatoire : " + randomWins + "\n" + "Routes : " + routeWins + "\n");
+        System.out.println("Aléatoire : " + randomWins + "\n" + "Routes : " + routeWins + "\n");
 
        /*if(commands.isTwoThousands()){
            //for(int i = 0 ; i < 1000; i++){

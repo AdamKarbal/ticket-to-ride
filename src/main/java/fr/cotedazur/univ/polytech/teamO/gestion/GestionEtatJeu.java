@@ -9,6 +9,7 @@ import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
 import java.util.*;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GestionEtatJeu {
@@ -115,5 +116,15 @@ public class GestionEtatJeu {
     public void endOfGameUpdate(List<Robot> robots) {
         whoHaveMostDestinationCards(robots);
         whoHaveMostMeeples(robots);
+    }
+
+    public void DLogsOn(){
+        logger.setLevel(Level.INFO);
+        affichage.DLogsOn();
+    }
+
+    public void DLogsOff(){
+        logger.setLevel(Level.OFF);
+        affichage.DLogsOff();
     }
 }
