@@ -68,7 +68,7 @@ public class RobotRoute extends Robot{
 
     public void init(MoteurDeJeu moteurDeJeu){
         chooseDestinations(moteurDeJeu);
-        refuseDestinations(moteurDeJeu);
+        //refuseDestinations(moteurDeJeu);
     }
 
     @Override

@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 public class Jeu {
     private static final Logger logger = Logger.getLogger(Jeu.class.getName());
-
+    private int nombreTour;
     static boolean displayLogs = true;
     RobotRoute robotBleu;
     RobotAleatoire robotJaune;
@@ -54,7 +54,7 @@ public class Jeu {
         robots = new ArrayList<>();
         robots.add(robotBleu);
         robots.add(robotJaune);
-
+        this.nombreTour=0;
         pioche = new Pioche();
         pioche.creerPiocheComplete();
         map = new GameMap();
@@ -92,14 +92,14 @@ public class Jeu {
 
     public void play(boolean Logs) throws NotEnoughWagonCard, EmptyListException {
         if(!Logs) DLogsOff();
-        int tour = 1;
+        nombreTour = 1;
         setup(Logs);
         robots = new ArrayList<>();
         robots.add(robotJaune);
         robots.add(robotBleu);
 
         while (!(moteurDeJeu.isFinished(robots))) {
-            logger.info("---------------------- Début du tour numéro : " + tour++ + " ----------------------");
+            logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
             try {
                 robotBleu.choixAction(gestionTrajets, moteurDeJeu);
                 robotJaune.chooseaction(moteurDeJeu, map, gestionTrajets);
@@ -131,4 +131,21 @@ public class Jeu {
     public static void DLogsOff(){
         logger.setLevel(Level.OFF);
     }
+
+    public ArrayList<Robot> getRobots() {
+        return robots;
+    }
+
+    public int getNombreTour(){
+        return nombreTour;
+    }
+
+    public Ranking getRanking(){
+        return ranking;
+    }
+
+    public GestionEtatJeu getGestionEtatJeu(){
+        return gestionEtatJeu;
+    }
+
 }
