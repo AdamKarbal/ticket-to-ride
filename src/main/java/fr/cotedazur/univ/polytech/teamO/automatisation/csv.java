@@ -40,14 +40,20 @@ public class csv {
         csvWriter.writeNext(entete);
     }
 
+    /**
+     * Cette méthode permet de retourner le dernier numéro de partie dans gamestats.csv
+     * @return
+     * @throws IOException
+     * @throws CsvValidationException
+     */
     private int getDernierNumeroPartie() throws IOException, CsvValidationException {
         int dernierNumero = 0;
         CSVReader reader = new CSVReader(new FileReader(fichierCSV));
         String[] ligne;
         reader.readNext();
-        while ((ligne = reader.readNext()) != null) {
+        while ((ligne = reader.readNext()) != null) { // on regarde si la prochaine ligne existe
             try {
-                dernierNumero = Integer.parseInt(ligne[0].trim());
+                dernierNumero = Integer.parseInt(ligne[0].trim()); // on recupere le numero de partie
             } catch (NumberFormatException e) {
             }
         }
