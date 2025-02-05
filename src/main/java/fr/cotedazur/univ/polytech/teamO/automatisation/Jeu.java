@@ -60,6 +60,17 @@ public class Jeu {
         logger.addHandler(handler);
     }
 
+    /**
+     * Méthode permettant d'instancier les robots joueurs à différentes stratégies.
+     * Cette méthode instancie tout un tas d'autres objets indispensables au déroulement du jeu
+     * (Plateau, pioches, moteur de jeu...).
+     * En fonction de la version choisie au lancement du jeu, un groupe de bots différents est intégré au
+     * jeu et pioche les cartes.
+     *
+     * @param Logs Booléen qui détermine si les logs du setup seront affichés
+     * @param Version Entier qui détermine la version du setup qui sera lancée.
+     * @throws NotEnoughWagonCard
+     */
     public void setup(boolean Logs, int Version) throws NotEnoughWagonCard {
         Random random = new Random();
         robotRoute1 = new RobotRoute(Couleur.Bleu);
@@ -81,7 +92,7 @@ public class Jeu {
         gestionEtatJeu = new GestionEtatJeu(gestionTrajets);
         if(!Logs) gestionEtatJeu.DLogsOff();
 
-        if(Version == 1) {//Faudra rajouter un if pour la V3 avec tous les bots)
+        if(Version == 1) {
             robots.add(robotRoute1);
             robots.add(robotAleatoire);
             for (int i = 0; i < 4; i++) {
@@ -131,6 +142,12 @@ public class Jeu {
         logger.info(ranking.toString());
     }
 
+    /**Méthode qui, en fonction de la version désignée, lance les boucles de jeu correspondante.
+     * @param Logs  Booléen qui détermine si les logs du jeu seront affichés
+     * @param Version Entier qui détermine la version du jeu qui sera lancée.
+     * @throws NotEnoughWagonCard
+     * @throws EmptyListException
+     */
     public void play(boolean Logs, int Version) throws NotEnoughWagonCard, EmptyListException {
         if(!Logs) DLogsOff();
         nombreTour = 1;
@@ -187,6 +204,10 @@ public class Jeu {
         logger.setLevel(Level.OFF);
     }
 
+    /**
+     * Boucle de jeu. Tant que le jeu n'est pas fini, le meilleur bot et un autre bot continuent de jouer.
+     * @throws NotEnoughWagonCard
+     */
     public void loopV1() throws NotEnoughWagonCard{
         while (!(moteurDeJeu.isFinished(robots))) {
             logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
@@ -202,6 +223,10 @@ public class Jeu {
         }
     }
 
+    /**
+     * Boucle de jeu. Tant que le jeu n'est pas fini, le meilleur bot contre lui même continuent de jouer.
+     * @throws NotEnoughWagonCard
+     */
     public void loopV2(){
         while (!(moteurDeJeu.isFinished(robots))) {
             logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
@@ -217,6 +242,10 @@ public class Jeu {
         }
     }
 
+    /**
+     * Boucle de jeu. Tant que le jeu n'est pas fini, tous les bots continuent de jouer.
+     * @throws NotEnoughWagonCard
+     */
     public void loopV3() throws NotEnoughWagonCard{
         while (!(moteurDeJeu.isFinished(robots))) {
             logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");

@@ -1,13 +1,10 @@
 package fr.cotedazur.univ.polytech.teamO;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
 public class LogFormatter extends Formatter
 {
-    // ANSI escape code
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -18,10 +15,11 @@ public class LogFormatter extends Formatter
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    // Here you can configure the format of the output and 
-    // its color by using the ANSI escape codes defined above.
-
-    // format is called for every console log message
+    /**
+     * Simple methode permettant de formatter les logs comme voulu.
+     * @param record the log record to be formatted.
+     * @return
+     */
     @Override
     public String format(LogRecord record)
     {
@@ -54,11 +52,5 @@ public class LogFormatter extends Formatter
         builder.append(ANSI_RESET);
         builder.append("\n");
         return builder.toString();
-    }
-
-    private String calcDate(long millisecs) {
-        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date resultdate = new Date(millisecs);
-        return date_format.format(resultdate);
     }
 }

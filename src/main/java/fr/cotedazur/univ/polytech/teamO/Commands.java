@@ -25,6 +25,10 @@ public class Commands {
         return CsvCommand;
     }
 
+    /**Méthode permettant de débugger la détection des commande par le
+     * JCommander.
+     * @return
+     */
     @Override
     public String toString() {
         return "Commands{" +

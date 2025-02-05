@@ -58,10 +58,18 @@ public enum Ville {
         this.passagers = new ArrayList<>();
     }
 
+    /**
+     * Cette méthode permet de récupérer le nombre de meeples de base d'une ville
+     * @return un entier
+     */
     public int getBaseNbMeeple() {
         return NbMeeple;
     }
 
+    /**
+     * Cette méthode permet de récupérer le nombre de meeples actuels d'une ville
+     * @return un entier
+     */
     public int getCurrentNbMeeples(){
         return passagers.size();
     }
@@ -90,6 +98,10 @@ public enum Ville {
         this.passagers.remove(meeple);
     }
 
+    /**
+     * Cette méthode permet de récupérer les couleurs de meeples existants dans une ville
+     * @return un Set de Mcouleur
+     */
     public Set<MCouleur> getPassagersColors(){
         Set<MCouleur> colors = new HashSet<>();
         for(Meeples meeple : passagers) {
@@ -98,7 +110,10 @@ public enum Ville {
         return colors;
     }
 
-
+    /**
+     * Cette méthode permet d'afficher les meeples d'une ville
+     * @return
+     */
     public String PDisplay() {
         String output = "";
         List<Meeples> p = getPassagers();
