@@ -24,9 +24,9 @@ import java.util.logging.Logger;
 public class Jeu {
     private static final Logger logger = Logger.getLogger(Jeu.class.getName());
     private int nombreTour;
-    static boolean displayLogs = true;
-    RobotRoute robotBleu;
-    RobotAleatoire robotJaune;
+    RobotRoute robotRoute2;
+    RobotRoute robotRoute1;
+    RobotAleatoire robotAleatoire;
     ArrayList<Robot> robots;
     Ranking ranking;
     MoteurDeJeu moteurDeJeu;
@@ -39,6 +39,18 @@ public class Jeu {
     GestionTrajets gestionTrajets;
     Robot winner;
 
+    public int getNombreTour(){
+        return this.nombreTour;
+    }
+
+    public Ranking getRanking(){
+        return ranking;
+    }
+
+    public GestionEtatJeu getGestionEtatJeu(){
+        return gestionEtatJeu;
+    }
+
     static{
         logger.setUseParentHandlers(false);
         ConsoleHandler handler = new ConsoleHandler();
@@ -47,14 +59,14 @@ public class Jeu {
         logger.addHandler(handler);
     }
 
-    public void setup(boolean Logs) throws NotEnoughWagonCard {
+    public void setup(boolean Logs, int Version) throws NotEnoughWagonCard {
         Random random = new Random();
-        robotBleu = new RobotRoute(Couleur.Bleu);
-        robotJaune = new RobotAleatoire(Couleur.Jaune, random);
+        robotRoute1 = new RobotRoute(Couleur.Bleu);
+        robotAleatoire = new RobotAleatoire(Couleur.Jaune, random);
+        robotRoute2 = new RobotRoute(Couleur.Vert);
         robots = new ArrayList<>();
-        robots.add(robotBleu);
-        robots.add(robotJaune);
-        this.nombreTour=0;
+        this.nombreTour = 0;
+
         pioche = new Pioche();
         pioche.creerPiocheComplete();
         map = new GameMap();
@@ -67,12 +79,26 @@ public class Jeu {
         gestionEtatJeu = new GestionEtatJeu(gestionTrajets);
         if(!Logs) gestionEtatJeu.DLogsOff();
 
-        for (int i = 0; i < 4; i++) {
-            robotBleu.piocher(moteurDeJeu);
-            robotJaune.piocher(moteurDeJeu);
+        if(Version == 1 || Version == 3) {//Faudra rajouter un if pour la V3 avec tous les bots)
+            robots.add(robotRoute1);
+            robots.add(robotAleatoire);
+            for (int i = 0; i < 4; i++) {
+                robotRoute1.piocher(moteurDeJeu);
+                robotAleatoire.piocher(moteurDeJeu);
+            }
+            robotAleatoire.init(moteurDeJeu);
+            robotRoute1.init(moteurDeJeu);
         }
-        robotJaune.init(moteurDeJeu);
-        robotBleu.init(moteurDeJeu);
+        else if(Version == 2) {
+            robots.add(robotRoute1);
+            robots.add(robotRoute2);
+            for (int i = 0; i < 4; i++) {
+                robotRoute1.piocher(moteurDeJeu);
+                robotRoute2.piocher(moteurDeJeu);
+            }
+            robotRoute2.init(moteurDeJeu);
+            robotRoute1.init(moteurDeJeu);
+        }
 
         logger.info("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
@@ -90,38 +116,47 @@ public class Jeu {
         logger.info(ranking.toString());
     }
 
-    public void play(boolean Logs) throws NotEnoughWagonCard, EmptyListException {
+    public void play(boolean Logs, int Version) throws NotEnoughWagonCard, EmptyListException {
         if(!Logs) DLogsOff();
         nombreTour = 1;
-        setup(Logs);
+        setup(Logs, Version);
         robots = new ArrayList<>();
-        robots.add(robotJaune);
-        robots.add(robotBleu);
-
-        while (!(moteurDeJeu.isFinished(robots))) {
-            logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
-            try {
-                robotBleu.choixAction(gestionTrajets, moteurDeJeu);
-                robotJaune.chooseaction(moteurDeJeu, map, gestionTrajets);
-            } catch (EmptyStackException e) {
-                logger.warning("Fin du jeu prématurée : Pioche vide.");
-                break;
-            }
-            logger.info("\n");
+        if(Version == 1) {
+            robots.add(robotAleatoire);
+            robots.add(robotRoute1);
+            loopV1();
+        }
+        else if(Version == 2) {
+            robots.add(robotRoute2);
+            robots.add(robotRoute1);
+            loopV2();
+        }
+        else if(Version == 3) {
+            robots.add(robotRoute1);
+            robots.add(robotAleatoire);
+            loopV3();
         }
         endofGame();
     }
 
     public Robot getRobotAleatoire(){
-        return robotJaune;
+        return robotAleatoire;
     }
 
-    public Robot getRobotRoute(){
-        return robotBleu;
+    public Robot getRobotRoute1(){
+        return robotRoute1;
+    }
+
+    public Robot getRobotRoute2(){
+        return robotRoute2;
     }
 
     public Robot getWinner(){
         return winner;
+    }
+
+    public ArrayList<Robot> getRobots(){
+        return robots;
     }
 
     public static void DLogsOn(){
@@ -132,20 +167,48 @@ public class Jeu {
         logger.setLevel(Level.OFF);
     }
 
-    public ArrayList<Robot> getRobots() {
-        return robots;
+    public void loopV1() throws NotEnoughWagonCard{
+        while (!(moteurDeJeu.isFinished(robots))) {
+            logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
+            try {
+                robotRoute1.choixAction(gestionTrajets, moteurDeJeu);
+                robotAleatoire.chooseaction(moteurDeJeu, map, gestionTrajets);
+            }
+            catch (EmptyStackException e) {
+                logger.warning("Fin du jeu prématurée : Pioche vide.");
+                break;
+            }
+            logger.info("\n");
+        }
     }
 
-    public int getNombreTour(){
-        return nombreTour;
+    public void loopV2(){
+        while (!(moteurDeJeu.isFinished(robots))) {
+            logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
+            try {
+                robotRoute1.choixAction(gestionTrajets, moteurDeJeu);
+                robotRoute2.choixAction(gestionTrajets, moteurDeJeu);
+            }
+            catch (EmptyStackException e) {
+                logger.warning("Fin du jeu prématurée : Pioche vide.");
+                break;
+            }
+            logger.info("\n");
+        }
     }
 
-    public Ranking getRanking(){
-        return ranking;
+    public void loopV3() throws NotEnoughWagonCard{
+        while (!(moteurDeJeu.isFinished(robots))) {
+            logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
+            try {
+                robotRoute1.choixAction(gestionTrajets, moteurDeJeu);
+                robotAleatoire.chooseaction(moteurDeJeu, map, gestionTrajets);
+            }
+            catch (EmptyStackException e) {
+                logger.warning("Fin du jeu prématurée : Pioche vide.");
+                break;
+            }
+            logger.info("\n");
+        }
     }
-
-    public GestionEtatJeu getGestionEtatJeu(){
-        return gestionEtatJeu;
-    }
-
 }

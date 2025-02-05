@@ -3,9 +3,8 @@ package fr.cotedazur.univ.polytech.teamO;
 import com.beust.jcommander.JCommander;
 import fr.cotedazur.univ.polytech.teamO.automatisation.Jeu;
 import fr.cotedazur.univ.polytech.teamO.automatisation.csv;
-import fr.cotedazur.univ.polytech.teamO.classement.EmptyListException;
-import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 
+import java.io.FileNotFoundException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
@@ -24,8 +23,13 @@ public class Main {
     }
 
     private static Jeu jeu = new Jeu();
-    private static int routeWins = 0;
+    private static int route1Wins = 0;
+    private static int route2Wins = 0;
     private static int randomWins = 0;
+    private static int TauxVictR1 = 0;
+    private static int TauxVictR2 = 0;
+    private static int TauxVictRandom = 0;
+
 
     public static void main(String[] args) throws Exception {
         Commands commands = new Commands();
@@ -33,29 +37,50 @@ public class Main {
        JCommander JCommander = new JCommander(commands);
 
        JCommander.parse(args);
-
         csv csv = new csv();
+        if(commands.isTwoThousands()){
+            for(int i = 0 ; i < 1000; i++){
+                jeu.play(false,1);
+                if(commands.isCsvCommand()){
+                    csv.updateStat(jeu);
+                }
+                if(jeu.getWinner() == jeu.getRobotAleatoire()) randomWins++;
+                else if(jeu.getWinner() == jeu.getRobotRoute1()) route1Wins++;
+           }
+            logger.setLevel(Level.INFO);
+            TauxVictRandom = (int) (((double) randomWins / 1000) * 100);
+            TauxVictR1 = (int) (((double) route1Wins / 1000) * 100);
 
-        for(int i = 0 ; i < 10000; i++){
-            jeu.play(false);
-            csv.updateStat(jeu);
-            if(jeu.getWinner() == jeu.getRobotAleatoire()) randomWins++;
-            else if(jeu.getWinner() == jeu.getRobotRoute()) routeWins++;
-        }
+            logger.info("\nPremières 1000 parties :\n" + "Robot Aleatoire a gagné "+ randomWins + " parties, soit "+ TauxVictRandom +"% et perdu "+ (1000-randomWins) +" parties, soit " + (100-TauxVictRandom) +"%\n" +
+                    "Robot Route a gagné "+ route1Wins + " parties, soit "+ TauxVictR1 +"% et perdu "+ (1000-route1Wins) +" parties, soit " + (100-TauxVictR1) +"%\n");
+            logger.setLevel(Level.OFF);
 
-        System.out.println("Aléatoire : " + randomWins + "\n" + "Routes : " + routeWins + "\n");
+           route1Wins = 0;
+           TauxVictR1 = 0;
+           for(int i = 0 ; i < 1000; i++){
+               jeu.play(true,2);
+               if(commands.isCsvCommand()){
+                   csv.updateStat(jeu);
+               }
+               if(jeu.getWinner() == jeu.getRobotRoute1()) route1Wins++;
+               else if(jeu.getWinner() == jeu.getRobotRoute2()) route2Wins++;
+           }
+            logger.setLevel(Level.INFO);
+            TauxVictR1 = (int) (((double) route1Wins / 1000) * 100);
+            TauxVictR2 = (int) (((double) route2Wins / 1000) * 100);
 
-       /*if(commands.isTwoThousands()){
-           //for(int i = 0 ; i < 1000; i++){
-
-           //}
+            logger.info("\nDeuxièmes 1000 parties :\n" + "Robot Route 1 a gagné "+ route1Wins + " parties, soit "+ TauxVictR1 +"% et perdu "+ (1000-route1Wins) +" parties, soit " + (100-TauxVictR1) +"%\n" +
+                    "Robot Route 2 a gagné "+ route2Wins + " parties, soit "+ TauxVictR2 +"% et perdu "+ (1000-route2Wins) +" parties, soit " + (100-TauxVictR2) +"%\n");
+            logger.setLevel(Level.OFF);
        }
        else if(commands.isDemoCommand()){
-
+           jeu.play(true, 3);
+            if(commands.isCsvCommand()){
+                csv.updateStat(jeu);
+            }
        }
        else{
-
-       }*/
-   }
-
+           throw new NotValidCommand("Entrez --2thousands ou --demo");
+       }
+    }
 }

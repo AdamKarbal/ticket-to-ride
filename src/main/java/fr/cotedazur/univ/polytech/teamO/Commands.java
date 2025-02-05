@@ -24,5 +24,14 @@ public class Commands {
     public boolean isCsvCommand(){
         return CsvCommand;
     }
+
+    @Override
+    public String toString() {
+        return "Commands{" +
+                "TwoThousandCommand=" + TwoThousandCommand +
+                ", DemoCommand=" + DemoCommand +
+                ", CsvCommand=" + CsvCommand +
+                '}';
+    }
 }
 
