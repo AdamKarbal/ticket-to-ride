@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
+import fr.cotedazur.univ.polytech.teamO.LogFormatter;
 import fr.cotedazur.univ.polytech.teamO.affichage.Affichage;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
@@ -11,10 +12,25 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
 import java.util.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GestionEtatJeu {
+
+    private static final Logger logger = Logger.getLogger(GestionEtatJeu.class.getName());
     private GestionTrajets gestionTrajets;
     private Affichage affichage;
+
+    static{
+        logger.setUseParentHandlers(false);
+        ConsoleHandler handler = new ConsoleHandler();
+        Formatter formatter = new LogFormatter();
+        handler.setFormatter(formatter);
+        logger.addHandler(handler);
+    }
+
     public GestionEtatJeu(GestionTrajets gestionTrajets) {
         this.gestionTrajets = gestionTrajets;
         this.affichage = new Affichage();
@@ -25,15 +41,15 @@ public class GestionEtatJeu {
      * Si elles le sont, les points nécessaires sont ajoutés ; sinon, ils sont retirés.
      * @param robot
      */
+
     public void updateScoreCarteDestination(Robot robot) {
         for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()) {
-            if(!carteDestination.isCompleted()){
+            if (!carteDestination.isCompleted()) {
                 robot.getScore().removeNbPoints(carteDestination.getValue());
                 affichage.afficheCheckCarteDestinationPASOK(robot, carteDestination);
-            }
-            else{
+            } else {
                 robot.getScore().addNbPoints(carteDestination.getValue());
-                affichage.afficheCheckCarteDestinationOK(robot,carteDestination);
+                affichage.afficheCheckCarteDestinationOK(robot, carteDestination);
             }
         }
     }
@@ -45,7 +61,8 @@ public class GestionEtatJeu {
     public void isDestinationsCardCompleted(List<Robot> robots) { // refactor cette méthode en combinant avec celle d'en haut ?
         for (Robot robot : robots) {
             for (CarteDestination card : robot.getDestinations().getMainDeCartes()) {
-                if(gestionTrajets.isConnected(card.getVille1(), card.getVille2(), robot.getTrajet()) || gestionTrajets.isConnected(card.getVille2(), card.getVille1(), robot.getTrajet())){
+                if (gestionTrajets.isConnected(card.getVille1(), card.getVille2(), robot.getTrajet()) ||
+                        gestionTrajets.isConnected(card.getVille2(), card.getVille1(), robot.getTrajet())) {
                     card.setCompleted(true);
                 }
             }
@@ -57,12 +74,13 @@ public class GestionEtatJeu {
      * @param robots
      */
     public void whoHaveMostMeeples(List<Robot> robots) {
-        System.out.println("Concernant les meeples ... \n");
+        logger.info("Concernant les meeples ...");
         Robot first = robots.get(0);
         Robot second = robots.get(1);
         int max = 0;
         int max2 = 0;
-        int temp = 0;
+        int temp;
+
         for (MCouleur couleur : MCouleur.values()) {
             for (Robot robot : robots) {
                 temp = robot.getTakenMeeplesByCouleur(couleur);
@@ -78,11 +96,10 @@ public class GestionEtatJeu {
                 }
             }
             first.getScore().addNbPoints(20);
-            if(!(second.equals(first))) {
+            if (!second.equals(first)) {
                 second.getScore().addNbPoints(10);
                 affichage.affichePointMeeples(couleur, first, second);
-            }
-            else{
+            } else {
                 affichage.affichePointMeeplespasSecond(couleur, first);
             }
         }
@@ -95,6 +112,7 @@ public class GestionEtatJeu {
     public void whoHaveMostDestinationCards(List<Robot> robots) {
         List<Robot> winners = new ArrayList<>();
         int max = 0;
+
         for (Robot robot : robots) {
             int nbclaim = nombreCarteDestination(robot);
             if (nbclaim > max) {
@@ -105,7 +123,8 @@ public class GestionEtatJeu {
                 winners.add(robot);
             }
         }
-        System.out.println("Le titre de GlobeTrotter est pour.... \n");
+
+        logger.info("Le titre de GlobeTrotter est pour....");
         for (Robot winner : winners) {
             winner.getScore().addNbPoints(15);
             affichage.afficheFirstCarteDestination(winner);
@@ -136,5 +155,13 @@ public class GestionEtatJeu {
         whoHaveMostMeeples(robots);
     }
 
+    public void DLogsOn(){
+        logger.setLevel(Level.INFO);
+        affichage.DLogsOn();
+    }
 
+    public void DLogsOff(){
+        logger.setLevel(Level.OFF);
+        affichage.DLogsOff();
+    }
 }

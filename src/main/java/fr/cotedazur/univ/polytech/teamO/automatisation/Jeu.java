@@ -1,4 +1,5 @@
 package fr.cotedazur.univ.polytech.teamO.automatisation;
+
 import fr.cotedazur.univ.polytech.teamO.bot.*;
 import fr.cotedazur.univ.polytech.teamO.classement.EmptyListException;
 import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
@@ -9,120 +10,125 @@ import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
-
+import fr.cotedazur.univ.polytech.teamO.LogFormatter;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Random;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Jeu {
-     RobotRoute robotBleu;
-     //RobotMeeples robotRouge;
-     RobotAleatoire robotJaune;
-     ArrayList<Robot> robots;
-     Ranking ranking;
-     MoteurDeJeu moteurDeJeu;
-     Pioche pioche;
-     PiocheSurTable piocheSurTable;
-     PiocheDestinationCourte piocheDestinationCourte;
-     PiocheDestinationLongue piocheDestinationLongue;
-     GameMap map;
-     GestionEtatJeu gestionEtatJeu;
-     GestionTrajets gestionTrajets;
-     private int nombreTour;
+    private static final Logger logger = Logger.getLogger(Jeu.class.getName());
 
-    public  String hello() {
-        return "Hello World!";
+    static boolean displayLogs = true;
+    RobotRoute robotBleu;
+    RobotAleatoire robotJaune;
+    ArrayList<Robot> robots;
+    Ranking ranking;
+    MoteurDeJeu moteurDeJeu;
+    Pioche pioche;
+    PiocheSurTable piocheSurTable;
+    PiocheDestinationCourte piocheDestinationCourte;
+    PiocheDestinationLongue piocheDestinationLongue;
+    GameMap map;
+    GestionEtatJeu gestionEtatJeu;
+    GestionTrajets gestionTrajets;
+    Robot winner;
+
+    static{
+        logger.setUseParentHandlers(false);
+        ConsoleHandler handler = new ConsoleHandler();
+        Formatter formatter = new LogFormatter();
+        handler.setFormatter(formatter);
+        logger.addHandler(handler);
     }
 
-    // ACCESEURS POUR LE CSV
-    public MoteurDeJeu getMoteurDeJeu(){
-        return moteurDeJeu;
-    }
-
-    public ArrayList<Robot> getRobots(){
-        return robots;
-    }
-
-    public int getNombreTour(){
-        return nombreTour;
-    }
-
-    public Ranking getRanking(){
-        return ranking;
-    }
-
-    public GestionEtatJeu getGestionEtatJeu() {
-        return gestionEtatJeu;
-    }
-
-    public  void setup() throws NotEnoughWagonCard {
+    public void setup(boolean Logs) throws NotEnoughWagonCard {
         Random random = new Random();
-        robotBleu=new RobotRoute(Couleur.Bleu);
-        //robotRouge=new RobotMeeples(Couleur.Rouge);
-        robotJaune=new RobotAleatoire(Couleur.Jaune, random);
-        robots=new ArrayList<>();
+        robotBleu = new RobotRoute(Couleur.Bleu);
+        robotJaune = new RobotAleatoire(Couleur.Jaune, random);
+        robots = new ArrayList<>();
         robots.add(robotBleu);
-        //robots.add(robotRouge);
         robots.add(robotJaune);
 
         pioche = new Pioche();
         pioche.creerPiocheComplete();
-
         map = new GameMap();
-
         piocheSurTable = new PiocheSurTable();
-        piocheDestinationCourte=new PiocheDestinationCourte();
-        piocheDestinationLongue=new PiocheDestinationLongue();
-        gestionTrajets= new GestionTrajets(map);
-        moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
+        piocheDestinationCourte = new PiocheDestinationCourte();
+        piocheDestinationLongue = new PiocheDestinationLongue();
+        gestionTrajets = new GestionTrajets(map);
+        moteurDeJeu = new MoteurDeJeu(pioche, piocheSurTable, piocheDestinationLongue, piocheDestinationCourte);
         piocheSurTable.initPiocheSurTable(moteurDeJeu);
-        gestionEtatJeu=new GestionEtatJeu(gestionTrajets);
+        gestionEtatJeu = new GestionEtatJeu(gestionTrajets);
+        if(!Logs) gestionEtatJeu.DLogsOff();
 
-        for(int i=0;i<4;i++){
+        for (int i = 0; i < 4; i++) {
             robotBleu.piocher(moteurDeJeu);
-            //robotRouge.piocher(moteurDeJeu);
             robotJaune.piocher(moteurDeJeu);
         }
         robotJaune.init(moteurDeJeu);
         robotBleu.init(moteurDeJeu);
-        //robotRouge.init(moteurDeJeu);
 
-        System.out.println("---------------------- Le jeu est prêt à démarrer ! ----------------------");
+        logger.info("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
 
-    public  void endofGame() throws EmptyListException {
-        System.out.print("\n---------------------- Le jeu est fini ! ----------------------\n");
-        System.out.print("Voici la mise à jour par rapport aux cartes destinations !\n");
+    public void endofGame() throws EmptyListException {
+        logger.info("\n---------------------- Le jeu est fini ! ----------------------");
+        logger.info("Voici la mise à jour par rapport aux cartes destinations !");
         gestionEtatJeu.isDestinationsCardCompleted(robots);
-        for(Robot robot:robots){
+        for (Robot robot : robots) {
             gestionEtatJeu.updateScoreCarteDestination(robot);
         }
         gestionEtatJeu.endOfGameUpdate(robots);
-        ranking=new Ranking(robots);
-        System.out.println(ranking);
+        ranking = new Ranking(robots);
+        winner = ranking.first();
+        logger.info(ranking.toString());
     }
 
-    public  void play () throws NotEnoughWagonCard, EmptyListException {
-        nombreTour = 1;
-        setup();
-        robots=new ArrayList<>();
+    public void play(boolean Logs) throws NotEnoughWagonCard, EmptyListException {
+        if(!Logs) DLogsOff();
+        int tour = 1;
+        setup(Logs);
+        robots = new ArrayList<>();
         robots.add(robotJaune);
         robots.add(robotBleu);
-        //robots.add(robotRouge);
-        while (!(moteurDeJeu.isFinished(robots))){
-            System.out.println("---------------------- Début du tour numéro : " + nombreTour++ + "---------------------- \n");
-            try{
-                robotBleu.choixAction(gestionTrajets,moteurDeJeu);
-                //robotRouge.choixAction(moteurDeJeu,map,gestionTrajets);
-                robotJaune.chooseaction(moteurDeJeu,map,gestionTrajets);}
-            catch(EmptyStackException e){
+
+        while (!(moteurDeJeu.isFinished(robots))) {
+            logger.info("---------------------- Début du tour numéro : " + tour++ + " ----------------------");
+            try {
+                robotBleu.choixAction(gestionTrajets, moteurDeJeu);
+                robotJaune.chooseaction(moteurDeJeu, map, gestionTrajets);
+            } catch (EmptyStackException e) {
+                logger.warning("Fin du jeu prématurée : Pioche vide.");
                 break;
             }
-            System.out.print("\n");
+            logger.info("\n");
         }
         endofGame();
     }
 
+    public Robot getRobotAleatoire(){
+        return robotJaune;
+    }
+
+    public Robot getRobotRoute(){
+        return robotBleu;
+    }
+
+    public Robot getWinner(){
+        return winner;
+    }
+
+    public static void DLogsOn(){
+        logger.setLevel(Level.INFO);
+    }
+
+    public static void DLogsOff(){
+        logger.setLevel(Level.OFF);
+    }
 }
