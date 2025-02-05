@@ -30,14 +30,6 @@ public class LogFormatter extends Formatter
         StringBuilder builder = new StringBuilder();
         builder.append(ANSI_YELLOW);
 
-        builder.append("[");
-        builder.append(calcDate(record.getMillis()));
-        builder.append("]");
-
-        builder.append(" [");
-        builder.append(record.getSourceClassName());
-        builder.append("]");
-
         builder.append(" [");
         builder.append(record.getLevel().getName());
         builder.append("]");

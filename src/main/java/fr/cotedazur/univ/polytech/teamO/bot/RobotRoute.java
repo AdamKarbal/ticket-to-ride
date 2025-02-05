@@ -31,6 +31,9 @@ public class RobotRoute extends Robot{
     public CarteDestination getCurrentDestination() {
         return currentDestination;
     }
+    public void setCurrentDestination(CarteDestination currentDestination) {
+        this.currentDestination = currentDestination;
+    }
 
     // Actions du robot
 
@@ -74,7 +77,7 @@ public class RobotRoute extends Robot{
     @Override
     public void chooseDestination(CarteDestination destination) {
         super.chooseDestination(destination);
-        currentDestination = getDestinations().getMainDeCartes().get(0);
+        currentDestination = getDestinations().getMainDeCartes().getFirst();
         this.villeActuelle=currentDestination.getVille1();
     }
 
@@ -129,7 +132,15 @@ public class RobotRoute extends Robot{
             handleNotEnoughWagonCard(gestionTrajets, moteurDeJeu);
         } catch (NoAvailableTrip noAvailableTrip) { // Cas où tous les trajets sont déjà
             updateCarteDestination(moteurDeJeu);
+            choixPiocheCouleur(moteurDeJeu);
         }
+    }
+
+    public void choixPiocheCouleur(MoteurDeJeu moteurDeJeu) {
+        if(getWagonByCouleur().getOrDefault(moteurDeJeu.findMinWagon(this),0)>=3){
+            choosePioche(moteurDeJeu.findMaxWagon(this),moteurDeJeu);
+        }
+        else choosePioche(moteurDeJeu.findMinWagon(this),moteurDeJeu);
     }
 
 
@@ -142,7 +153,8 @@ public class RobotRoute extends Robot{
         try {
             Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this, villeActuelle, currentDestination.getVille2());
             Couleur couleurTrajet = trajetOpti.getRoute().getCouleur();
-            choosePioche(couleurTrajet, moteurDeJeu);
+            if(trajetOpti.getRoute().isAvailable())choosePioche(couleurTrajet, moteurDeJeu);
+            else piocher(moteurDeJeu);
         } catch (NoAvailableTrip noAvailableTrip) {
             updateCarteDestination(moteurDeJeu);
         }

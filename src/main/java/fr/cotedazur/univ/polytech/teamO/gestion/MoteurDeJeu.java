@@ -109,7 +109,7 @@ public class MoteurDeJeu {
      * @param robot
      * @return
      */
-    private Couleur findMaxWagon(Robot robot) {
+    public Couleur findMaxWagon(Robot robot) {
         if (robot == null || robot.getWagonByCouleur() == null || robot.getWagonByCouleur().isEmpty()) {
             return Couleur.Default; // Valeur par défaut si aucune donnée disponible
         }
@@ -122,6 +122,21 @@ public class MoteurDeJeu {
             }
         }
         return couleurMax;
+    }
+
+    public Couleur findMinWagon(Robot robot) {
+        if (robot == null || robot.getWagonByCouleur() == null || robot.getWagonByCouleur().isEmpty()) {
+            return Couleur.Default; // Valeur par défaut si aucune donnée disponible
+        }
+        Couleur couleurMin = Couleur.Default;
+        int min = 0;
+        for (Map.Entry<Couleur, Integer> entry : robot.getWagonByCouleur().entrySet()) {
+            if (entry.getValue() < min) {
+                min = entry.getValue();
+                couleurMin = entry.getKey();
+            }
+        }
+        return couleurMin;
     }
 
     /**

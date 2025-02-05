@@ -126,37 +126,18 @@ public class RobotNewStrategy extends RobotRoute {
 
     @Override
     public void choixAction(GestionTrajets gestionTrajets,MoteurDeJeu moteurDeJeu){
-        try {
-            chooseAnotherDestination(moteurDeJeu,gestionTrajets);
-            Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this, getCurrentDestination().getVille1(), getCurrentDestination().getVille2());
-            if(trajetOpti==null){
-                updateCarteDestination(moteurDeJeu);
-            }
-            poseTrainOpti(gestionTrajets, moteurDeJeu);
-            Random random=new Random();
-            int choice=random.nextInt(2)+1;
-            if(choice==1){
-                takeMeeplesAleatory(trajetOpti.getFrom(),moteurDeJeu);
-            }
-            if(choice==2){
-                takeMeeplesAleatory(trajetOpti.getTo(),moteurDeJeu);
-            }
-            gestionTrajets.updateAfterTrainPlacement(this,trajetOpti);
-        } catch (NotEnoughWagonCard e) {
-            // Handle insufficient cards by attempting to draw
-            handleNotEnoughWagonCard(gestionTrajets, moteurDeJeu);
-        } catch (NoAvailableTrip noAvailableTrip) { // Cas où tous les trajets sont déjà
-            updateCarteDestination(moteurDeJeu);
-        }
+        chooseAnotherDestination(moteurDeJeu,gestionTrajets);
+        super.choixAction(gestionTrajets,moteurDeJeu);
+
     }
 
     @Override
 
     public void updateCarteDestination(MoteurDeJeu moteurDeJeu) {
-        int currentIndex = getDestinations().getMainDeCartes().indexOf(currentDestination);
+        int currentIndex = getDestinations().getMainDeCartes().indexOf(getCurrentDestination());
         if (currentIndex + 1 < getDestinations().getMainDeCartes().size()) {
-            currentDestination = getDestinations().getMainDeCartes().get(currentIndex + 1);
-            this.villeActuelle = currentDestination.getVille1();
+            setCurrentDestination(getDestinations().getMainDeCartes().get(currentIndex + 1));
+            setVilleActuelle(getCurrentDestination().getVille1());
         } else {
             if(!moteurDeJeu.getPiocheDesinationCourte().getCartesDestinationCourtes().empty())moteurDeJeu.giveDestinationsCard(this, 1);
             else if (!moteurDeJeu.getPiocheDestinationLongue().getCartesDestinationLongues().isEmpty())moteurDeJeu.giveDestinationsCard(this, 2);
