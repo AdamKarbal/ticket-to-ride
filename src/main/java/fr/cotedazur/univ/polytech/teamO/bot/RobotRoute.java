@@ -92,7 +92,11 @@ public class RobotRoute extends Robot{
             this.villeActuelle = currentDestination.getVille1();
         } else {
 
-            if(!moteurDeJeu.getPiocheDestinationLongue().getCartesDestinationLongues().isEmpty())moteurDeJeu.giveDestinationsCard(this, 2); // No more cards, draw new destination cards
+            if(!moteurDeJeu.getPiocheDestinationLongue().getCartesDestinationLongues().isEmpty())
+                moteurDeJeu.giveDestinationsCard(this, 2); // No more cards, draw new destination cards
+            else{
+                moteurDeJeu.giveDestinationsCard(this, 1);
+            }
         }
     }
 
