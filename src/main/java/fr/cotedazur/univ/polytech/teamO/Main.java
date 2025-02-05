@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO;
 
 import fr.cotedazur.univ.polytech.teamO.automatisation.Jeu;
+import fr.cotedazur.univ.polytech.teamO.automatisation.csv;
 import fr.cotedazur.univ.polytech.teamO.classement.EmptyListException;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 
@@ -9,9 +10,19 @@ public class Main {
     public static String  hello(){
         return "Hello world !";
     }
+
+
+
+
    public static void main(String[] args) throws Exception {
        Jeu jeu=new Jeu();
-       jeu.play();
+       csv csv = new csv();
+       //jeu.play();
+       for(int i=0;i<1000;i++){
+           jeu.play();
+           csv.updateStat(jeu);
+       }
+       csv.getCsvWriter().close();
+       System.out.println(100);
    }
-
 }

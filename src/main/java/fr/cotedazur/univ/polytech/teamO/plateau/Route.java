@@ -29,6 +29,12 @@ public class Route {
         return available;
     }
 
+    /**
+     * Cette méthode permet de voir si la route est claimable par en fonction du nbwagon du robot
+     * @param nbWagons
+     * @param wagon
+     * @return
+     */
     public boolean isClaimable(int nbWagons, Wagon wagon) {
         if(couleur==Couleur.Default){
             return nbWagons >= getNbCases() && isAvailable();
