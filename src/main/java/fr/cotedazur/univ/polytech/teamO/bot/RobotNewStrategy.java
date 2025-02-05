@@ -126,28 +126,9 @@ public class RobotNewStrategy extends RobotRoute {
 
     @Override
     public void choixAction(GestionTrajets gestionTrajets,MoteurDeJeu moteurDeJeu){
-        try {
-            chooseAnotherDestination(moteurDeJeu,gestionTrajets);
-            Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this, getCurrentDestination().getVille1(), getCurrentDestination().getVille2());
-            if(trajetOpti==null){
-                updateCarteDestination(moteurDeJeu);
-            }
-            poseTrainOpti(gestionTrajets, moteurDeJeu);
-            Random random=new Random();
-            int choice=random.nextInt(2)+1;
-            if(choice==1){
-                takeMeeplesAleatory(trajetOpti.getFrom(),moteurDeJeu);
-            }
-            if(choice==2){
-                takeMeeplesAleatory(trajetOpti.getTo(),moteurDeJeu);
-            }
-            gestionTrajets.updateAfterTrainPlacement(this,trajetOpti);
-        } catch (NotEnoughWagonCard e) {
-            // Handle insufficient cards by attempting to draw
-            handleNotEnoughWagonCard(gestionTrajets, moteurDeJeu);
-        } catch (NoAvailableTrip noAvailableTrip) { // Cas où tous les trajets sont déjà
-            updateCarteDestination(moteurDeJeu);
-        }
+        chooseAnotherDestination(moteurDeJeu,gestionTrajets);
+        super.choixAction(gestionTrajets,moteurDeJeu);
+
     }
 
     @Override

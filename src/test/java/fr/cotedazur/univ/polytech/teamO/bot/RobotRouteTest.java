@@ -122,4 +122,25 @@ class RobotRouteTest {
         verify(robotSpy,atLeastOnce()).choosePioche(trajetOpti.getRoute().getCouleur(), moteurDeJeu);
     }
 
+    @Test
+    void testChoixCouleurPiocheMin(){
+        RobotRoute robotSpy= spy(robotRoute);
+        robotSpy.chooseDestination(berlinKiel);
+        robotSpy.setVilleActuelle(Ville.Berlin);
+        assertThrows(NoAvailableTrip.class,()-> robotSpy.poseTrainOpti(gestionTrajets,moteurDeJeu));
+        robotSpy.choixAction(gestionTrajets,moteurDeJeu);
+        verify(robotSpy,atLeastOnce()).choosePioche(moteurDeJeu.findMinWagon(robotSpy),moteurDeJeu);
+    }
+
+    @Test
+    void testChoixCouleurPiocheMax(){
+        RobotRoute robotSpy= spy(robotRoute);
+        robotSpy.chooseDestination(berlinKiel);
+        robotSpy.setVilleActuelle(Ville.Berlin);
+        for(int i=0;i<taille-2;i++){
+            robotSpy.piocher(moteurDeJeu);
+        }
+        verify(robotSpy,atLeastOnce()).choosePioche(moteurDeJeu.findMaxWagon(robotSpy),moteurDeJeu);
+    }
+
 }
