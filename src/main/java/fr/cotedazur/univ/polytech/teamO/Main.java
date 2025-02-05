@@ -26,7 +26,6 @@ public class Main {
     private static Jeu jeu = new Jeu();
     private static int routeWins = 0;
     private static int randomWins = 0;
-    private static int newStrategyWins=0;
 
     public static void main(String[] args) throws Exception {
         Commands commands = new Commands();
@@ -42,10 +41,9 @@ public class Main {
             csv.updateStat(jeu);
             if(jeu.getWinner() == jeu.getRobotAleatoire()) randomWins++;
             else if(jeu.getWinner() == jeu.getRobotRoute()) routeWins++;
-            else if (jeu.getWinner() == jeu.getRobotNewStrategy()) newStrategyWins++;
         }
 
-        System.out.println("Aléatoire : " + randomWins + "\n" + "Routes : " + routeWins + "\n" +"NewStrategy : "+newStrategyWins + "\n");
+        System.out.println("Aléatoire : " + randomWins + "\n" + "Routes : " + routeWins + "\n");
 
        /*if(commands.isTwoThousands()){
            //for(int i = 0 ; i < 1000; i++){
