@@ -26,9 +26,12 @@ public class Main {
     private static int route1Wins = 0;
     private static int route2Wins = 0;
     private static int randomWins = 0;
+    private static int newWins = 0;
     private static double TauxVictR1 = 0;
     private static double TauxVictR2 = 0;
     private static double TauxVictRandom = 0;
+    private static double TauxVictNew = 0;
+
 
 
     public static void main(String[] args) throws Exception {
@@ -39,19 +42,22 @@ public class Main {
         csv csv = new csv();
         if(commands.isTwoThousands()){
             for(int i = 0 ; i < 1000; i++){
-                jeu.play(false,1);
+                jeu.play(false,1); //Version 3 Pour tester avec d'autres bots
                 if(commands.isCsvCommand()){
                     csv.updateStat(jeu);
                 }
                 if(jeu.getWinner() == jeu.getRobotAleatoire()) randomWins++;
                 else if(jeu.getWinner() == jeu.getRobotRoute1()) route1Wins++;
+                //else if(jeu.getWinner() == jeu.getRobotNewStrategy()) newWins++;
            }
             logger.setLevel(Level.INFO);
             TauxVictRandom =((double) randomWins / 10);
             TauxVictR1 = ((double) route1Wins / 10);
+            //TauxVictNew = ((double) newWins / 10);
 
             logger.info("\nPremières 1000 parties :\n" + "Robot Aleatoire a gagné "+ randomWins + " parties, soit "+ TauxVictRandom +"% et perdu "+ (1000-randomWins) +" parties, soit " + (100-TauxVictRandom) +"%\n" +
                     "Robot Route a gagné "+ route1Wins + " parties, soit "+ TauxVictR1 +"% et perdu "+ (1000-route1Wins) +" parties, soit " + (100-TauxVictR1) +"%\n");
+                           // "Robot Nico a gagné "+ newWins + " parties, soit "+ TauxVictNew +"% et perdu "+ (1000-newWins) +" parties, soit " + (100-TauxVictNew) +"%");
             logger.setLevel(Level.OFF);
 
            route1Wins = 0;

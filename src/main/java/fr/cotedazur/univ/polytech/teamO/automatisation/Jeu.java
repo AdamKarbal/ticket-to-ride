@@ -27,6 +27,7 @@ public class Jeu {
     RobotRoute robotRoute2;
     RobotRoute robotRoute1;
     RobotAleatoire robotAleatoire;
+    RobotNewStrategy robotNewStrategy;
     ArrayList<Robot> robots;
     Ranking ranking;
     MoteurDeJeu moteurDeJeu;
@@ -64,6 +65,7 @@ public class Jeu {
         robotRoute1 = new RobotRoute(Couleur.Bleu);
         robotAleatoire = new RobotAleatoire(Couleur.Jaune, random);
         robotRoute2 = new RobotRoute(Couleur.Vert);
+        robotNewStrategy = new RobotNewStrategy(Couleur.Rouge);
         robots = new ArrayList<>();
         this.nombreTour = 0;
 
@@ -79,7 +81,7 @@ public class Jeu {
         gestionEtatJeu = new GestionEtatJeu(gestionTrajets);
         if(!Logs) gestionEtatJeu.DLogsOff();
 
-        if(Version == 1 || Version == 3) {//Faudra rajouter un if pour la V3 avec tous les bots)
+        if(Version == 1) {//Faudra rajouter un if pour la V3 avec tous les bots)
             robots.add(robotRoute1);
             robots.add(robotAleatoire);
             for (int i = 0; i < 4; i++) {
@@ -98,6 +100,19 @@ public class Jeu {
             }
             robotRoute2.init(moteurDeJeu);
             robotRoute1.init(moteurDeJeu);
+        }
+        else if(Version == 3) {
+            robots.add(robotRoute1);
+            robots.add(robotNewStrategy);
+            robots.add(robotAleatoire);
+            for (int i = 0; i < 4; i++) {
+                robotRoute1.piocher(moteurDeJeu);
+                robotNewStrategy.piocher(moteurDeJeu);
+                robotAleatoire.piocher(moteurDeJeu);
+            }
+            robotRoute1.init(moteurDeJeu);
+            robotNewStrategy.init(moteurDeJeu);
+            robotAleatoire.init(moteurDeJeu);
         }
 
         logger.info("---------------------- Le jeu est prêt à démarrer ! ----------------------");
@@ -122,17 +137,18 @@ public class Jeu {
         setup(Logs, Version);
         robots = new ArrayList<>();
         if(Version == 1) {
-            robots.add(robotAleatoire);
             robots.add(robotRoute1);
+            robots.add(robotAleatoire);
             loopV1();
         }
         else if(Version == 2) {
-            robots.add(robotRoute2);
             robots.add(robotRoute1);
+            robots.add(robotRoute2);
             loopV2();
         }
         else if(Version == 3) {
             robots.add(robotRoute1);
+            robots.add(robotNewStrategy);
             robots.add(robotAleatoire);
             loopV3();
         }
@@ -145,6 +161,10 @@ public class Jeu {
 
     public Robot getRobotRoute1(){
         return robotRoute1;
+    }
+
+    public Robot getRobotNewStrategy(){
+        return robotNewStrategy;
     }
 
     public Robot getRobotRoute2(){
@@ -203,6 +223,7 @@ public class Jeu {
             try {
                 robotRoute1.choixAction(gestionTrajets, moteurDeJeu);
                 robotAleatoire.chooseaction(moteurDeJeu, map, gestionTrajets);
+                robotNewStrategy.choixAction(gestionTrajets, moteurDeJeu);
             }
             catch (EmptyStackException e) {
                 logger.warning("Fin du jeu prématurée : Pioche vide.");
