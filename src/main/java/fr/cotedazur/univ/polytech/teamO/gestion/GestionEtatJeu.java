@@ -3,8 +3,13 @@ package fr.cotedazur.univ.polytech.teamO.gestion;
 import fr.cotedazur.univ.polytech.teamO.LogFormatter;
 import fr.cotedazur.univ.polytech.teamO.affichage.Affichage;
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
+import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.meeples.MCouleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
+import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
+import fr.cotedazur.univ.polytech.teamO.plateau.Route;
+import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
+import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
 import java.util.*;
 import java.util.logging.ConsoleHandler;
@@ -31,6 +36,12 @@ public class GestionEtatJeu {
         this.affichage = new Affichage();
     }
 
+    /**
+     * Cette méthode est appelée à la fin de la partie pour vérifier si les cartes destinations sont complétées.
+     * Si elles le sont, les points nécessaires sont ajoutés ; sinon, ils sont retirés.
+     * @param robot
+     */
+
     public void updateScoreCarteDestination(Robot robot) {
         for (CarteDestination carteDestination : robot.getDestinations().getMainDeCartes()) {
             if (!carteDestination.isCompleted()) {
@@ -43,7 +54,11 @@ public class GestionEtatJeu {
         }
     }
 
-    public void isDestinationsCardCompleted(List<Robot> robots) {
+    /**
+     * Cette méthode permet de definir si une carte destination est completer ou non
+     * @param robots
+     */
+    public void isDestinationsCardCompleted(List<Robot> robots) { // refactor cette méthode en combinant avec celle d'en haut ?
         for (Robot robot : robots) {
             for (CarteDestination card : robot.getDestinations().getMainDeCartes()) {
                 if (gestionTrajets.isConnected(card.getVille1(), card.getVille2(), robot.getTrajet()) ||
@@ -54,6 +69,10 @@ public class GestionEtatJeu {
         }
     }
 
+    /**
+     * Cette méthode est appeller en fin de partie pour désigner qui a le plus de meeples par couleur, il ajoute les points en conséquences.
+     * @param robots
+     */
     public void whoHaveMostMeeples(List<Robot> robots) {
         logger.info("Concernant les meeples ...");
         Robot first = robots.get(0);
@@ -86,17 +105,16 @@ public class GestionEtatJeu {
         }
     }
 
+    /**
+     * Cette méthode est appeller en fin de partie pour dire qui a le plus de carte destination, les points sont ajouter en consequence.
+     * @param robots
+     */
     public void whoHaveMostDestinationCards(List<Robot> robots) {
         List<Robot> winners = new ArrayList<>();
         int max = 0;
 
         for (Robot robot : robots) {
-            int nbclaim = 0;
-            for (CarteDestination card : robot.getDestinations().getMainDeCartes()) {
-                if (card.isCompleted()) {
-                    nbclaim++;
-                }
-            }
+            int nbclaim = nombreCarteDestination(robot);
             if (nbclaim > max) {
                 max = nbclaim;
                 winners.clear();
@@ -113,7 +131,26 @@ public class GestionEtatJeu {
         }
     }
 
-    public void endOfGameUpdate(List<Robot> robots) {
+    /**
+     * Cette méthode est utiliser pour les statistiques du jeu, il dit combien de carte destination le robot a completer
+     * @param robot
+     * @return
+     */
+    public int nombreCarteDestination(Robot robot) {
+        int nbclaim = 0;
+        for (int i = 0; i < robot.getDestinations().getMainDeCartes().size(); i++) {
+            if (robot.getDestinations().getMainDeCartes().get(i).isCompleted()) {
+                nbclaim++;
+            }
+        }
+        return nbclaim;
+    }
+
+    /**
+     * Cette méthode est appeler lors de la fin de partie pour mettre à jour les informations necessaires.
+     * @param robots
+     */
+    public void endOfGameUpdate(List<Robot> robots){
         whoHaveMostDestinationCards(robots);
         whoHaveMostMeeples(robots);
     }
