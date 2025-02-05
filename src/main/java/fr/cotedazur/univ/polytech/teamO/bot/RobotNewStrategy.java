@@ -153,10 +153,10 @@ public class RobotNewStrategy extends RobotRoute {
     @Override
 
     public void updateCarteDestination(MoteurDeJeu moteurDeJeu) {
-        int currentIndex = getDestinations().getMainDeCartes().indexOf(currentDestination);
+        int currentIndex = getDestinations().getMainDeCartes().indexOf(getCurrentDestination());
         if (currentIndex + 1 < getDestinations().getMainDeCartes().size()) {
-            currentDestination = getDestinations().getMainDeCartes().get(currentIndex + 1);
-            this.villeActuelle = currentDestination.getVille1();
+            setCurrentDestination(getDestinations().getMainDeCartes().get(currentIndex + 1));
+            setVilleActuelle(getCurrentDestination().getVille1());
         } else {
             if(!moteurDeJeu.getPiocheDesinationCourte().getCartesDestinationCourtes().empty())moteurDeJeu.giveDestinationsCard(this, 1);
             else if (!moteurDeJeu.getPiocheDestinationLongue().getCartesDestinationLongues().isEmpty())moteurDeJeu.giveDestinationsCard(this, 2);

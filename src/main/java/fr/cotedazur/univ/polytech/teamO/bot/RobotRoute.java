@@ -31,6 +31,9 @@ public class RobotRoute extends Robot{
     public CarteDestination getCurrentDestination() {
         return currentDestination;
     }
+    public void setCurrentDestination(CarteDestination currentDestination) {
+        this.currentDestination = currentDestination;
+    }
 
     // Actions du robot
 
