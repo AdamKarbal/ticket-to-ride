@@ -85,7 +85,7 @@
 
 ### Documentation et exécution
 
-- Chaque méthode possède une [`JavaDoc` explicative](http://localhost:63342/ttr-germany-24-25-fise-24-25-ttr-o-se/JarName/javadoc/index.html?_ijt=r39kaos9681hidp8mte5d3cib&_ij_reload=RELOAD_ON_SAVE).
+- Chaque méthode possède une [`JavaDoc` explicative](javadoc/index.html).
 - Instructions d’exécution disponibles dans le `Readme`.
 
 ### État de la base de code
