@@ -38,7 +38,7 @@ class RobotAleatoireTest {
     GameMap map;
     GestionTrajets gestionTrajets;
     @Mock Random random = mock(Random.class);
-
+    @Mock PiocheSurTable piocheMock = mock(PiocheSurTable.class);
     @BeforeEach
     void setUp() {
         robot=new RobotAleatoire(Couleur.Bleu, random);
@@ -92,6 +92,8 @@ class RobotAleatoireTest {
     @Test
     void testChooseAction80100() throws NotEnoughWagonCard {
         RobotAleatoire robotSpy= spy(robot);
+        moteurDeJeu= new MoteurDeJeu(pioche,piocheMock,piocheDestinationLongue,piocheDestinationCourte);
+        when(piocheMock.piocher(any())).thenReturn(new CarteWagon(Couleur.Noir));
         when(random.nextInt(100)).thenReturn(81);
         robotSpy.chooseaction(moteurDeJeu,map,gestionTrajets);
         verify(robotSpy, atLeastOnce()).chooseactionnotenought(moteurDeJeu);
