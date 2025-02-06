@@ -41,6 +41,7 @@ class PiocheSurTableTest {
     @Test
     void piocher(){
         assertThrows(NullPointerException.class,()->piocheSurTable.piocher(new CarteWagon(Couleur.Bleu)));
+        System.out.println(piocheSurTable.toString());
     }
 
 }

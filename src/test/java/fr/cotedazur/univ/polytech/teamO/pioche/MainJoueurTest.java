@@ -43,6 +43,7 @@ public class MainJoueurTest {
          MainJoueur1.addCarte(CarteWagonJaune);
          MainJoueur1.addCarte(CarteWagonViolet);
          MainJoueur1.addCarte(CarteWagonBlanc);
+         assertTrue(MainJoueur1.containCarte(CarteWagonNoir));
      }
 
      @Test
