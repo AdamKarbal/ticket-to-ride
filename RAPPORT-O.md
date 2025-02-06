@@ -85,7 +85,7 @@
 
 ### Documentation et exécution
 
-- Chaque méthode possède une [`JavaDoc` explicative](javadoc/index.html).
+- Chaque méthode possède une [`JavaDoc` explicative](javadoc/index.html). Il faut télécharger le fichier et l'ouvrir avec son navigateur.
 - Instructions d’exécution disponibles dans le `Readme`.
 
 ### État de la base de code
