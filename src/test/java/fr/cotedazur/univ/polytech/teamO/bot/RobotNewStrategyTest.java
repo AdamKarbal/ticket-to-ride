@@ -25,7 +25,7 @@ class RobotNewStrategyTest {
     MoteurDeJeu moteurDeJeu;
     GestionTrajets gestionTrajets;
     GameMap gameMap;
-    CarteDestination berLeipz;
+    CarteDestination berlinLeipzigDestination;
 
     @BeforeEach
     void setUp() {
@@ -37,7 +37,7 @@ class RobotNewStrategyTest {
         moteurDeJeu=new MoteurDeJeu(pioche,piocheSurTable,new PiocheDestinationLongue(),new PiocheDestinationCourte());
         piocheSurTable.initPiocheSurTable(moteurDeJeu);
         gestionTrajets=new GestionTrajets(gameMap);
-        berLeipz= new CarteDestination(Couleur.Bleu,Ville.Berlin,Ville.Leipzig,10);
+        berlinLeipzigDestination= new CarteDestination(Couleur.Bleu,Ville.Berlin,Ville.Leipzig,10);
 
     }
 
@@ -87,12 +87,30 @@ class RobotNewStrategyTest {
     @Test
     void choixAction(){
         RobotNewStrategy robotSpy= spy(robotNewStrategy);
-        robotSpy.chooseDestination(berLeipz);
+        robotSpy.chooseDestination(berlinLeipzigDestination);
         robotSpy.setVilleActuelle(Ville.Berlin);
         assertThrows(NotEnoughWagonCard.class,()-> robotSpy.poseTrainOpti(gestionTrajets,moteurDeJeu));
         robotSpy.choixAction(gestionTrajets,moteurDeJeu);
         verify(robotSpy,atLeastOnce()).choosePioche(moteurDeJeu.findMinWagon(robotSpy),moteurDeJeu);
 
+    }
+    @Test
+    void testChooseAnotherDestination(){
+        robotNewStrategy.chooseDestination(berlinLeipzigDestination);
+        robotNewStrategy.getCurrentDestination().setCompleted(true);
+        robotNewStrategy.chooseAnotherDestination(moteurDeJeu);
+        System.out.println(robotNewStrategy.getDestinations().getMainDeCartes());
+        assertEquals(2,robotNewStrategy.getDestinations().getMainDeCartes().size());
+
+    }
+
+    @Test
+    void testInit(){
+        robotNewStrategy.chooseDestinations(moteurDeJeu);
+        assertEquals(2,robotNewStrategy.getDestinations().getMainDeCartes().size());
+        robotNewStrategy.getDestinations().getMainDeCartes().clear();
+        robotNewStrategy.init(moteurDeJeu,gestionTrajets);
+        assertEquals(2,robotNewStrategy.getDestinations().getMainDeCartes().size());
     }
 
 
