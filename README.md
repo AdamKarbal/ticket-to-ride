@@ -1,5 +1,4 @@
 ﻿# ttr-germany-24-25-fise-24-25-ttr-o-se
-# Les Aventuriers du Rail - Simulation
 
 ## Prérequis
 Avant de lancer le jeu, assurez-vous d'avoir :
