@@ -2,9 +2,8 @@ package fr.cotedazur.univ.polytech.teamO;
 
 import com.beust.jcommander.JCommander;
 import fr.cotedazur.univ.polytech.teamO.automatisation.Jeu;
-import fr.cotedazur.univ.polytech.teamO.automatisation.csv;
+import fr.cotedazur.univ.polytech.teamO.automatisation.Csv;
 
-import java.io.FileNotFoundException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
@@ -57,7 +56,7 @@ public class Main {
        JCommander JCommander = new JCommander(commands);
 
        JCommander.parse(args);
-        csv csv = new csv();
+        Csv csv = new Csv();
 
         if(commands.isTwoThousands()){
             for(int i = 0 ; i < 1000; i++){
