@@ -88,8 +88,8 @@ class RobotNewStrategyTest {
     void choixAction(){
         RobotNewStrategy robotSpy= spy(robotNewStrategy);
         robotSpy.chooseDestination(berlinLeipzigDestination);
-        robotSpy.setVilleActuelle(Ville.Berlin);
-        assertThrows(NotEnoughWagonCard.class,()-> robotSpy.poseTrainOpti(gestionTrajets,moteurDeJeu));
+        robotSpy.setVilleActuelle(Ville.Leipzig);
+        assertThrows(NoAvailableTrip.class,()-> robotSpy.poseTrainOpti(gestionTrajets,moteurDeJeu));
         robotSpy.choixAction(gestionTrajets,moteurDeJeu);
         verify(robotSpy,atLeastOnce()).choosePioche(moteurDeJeu.findMinWagon(robotSpy),moteurDeJeu);
 
