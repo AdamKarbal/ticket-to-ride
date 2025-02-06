@@ -21,7 +21,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class mRobotTest {
+class RobotTest {
     Robot robot;
     CarteWagon carteBleue;
     CarteWagon carteJaune;

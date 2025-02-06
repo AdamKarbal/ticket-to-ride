@@ -61,12 +61,5 @@ public class GameMapTest {
         Ville.Leipzig.PDisplay();
     }
 
-    @Test
-    void getCorrespTest(){
-       /* ArrayList<Trajet> corresp = new ArrayList<Trajet>(gameMap.getCorresp(Ville.Magdeburg));
-        //assertTrue(corresp.contains(Ville.Hannover));
-        assertTrue(corresp.contains(Ville.Leipzig));
-        assertTrue(corresp.contains(Ville.Berlin));*/
-    }
 
 }
