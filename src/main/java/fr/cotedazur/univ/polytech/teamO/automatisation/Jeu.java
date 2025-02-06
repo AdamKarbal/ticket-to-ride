@@ -52,6 +52,38 @@ public class Jeu {
         return gestionEtatJeu;
     }
 
+    public Robot getRobotAleatoire(){
+        return robotAleatoire;
+    }
+
+    public Robot getRobotRoute1(){
+        return robotRoute1;
+    }
+
+    public Robot getRobotNewStrategy(){
+        return robotNewStrategy;
+    }
+
+    public Robot getRobotRoute2(){
+        return robotRoute2;
+    }
+
+    public Robot getWinner(){
+        return winner;
+    }
+
+    public ArrayList<Robot> getRobots(){
+        return robots;
+    }
+
+    public static void DLogsOn(){
+        logger.setLevel(Level.INFO);
+    }
+
+    public static void DLogsOff(){
+        logger.setLevel(Level.OFF);
+    }
+
     static{
         logger.setUseParentHandlers(false);
         ConsoleHandler handler = new ConsoleHandler();
@@ -170,38 +202,6 @@ public class Jeu {
             loopV3();
         }
         endofGame();
-    }
-
-    public Robot getRobotAleatoire(){
-        return robotAleatoire;
-    }
-
-    public Robot getRobotRoute1(){
-        return robotRoute1;
-    }
-
-    public Robot getRobotNewStrategy(){
-        return robotNewStrategy;
-    }
-
-    public Robot getRobotRoute2(){
-        return robotRoute2;
-    }
-
-    public Robot getWinner(){
-        return winner;
-    }
-
-    public ArrayList<Robot> getRobots(){
-        return robots;
-    }
-
-    public static void DLogsOn(){
-        logger.setLevel(Level.INFO);
-    }
-
-    public static void DLogsOff(){
-        logger.setLevel(Level.OFF);
     }
 
     /**

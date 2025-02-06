@@ -57,6 +57,7 @@ class RobotAleatoireTest {
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);
         map = new GameMap();
         gestionTrajets= new GestionTrajets(map);
+        piocheSurTable.initPiocheSurTable(moteurDeJeu);
     }
 
     /*@Test
@@ -88,24 +89,13 @@ class RobotAleatoireTest {
         verify(robotSpy, times(1)).poseTrainAleatoire(moteurDeJeu,map,gestionTrajets);
     }
 
-    @Test
-    void testChooseActionPiocheTable() throws NotEnoughWagonCard, EmptyStackException{
-        /*RobotAleatoire robotSpy = spy(robot);
-        when(random.nextInt(100)).thenReturn(88);
-        when(random.nextInt(moteurDeJeu.getPiocheSurTable().size())).thenReturn(0);
-        CarteWagon carteMock = mock(CarteWagon.class);
-        when(moteurDeJeu.getPiocheSurTable().carteAtPosI(0)).thenReturn(carteMock);
-        robotSpy.chooseaction(moteurDeJeu,map);
-        verify(robotSpy, times(1)).piocherSurTable(carteMock,moteurDeJeu);*/
-    }
 
     @Test
     void testChooseDestination(){
         RobotAleatoire robotSpy = spy(robot);
-        MoteurDeJeu moteurDeJeuSpy = spy(moteurDeJeu);
         when(random.nextInt(2)).thenReturn(0);
         robotSpy.chooseDestination(moteurDeJeu);
-       // verify(moteurDeJeuSpy, atLeastOnce()).giveDestinationsCard(robotSpy,1);
+       verify(robotSpy, atLeastOnce()).getDestinations();
     }
 
     @Test
