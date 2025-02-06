@@ -67,16 +67,16 @@ public class Main {
                 }
                 if(jeu.getWinner() == jeu.getRobotAleatoire()) randomWins++;
                 else if(jeu.getWinner() == jeu.getRobotRoute1()) route1Wins++;
-                //else if(jeu.getWinner() == jeu.getRobotNewStrategy()) newWins++;
+                else if(jeu.getWinner() == jeu.getRobotNewStrategy()) newWins++;
            }
             logger.setLevel(Level.INFO);
             TauxVictRandom =((double) randomWins / 10);
             TauxVictR1 = ((double) route1Wins / 10);
-            //TauxVictNew = ((double) newWins / 10);
+            TauxVictNew = ((double) newWins / 10);
 
             logger.info("\nPremières 1000 parties :\n" + "Robot Aleatoire a gagné "+ randomWins + " parties, soit "+ TauxVictRandom +"% et perdu "+ (1000-randomWins) +" parties, soit " + (100-TauxVictRandom) +"%\n" +
-                    "Robot Route a gagné "+ route1Wins + " parties, soit "+ TauxVictR1 +"% et perdu "+ (1000-route1Wins) +" parties, soit " + (100-TauxVictR1) +"%\n");
-                           // "Robot Nico a gagné "+ newWins + " parties, soit "+ TauxVictNew +"% et perdu "+ (1000-newWins) +" parties, soit " + (100-TauxVictNew) +"%");
+                    "Robot Route a gagné "+ route1Wins + " parties, soit "+ TauxVictR1 +"% et perdu "+ (1000-route1Wins) +" parties, soit " + (100-TauxVictR1) +"%\n"
+                           +"Robot Nico a gagné "+ newWins + " parties, soit "+ TauxVictNew +"% et perdu "+ (1000-newWins) +" parties, soit " + (100-TauxVictNew) +"%\n");
             logger.setLevel(Level.OFF);
 
            route1Wins = 0;
@@ -88,10 +88,12 @@ public class Main {
                }
                if(jeu.getWinner() == jeu.getRobotRoute1()) route1Wins++;
                else if(jeu.getWinner() == jeu.getRobotRoute2()) route2Wins++;
+               else if(jeu.getWinner() == jeu.getRobotNewStrategy()) newWins++;
            }
             logger.setLevel(Level.INFO);
             TauxVictR1 =((double) route1Wins / 10);
             TauxVictR2 = ((double) route2Wins / 10);
+            TauxVictNew = ((double) newWins / 10);
 
             logger.info("\nDeuxièmes 1000 parties :\n" + "Robot Route 1 a gagné "+ route1Wins + " parties, soit "+ TauxVictR1 +"% et perdu "+ (1000-route1Wins) +" parties, soit " + (100-TauxVictR1) +"%\n" +
                     "Robot Route 2 a gagné "+ route2Wins + " parties, soit "+ TauxVictR2 +"% et perdu "+ (1000-route2Wins) +" parties, soit " + (100-TauxVictR2) +"%\n");

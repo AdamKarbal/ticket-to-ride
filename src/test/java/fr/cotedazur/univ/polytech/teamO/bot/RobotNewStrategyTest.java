@@ -3,8 +3,10 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
+import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
+import fr.cotedazur.univ.polytech.teamO.plateau.NoAvailableTrip;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class RobotNewStrategyTest {
     Pioche pioche;
@@ -34,6 +37,7 @@ class RobotNewStrategyTest {
         moteurDeJeu=new MoteurDeJeu(pioche,piocheSurTable,new PiocheDestinationLongue(),new PiocheDestinationCourte());
         piocheSurTable.initPiocheSurTable(moteurDeJeu);
         gestionTrajets=new GestionTrajets(gameMap);
+        berLeipz= new CarteDestination(Couleur.Bleu,Ville.Berlin,Ville.Leipzig,10);
 
     }
 
@@ -62,5 +66,34 @@ class RobotNewStrategyTest {
         // Vérifie que le robot détecte une ville commune (villeB)
         assertTrue(robotNewStrategy.hasVillesCommunes());
     }
+
+    @Test
+    void testChooseBetterDestination() {
+        robotNewStrategy.getDestinations().getMainDeCartes().addAll(List.of(new CarteDestination(Couleur.Bleu, Ville.Niederlande,Ville.Düsseldorf,10),new CarteDestination(Couleur.Marron, Ville.Berlin,Ville.Bremerhaven,12),new CarteDestination(Couleur.Bleu, Ville.Leipzig,Ville.Hannover,8),new CarteDestination(Couleur.Marron, Ville.Augsburg,Ville.Dortmund,16)));
+        assertFalse(robotNewStrategy.hasVillesCommunes());
+        robotNewStrategy.refuseDestinations(moteurDeJeu);
+        assertEquals(new ArrayList<>(List.of(new CarteDestination(Couleur.Marron, Ville.Berlin,Ville.Bremerhaven,12),new CarteDestination(Couleur.Marron, Ville.Augsburg,Ville.Dortmund,16))),robotNewStrategy.getDestinations().getMainDeCartes());
+
+    }
+
+    @Test
+    void testSortWithFindingPath(){
+        robotNewStrategy.getDestinations().getMainDeCartes().addAll(List.of(new CarteDestination(Couleur.Bleu, Ville.Niederlande,Ville.Düsseldorf,10),new CarteDestination(Couleur.Marron, Ville.Berlin,Ville.Bremerhaven,12),new CarteDestination(Couleur.Bleu, Ville.Leipzig,Ville.Hannover,8),new CarteDestination(Couleur.Marron, Ville.Augsburg,Ville.Dortmund,16)));
+        robotNewStrategy.refuseDestinations(moteurDeJeu);
+        robotNewStrategy.findingShortestPathForDestinations(moteurDeJeu,gestionTrajets);
+        assertEquals(new ArrayList<>(List.of(new CarteDestination(Couleur.Marron, Ville.Berlin,Ville.Bremerhaven,12),new CarteDestination(Couleur.Marron, Ville.Augsburg,Ville.Dortmund,16))),robotNewStrategy.getDestinations().getMainDeCartes());
+    }
+
+    @Test
+    void choixAction(){
+        RobotNewStrategy robotSpy= spy(robotNewStrategy);
+        robotSpy.chooseDestination(berLeipz);
+        robotSpy.setVilleActuelle(Ville.Berlin);
+        assertThrows(NotEnoughWagonCard.class,()-> robotSpy.poseTrainOpti(gestionTrajets,moteurDeJeu));
+        robotSpy.choixAction(gestionTrajets,moteurDeJeu);
+        verify(robotSpy,atLeastOnce()).choosePioche(moteurDeJeu.findMinWagon(robotSpy),moteurDeJeu);
+
+    }
+
 
 }
