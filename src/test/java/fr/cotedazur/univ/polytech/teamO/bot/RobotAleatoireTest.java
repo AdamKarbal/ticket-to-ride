@@ -60,14 +60,14 @@ class RobotAleatoireTest {
         piocheSurTable.initPiocheSurTable(moteurDeJeu);
     }
 
-    /*@Test
+    @Test
     void testChooseAction() throws NotEnoughWagonCard {
         robot=new RobotAleatoire(Couleur.Bleu, random);
         int taille = pioche.size();
         for(int i=0;i<taille;i++) robot.piocher(moteurDeJeu);
         when(random.nextInt(anyInt())).thenReturn(21);
-        robot.chooseaction(moteurDeJeu,map);
-    }*/
+        robot.chooseaction(moteurDeJeu, map, gestionTrajets);
+    }
 
     @Test
     void testChooseActionPosePioche() throws NotEnoughWagonCard, EmptyStackException {
@@ -88,6 +88,33 @@ class RobotAleatoireTest {
         robotSpy.chooseaction(moteurDeJeu,map,gestionTrajets);
         verify(robotSpy, times(1)).poseTrainAleatoire(moteurDeJeu,map,gestionTrajets);
     }
+
+    @Test
+    void testChooseAction80100() throws NotEnoughWagonCard {
+        RobotAleatoire robotSpy= spy(robot);
+        when(random.nextInt(100)).thenReturn(81);
+        robotSpy.chooseaction(moteurDeJeu,map,gestionTrajets);
+        verify(robotSpy, atLeastOnce()).chooseactionnotenought(moteurDeJeu);
+        verify(robotSpy,atLeastOnce()).piocherSurTable(any(),any());
+
+    }
+
+    @Test
+    void testChooseActionNotEnoughtFirstRandom(){
+        RobotAleatoire robotSpy= spy(robot);
+        when(random.nextInt(100)).thenReturn(40);
+        robotSpy.chooseactionnotenought(moteurDeJeu);
+        verify(robotSpy, atLeastOnce()).chooseactionnotenought(moteurDeJeu);
+    }
+
+    @Test
+    void testChooseActionNotEnoughtSecondRandom(){
+        RobotAleatoire robotSpy= spy(robot);
+        when(random.nextInt(100)).thenReturn(60);
+        robotSpy.chooseactionnotenought(moteurDeJeu);
+        verify(robotSpy, atLeastOnce()).chooseactionnotenought(moteurDeJeu);
+        verify(robotSpy,atLeastOnce()).piocherSurTable(any(),any());    }
+
 
 
     @Test
