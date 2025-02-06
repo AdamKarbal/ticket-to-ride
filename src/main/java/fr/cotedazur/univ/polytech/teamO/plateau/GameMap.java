@@ -19,15 +19,25 @@ public class GameMap {
         init();
     }
 
-    //Méthode pour récupérer une couleur au hasard parmi les couleurs des Meeples
-
+    /**
+     * Cette méthode fournit une couleur aléatoire de meeple.
+     * Cela permet, notamment quand dans une ville des meeples d'une couleur donnée
+     * existent déjà, de boucler sur cette méthode jusqu'à tomber sur une couleur non utilisée.
+     * @param enumClass Ce paramètre représente un élément générique, mais de type Enum. Dans notre cas, l'énum MCouleur.
+     * @return Un élément de l'énum MCouleur pour le placer sur la ville
+     * @param <T>
+     */
     public <T extends Enum<MCouleur>> T getRandomMeepleColor(Class<T> enumClass) {
         T[] Couleurs = enumClass.getEnumConstants(); // Récupérer les valeurs de l'énum sous forme d'un tableau
         int randomIndex = new Random().nextInt(Couleurs.length); // Générer un index aléatoire
         return Couleurs[randomIndex];
     }
 
-    //Initialisation
+    /**
+     * Cette méthode sert à distribuer de manière aléatoire les meeples
+     * à travers les ville en suivant le nombre de meeple par viller indiqué dans
+     * les règles du jeu.
+     */
     public void init() {
         //Initialisation
             Random random = new Random();
@@ -219,7 +229,13 @@ public class GameMap {
         return map;
     }
 
-    // Méthode
+    /**
+     * Cette méthode permet de créer un trajet,, d'une couleur et d'une longueur donnée, entre deux villes.
+     * @param ville
+     * @param voisin
+     * @param nbCases
+     * @param couleur
+     */
     void ajouterTrajet(Ville ville, Ville voisin, int nbCases, Couleur couleur){
         Trajet trajet1 = new Trajet(ville,voisin,new Route(nbCases,couleur));
         Trajet trajet2 = new Trajet(voisin,ville,new Route(nbCases,couleur));
@@ -233,6 +249,13 @@ public class GameMap {
         return map.get(ville);
     }
 
+    /**
+     * Cette méthode permet de récupérer la liste des trajets entre une
+     * ville de départ donnée et chacune de ses villes voisines. Cela sert pour
+     * l'algorithme du robot à stratégie axée Meeples.
+     * @param VilleDeDepart
+     * @return Une ArrayList d'objets Trajet
+     */
     public ArrayList<Trajet> getCorresp(Ville VilleDeDepart){
         ArrayList<Trajet> corresp = new ArrayList<Trajet>();
         for (Trajet trajet : trajets) {
@@ -243,6 +266,13 @@ public class GameMap {
         return corresp;
     }
 
+    /**
+     * Cette méthode donne, en utilisant le résultat de l'appel à la méthode
+     * getCorresp(), le meilleur trajet que le robot à stratégie Meeple
+     * peut poser en partant de la ville de départ.
+     * @param corresp
+     * @return Un trajet à poser
+     */
     public Trajet bestNext(ArrayList<Trajet> corresp){
         int maxMeeples = 0;
         Trajet bestNext = null;
@@ -255,6 +285,12 @@ public class GameMap {
         return bestNext;
     }
 
+    /**
+     * Cette méthode a pour unique but de retourner la ville sur tout le plateau
+     * qui actuellement possède le plus de Meeples à récupérer. Cela sert l'algorithme
+     * du robot à stratégie axée meeples.
+     * @return Un objet de type Ville.
+     */
     public Ville getVilleMaxMeeples(){
         int maxMeeples = 0;
         Ville maxVille = null;

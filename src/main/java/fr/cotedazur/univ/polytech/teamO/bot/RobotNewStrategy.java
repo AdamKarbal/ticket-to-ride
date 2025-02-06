@@ -3,10 +3,7 @@ package fr.cotedazur.univ.polytech.teamO.bot;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.gestion.GestionTrajets;
 import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
-import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.CarteDestination;
-import fr.cotedazur.univ.polytech.teamO.plateau.NoAvailableTrip;
-import fr.cotedazur.univ.polytech.teamO.plateau.Trajet;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
 import java.util.*;
@@ -18,14 +15,20 @@ public class RobotNewStrategy extends RobotRoute {
     public RobotNewStrategy(Couleur couleur) {
         super(couleur);
     }
-    @Override
-    public void chooseDestination(CarteDestination carteDestination) {
-        super.chooseDestination(carteDestination);
-    }
 
     public void chooseShortDestination(MoteurDeJeu moteurDeJeu) {
-        for(int i =0; i<4; i++){
+        Random rand = new Random();
+        int choice= rand.nextInt(2)+1;
+        if(moteurDeJeu.getPiocheDestinationLongue().getCartesDestinationLongues().isEmpty()) {
             CarteDestination carteDestination=moteurDeJeu.giveDestinationsCard(this,1);
+            chooseDestination(carteDestination);
+        }
+        else if(moteurDeJeu.getPiocheDesinationCourte().getCartesDestinationCourtes().isEmpty()) {
+            CarteDestination carteDestination=moteurDeJeu.giveDestinationsCard(this,2);
+            chooseDestination(carteDestination);
+        }
+        else {
+            CarteDestination carteDestination=moteurDeJeu.giveDestinationsCard(this,choice);
             chooseDestination(carteDestination);
         }
     }
@@ -41,19 +44,19 @@ public class RobotNewStrategy extends RobotRoute {
         refuseDestinations(moteurDeJeu);
 
     }
-    @Override
 
-    public void init(MoteurDeJeu moteurDeJeu) {
+    public void init(MoteurDeJeu moteurDeJeu,GestionTrajets gestionTrajets) {
         chooseDestinations(moteurDeJeu);
+        findingShortestPathForDestinations(moteurDeJeu,gestionTrajets);
     }
 
     @Override
     public void refuseDestinations(MoteurDeJeu moteurDeJeu){//Parmi sa main le joueur choisi les cartes qu'il ne veut pas
-        if(isVillesCommunes()){chooseDestinationsWithCommonCity(moteurDeJeu);}
+        if(hasVillesCommunes()){chooseDestinationsWithCommonCity(moteurDeJeu);}
         else chooseDestinationsWIthBetterPoints(moteurDeJeu);
     }
 
-    public void chooseAnotherDestination(MoteurDeJeu moteurDeJeu,GestionTrajets gestionTrajets){
+    public void chooseAnotherDestination(MoteurDeJeu moteurDeJeu){
         boolean cartesDone=true;
         for(CarteDestination carteDestination: getDestinations().getMainDeCartes()){
             if (!carteDestination.isCompleted()) {
@@ -63,8 +66,6 @@ public class RobotNewStrategy extends RobotRoute {
         }
         if(cartesDone){
             chooseShortDestination(moteurDeJeu);
-            findingShortestPathForDestinations(moteurDeJeu,gestionTrajets);
-            takeOnlyShortPathDestinations(moteurDeJeu);
         }
     }
 
@@ -79,7 +80,7 @@ public class RobotNewStrategy extends RobotRoute {
                 .collect(Collectors.groupingBy(v -> v, Collectors.counting()));
     }
 
-    public boolean isVillesCommunes(){// True si une ville apparait plus d'une fois dans la main du joueur
+    public boolean hasVillesCommunes(){// True si une ville apparait plus d'une fois dans la main du joueur
         return nbOccurencesVilles().values().stream().anyMatch(count->count>1);
     }
 
@@ -117,7 +118,7 @@ public class RobotNewStrategy extends RobotRoute {
     }
 
     public void takeOnlyShortPathDestinations(MoteurDeJeu moteurDeJeu){
-        if(isVillesCommunes()){
+        if(hasVillesCommunes()){
             moteurDeJeu.removeDestinationsCard(this,0);
             moteurDeJeu.removeDestinationsCard(this,0);
         }
@@ -126,22 +127,9 @@ public class RobotNewStrategy extends RobotRoute {
 
     @Override
     public void choixAction(GestionTrajets gestionTrajets,MoteurDeJeu moteurDeJeu){
-        chooseAnotherDestination(moteurDeJeu,gestionTrajets);
+        findingShortestPathForDestinations(moteurDeJeu,gestionTrajets);
+        chooseAnotherDestination(moteurDeJeu);
         super.choixAction(gestionTrajets,moteurDeJeu);
-
-    }
-
-    @Override
-
-    public void updateCarteDestination(MoteurDeJeu moteurDeJeu) {
-        int currentIndex = getDestinations().getMainDeCartes().indexOf(getCurrentDestination());
-        if (currentIndex + 1 < getDestinations().getMainDeCartes().size()) {
-            setCurrentDestination(getDestinations().getMainDeCartes().get(currentIndex + 1));
-            setVilleActuelle(getCurrentDestination().getVille1());
-        } else {
-            if(!moteurDeJeu.getPiocheDesinationCourte().getCartesDestinationCourtes().empty())moteurDeJeu.giveDestinationsCard(this, 1);
-            else if (!moteurDeJeu.getPiocheDestinationLongue().getCartesDestinationLongues().isEmpty())moteurDeJeu.giveDestinationsCard(this, 2);
-        }
     }
 
     @Override

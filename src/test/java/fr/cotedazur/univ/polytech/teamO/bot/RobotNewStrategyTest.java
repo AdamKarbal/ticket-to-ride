@@ -8,6 +8,9 @@ import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
 import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +22,7 @@ class RobotNewStrategyTest {
     MoteurDeJeu moteurDeJeu;
     GestionTrajets gestionTrajets;
     GameMap gameMap;
+    CarteDestination berLeipz;
 
     @BeforeEach
     void setUp() {
@@ -35,17 +39,12 @@ class RobotNewStrategyTest {
 
     @Test
     void testPiocherCarteDestination(){
-        robotNewStrategy.chooseDestinations(moteurDeJeu);
-        System.out.println(robotNewStrategy.getDestinations().getMainDeCartes());
-        assertEquals(2,robotNewStrategy.getDestinations().getMainDeCartes().size());
-        robotNewStrategy.getDestinations().getMainDeCartes().clear();
-        assertEquals(0,robotNewStrategy.getDestinations().getMainDeCartes().size());
         robotNewStrategy.getDestinations().getMainDeCartes().addAll(List.of(new CarteDestination(Couleur.Bleu, Ville.Niederlande,Ville.Berlin,10),new CarteDestination(Couleur.Marron, Ville.Berlin,Ville.Bremerhaven,12),new CarteDestination(Couleur.Bleu, Ville.Leipzig,Ville.Hannover,8),new CarteDestination(Couleur.Marron, Ville.Augsburg,Ville.Dortmund,16)));
         assertEquals(4,robotNewStrategy.getDestinations().getMainDeCartes().size());
-        assertTrue(robotNewStrategy.isVillesCommunes());
+        assertTrue(robotNewStrategy.hasVillesCommunes());
         robotNewStrategy.refuseDestinations(moteurDeJeu);
         assertEquals(2,robotNewStrategy.getDestinations().getMainDeCartes().size());
-        System.out.println(robotNewStrategy.getDestinations().getMainDeCartes());
+        assertEquals(new ArrayList<>(Arrays.asList(new CarteDestination(Couleur.Bleu, Ville.Niederlande,Ville.Berlin,10),new CarteDestination(Couleur.Marron, Ville.Berlin,Ville.Bremerhaven,12))),robotNewStrategy.getDestinations().getMainDeCartes());
     }
 
     @Test
@@ -61,7 +60,7 @@ class RobotNewStrategyTest {
         robotNewStrategy.chooseDestination(new CarteDestination(Couleur.Bleu,Ville.Leipzig,Ville.Berlin,11));
 
         // Vérifie que le robot détecte une ville commune (villeB)
-        assertTrue(robotNewStrategy.isVillesCommunes());
+        assertTrue(robotNewStrategy.hasVillesCommunes());
     }
 
 }

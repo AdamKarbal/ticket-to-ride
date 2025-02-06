@@ -27,6 +27,7 @@ public class Jeu {
     RobotRoute robotRoute2;
     RobotRoute robotRoute1;
     RobotAleatoire robotAleatoire;
+    RobotNewStrategy robotNewStrategy;
     ArrayList<Robot> robots;
     Ranking ranking;
     MoteurDeJeu moteurDeJeu;
@@ -59,11 +60,23 @@ public class Jeu {
         logger.addHandler(handler);
     }
 
+    /**
+     * Méthode permettant d'instancier les robots joueurs à différentes stratégies.
+     * Cette méthode instancie tout un tas d'autres objets indispensables au déroulement du jeu
+     * (Plateau, pioches, moteur de jeu...).
+     * En fonction de la version choisie au lancement du jeu, un groupe de bots différents est intégré au
+     * jeu et pioche les cartes.
+     *
+     * @param Logs Booléen qui détermine si les logs du setup seront affichés
+     * @param Version Entier qui détermine la version du setup qui sera lancée.
+     * @throws NotEnoughWagonCard
+     */
     public void setup(boolean Logs, int Version) throws NotEnoughWagonCard {
         Random random = new Random();
         robotRoute1 = new RobotRoute(Couleur.Bleu);
         robotAleatoire = new RobotAleatoire(Couleur.Jaune, random);
         robotRoute2 = new RobotRoute(Couleur.Vert);
+        robotNewStrategy = new RobotNewStrategy(Couleur.Rouge);
         robots = new ArrayList<>();
         this.nombreTour = 0;
 
@@ -79,7 +92,7 @@ public class Jeu {
         gestionEtatJeu = new GestionEtatJeu(gestionTrajets);
         if(!Logs) gestionEtatJeu.DLogsOff();
 
-        if(Version == 1 || Version == 3) {//Faudra rajouter un if pour la V3 avec tous les bots)
+        if(Version == 1) {
             robots.add(robotRoute1);
             robots.add(robotAleatoire);
             for (int i = 0; i < 4; i++) {
@@ -99,6 +112,19 @@ public class Jeu {
             robotRoute2.init(moteurDeJeu);
             robotRoute1.init(moteurDeJeu);
         }
+        else if(Version == 3) {
+            robots.add(robotRoute1);
+            robots.add(robotNewStrategy);
+            robots.add(robotAleatoire);
+            for (int i = 0; i < 4; i++) {
+                robotRoute1.piocher(moteurDeJeu);
+                robotNewStrategy.piocher(moteurDeJeu);
+                robotAleatoire.piocher(moteurDeJeu);
+            }
+            robotRoute1.init(moteurDeJeu);
+            robotNewStrategy.init(moteurDeJeu);
+            robotAleatoire.init(moteurDeJeu);
+        }
 
         logger.info("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
@@ -116,23 +142,30 @@ public class Jeu {
         logger.info(ranking.toString());
     }
 
+    /**Méthode qui, en fonction de la version désignée, lance les boucles de jeu correspondante.
+     * @param Logs  Booléen qui détermine si les logs du jeu seront affichés
+     * @param Version Entier qui détermine la version du jeu qui sera lancée.
+     * @throws NotEnoughWagonCard
+     * @throws EmptyListException
+     */
     public void play(boolean Logs, int Version) throws NotEnoughWagonCard, EmptyListException {
         if(!Logs) DLogsOff();
         nombreTour = 1;
         setup(Logs, Version);
         robots = new ArrayList<>();
         if(Version == 1) {
-            robots.add(robotAleatoire);
             robots.add(robotRoute1);
+            robots.add(robotAleatoire);
             loopV1();
         }
         else if(Version == 2) {
-            robots.add(robotRoute2);
             robots.add(robotRoute1);
+            robots.add(robotRoute2);
             loopV2();
         }
         else if(Version == 3) {
             robots.add(robotRoute1);
+            robots.add(robotNewStrategy);
             robots.add(robotAleatoire);
             loopV3();
         }
@@ -145,6 +178,10 @@ public class Jeu {
 
     public Robot getRobotRoute1(){
         return robotRoute1;
+    }
+
+    public Robot getRobotNewStrategy(){
+        return robotNewStrategy;
     }
 
     public Robot getRobotRoute2(){
@@ -167,6 +204,10 @@ public class Jeu {
         logger.setLevel(Level.OFF);
     }
 
+    /**
+     * Boucle de jeu. Tant que le jeu n'est pas fini, le meilleur bot et un autre bot continuent de jouer.
+     * @throws NotEnoughWagonCard
+     */
     public void loopV1() throws NotEnoughWagonCard{
         while (!(moteurDeJeu.isFinished(robots))) {
             logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
@@ -182,6 +223,10 @@ public class Jeu {
         }
     }
 
+    /**
+     * Boucle de jeu. Tant que le jeu n'est pas fini, le meilleur bot contre lui même continuent de jouer.
+     * @throws NotEnoughWagonCard
+     */
     public void loopV2(){
         while (!(moteurDeJeu.isFinished(robots))) {
             logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
@@ -197,12 +242,17 @@ public class Jeu {
         }
     }
 
+    /**
+     * Boucle de jeu. Tant que le jeu n'est pas fini, tous les bots continuent de jouer.
+     * @throws NotEnoughWagonCard
+     */
     public void loopV3() throws NotEnoughWagonCard{
         while (!(moteurDeJeu.isFinished(robots))) {
             logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
             try {
                 robotRoute1.choixAction(gestionTrajets, moteurDeJeu);
                 robotAleatoire.chooseaction(moteurDeJeu, map, gestionTrajets);
+                robotNewStrategy.choixAction(gestionTrajets, moteurDeJeu);
             }
             catch (EmptyStackException e) {
                 logger.warning("Fin du jeu prématurée : Pioche vide.");

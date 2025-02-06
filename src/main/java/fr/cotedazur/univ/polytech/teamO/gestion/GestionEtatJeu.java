@@ -23,6 +23,9 @@ public class GestionEtatJeu {
     private GestionTrajets gestionTrajets;
     private Affichage affichage;
 
+    /**
+     * Paramétrage du Logger de la classe qui servira à afficher tous les messages destinés à la sortie standard.
+     */
     static{
         logger.setUseParentHandlers(false);
         ConsoleHandler handler = new ConsoleHandler();
