@@ -19,7 +19,7 @@ public class RobotMeeples extends Robot {
 
     public RobotMeeples(Couleur couleur) {
         super(couleur);
-    }
+    }/*
 
 
     public Stack<MCouleur> StackTakenMeeples(){
@@ -120,7 +120,7 @@ public class RobotMeeples extends Robot {
     @Override
     public String toString(){
         return "Le robot qui adopte une stratégie axée sur les Meeples. Sa couleur est : " + getCouleur();
-    }
+    }*/
 }
 
 

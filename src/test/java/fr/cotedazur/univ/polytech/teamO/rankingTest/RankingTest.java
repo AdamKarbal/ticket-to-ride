@@ -10,12 +10,18 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class RankingTest {
     Pioche pioche;
     PiocheSurTable piocheSurTable;
     ArrayList<Robot> robots;
     Ranking classement;
+    Robot Noir;
+    Robot Jaune;
+    Robot Rouge;
+    Robot Bleu;
 
 
     @BeforeEach
@@ -26,10 +32,10 @@ public class RankingTest {
         robots = new ArrayList<>();
 
 
-        Robot Bleu = new Robot(Couleur.Bleu);
-        Robot Rouge = new Robot(Couleur.Rouge);
-        Robot Jaune = new Robot(Couleur.Jaune);
-        Robot Noir = new Robot(Couleur.Noir);
+         Bleu = new Robot(Couleur.Bleu);
+         Rouge = new Robot(Couleur.Rouge);
+         Jaune = new Robot(Couleur.Jaune);
+         Noir = new Robot(Couleur.Noir);
 
         Bleu.getScore().addNbPoints(0);
         Rouge.getScore().addNbPoints(0);
@@ -48,4 +54,8 @@ public class RankingTest {
         System.out.println(classement);
     }
 
+    @Test
+    void positionTest(){
+        assertEquals(2,classement.position(Noir));
+    }
 }

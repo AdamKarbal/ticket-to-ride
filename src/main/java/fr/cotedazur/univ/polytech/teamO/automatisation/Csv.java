@@ -11,14 +11,14 @@ import java.io.IOException;
 import java.io.*;
 import java.util.ArrayList;
 
-public class csv {
+public class Csv {
     private CSVWriter csvWriter;
     private int compteur;
     private String fichierCSV = "stats/gamestats.csv";
 
 
 
-    public csv() throws IOException, CsvValidationException {
+    public Csv() throws IOException, CsvValidationException {
         File file = new File(fichierCSV);
         if (!file.exists() || file.length()==0) {
             FileWriter writer = new FileWriter(fichierCSV, true);
@@ -72,7 +72,7 @@ public class csv {
         csvWriter = new CSVWriter(writer);
         ArrayList<Robot> robots = jeu.getRobots();
         for(Robot robot : robots){
-            String[] ligne = {String.valueOf(compteur), String.valueOf(jeu.getNombreTour()),robot.toString(), String.valueOf(jeu.getRanking().position(robot)),String.valueOf(robot.getScore().getNbPoints()),String.valueOf(jeu.getGestionEtatJeu().nombreCarteDestination(robot)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Noir)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Jaune)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Blanc)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Vert)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Rouge)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Bleu)) };
+            String[] ligne = {String.valueOf(compteur), String.valueOf(jeu.getNombreTour()),robot.toString(), String.valueOf(jeu.getRanking().position(robot)),String.valueOf(robot.getScore().getNbPoints()),String.valueOf(jeu.getGestionEtatJeu().nombreCarteDestination(robot)),String.valueOf(robot.getNbroute()),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Noir)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Jaune)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Blanc)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Vert)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Rouge)),String.valueOf(robot.getTakenMeeplesByCouleur(MCouleur.Bleu)) };
             csvWriter.writeNext(ligne);
         }
         compteur++;

@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.teamO.gestion;
 
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
+import fr.cotedazur.univ.polytech.teamO.bot.RobotNewStrategy;
 import fr.cotedazur.univ.polytech.teamO.bot.RobotRoute;
 import fr.cotedazur.univ.polytech.teamO.couleur.Couleur;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
@@ -27,6 +28,7 @@ class GestionTrajetsTest {
     GestionEtatJeu gestionEtatJeu;
     Pioche pioche;
     PiocheSurTable piocheSurTable;
+    RobotNewStrategy robotNewStrategy;
     int taille;
     @BeforeEach
     void setUp() {
@@ -39,6 +41,7 @@ class GestionTrajetsTest {
         gestionTrajets=new GestionTrajets(gameMap);
         gestionEtatJeu= new GestionEtatJeu(gestionTrajets);
         robotRoute = new RobotRoute(Couleur.Rouge);
+        robotNewStrategy= new RobotNewStrategy(Couleur.Bleu);
         berlinRostock=new Trajet(Ville.Berlin,Ville.Rostock,new Route(4,Couleur.Default));
         rostockKiel=new Trajet(Ville.Rostock,Ville.Kiel,new Route(6,Couleur.Default));
         berlinSchwerin=new Trajet(Ville.Berlin,Ville.Schwerin,new Route(5, Couleur.Default));
@@ -62,6 +65,21 @@ class GestionTrajetsTest {
         assertEquals(gestionTrajets.findOptimalTrajet(robotRoute, robotRoute.getVilleActuelle(), robotRoute.getCurrentDestination().getVille2()),new Trajet(Ville.Berlin,Ville.Schwerin,new Route(2,Couleur.Default)));
         gestionTrajets.updateAfterTrainPlacement(robotRoute,new Trajet(Ville.Berlin,Ville.Schwerin,new Route(2,Couleur.Default)));
         assertEquals(gestionTrajets.findOptimalTrajet(robotRoute, robotRoute.getVilleActuelle(), robotRoute.getCurrentDestination().getVille2()),new Trajet(Ville.Kiel,Ville.Schwerin,new Route(2,Couleur.Default)));
+
+    }
+    @Test
+    void testFindOptimalTrajet(){
+        robotNewStrategy.setVilleActuelle(Ville.Berlin);
+        robotNewStrategy.setCurrentDestination(berlinKielDestination);
+        assertTrue(gestionTrajets.findOptimalTrajets(robotNewStrategy,berlinKielDestination).contains(new Trajet(Ville.Berlin,Ville.Schwerin,new Route(5,Couleur.Blanc))));
+        assertTrue(gestionTrajets.findOptimalTrajets(robotNewStrategy,berlinKielDestination).contains(new Trajet(Ville.Kiel,Ville.Schwerin,new Route(3,Couleur.Jaune))));
+        assertEquals(2,gestionTrajets.findOptimalTrajets(robotNewStrategy,berlinKielDestination).size());
+    }
+    @Test
+    void testGetNbChemins(){
+        robotNewStrategy.setVilleActuelle(Ville.Berlin);
+        robotNewStrategy.setCurrentDestination(berlinKielDestination);
+        assertEquals(2,gestionTrajets.getNbChemin(robotNewStrategy,berlinKielDestination));
 
     }
 
