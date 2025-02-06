@@ -85,7 +85,7 @@
 
 ### Documentation et exécution
 
-- Chaque méthode possède une `JavaDoc` explicative.
+- Chaque méthode possède une [`JavaDoc` explicative](javadoc/index.html).
 - Instructions d’exécution disponibles dans le `Readme`.
 
 ### État de la base de code
