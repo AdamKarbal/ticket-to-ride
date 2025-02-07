@@ -36,7 +36,7 @@ public class Csv {
     }
 
     public void init() throws IOException {
-        String[] entete = {"Numero de la partie", "Nombre de tours","Nom robot", "Positionnement","Nombre de point","Nombre de carte destination completer","Nombre de route","Nombre de meeples NOIR","Nombre de meeples JAUNE","Nombre de meeples BLANC", "Nombre de meeples VERT", "Nombre de meeples ROUGE","Nombre de meeples BLEU",};
+        String[] entete = {"Numero de la partie", "Nombre de tours","Nom robot", "Positionnement","Nombre de points","Nombre de cartes destination completées","Nombre de routes","Nombre de meeples NOIR","Nombre de meeples JAUNE","Nombre de meeples BLANC", "Nombre de meeples VERT", "Nombre de meeples ROUGE","Nombre de meeples BLEU",};
         csvWriter.writeNext(entete);
         csvWriter.flush();
     }

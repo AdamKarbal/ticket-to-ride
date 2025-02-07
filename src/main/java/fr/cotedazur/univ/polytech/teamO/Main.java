@@ -60,7 +60,7 @@ public class Main {
 
         if(commands.isTwoThousands()){
             for(int i = 0 ; i < 1000; i++){
-                jeu.play(false,1); //Version 3 Pour tester avec d'autres bots
+                jeu.play(false,3); //Version 3 Pour tester avec d'autres bots // Version 1 entre les deux meilleurs
                 if(commands.isCsvCommand()){
                     csv.updateStat(jeu);
                 }
