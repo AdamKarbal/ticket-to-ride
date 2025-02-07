@@ -329,6 +329,7 @@ public class MoteurDeJeu {
         Meeples meepleToPick = new Meeples(meepleChoisi);
         ville.removePassenger(meepleToPick);
         robot.addMeeple(meepleChoisi);
+        affichage.afficheTakeMeeples(robot,1,meepleChoisi);
     }
 
     /**

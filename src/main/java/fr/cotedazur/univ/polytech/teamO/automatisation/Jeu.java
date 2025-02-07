@@ -127,15 +127,12 @@ public class Jeu {
         if(Version == 1) {
             robots.add(robotRoute1);
             robots.add(robotAleatoire);
-            robots.add(robotNewStrategy);
             for (int i = 0; i < 4; i++) {
                 robotRoute1.piocher(moteurDeJeu);
                 robotAleatoire.piocher(moteurDeJeu);
-                robotNewStrategy.piocher(moteurDeJeu);
             }
             robotAleatoire.init(moteurDeJeu);
             robotRoute1.init(moteurDeJeu);
-            robotNewStrategy.init(moteurDeJeu);
         }
         else if(Version == 2) {
             robots.add(robotRoute1);
@@ -191,7 +188,6 @@ public class Jeu {
         if(Version == 1) {
             robots.add(robotRoute1);
             robots.add(robotAleatoire);
-            robots.add(robotNewStrategy);
             loopV1();
         }
         else if(Version == 2) {
@@ -218,7 +214,6 @@ public class Jeu {
             try {
                 robotRoute1.choixAction(gestionTrajets, moteurDeJeu);
                 robotAleatoire.chooseaction(moteurDeJeu, map, gestionTrajets);
-                robotNewStrategy.choixAction(gestionTrajets,moteurDeJeu);
             }
             catch (EmptyStackException e) {
                 logger.warning("Fin du jeu prématurée : Pioche vide.");

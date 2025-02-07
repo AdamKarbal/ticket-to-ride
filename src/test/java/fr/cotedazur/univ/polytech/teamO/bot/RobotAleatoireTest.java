@@ -63,10 +63,12 @@ class RobotAleatoireTest {
     @Test
     void testChooseAction() throws NotEnoughWagonCard {
         robot=new RobotAleatoire(Couleur.Bleu, random);
+        RobotAleatoire robotSpy = spy(robot);
         int taille = pioche.size();
-        for(int i=0;i<taille;i++) robot.piocher(moteurDeJeu);
+        for(int i=0;i<taille;i++) robotSpy.piocher(moteurDeJeu);
         when(random.nextInt(anyInt())).thenReturn(21);
-        robot.chooseaction(moteurDeJeu, map, gestionTrajets);
+        robotSpy.chooseaction(moteurDeJeu, map, gestionTrajets);
+        verify(robotSpy,atLeastOnce()).piocher(moteurDeJeu);
     }
 
     @Test
@@ -98,7 +100,6 @@ class RobotAleatoireTest {
         robotSpy.chooseaction(moteurDeJeu,map,gestionTrajets);
         verify(robotSpy, atLeastOnce()).chooseactionnotenought(moteurDeJeu);
         verify(robotSpy,atLeastOnce()).piocherSurTable(any(),any());
-
     }
 
     @Test

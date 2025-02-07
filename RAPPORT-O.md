@@ -48,7 +48,7 @@
 - Analyse des performances sur 1000 parties : 
   - Victoire dans 20% des cas, moins efficace que les autres robots.
   - Stratégie trop centrée sur les destinations courtes, limitant les points.
-  - Ne pose pas de routes inutiles contrairement au robot aléatoire.
+  - Ne pose pas assez de routes contrairement au robot aléatoire car le robot se contente de compléter ses cartes Destinations.
 
 ## II – Architecture et qualité
 
