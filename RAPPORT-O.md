@@ -57,31 +57,31 @@
 #### 1) Robot générique
 
 - **Attributs** : main contenant les cartes wagons et destinations, liste de meeples pris et trajets effectués.
-- **Interaction** : sélectionne une action, mais son exécution est gérée par un gestionnaire.
-- **Choix** : le robot n’accède pas directement aux éléments du jeu, assurant le respect des règles.
+- **Interactions avec le reste du jeu** : sélectionne une action, mais son exécution est gérée par un gestionnaire.
+- **Pourquoi cette implémentation ?** : le robot n’accède pas directement aux éléments du jeu, assurant le respect des règles et une bonne division de la responsabilité.
 
 #### 2) `MoteurDeJeu`
 
 - **Attributs** : pioche courante, pioche visible, pioche des destinations longues et courtes, défausse.
-- **Interaction** : exécute les actions du robot et met à jour les éléments du jeu.
-- **Choix** : assure la synchronisation des éléments du jeu.
+- **Interactions avec le reste du jeu** : exécute les actions du robot et met à jour les éléments du jeu.
+- **Pourquoi cette implémentation ?** : assure la synchronisation des éléments du jeu.
 
 #### 3) `GestionTrajets`
 
 - **Attributs** : carte du jeu, dictionnaire des trajets disponibles.
 - **Interaction** : calcule les trajets optimaux et met à jour les trajets disponibles.
-- **Choix** : assure la cohérence entre le robot et les éléments du jeu.
+- **Pourquoi cette implémentation ?** : assure la cohérence entre le robot et les éléments du jeu.
 
 #### 4) `GameMap`
 
-- **Attributs** : graphe non-orienté pondéré représentant les villes et leurs connexions.
-- **Interaction** : regroupe tous les trajets et meeples.
-- **Choix** : facilite l’utilisation de l’algorithme de Dijkstra.
+- **Attributs** : graphe non-orienté pondéré représentant les villes et leurs connexions, implémenté sous la forme d'un HashMap qui mappe toutes les villes avec leurs voisins et leur distance, et une ArrayList des trajets.
+- **Interactions avec le reste du jeu** : regroupe tous les trajets et meeples.
+- **Pourquoi cette implémentation ?** : facilite l’utilisation de l’algorithme de Dijkstra, central à la stratégie de deux robots.
 
 #### 5) Autres robots
 
 - Héritent de la classe `Robot`.
-- Factorisation des comportements communs (piocher, poser un train) et surcharge de méthodes spécifiques.
+- Factorisation des comportements communs (piocher, poser un train) et surcharge de méthodes spécifiques comme l'algorithme de choix d'action.
 
 ### Documentation et exécution
 
@@ -92,19 +92,15 @@
 
 #### Points positifs
 
-- Bonne séparation entre le moteur de jeu et les robots.
-- Les règles sont centralisées dans le moteur de jeu, garantissant leur respect.
+L’utilisation du moteur de jeu est bien pensée, en effet c'est une discussion entre le robot et le moteur de jeu. Le moteur de jeu dicte les règles au robot, et lui demande l’action qu’il veut faire. Si l’action est possible alors il l’effectue sinon il lui demande de faire autre chose. C’est le moteur de jeu qui fait les actions pour éviter que le robot ait accès à des éléments auxquels il ne devrait pas avoir accès. 
 
 #### Points à améliorer
 
 1. **Utilisation de HashMap pour `WagonsByCouleur`** : 
-   - Il aurait été plus pertinent d’utiliser directement la main du joueur.
-   - Une conception pensée pour des joueurs humains aurait évité cette structure redondante.
+	L’implémentation des robots serait aussi à revoir. En effet, Robot est définie comme une classe mais n’est jamais instanciée. On           utilise toujours les robots avec un type d’intelligence en particulier, ce qui nous a poussé, en tant que développeurs, à créer différentes “versions” du jeu. Implémenter les différents types de robots de manière uniforme nous aurait évité la création de trois versions différentes du jeu.  Cela aurait pu être fait en définissant Robot comme une classe abstraite avec des méthodes communes et des signatures imposées. Ce défaut d’implémentation s’est avéré handicapant au moment d’implémenter les commandes 2thousand et démo. Améliorer cet aspect du projet à ce moment-là aurait été risqué faute de temps (trop de méthodes à réécrire, d’appels de fonctions à changer, de test à réécrire...), d’où notre choix de créer différentes versions du jeu implémentant les différents robots. 
 
 2. **Implémentation des robots** : 
-   - `Robot` aurait dû être une classe abstraite avec des méthodes communes imposées.
-   - L’absence de cette approche a nécessité la création de différentes versions du jeu.
-   - Un refactoring aurait été trop coûteux en temps et en modifications de tests.
+	L’implémentation des robots serait aussi à revoir. En effet, Robot est définie comme une classe mais n’est jamais instanciée. On utilise toujours les robots avec un type d’intelligence en particulier, ce qui nous a poussé, en tant que développeurs, à créer différentes “versions” du jeu. Implémenter les différents types de robots de manière uniforme nous aurait évité la création de trois versions différentes du jeu.  Cela aurait pu être fait en définissant Robot comme une classe abstraite avec des méthodes communes et des signatures imposées. Ce défaut d’implémentation s’est avéré handicapant au moment d’implémenter les commandes 2thousand et démo. Améliorer cet aspect du projet à ce moment-là aurait été risqué faute de temps (trop de méthodes à réécrire, d’appels de fonctions à changer, de test à réécrire...), d’où notre choix de créer différentes versions du jeu implémentant les différents robots. 
 
 ### Répartition
 
