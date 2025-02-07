@@ -78,8 +78,7 @@ public class RobotNewStrategy extends RobotRoute {
      * les cartes Destinations qui correspondent à son algorithme de choix
      * @param moteurDeJeu
      */
-    @Override
-    public void updateCarteDestination(MoteurDeJeu moteurDeJeu){//test
+    public void chooseAnotherDestination(MoteurDeJeu moteurDeJeu){//test
         boolean cartesDone=true;
         for(CarteDestination carteDestination: getDestinations().getMainDeCartes()){
             if (!carteDestination.isCompleted()) {
@@ -170,6 +169,7 @@ public class RobotNewStrategy extends RobotRoute {
     @Override
     public void choixAction(GestionTrajets gestionTrajets,MoteurDeJeu moteurDeJeu){//test
         findingShortestPathForDestinations(moteurDeJeu,gestionTrajets);
+        chooseAnotherDestination(moteurDeJeu);
         super.choixAction(gestionTrajets,moteurDeJeu);
     }
 
