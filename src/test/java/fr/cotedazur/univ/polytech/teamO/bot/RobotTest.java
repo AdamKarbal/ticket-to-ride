@@ -73,7 +73,7 @@ class RobotTest {
         assertEquals(robot.getMain().getMainDeCartes().size(),1);
     }
     @Test
-    void testPiocheSurTable(){
+    void testPiocheSurTable(){ // TEST A MONTRER
         taillePiocheInit=moteurDeJeu.getPioche().size();
         assertFalse(robot.isTurnOver());
         moteurDeJeu = new MoteurDeJeu(pioche,piocheSurTableMock,piocheDestinationLongue,piocheDestinationCourte);
@@ -84,6 +84,7 @@ class RobotTest {
         assertEquals(moteurDeJeu.getPioche().size(),taillePiocheInit -2);
         assertTrue(robot.isTurnOver());
     }
+
     @Test
     void testPiocheRainbow() {
 

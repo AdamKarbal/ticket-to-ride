@@ -12,6 +12,9 @@ import fr.cotedazur.univ.polytech.teamO.plateau.Ville;
 
 import java.util.Random;
 
+/**
+ * Ce robot implémente l'algorithme de Dijkstra
+ */
 public class RobotRoute extends Robot{
     // Ce robot va en priorité au plus vite terminer ses cartes de destination dans l'ordre où elles sont présentes dans sa main
     private Ville villeActuelle;
@@ -28,7 +31,16 @@ public class RobotRoute extends Robot{
     public CarteDestination getCurrentDestination() {
         return currentDestination;
     }
+    public void setCurrentDestination(CarteDestination currentDestination) {
+        this.currentDestination = currentDestination;
+    }
 
+    // Actions du robot
+
+    /**
+     * Choisit uniquement des carteDestinationLongue
+     * @param moteurDeJeu
+     */
     @Override
     public void chooseDestinations(MoteurDeJeu moteurDeJeu) {
         for(int i=0;i<4;i++){
@@ -37,17 +49,21 @@ public class RobotRoute extends Robot{
         }
     }
 
+    /**
+     * Garde uniquement la carteDestination de plus haute valeur
+     * @param moteurDeJeu
+     */
     @Override
     public void refuseDestinations(MoteurDeJeu moteurDeJeu) {
-        int maxvalue = getDestinations().getMainDeCartes().get(0).getValue();
-        CarteDestination temp = getDestinations().getMainDeCartes().get(0);
+        int maxvalue = getDestinations().getMainDeCartes().getFirst().getValue();
+        CarteDestination temp = getDestinations().getMainDeCartes().getFirst();
         for(int i =0 ; i<4 ; i++){
             if(getDestinations().getMainDeCartes().get(i).getValue()>maxvalue){
                 maxvalue = getDestinations().getMainDeCartes().get(i).getValue();
                 temp = getDestinations().getMainDeCartes().get(i);
             }
         }
-        for(int i = 0 ; i<4 ; i++){
+        for(int i = 3 ; i>=0 ; i--){
             moteurDeJeu.removeDestinationsCard(this,i);
         }
         getDestinations().getMainDeCartes().add(temp);
@@ -61,26 +77,47 @@ public class RobotRoute extends Robot{
     @Override
     public void chooseDestination(CarteDestination destination) {
         super.chooseDestination(destination);
-        currentDestination = getDestinations().getMainDeCartes().get(0);
+        currentDestination = getDestinations().getMainDeCartes().getFirst();
         this.villeActuelle=currentDestination.getVille1();
     }
 
-    private void updateCarteDestination(MoteurDeJeu moteurDeJeu) {
+    /**
+     * Passe à la carteDestination suivante ou s'il n'en a plus va en piocher une
+     * @param moteurDeJeu
+     */
+    protected void updateCarteDestination(MoteurDeJeu moteurDeJeu) {
         int currentIndex = getDestinations().getMainDeCartes().indexOf(currentDestination);
         if (currentIndex + 1 < getDestinations().getMainDeCartes().size()) { // Ensure there is a next card
             currentDestination = getDestinations().getMainDeCartes().get(currentIndex + 1);
             this.villeActuelle = currentDestination.getVille1();
         } else {
-            moteurDeJeu.giveDestinationsCard(this, 2); // No more cards, draw new destination cards
+
+            if(!moteurDeJeu.getPiocheDestinationLongue().getCartesDestinationLongues().isEmpty())
+                moteurDeJeu.giveDestinationsCard(this, 2); // No more cards, draw new destination cards
+            else{
+                moteurDeJeu.giveDestinationsCard(this, 1);
+            }
         }
     }
 
+    /**
+     * Essaie de poser un train sur le trajet optimal pour terminer sa carteDestination actuelle
+     * @param gestionTrajets
+     * @param moteurDeJeu
+     * @return Couleur du trajetOpti
+     * @throws NotEnoughWagonCard dans le cas où le robot n'a pas assez pour poser
+     */
     public Couleur poseTrainOpti(GestionTrajets gestionTrajets, MoteurDeJeu moteurDeJeu) throws NotEnoughWagonCard {
         Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this,villeActuelle,currentDestination.getVille2());
         super.poseTrain(trajetOpti,moteurDeJeu,gestionTrajets);
         return trajetOpti.getRoute().getCouleur();
     }
 
+    /**
+     * Algorithme de choix de l'action
+     * @param gestionTrajets
+     * @param moteurDeJeu
+     */
     public void choixAction(GestionTrajets gestionTrajets, MoteurDeJeu moteurDeJeu) {
         try {
             Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this, villeActuelle, currentDestination.getVille2());
@@ -99,20 +136,39 @@ public class RobotRoute extends Robot{
             handleNotEnoughWagonCard(gestionTrajets, moteurDeJeu);
         } catch (NoAvailableTrip noAvailableTrip) { // Cas où tous les trajets sont déjà
             updateCarteDestination(moteurDeJeu);
+            choixPiocheCouleur(moteurDeJeu);
         }
     }
 
-    private void handleNotEnoughWagonCard(GestionTrajets gestionTrajets, MoteurDeJeu moteurDeJeu) {
+    public void choixPiocheCouleur(MoteurDeJeu moteurDeJeu) {
+        if(getWagonByCouleur().getOrDefault(moteurDeJeu.findMinWagon(this),0)>=3){
+            choosePioche(moteurDeJeu.findMaxWagon(this),moteurDeJeu);
+        }
+        else choosePioche(moteurDeJeu.findMinWagon(this),moteurDeJeu);
+    }
+
+
+    /**
+     * Gère le cas où le robot n'a pas assez de CarteWagon
+     * @param gestionTrajets
+     * @param moteurDeJeu
+     */
+    protected void handleNotEnoughWagonCard(GestionTrajets gestionTrajets, MoteurDeJeu moteurDeJeu) {
         try {
             Trajet trajetOpti = gestionTrajets.findOptimalTrajet(this, villeActuelle, currentDestination.getVille2());
             Couleur couleurTrajet = trajetOpti.getRoute().getCouleur();
-            choosePioche(couleurTrajet, moteurDeJeu);
+            if(trajetOpti.getRoute().isAvailable())choosePioche(couleurTrajet, moteurDeJeu);
+            else piocher(moteurDeJeu);
         } catch (NoAvailableTrip noAvailableTrip) {
             updateCarteDestination(moteurDeJeu);
         }
     }
 
-
+    /**
+     * Algorithme de choix de la pioche
+     * @param couleurTrajet couleur du Trajet qu'il a essaié de compléter
+     * @param moteurDeJeu
+     */
     public void choosePioche(Couleur couleurTrajet,MoteurDeJeu moteurDeJeu) {
         try {
             piocherSurTable(new CarteWagon(couleurTrajet), moteurDeJeu); // essaie de piocher la carte qu'il lui faut pour compléter son trajet

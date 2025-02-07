@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.teamO.classement;
 
 import fr.cotedazur.univ.polytech.teamO.bot.Robot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -10,6 +11,13 @@ import java.util.TreeSet;
 public class Ranking {
     private TreeSet<Robot> classement;
 
+    /**
+     * Ce constructeur prend une liste de robots pour construire un TreeSet, set qui utilise le caractère comparable des Robots pour les classer.
+     * Les robots sont classés par ordre décroissant de leur score.
+     * @param robots
+     * @throws NullPointerException
+     * @throws EmptyListException
+     */
     public Ranking(List<Robot> robots) throws NullPointerException, EmptyListException{
         this.classement = new TreeSet<>(Comparator.reverseOrder());
         if(robots.isEmpty()) throw new EmptyListException("La liste que vous avez passé ne contient pas de joueur! Ajoutez en...");
@@ -24,9 +32,23 @@ public class Ranking {
     public Robot first(){
         return classement.first();
     }
-    /*public TreeSet<Robot> getClassement(){
-        return classement;
-    }*/
+
+    /**
+     * Cette méthode permet de dire la position d'un robot dans le classement
+     * @param robot
+     * @return
+     */
+    public int position(Robot robot){
+        int i=1;
+        for(Robot robotind : classement){
+            if(robot.equals(robotind)){
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+
     @Override 
     public String toString(){
         int classeur = 0;

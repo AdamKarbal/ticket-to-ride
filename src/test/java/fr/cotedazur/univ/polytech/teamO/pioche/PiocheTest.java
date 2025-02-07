@@ -20,6 +20,8 @@ public class PiocheTest {
     @Test
     void testPioche(){
         System.out.print(pioche.getPioche());
+        System.out.print(pioche.toString());
+
     }
 
 }
