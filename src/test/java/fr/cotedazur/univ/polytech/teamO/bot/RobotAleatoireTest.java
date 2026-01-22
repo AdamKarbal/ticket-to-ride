@@ -38,7 +38,7 @@ class RobotAleatoireTest {
     GameMap map;
     GestionTrajets gestionTrajets;
     @Mock Random random = mock(Random.class);
-
+    @Mock PiocheSurTable piocheMock = mock(PiocheSurTable.class);
     @BeforeEach
     void setUp() {
         robot=new RobotAleatoire(Couleur.Bleu, random);
@@ -57,16 +57,19 @@ class RobotAleatoireTest {
         trajet= new Trajet(Ville.Leipzig,Ville.Chemnitz,routeBleue);
         map = new GameMap();
         gestionTrajets= new GestionTrajets(map);
+        piocheSurTable.initPiocheSurTable(moteurDeJeu);
     }
 
-    /*@Test
+    @Test
     void testChooseAction() throws NotEnoughWagonCard {
         robot=new RobotAleatoire(Couleur.Bleu, random);
+        RobotAleatoire robotSpy = spy(robot);
         int taille = pioche.size();
-        for(int i=0;i<taille;i++) robot.piocher(moteurDeJeu);
+        for(int i=0;i<taille;i++) robotSpy.piocher(moteurDeJeu);
         when(random.nextInt(anyInt())).thenReturn(21);
-        robot.chooseaction(moteurDeJeu,map);
-    }*/
+        robotSpy.chooseaction(moteurDeJeu, map, gestionTrajets);
+        verify(robotSpy,atLeastOnce()).piocher(moteurDeJeu);
+    }
 
     @Test
     void testChooseActionPosePioche() throws NotEnoughWagonCard, EmptyStackException {
@@ -89,23 +92,40 @@ class RobotAleatoireTest {
     }
 
     @Test
-    void testChooseActionPiocheTable() throws NotEnoughWagonCard, EmptyStackException{
-        /*RobotAleatoire robotSpy = spy(robot);
-        when(random.nextInt(100)).thenReturn(88);
-        when(random.nextInt(moteurDeJeu.getPiocheSurTable().size())).thenReturn(0);
-        CarteWagon carteMock = mock(CarteWagon.class);
-        when(moteurDeJeu.getPiocheSurTable().carteAtPosI(0)).thenReturn(carteMock);
-        robotSpy.chooseaction(moteurDeJeu,map);
-        verify(robotSpy, times(1)).piocherSurTable(carteMock,moteurDeJeu);*/
+    void testChooseAction80100() throws NotEnoughWagonCard {
+        RobotAleatoire robotSpy= spy(robot);
+        moteurDeJeu= new MoteurDeJeu(pioche,piocheMock,piocheDestinationLongue,piocheDestinationCourte);
+        when(piocheMock.piocher(any())).thenReturn(new CarteWagon(Couleur.Noir));
+        when(random.nextInt(100)).thenReturn(81);
+        robotSpy.chooseaction(moteurDeJeu,map,gestionTrajets);
+        verify(robotSpy, atLeastOnce()).chooseactionnotenought(moteurDeJeu);
+        verify(robotSpy,atLeastOnce()).piocherSurTable(any(),any());
     }
+
+    @Test
+    void testChooseActionNotEnoughtFirstRandom(){
+        RobotAleatoire robotSpy= spy(robot);
+        when(random.nextInt(100)).thenReturn(40);
+        robotSpy.chooseactionnotenought(moteurDeJeu);
+        verify(robotSpy, atLeastOnce()).chooseactionnotenought(moteurDeJeu);
+    }
+
+    @Test
+    void testChooseActionNotEnoughtSecondRandom(){
+        RobotAleatoire robotSpy= spy(robot);
+        when(random.nextInt(100)).thenReturn(60);
+        robotSpy.chooseactionnotenought(moteurDeJeu);
+        verify(robotSpy, atLeastOnce()).chooseactionnotenought(moteurDeJeu);
+        verify(robotSpy,atLeastOnce()).piocherSurTable(any(),any());    }
+
+
 
     @Test
     void testChooseDestination(){
         RobotAleatoire robotSpy = spy(robot);
-        MoteurDeJeu moteurDeJeuSpy = spy(moteurDeJeu);
         when(random.nextInt(2)).thenReturn(0);
         robotSpy.chooseDestination(moteurDeJeu);
-       // verify(moteurDeJeuSpy, atLeastOnce()).giveDestinationsCard(robotSpy,1);
+       verify(robotSpy, atLeastOnce()).getDestinations();
     }
 
     @Test

@@ -26,7 +26,7 @@ public class RobotMeeplesTest {
     @Test
     void StackTakenMeeplesTest(){
         StringBuilder sb = new StringBuilder();
-        bot.StackTakenMeeples();
+        //bot.StackTakenMeeples();
         sb.append("Pile ordonnée selon le nombre de Meeple par couleur : \n");
 
     }

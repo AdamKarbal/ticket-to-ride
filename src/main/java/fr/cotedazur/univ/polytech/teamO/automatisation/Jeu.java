@@ -1,4 +1,5 @@
 package fr.cotedazur.univ.polytech.teamO.automatisation;
+
 import fr.cotedazur.univ.polytech.teamO.bot.*;
 import fr.cotedazur.univ.polytech.teamO.classement.EmptyListException;
 import fr.cotedazur.univ.polytech.teamO.classement.Ranking;
@@ -9,98 +10,255 @@ import fr.cotedazur.univ.polytech.teamO.gestion.MoteurDeJeu;
 import fr.cotedazur.univ.polytech.teamO.gestion.NotEnoughWagonCard;
 import fr.cotedazur.univ.polytech.teamO.pioche.*;
 import fr.cotedazur.univ.polytech.teamO.plateau.GameMap;
-
+import fr.cotedazur.univ.polytech.teamO.LogFormatter;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Random;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Jeu {
-     RobotRoute robotBleu;
-     //RobotMeeples robotRouge;
-     RobotAleatoire robotJaune;
-     ArrayList<Robot> robots;
-     Ranking ranking;
-     MoteurDeJeu moteurDeJeu;
-     Pioche pioche;
-     PiocheSurTable piocheSurTable;
-     PiocheDestinationCourte piocheDestinationCourte;
-     PiocheDestinationLongue piocheDestinationLongue;
-     GameMap map;
-     GestionEtatJeu gestionEtatJeu;
-     GestionTrajets gestionTrajets;
-    public  String hello() {
-        return "Hello World!";
+    private static final Logger logger = Logger.getLogger(Jeu.class.getName());
+    private int nombreTour;
+    RobotRoute robotRoute2;
+    RobotRoute robotRoute1;
+    RobotAleatoire robotAleatoire;
+    RobotNewStrategy robotNewStrategy;
+    ArrayList<Robot> robots;
+    Ranking ranking;
+    MoteurDeJeu moteurDeJeu;
+    Pioche pioche;
+    PiocheSurTable piocheSurTable;
+    PiocheDestinationCourte piocheDestinationCourte;
+    PiocheDestinationLongue piocheDestinationLongue;
+    GameMap map;
+    GestionEtatJeu gestionEtatJeu;
+    GestionTrajets gestionTrajets;
+    Robot winner;
+
+    public int getNombreTour(){
+        return this.nombreTour;
     }
 
+    public Ranking getRanking(){
+        return ranking;
+    }
 
-    public  void setup() throws NotEnoughWagonCard {
+    public GestionEtatJeu getGestionEtatJeu(){
+        return gestionEtatJeu;
+    }
+
+    public Robot getRobotAleatoire(){
+        return robotAleatoire;
+    }
+
+    public Robot getRobotRoute1(){
+        return robotRoute1;
+    }
+
+    public Robot getRobotNewStrategy(){
+        return robotNewStrategy;
+    }
+
+    public Robot getRobotRoute2(){
+        return robotRoute2;
+    }
+
+    public Robot getWinner(){
+        return winner;
+    }
+
+    public ArrayList<Robot> getRobots(){
+        return robots;
+    }
+
+    public static void DLogsOn(){
+        logger.setLevel(Level.INFO);
+    }
+
+    public static void DLogsOff(){
+        logger.setLevel(Level.OFF);
+    }
+
+    static{
+        logger.setUseParentHandlers(false);
+        ConsoleHandler handler = new ConsoleHandler();
+        Formatter formatter = new LogFormatter();
+        handler.setFormatter(formatter);
+        logger.addHandler(handler);
+    }
+
+    /**
+     * Méthode permettant d'instancier les robots joueurs à différentes stratégies.
+     * Cette méthode instancie tout un tas d'autres objets indispensables au déroulement du jeu
+     * (Plateau, pioches, moteur de jeu...).
+     * En fonction de la version choisie au lancement du jeu, un groupe de bots différents est intégré au
+     * jeu et pioche les cartes.
+     *
+     * @param Logs Booléen qui détermine si les logs du setup seront affichés
+     * @param Version Entier qui détermine la version du setup qui sera lancée.
+     * @throws NotEnoughWagonCard
+     */
+    public void setup(boolean Logs, int Version) throws NotEnoughWagonCard {
         Random random = new Random();
-        robotBleu=new RobotRoute(Couleur.Bleu);
-        //robotRouge=new RobotMeeples(Couleur.Rouge);
-        robotJaune=new RobotAleatoire(Couleur.Jaune, random);
-        robots=new ArrayList<>();
-        robots.add(robotBleu);
-        //robots.add(robotRouge);
-        robots.add(robotJaune);
+        robotRoute1 = new RobotRoute(Couleur.Bleu);
+        robotAleatoire = new RobotAleatoire(Couleur.Jaune, random);
+        robotRoute2 = new RobotRoute(Couleur.Vert);
+        robotNewStrategy = new RobotNewStrategy(Couleur.Rouge);
+        robots = new ArrayList<>();
+        this.nombreTour = 0;
 
         pioche = new Pioche();
         pioche.creerPiocheComplete();
-
         map = new GameMap();
-
         piocheSurTable = new PiocheSurTable();
-        piocheDestinationCourte=new PiocheDestinationCourte();
-        piocheDestinationLongue=new PiocheDestinationLongue();
-        gestionTrajets= new GestionTrajets(map);
-        moteurDeJeu =new MoteurDeJeu(pioche,piocheSurTable,piocheDestinationLongue,piocheDestinationCourte);
+        piocheDestinationCourte = new PiocheDestinationCourte();
+        piocheDestinationLongue = new PiocheDestinationLongue();
+        gestionTrajets = new GestionTrajets(map);
+        moteurDeJeu = new MoteurDeJeu(pioche, piocheSurTable, piocheDestinationLongue, piocheDestinationCourte);
         piocheSurTable.initPiocheSurTable(moteurDeJeu);
-        gestionEtatJeu=new GestionEtatJeu(gestionTrajets);
+        gestionEtatJeu = new GestionEtatJeu(gestionTrajets);
+        if(!Logs) gestionEtatJeu.DLogsOff();
 
-        for(int i=0;i<4;i++){
-            robotBleu.piocher(moteurDeJeu);
-            //robotRouge.piocher(moteurDeJeu);
-            robotJaune.piocher(moteurDeJeu);
+        if(Version == 1) {
+            robots.add(robotRoute1);
+            robots.add(robotAleatoire);
+            for (int i = 0; i < 4; i++) {
+                robotRoute1.piocher(moteurDeJeu);
+                robotAleatoire.piocher(moteurDeJeu);
+            }
+            robotAleatoire.init(moteurDeJeu);
+            robotRoute1.init(moteurDeJeu);
         }
-        robotJaune.init(moteurDeJeu);
-        robotBleu.init(moteurDeJeu);
-        //robotRouge.init(moteurDeJeu);
+        else if(Version == 2) {
+            robots.add(robotRoute1);
+            robots.add(robotRoute2);
+            for (int i = 0; i < 4; i++) {
+                robotRoute1.piocher(moteurDeJeu);
+                robotRoute2.piocher(moteurDeJeu);
+            }
+            robotRoute2.init(moteurDeJeu);
+            robotRoute1.init(moteurDeJeu);
+        }
+        else if(Version == 3) {
+            robots.add(robotRoute1);
+            robots.add(robotNewStrategy);
+            robots.add(robotAleatoire);
+            for (int i = 0; i < 4; i++) {
+                robotRoute1.piocher(moteurDeJeu);
+                robotNewStrategy.piocher(moteurDeJeu);
+                robotAleatoire.piocher(moteurDeJeu);
+            }
+            robotRoute1.init(moteurDeJeu);
+            robotNewStrategy.init(moteurDeJeu,gestionTrajets);
+            robotAleatoire.init(moteurDeJeu);
+        }
 
-        System.out.println("---------------------- Le jeu est prêt à démarrer ! ----------------------");
+        logger.info("---------------------- Le jeu est prêt à démarrer ! ----------------------");
     }
 
-    public  void endofGame() throws EmptyListException {
-        System.out.print("\n---------------------- Le jeu est fini ! ----------------------\n");
-        System.out.print("Voici la mise à jour par rapport aux cartes destinations !\n");
+    public void endofGame() throws EmptyListException {
+        logger.info("\n---------------------- Le jeu est fini ! ----------------------");
+        logger.info("Voici la mise à jour par rapport aux cartes destinations !");
         gestionEtatJeu.isDestinationsCardCompleted(robots);
-        for(Robot robot:robots){
+        for (Robot robot : robots) {
             gestionEtatJeu.updateScoreCarteDestination(robot);
         }
         gestionEtatJeu.endOfGameUpdate(robots);
-        ranking=new Ranking(robots);
-        System.out.println(ranking);
+        ranking = new Ranking(robots);
+        winner = ranking.first();
+        logger.info(ranking.toString());
     }
 
-    public  void play () throws NotEnoughWagonCard, EmptyListException {
-        int tour = 1;
-        setup();
-        robots=new ArrayList<>();
-        robots.add(robotJaune);
-        robots.add(robotBleu);
-        //robots.add(robotRouge);
-        while (!(moteurDeJeu.isFinished(robots))){
-            System.out.println("---------------------- Début du tour numéro : " + tour++ + "---------------------- \n");
-            try{
-                robotBleu.choixAction(gestionTrajets,moteurDeJeu);
-                //robotRouge.choixAction(moteurDeJeu,map,gestionTrajets);
-                robotJaune.chooseaction(moteurDeJeu,map,gestionTrajets);}
-            catch(EmptyStackException e){
-                break;
-            }
-            System.out.print("\n");
+    /**Méthode qui, en fonction de la version désignée, lance les boucles de jeu correspondante.
+     * @param Logs  Booléen qui détermine si les logs du jeu seront affichés
+     * @param Version Entier qui détermine la version du jeu qui sera lancée.
+     * @throws NotEnoughWagonCard
+     * @throws EmptyListException
+     */
+    public void play(boolean Logs, int Version) throws NotEnoughWagonCard, EmptyListException {
+        if(!Logs) DLogsOff();
+        nombreTour = 1;
+        setup(Logs, Version);
+        robots = new ArrayList<>();
+        if(Version == 1) {
+            robots.add(robotRoute1);
+            robots.add(robotAleatoire);
+            loopV1();
+        }
+        else if(Version == 2) {
+            robots.add(robotRoute1);
+            robots.add(robotRoute2);
+            loopV2();
+        }
+        else if(Version == 3) {
+            robots.add(robotRoute1);
+            robots.add(robotNewStrategy);
+            robots.add(robotAleatoire);
+            loopV3();
         }
         endofGame();
     }
 
+    /**
+     * Boucle de jeu. Tant que le jeu n'est pas fini, le meilleur bot et un autre bot continuent de jouer.
+     * @throws NotEnoughWagonCard
+     */
+    public void loopV1() throws NotEnoughWagonCard{
+        while (!(moteurDeJeu.isFinished(robots))) {
+            logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
+            try {
+                robotRoute1.choixAction(gestionTrajets, moteurDeJeu);
+                robotAleatoire.chooseaction(moteurDeJeu, map, gestionTrajets);
+            }
+            catch (EmptyStackException e) {
+                logger.warning("Fin du jeu prématurée : Pioche vide.");
+                break;
+            }
+            logger.info("\n");
+        }
+    }
+
+    /**
+     * Boucle de jeu. Tant que le jeu n'est pas fini, le meilleur bot contre lui même continuent de jouer.
+     * @throws NotEnoughWagonCard
+     */
+    public void loopV2(){
+        while (!(moteurDeJeu.isFinished(robots))) {
+            logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
+            try {
+                robotRoute1.choixAction(gestionTrajets, moteurDeJeu);
+                robotRoute2.choixAction(gestionTrajets, moteurDeJeu);
+            }
+            catch (EmptyStackException e) {
+                logger.warning("Fin du jeu prématurée : Pioche vide.");
+                break;
+            }
+            logger.info("\n");
+        }
+    }
+
+    /**
+     * Boucle de jeu. Tant que le jeu n'est pas fini, tous les bots continuent de jouer.
+     * @throws NotEnoughWagonCard
+     */
+    public void loopV3() throws NotEnoughWagonCard{
+        while (!(moteurDeJeu.isFinished(robots))) {
+            logger.info("---------------------- Début du tour numéro : " + nombreTour++ + " ----------------------");
+            try {
+                robotRoute1.choixAction(gestionTrajets, moteurDeJeu);
+                robotAleatoire.chooseaction(moteurDeJeu, map, gestionTrajets);
+                robotNewStrategy.choixAction(gestionTrajets, moteurDeJeu);
+            }
+            catch (EmptyStackException e) {
+                logger.warning("Fin du jeu prématurée : Pioche vide.");
+                break;
+            }
+            logger.info("\n");
+        }
+    }
 }

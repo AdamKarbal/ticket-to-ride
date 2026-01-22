@@ -7,6 +7,12 @@ import java.util.*;
 
 public enum Ville {
     Berlin(5, true),
+    Frankfurt(4, true),
+    Hamburg(4, true),
+    Köln(4, true),
+    München(4, true),
+    Leipzig(3, true),
+    Stuttgart(3, true),
     Bremen(1, true),
     Bremerhaven(1, true),
     Chemnitz(1, true),
@@ -15,28 +21,22 @@ public enum Ville {
     Düsseldorf(1, true),
     Erfurt(1, true),
     Freiburg(1, true),
-    Frankfurt(4, true),
-    Hamburg(4, true),
     Hannover(1, true),
     Karlsruhe(1, true),
     Kassel(1, true),
     Kiel(1, true),
     Koblenz(1, true),
     Konstanz(1, true),
-    Köln(4, true),
-    Leipzig(3, true),
     Lindau(1, true),
     Magdeburg(1, true),
     Mainz(1, true),
     Mannheim(1, true),
-    München(4, true),
     Münster(1, true),
     Nürnberg(1, true),
     Regensburg(1, true),
     Rostock(1, true),
     Saarbrücken(1, true),
     Schwerin(1, true),
-    Stuttgart(3, true),
     Ulm(1, true),
     Würzburg(1, true),
     Augsburg(1, true),
@@ -48,7 +48,6 @@ public enum Ville {
     Österreich(1, false),
     Schweiz(1, false);
 
-
     private int NbMeeple;
     private final boolean isVille;
     private List<Meeples> passagers;
@@ -59,10 +58,18 @@ public enum Ville {
         this.passagers = new ArrayList<>();
     }
 
+    /**
+     * Cette méthode permet de récupérer le nombre de meeples de base d'une ville
+     * @return un entier
+     */
     public int getBaseNbMeeple() {
         return NbMeeple;
     }
 
+    /**
+     * Cette méthode permet de récupérer le nombre de meeples actuels d'une ville
+     * @return un entier
+     */
     public int getCurrentNbMeeples(){
         return passagers.size();
     }
@@ -91,6 +98,10 @@ public enum Ville {
         this.passagers.remove(meeple);
     }
 
+    /**
+     * Cette méthode permet de récupérer les couleurs de meeples existants dans une ville
+     * @return un Set de Mcouleur
+     */
     public Set<MCouleur> getPassagersColors(){
         Set<MCouleur> colors = new HashSet<>();
         for(Meeples meeple : passagers) {
@@ -99,7 +110,10 @@ public enum Ville {
         return colors;
     }
 
-
+    /**
+     * Cette méthode permet d'afficher les meeples d'une ville
+     * @return
+     */
     public String PDisplay() {
         String output = "";
         List<Meeples> p = getPassagers();
